@@ -1,0 +1,20 @@
+
+
+<section class="hero {{size ? 'is-' ~ size}} pagebrick simple-text" style="{{backgroundImage ? 'background-image: url(' ~ backgroundImage ~ '); background-size:cover; background-attachment:fixed'}}{{ backgroundColor ? 'background-color:#' ~ backgroundColor ~ ';'}}">
+    <div class="hero-body">
+        <div class="container">
+            <div class="content">
+                <h1 class="title is-1" style="{{colorText ? 'color:#' ~ colorText}}">{{content.title}}</h1>
+                <h2 class="subtitle is-4" style="{{colorText ? 'color:#' ~ colorText}}">{{content.subtitle}}</h2>
+                <p style="{{colorText ? 'color:#' ~ colorText}}">{{content.body}}</p>
+            </div>
+            {% if actionButtons|length > 0 %}
+            <div class="buttons">
+                {% for actionButton in actionButtons %}
+                <a href="{{actionButton.href}}" class="button is-primary">{{actionButton.label}}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

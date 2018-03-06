@@ -1,0 +1,72 @@
+{# set show_footer = true #}
+{% set show_navbar = true %}
+{# set body_class = '' #}
+{% extends 'master.twig' %}
+{% block
+title %}Vote{% endblock %}
+{% block body %}
+  <div class="hero is-dark is-bold">
+    <div class="container">
+      <div class="hero-body">
+        <div class="columns">
+          <div class="column is-9">
+            <div class="tags">
+              <span class="tag is-white">Salud</span>
+              <span class="tag is-white">Higiene</span>
+              <span class="tag is-white">Contaminación</span>
+            </div>
+            <h1 class="title is-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis fugiat nihil.</h1>
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48 is-rounded">
+                  <img alt="Placeholder image" src="{{asset('img/avatar.jpg')}}">
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">Augusto Mathurin</p>
+                <p class="subtitle is-6">
+                  <i class="fa fa-trophy"></i>&nbsp;40 -
+                  <a href="https://www.twitter.com/augusthur">@augusthur</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <node-users-participated></node-users-participated>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-9">
+          <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fringilla sagittis lorem, et tempor dolor commodo vel. Integer placerat turpis eu quam tristique, et cursus diam ultrices. Suspendisse potenti. Suspendisse mollis metus enim, non imperdiet arcu congue a. Etiam suscipit ultrices commodo. Nam laoreet, turpis sit amet pulvinar placerat, ipsum odio laoreet augue, eget vulputate velit lectus in nisi. Praesent quis nisi interdum, euismod augue at, porta enim. Vestibulum consequat rhoncus imperdiet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Duis quis velit eget magna convallis vulputate ut vitae felis. Integer non sagittis sem. Fusce ante tortor, luctus in sodales sed, molestie non eros. Praesent ultricies ac lectus sed fermentum. Vivamus tempus iaculis sem nec molestie.
+            </p>
+            <p>
+              Cras sit amet arcu pharetra risus sollicitudin malesuada. Curabitur in erat a lacus pellentesque ultrices in et ex. Morbi imperdiet lectus at iaculis vulputate. Ut malesuada lectus dui, eget pretium ipsum aliquet in. Aenean vitae dictum magna. Vestibulum accumsan, metus quis malesuada porta, diam lorem tincidunt urna, vitae maximus justo massa quis neque. Vestibulum non vulputate risus, sit amet volutpat quam. Etiam a venenatis nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras aliquet tristique leo, vitae elementum erat ultricies vel. Nunc ex tortor, condimentum in laoreet ut, dignissim egestas libero. Mauris id justo sem. Phasellus volutpat lacinia nibh, ac efficitur odio vehicula non. Aenean sit amet urna nec sem posuere dictum eget eget massa. Quisque dictum vitae elit in scelerisque.
+            </p>
+            <p>
+              Sed semper, arcu ut porttitor volutpat, sem mi dignissim dui, in dapibus nibh massa vitae magna. Cras feugiat vehicula velit, nec dapibus urna egestas sodales. Proin scelerisque blandit sagittis. Maecenas vestibulum ut nibh porttitor mattis. Sed sed semper libero. Proin tempor sodales convallis. Nullam venenatis justo a mauris eleifend tristique.
+            </p>
+          </div>
+          <vote :options="['I love it! Go for it!','I am no that sure','Oh, no! Definetly no!']" login-url="{{ path_for('showLogin') }}" title="Here goes your question!!!"></vote>
+          <hr>
+          <node-comment :enabled="true" form-url="{{ path_for('commentNode') }}"></node-comment>
+          <br>
+          <node-comments :node-id="3">
+            <div class="notification">
+              Estoy cargando!
+            </div>
+          </node-comments>
+        </div>
+        <div class="column">
+          <vote-results :options="['I love it! Go for it!','I am no that sure','Oh, no! Definetly no!']" :values="[40,50,21]" :height="300"></vote-results>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block javascripts %}{% endblock %}

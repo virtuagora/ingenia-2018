@@ -1,0 +1,18 @@
+{# set show_footer = true #}
+{% set show_navbar = true %}
+{# set body_class = '' #}
+{% extends 'master.twig' %}
+{% block title %}My account{% endblock %}
+{% block body %}
+  <section class="section">
+    <div class="container">
+      <router-view>
+        <span class="icon">
+          <i class="fas fa-cog fa-spin"></i>
+        </span>
+        Loading . . .
+      </router-view>
+    </div>
+  </section>
+{% endblock %}
+{% block javascripts %}{% endblock %}

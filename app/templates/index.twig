@@ -1,0 +1,36 @@
+{# set show_footer = true #}
+{% set show_navbar = true %}
+{# set body_class = '' #}
+
+{% set bricks = [
+     { "type": "simple-text", "order": 2, "size":"medium", "colorText": "FFFFFF", "backgroundColor": null, "backgroundImage": "http://lorempixel.com/g/600/200/",
+    "content": { "title": "This brick is amazing, wanna know why?", "subtitle": "Cause it's amazing, that is why", "body": "Here
+    is some lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque scelerisque, ante quis cursus viverra, ligula ligula
+    accumsan libero, ac finibus magna sapien ut massa. Praesent leo enim, condimentum sit amet efficitur eu, ullamcorper ut sapien.
+    Vivamus vel urna ut ante lobortis efficitur. Aenean ut urna risus. Aenean vestibulum volutpat vestibulum.", }, "actionButtons":
+    [ { "label": "Sign up the petition", "href": "http://external-url.com/if-you-want" }, { "label": "Know more...", "href":
+    "/testing" }] },
+    {'type':'two-columns','content': 
+        [
+        {'title':'Titulo 1', 'body':'Lorem ipsum re loco'},
+        {'title':'Titulo 2', 'body':'Lorem ipsum re loco numero 2'}
+        ]
+    }]%}
+
+{% extends 'master.twig' %}
+
+{% block body %}
+    <div class="hero is-primary is-bold is-medium">
+        <div class="hero-body has-text-centered">
+            <h1 class="title is-2">App name</h1>
+            <h1 class="subtitle is-4 is-300">This is a subtitle and which you will be able to customize</h1>
+        </div>
+    </div>
+    {% for brick in bricks %}
+        {% if brick.type == 'simple-text' %}
+            {% include 'pagebricks/simple-text.twig' with brick only %}
+        {% elseif brick.type == 'two-columns' %}
+            {% include 'pagebricks/two-columns.twig' with brick only %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}

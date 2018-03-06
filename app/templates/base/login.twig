@@ -1,0 +1,34 @@
+{# set show_footer = true #}
+{# set show_navbar = true #}
+{# set body_class = '' #}
+
+{% extends 'master.twig' %}
+
+{% block title %}Login{% endblock %}
+{% block body %}
+   <div id="vue" class="hero is-primary is-fullheight is-login-window">
+      <div class="hero-body has-text-centered">
+         <div class="container">
+            <div class="columns">
+               <div class="column is-6-tablet is-offset-3-tablet is-4-desktop is-offset-4-desktop">
+                  <img src="{{asset('img/logo-virtuagora-white.svg')}}" class="image login-logo" alt="">
+                  {% if error %}
+                  <div class="notification is-warning">
+                     {{ error }}
+                  </div>
+                  {% endif %}
+                  <login message="{{subject.type}}" form-url="{{ path_for('runLogin') }}" sign-up-url="{{ path_for('showSignUp') }}" home-url="{{path_for('showHome')}}">
+                <div class="box">
+                    <span class="icon">
+                        <i class="fas fa-cog fa-spin"></i>
+                    </span> Loading . . .
+                </div>
+                  </login>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
