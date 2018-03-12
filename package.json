@@ -42,6 +42,7 @@
     "vuedraggable": "^2.16.0"
   },
   "dependencies": {
+    "buefy": "^0.6.3",
     "chart.js": "^2.7.1",
     "emoji-awesome": "0.0.1",
     "fontawesome5-webfont": "^5.0.4",
