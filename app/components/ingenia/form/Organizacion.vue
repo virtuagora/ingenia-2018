@@ -1,33 +1,10 @@
 <template>
   <div>
-    <div class="field">
-      <label class="label is-size-4">
-        <i class="fas fa-angle-double-right"></i> ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * </label>
-      <p>Se refiere a organizaciones y/o instituciones diferentes a la de pertenencia</p>
-      <p>Si el proyecto se realiza en coordinación de alguna institución y/o organización deben adjuntar la carta aval.</p>
-      <br>
-      <b-field>
-        <b-radio-button v-model="radioOrganizacion" :native-value="true" type="is-primary" size="is-medium">
-          <span>
-            <i class="fas fa-check"></i> Si</span>
-        </b-radio-button>
-        <b-radio-button v-model="radioOrganizacion" :native-value="false" type="is-primary" size="is-medium">
-          <span>
-            <i class="fas fa-times"></i> No</span>
-        </b-radio-button>
-      </b-field>
-    </div>
-    <p>Para descargar los modelos de Carta Aval y Carta de conformidad de los integrantes del grupo
-      <a href="">
-        <b>haz click aquí</b>
-      </a>
-    </p>
-    <br>
-    <div v-if="radioOrganizacion">
+    <div>
       <div class="field">
         <label class="label is-size-4">
           <i class="fas fa-angle-double-right"></i> Nombre de la organización *</label>
-        <input type="text" class="input is-medium" placeholder="Requerido *">
+        <input type="text" v-model="organizacion.nombre" class="input is-medium" placeholder="Requerido *">
       </div>
       <br>
       <div class="field">
@@ -36,36 +13,36 @@
         <div class="columns">
           <div class="column">
             <div class="field">
-              <b-checkbox v-model="tematicasOrganizacion" :native-value="1">Arte y Cultura</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" :native-value="1">Arte y Cultura</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="tematicasOrganizacion" :native-value="2">Comunicación</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" :native-value="2">Comunicación</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="tematicasOrganizacion" :native-value="3">Deporte y recreación</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" :native-value="3">Deporte y recreación</b-checkbox>
             </div>
           </div>
           <div class="column">
             <div class="field">
-              <b-checkbox v-model="tematicasOrganizacion" :native-value="4">Diversidad Sexual</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" :native-value="4">Diversidad Sexual</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="tematicasOrganizacion" :native-value="5">Integración Social</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" :native-value="5">Integración Social</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="tematicasOrganizacion" :native-value="6">Medio Ambiente</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" :native-value="6">Medio Ambiente</b-checkbox>
             </div>
 
           </div>
           <div class="column">
             <div class="field">
-              <b-checkbox v-model="tematicasOrganizacion" :native-value="7">Salud y Discapacidad</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" :native-value="7">Salud y Discapacidad</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="tematicasOrganizacion" :native-value="8">Ciudadanía y Participación</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" :native-value="8">Ciudadanía y Participación</b-checkbox>
             </div>
             <div class="field">
-              <input type="text" class="input" placeholder="Otro tema">
+              <input type="text" v-model="organizacion.otraTematica" class="input" placeholder="Otro tema">
             </div>
           </div>
         </div>
@@ -77,18 +54,18 @@
         <br>
         <b-field grouped>
           <b-field label="Nodo" expanded>
-            <b-select placeholder="Nodo" expanded>
+            <b-select v-model="organizacion.localizacion.nodo" placeholder="Nodo" expanded>
               <option>Mr.</option>
               <option>Ms.</option>
             </b-select>
           </b-field>
-          <b-field label="Departamento" expanded>
+          <b-field v-model="organizacion.localizacion.departamento" label="Departamento" expanded>
             <b-select placeholder="Departamento" expanded>
               <option>Mr.</option>
               <option>Ms.</option>
             </b-select>
           </b-field>
-          <b-field label="Localidad" expanded>
+          <b-field v-model="organizacion.localizacion.localidad" label="Localidad" expanded>
             <b-select placeholder="Localidad" expanded>
               <option>Mr.</option>
               <option>Ms.</option>
@@ -96,7 +73,7 @@
           </b-field>
         </b-field>
       </div>
-      <div class="field">
+      <!-- <div class="field">
         <label class="label is-size-4">
           <i class="fas fa-angle-double-right"></i> Carta de Aval *</label>
         <p>Para descargar los modelos de Carta Aval, haga <a href="#" target="_blank">clic aquí</a></p>
@@ -119,9 +96,8 @@
             </span>
           </div>
         </b-field>
-      </div>
+      </div> -->
     <br>
-      
       <div class="field">
         <label class="label is-size-4">
           <i class="fas fa-angle-double-right"></i> Redes y contacto *</label>
@@ -132,7 +108,7 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input class="input is-medium" type="text" placeholder="URL página web (Ej: http://www.organizacion.org)">
+            <input v-model="organizacion.contacto.web" class="input is-medium" type="text" placeholder="URL página web (Ej: http://www.organizacion.org)">
           </p>
         </div>
         <div class="field is-grouped">
@@ -142,7 +118,7 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input class="input is-medium" type="text" placeholder="URL página de Facebook">
+            <input v-model="organizacion.contacto.facebook" class="input is-medium" type="text" placeholder="URL página de Facebook">
           </p>
         </div>
         <div class="field is-grouped">
@@ -152,7 +128,7 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input class="input is-medium" type="email" placeholder="Email de contacto">
+            <input v-model="organizacion.contacto.email" class="input is-medium" type="email" placeholder="Email de contacto">
           </p>
         </div>
         <div class="field is-grouped">
@@ -162,7 +138,7 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input class="input is-medium" type="text" placeholder="Ej: 0342 - 4123456">
+            <input v-model="organizacion.contacto.telefono" class="input is-medium" type="text" placeholder="Ej: 0342 - 4123456">
           </p>
         </div>
       </div>
@@ -172,11 +148,10 @@
 
 <script>
 export default {
+  props: ['organizacion'],
   data() {
     return {
-      radioOrganizacion: true,
-      tematicasOrganizacion: [],
-      file: []
+      
     };
   }
 };

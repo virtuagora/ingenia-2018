@@ -5,6 +5,10 @@ import http from './http'
 import router from './router'
 import store from './store'
 
+import VeeValidate from 'vee-validate';
+
+Vue.use(VeeValidate);
+
 // VIRTUAGORA 2.0 COMPONENTS
 // Register every component that you will be using in any twig template.
 // Note: Some child components might be imported inside their parent components.
