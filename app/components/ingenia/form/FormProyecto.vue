@@ -27,6 +27,7 @@
       <label class="label is-size-4">
         <i class="fas fa-angle-double-right"></i> ¿Que temática trabaja el proyecto?</label>
       <p>Seleccione la temática para saber de que trata</p>
+      <br>
       <b-field>
         <b-select name="proyecto-tematica" size="is-large" v-model="tematicaSeleccionada" placeholder="Seleccione la temática" expanded>
           <option :value="1">Integración Social</option>
@@ -67,11 +68,11 @@
       <br>
       <div class="control">
         <b-field>
-          <b-radio-button v-model="radioEstado" :native-value="true" type="is-link" size="is-medium">
+          <b-radio-button v-model="radioEstado" :native-value="true" type="is-primary" size="is-medium">
             <span>
               <i class="fas fa-check"></i> Si</span>
           </b-radio-button>
-          <b-radio-button v-model="radioEstado" :native-value="false" type="is-link" size="is-medium">
+          <b-radio-button v-model="radioEstado" :native-value="false" type="is-primary" size="is-medium">
             <span>
               <i class="fas fa-times"></i> No</span>
           </b-radio-button>
@@ -178,6 +179,7 @@
       <label class="label is-size-4">
         <i class="fas fa-angle-double-right"></i> Calendario de Actividades *</label>
       <p>Coloque por cada actividad la fecha en que se realizará</p>
+      <br>
       <div class="field is-grouped">
         <div class="control">
           <b-datepicker placeholder="Haga clic!" v-model="dateActividad" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date()" :max-date="new Date('12/31/2018')" icon-pack="far" icon="calendar-alt">
@@ -193,83 +195,139 @@
         </p>
       </div>
       <br>
-        <div class="content">
-          <table class="table is-narrow is-bordered">
-            <thead>
-              <tr>
-                <th width="120px" >Fecha</th>
-                <th>Actividad</th>
-                <th width="50px" class="has-text-centered">
+      <div class="content">
+        <table class="table is-narrow is-bordered">
+          <thead>
+            <tr>
+              <th width="120px">Fecha</th>
+              <th>Actividad</th>
+              <th width="50px" class="has-text-centered">
+                <i class="fas fa-times"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody v-if="actividades.length">
+            <tr v-for="(actividad, index) in actividades" :key="index">
+              <td>
+                <i class="far fa-calendar-check fa-fw"></i> {{actividad.fecha.toLocaleDateString('es-AR')}}</td>
+              <td>{{actividad.descripcion}}</td>
+              <td class="has-text-centered">
+                <a @click="removeActividad(index)">
                   <i class="fas fa-times"></i>
-                </th>
-              </tr>
-            </thead>
-            <tbody v-if="actividades.length">
-              <tr v-for="(actividad, index) in actividades" :key="index">
-                <td><i class="far fa-calendar-check fa-fw"></i> {{actividad.fecha.toLocaleDateString('es-AR')}}</td>
-                <td>{{actividad.descripcion}}</td>
-                <td class="has-text-centered">
-                  <a @click="removeActividad(index)">
-                    <i class="fas fa-times"></i>
-                  </a>
-                </td>
-              </tr>
-            </tbody>
-            <tbody v-else>
-              <tr>
-                <td class="has-text-centered" colspan="3">
-                  <i>No se han ingresado actividades</i>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td class="has-text-centered" colspan="3">
+                <i>No se han ingresado actividades</i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
     <div class="field">
       <label class="label is-size-4">
         <i class="fas fa-angle-double-right"></i> Presupuesto *</label>
+      <p>
+        <span class="tag is-warning">Importante</span>&nbsp;&nbsp;Recuerda que el tope es de $20.000.-</p>
+      <br>
+      <div class="field is-grouped">
+        <p class="control is-expanded">
+          <input class="input is-medium" v-model="inputItemRubro" type="text" placeholder="Rubro Item">
+        </p>
+        <p class="control is-expanded">
+          <input class="input is-medium" v-model="inputItemDescripcion" type="text" placeholder="Descripcion Item">
+        </p>
+        <p class="control is-expanded">
+          <input class="input is-medium" v-model="inputItemMonto" type="text" placeholder="Monto en AR$">
+          <span class="help">Ingrese números sin decimal, puntos o comas</span>
+        </p>
+        <p class="control">
+          <button @click="addItem" class="button is-primary is-medium">
+            <i class="fas fa-plus"></i>
+          </button>
+        </p>
+      </div>
+      <br>
+      <div class="content">
+        <table class="table is-narrow is-bordered">
+          <thead>
+            <tr>
+              <th width="120px">Rubro</th>
+              <th>Descripción</th>
+              <th class="has-text-centered">Monto</th>
+              <th width="50px" class="has-text-centered">
+                <i class="fas fa-times"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody v-if="presupuesto.length">
+            <tr v-for="(item, index) in presupuesto" :key="index">
+              <td>{{item.rubro}}</td>
+              <td>{{item.descripcion}}</td>
+              <td class="has-text-centered">$ {{item.monto}}</td>
+              <td class="has-text-centered">
+                <a @click="removeItem(index)">
+                  <i class="fas fa-times"></i>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <th colspan="2" class="has-text-right">Monto total:</th>
+              <td class="has-text-centered">$ {{montoTotal}}</td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td class="has-text-centered" colspan="4">
+                <i>No se han ingresado items en el presupuesto</i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <label class="label is-size-4" v-if="presupuesto.length">
+        <i class="fas fa-angle-double-right"></i> Monto total solicitado: $ {{montoTotal}}</label>
     </div>
     <hr>
-    <div class="field">
-      <label class="label is-size-4">
-        <i class="fas fa-angle-double-right"></i> ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * </label>
-      <p>Se refiere a organizaciones y/o instituciones diferentes a la de pertenencia</p>
-      <p>Si el proyecto se realiza en coordinación de alguna institución y/o organización deben adjuntar la carta aval.</p>
-      <b-field>
-        <b-radio-button v-model="radioOrganizacion" :native-value="true" type="is-link" size="is-medium">
-          <span>
-            <i class="fas fa-check"></i> Si</span>
-        </b-radio-button>
-        <b-radio-button v-model="radioOrganizacion" :native-value="false" type="is-link" size="is-medium">
-          <span>
-            <i class="fas fa-times"></i> No</span>
-        </b-radio-button>
-      </b-field>
-    </div>
-    <p>Para descargar los modelos de Carta Aval y Carta de conformidad de los integrantes del grupo
-      <a href="">
-        <b>haz click aquí</b>
-      </a>
-    </p>
+    <organizacion></organizacion>
+    <br>
+
+    <hr>
+    <br>
+    <button class="button is-large is-primary is-fullwidth">
+      <i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Guardar y enviar</button>
+    <br>
   </div>
 </template>
 
 <script>
+import Organizacion from "./Organizacion";
+
 export default {
   data() {
     return {
       tematicaSeleccionada: null,
       radioEstado: null,
-      radioOrganizacion: null,
       barrios: [],
       presupuesto: [],
       objetivos: [],
       actividades: [],
       inputObjetivos: "",
       inputActividad: null,
+      inputItemRubro: null,
+      inputItemDescripcion: null,
+      inputItemMonto: null,
       dateActividad: null,
       calendarioActividades: []
     };
+  },
+  components: {
+    Organizacion
   },
   methods: {
     addObjetivo: function() {
@@ -281,7 +339,7 @@ export default {
     removeObjetivo: function(index) {
       this.objetivos.splice(index, 1);
     },
-     addActividad: function() {
+    addActividad: function() {
       if (this.inputActividad != "" && this.dateActividad != null) {
         this.actividades.push({
           fecha: this.dateActividad,
@@ -293,6 +351,34 @@ export default {
     },
     removeActividad: function(index) {
       this.actividades.splice(index, 1);
+    },
+    addItem: function() {
+      if (
+        this.inputItemRubro != null &&
+        this.inputItemDescripcion != null &&
+        this.inputItemMonto != null
+      ) {
+        this.presupuesto.push({
+          rubro: this.inputItemRubro,
+          descripcion: this.inputItemDescripcion,
+          monto: this.inputItemMonto
+        });
+        this.inputItemRubro = null;
+        this.inputItemDescripcion = null;
+        this.inputItemMonto = null;
+      }
+    },
+    removeItem: function(index) {
+      this.presupuesto.splice(index, 1);
+    }
+  },
+  computed: {
+    montoTotal: function() {
+      let montoTotal = 0;
+      this.presupuesto.forEach(item => {
+        montoTotal += parseFloat(item.monto);
+      });
+      return montoTotal;
     }
   }
 };

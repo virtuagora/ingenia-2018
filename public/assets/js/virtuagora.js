@@ -53387,6 +53387,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Organizacion__ = __webpack_require__(316);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Organizacion___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Organizacion__);
 //
 //
 //
@@ -53643,24 +53645,82 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       tematicaSeleccionada: null,
       radioEstado: null,
-      radioOrganizacion: null,
       barrios: [],
       presupuesto: [],
       objetivos: [],
       actividades: [],
       inputObjetivos: "",
       inputActividad: null,
+      inputItemRubro: null,
+      inputItemDescripcion: null,
+      inputItemMonto: null,
       dateActividad: null,
       calendarioActividades: []
     };
   },
 
+  components: {
+    Organizacion: __WEBPACK_IMPORTED_MODULE_0__Organizacion___default.a
+  },
   methods: {
     addObjetivo: function addObjetivo() {
       if (this.inputObjetivos != "") {
@@ -53683,6 +53743,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     removeActividad: function removeActividad(index) {
       this.actividades.splice(index, 1);
+    },
+    addItem: function addItem() {
+      if (this.inputItemRubro != null && this.inputItemDescripcion != null && this.inputItemMonto != null) {
+        this.presupuesto.push({
+          rubro: this.inputItemRubro,
+          descripcion: this.inputItemDescripcion,
+          monto: this.inputItemMonto
+        });
+        this.inputItemRubro = null;
+        this.inputItemDescripcion = null;
+        this.inputItemMonto = null;
+      }
+    },
+    removeItem: function removeItem(index) {
+      this.presupuesto.splice(index, 1);
+    }
+  },
+  computed: {
+    montoTotal: function montoTotal() {
+      var montoTotal = 0;
+      this.presupuesto.forEach(function (item) {
+        montoTotal += parseFloat(item.monto);
+      });
+      return montoTotal;
     }
   }
 });
@@ -53695,499 +53779,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _vm._m(1),
+  return _c(
+    "div",
+    [
+      _vm._m(0),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "control" },
-        [
-          _c("b-input", {
-            attrs: {
-              type: "textarea",
-              minlength: "10",
-              maxlength: "250",
-              rows: "3",
-              placeholder: "Requerido *. Breve descripcion de tu proyecto"
-            }
-          })
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _vm._m(2),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "control" },
-        [
-          _c("b-input", {
-            attrs: {
-              type: "textarea",
-              minlength: "10",
-              maxlength: "200",
-              rows: "3",
-              placeholder:
-                "Requerido *. ¿Por qué vale la pena realizar el proyecto? Máximo 200 palabras"
-            }
-          })
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "field" },
-      [
-        _vm._m(3),
-        _vm._v(" "),
-        _c("p", [_vm._v("Seleccione la temática para saber de que trata")]),
-        _vm._v(" "),
-        _c(
-          "b-field",
-          [
-            _c(
-              "b-select",
-              {
-                attrs: {
-                  name: "proyecto-tematica",
-                  size: "is-large",
-                  placeholder: "Seleccione la temática",
-                  expanded: ""
-                },
-                model: {
-                  value: _vm.tematicaSeleccionada,
-                  callback: function($$v) {
-                    _vm.tematicaSeleccionada = $$v
-                  },
-                  expression: "tematicaSeleccionada"
-                }
-              },
-              [
-                _c("option", { domProps: { value: 1 } }, [
-                  _vm._v("Integración Social")
-                ]),
-                _vm._v(" "),
-                _c("option", { domProps: { value: 2 } }, [
-                  _vm._v("Medio Ambiente")
-                ]),
-                _vm._v(" "),
-                _c("option", { domProps: { value: 3 } }, [
-                  _vm._v("Deporte y recreación")
-                ]),
-                _vm._v(" "),
-                _c("option", { domProps: { value: 4 } }, [_vm._v("Educación")]),
-                _vm._v(" "),
-                _c("option", { domProps: { value: 5 } }, [_vm._v("Cultura")]),
-                _vm._v(" "),
-                _c("option", { domProps: { value: 6 } }, [
-                  _vm._v("Empleo y Capacitación")
-                ]),
-                _vm._v(" "),
-                _c("option", { domProps: { value: 7 } }, [
-                  _vm._v("Comunicación")
-                ]),
-                _vm._v(" "),
-                _c("option", { domProps: { value: 8 } }, [_vm._v("Salud")])
-              ]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.tematicaSeleccionada != null,
-                expression: "tematicaSeleccionada != null"
-              }
-            ],
-            staticClass: "notification is-light"
-          },
-          [
-            _c(
-              "h1",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 1,
-                    expression: "tematicaSeleccionada == 1"
-                  }
-                ],
-                staticClass: "title is-5"
-              },
-              [_vm._v("Integracion Social")]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 1,
-                    expression: "tematicaSeleccionada == 1"
-                  }
-                ]
-              },
-              [
-                _vm._v(
-                  "Incluimos aquí aquellos proyectos cuyos objetivos y actividades apuntaban a mejorar la convivencia a nivel social, implementando acciones destinadas a jóvenes, y a población en general, que tengan algunos de sus derechos vulnerados. Entre ellos jóvenes en situación de vulnerabilidad social, jóvenes con discapacidad, entre otros."
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "h1",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 2,
-                    expression: "tematicaSeleccionada == 2"
-                  }
-                ],
-                staticClass: "title is-5"
-              },
-              [_vm._v("Medio Ambiente")]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 2,
-                    expression: "tematicaSeleccionada == 2"
-                  }
-                ]
-              },
-              [
-                _vm._v(
-                  "esta categoría engloba a los proyectos que se propusieron mejorar las condiciones del medio ambiente. Los mismos enfocan una amplia variedad de temáticas como ser la recolección sustentable de residuos, el reciclado de basura, la disminución de gases tóxicos; hasta el cuidado de otros seres vivos como plantas y animales."
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "h1",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 3,
-                    expression: "tematicaSeleccionada == 3"
-                  }
-                ],
-                staticClass: "title is-5"
-              },
-              [_vm._v("Deporte y recreación")]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 3,
-                    expression: "tematicaSeleccionada == 3"
-                  }
-                ]
-              },
-              [
-                _vm._v(
-                  "este eje integra los proyectos abocados a promover el bienestar joven mediante la organización de actividades deportivas y recreativas. En muchos casos, se trataban de proyectos que pretendían la recuperación de espacios públicos-en su mayoría plazas públicas- para tales fines."
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "h1",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 4,
-                    expression: "tematicaSeleccionada == 4"
-                  }
-                ],
-                staticClass: "title is-5"
-              },
-              [_vm._v("Educación")]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 4,
-                    expression: "tematicaSeleccionada == 4"
-                  }
-                ]
-              },
-              [
-                _vm._v(
-                  "Se incluyen en esta categoría a los proyectos juveniles cuyos objetivos y actividades tienen como fin brindar mayor educación a la sociedad en general. La educación es entendida en sentido amplio por los jóvenes, abarcando desde la enseñanza de los propios derechos hasta la educación sexual, adoptando desde formatos tradicionales de jornadas de formación básicas hasta actividades lúdicas."
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "h1",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 5,
-                    expression: "tematicaSeleccionada == 5"
-                  }
-                ],
-                staticClass: "title is-5"
-              },
-              [_vm._v("Cultura")]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 5,
-                    expression: "tematicaSeleccionada == 5"
-                  }
-                ]
-              },
-              [
-                _vm._v(
-                  "Caben aquí las iniciativas orientadas a al promoción de la cultura local, regional y provincial, desde diferentes expresiones artísticas: danzas, teatro, música, pintura, productos artesanales, entre otros."
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "h1",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 6,
-                    expression: "tematicaSeleccionada == 6"
-                  }
-                ],
-                staticClass: "title is-5"
-              },
-              [_vm._v("Empleo y Capacitación")]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 6,
-                    expression: "tematicaSeleccionada == 6"
-                  }
-                ]
-              },
-              [
-                _vm._v(
-                  "Se encuentran en esta categoría los proyectos juveniles cuyos intereses se relacionaban con el mundo del trabajo, la posibilidad de acceder al mismo y la mejora de las condiciones laborales. Aquí, se encuentran también algunas iniciativas que, no atendiendo a las bases del Programa Ingenia, se formularon con la intención de lograr un microemprendimiento de carácter privado."
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "h1",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 7,
-                    expression: "tematicaSeleccionada == 7"
-                  }
-                ],
-                staticClass: "title is-5"
-              },
-              [_vm._v("Comunicación")]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 7,
-                    expression: "tematicaSeleccionada == 7"
-                  }
-                ]
-              },
-              [
-                _vm._v(
-                  "Se abarca con este eje a los proyectos destinados a amplificar la voz joven. Caben aquí las acciones para crear medios de comunicación gráficos y audiovisuales, como así también aquellas actividades que promocionan la participación juvenil en los medios existentes."
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "h1",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 8,
-                    expression: "tematicaSeleccionada == 8"
-                  }
-                ],
-                staticClass: "title is-5"
-              },
-              [_vm._v("Salud")]
-            ),
-            _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.tematicaSeleccionada == 8,
-                    expression: "tematicaSeleccionada == 8"
-                  }
-                ]
-              },
-              [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga saepe natus accusamus delectus deserunt eaque repellat nemo temporibus necessitatibus perspiciatis rerum laboriosam, perferendis soluta nam molestias repellendus magni eos in?"
-                )
-              ]
-            )
-          ]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _vm._m(4),
-      _vm._v(" "),
-      _vm._m(5),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "control" },
-        [
-          _c(
-            "b-field",
-            [
-              _c(
-                "b-radio-button",
-                {
-                  attrs: {
-                    "native-value": true,
-                    type: "is-link",
-                    size: "is-medium"
-                  },
-                  model: {
-                    value: _vm.radioEstado,
-                    callback: function($$v) {
-                      _vm.radioEstado = $$v
-                    },
-                    expression: "radioEstado"
-                  }
-                },
-                [
-                  _c("span", [
-                    _c("i", { staticClass: "fas fa-check" }),
-                    _vm._v(" Si")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "b-radio-button",
-                {
-                  attrs: {
-                    "native-value": false,
-                    type: "is-link",
-                    size: "is-medium"
-                  },
-                  model: {
-                    value: _vm.radioEstado,
-                    callback: function($$v) {
-                      _vm.radioEstado = $$v
-                    },
-                    expression: "radioEstado"
-                  }
-                },
-                [
-                  _c("span", [
-                    _c("i", { staticClass: "fas fa-times" }),
-                    _vm._v(" No")
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.radioEstado,
-            expression: "radioEstado"
-          }
-        ],
-        staticClass: "field"
-      },
-      [
-        _vm._m(6),
+      _c("div", { staticClass: "field" }, [
+        _vm._m(1),
         _vm._v(" "),
         _c(
           "div",
@@ -54197,72 +53795,462 @@ var render = function() {
               attrs: {
                 type: "textarea",
                 minlength: "10",
-                maxlength: "100",
+                maxlength: "250",
                 rows: "3",
-                placeholder: "Requerido *"
+                placeholder: "Requerido *. Breve descripcion de tu proyecto"
               }
             })
           ],
           1
         )
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "field" },
-      [
-        _vm._m(7),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _vm._m(2),
         _vm._v(" "),
         _c(
-          "b-field",
-          { attrs: { grouped: "" } },
+          "div",
+          { staticClass: "control" },
+          [
+            _c("b-input", {
+              attrs: {
+                type: "textarea",
+                minlength: "10",
+                maxlength: "200",
+                rows: "3",
+                placeholder:
+                  "Requerido *. ¿Por qué vale la pena realizar el proyecto? Máximo 200 palabras"
+              }
+            })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _vm._m(3),
+          _vm._v(" "),
+          _c("p", [_vm._v("Seleccione la temática para saber de que trata")]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "b-field",
+            [
+              _c(
+                "b-select",
+                {
+                  attrs: {
+                    name: "proyecto-tematica",
+                    size: "is-large",
+                    placeholder: "Seleccione la temática",
+                    expanded: ""
+                  },
+                  model: {
+                    value: _vm.tematicaSeleccionada,
+                    callback: function($$v) {
+                      _vm.tematicaSeleccionada = $$v
+                    },
+                    expression: "tematicaSeleccionada"
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: 1 } }, [
+                    _vm._v("Integración Social")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 2 } }, [
+                    _vm._v("Medio Ambiente")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 3 } }, [
+                    _vm._v("Deporte y recreación")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 4 } }, [
+                    _vm._v("Educación")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 5 } }, [_vm._v("Cultura")]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 6 } }, [
+                    _vm._v("Empleo y Capacitación")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 7 } }, [
+                    _vm._v("Comunicación")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 8 } }, [_vm._v("Salud")])
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.tematicaSeleccionada != null,
+                  expression: "tematicaSeleccionada != null"
+                }
+              ],
+              staticClass: "notification is-light"
+            },
+            [
+              _c(
+                "h1",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 1,
+                      expression: "tematicaSeleccionada == 1"
+                    }
+                  ],
+                  staticClass: "title is-5"
+                },
+                [_vm._v("Integracion Social")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 1,
+                      expression: "tematicaSeleccionada == 1"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "Incluimos aquí aquellos proyectos cuyos objetivos y actividades apuntaban a mejorar la convivencia a nivel social, implementando acciones destinadas a jóvenes, y a población en general, que tengan algunos de sus derechos vulnerados. Entre ellos jóvenes en situación de vulnerabilidad social, jóvenes con discapacidad, entre otros."
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "h1",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 2,
+                      expression: "tematicaSeleccionada == 2"
+                    }
+                  ],
+                  staticClass: "title is-5"
+                },
+                [_vm._v("Medio Ambiente")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 2,
+                      expression: "tematicaSeleccionada == 2"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "esta categoría engloba a los proyectos que se propusieron mejorar las condiciones del medio ambiente. Los mismos enfocan una amplia variedad de temáticas como ser la recolección sustentable de residuos, el reciclado de basura, la disminución de gases tóxicos; hasta el cuidado de otros seres vivos como plantas y animales."
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "h1",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 3,
+                      expression: "tematicaSeleccionada == 3"
+                    }
+                  ],
+                  staticClass: "title is-5"
+                },
+                [_vm._v("Deporte y recreación")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 3,
+                      expression: "tematicaSeleccionada == 3"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "este eje integra los proyectos abocados a promover el bienestar joven mediante la organización de actividades deportivas y recreativas. En muchos casos, se trataban de proyectos que pretendían la recuperación de espacios públicos-en su mayoría plazas públicas- para tales fines."
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "h1",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 4,
+                      expression: "tematicaSeleccionada == 4"
+                    }
+                  ],
+                  staticClass: "title is-5"
+                },
+                [_vm._v("Educación")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 4,
+                      expression: "tematicaSeleccionada == 4"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "Se incluyen en esta categoría a los proyectos juveniles cuyos objetivos y actividades tienen como fin brindar mayor educación a la sociedad en general. La educación es entendida en sentido amplio por los jóvenes, abarcando desde la enseñanza de los propios derechos hasta la educación sexual, adoptando desde formatos tradicionales de jornadas de formación básicas hasta actividades lúdicas."
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "h1",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 5,
+                      expression: "tematicaSeleccionada == 5"
+                    }
+                  ],
+                  staticClass: "title is-5"
+                },
+                [_vm._v("Cultura")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 5,
+                      expression: "tematicaSeleccionada == 5"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "Caben aquí las iniciativas orientadas a al promoción de la cultura local, regional y provincial, desde diferentes expresiones artísticas: danzas, teatro, música, pintura, productos artesanales, entre otros."
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "h1",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 6,
+                      expression: "tematicaSeleccionada == 6"
+                    }
+                  ],
+                  staticClass: "title is-5"
+                },
+                [_vm._v("Empleo y Capacitación")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 6,
+                      expression: "tematicaSeleccionada == 6"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "Se encuentran en esta categoría los proyectos juveniles cuyos intereses se relacionaban con el mundo del trabajo, la posibilidad de acceder al mismo y la mejora de las condiciones laborales. Aquí, se encuentran también algunas iniciativas que, no atendiendo a las bases del Programa Ingenia, se formularon con la intención de lograr un microemprendimiento de carácter privado."
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "h1",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 7,
+                      expression: "tematicaSeleccionada == 7"
+                    }
+                  ],
+                  staticClass: "title is-5"
+                },
+                [_vm._v("Comunicación")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 7,
+                      expression: "tematicaSeleccionada == 7"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "Se abarca con este eje a los proyectos destinados a amplificar la voz joven. Caben aquí las acciones para crear medios de comunicación gráficos y audiovisuales, como así también aquellas actividades que promocionan la participación juvenil en los medios existentes."
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "h1",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 8,
+                      expression: "tematicaSeleccionada == 8"
+                    }
+                  ],
+                  staticClass: "title is-5"
+                },
+                [_vm._v("Salud")]
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.tematicaSeleccionada == 8,
+                      expression: "tematicaSeleccionada == 8"
+                    }
+                  ]
+                },
+                [
+                  _vm._v(
+                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga saepe natus accusamus delectus deserunt eaque repellat nemo temporibus necessitatibus perspiciatis rerum laboriosam, perferendis soluta nam molestias repellendus magni eos in?"
+                  )
+                ]
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _vm._m(5),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "control" },
           [
             _c(
               "b-field",
-              { attrs: { label: "Nodo", expanded: "" } },
               [
                 _c(
-                  "b-select",
-                  { attrs: { placeholder: "Nodo", expanded: "" } },
+                  "b-radio-button",
+                  {
+                    attrs: {
+                      "native-value": true,
+                      type: "is-primary",
+                      size: "is-medium"
+                    },
+                    model: {
+                      value: _vm.radioEstado,
+                      callback: function($$v) {
+                        _vm.radioEstado = $$v
+                      },
+                      expression: "radioEstado"
+                    }
+                  },
                   [
-                    _c("option", [_vm._v("Mr.")]),
-                    _vm._v(" "),
-                    _c("option", [_vm._v("Ms.")])
+                    _c("span", [
+                      _c("i", { staticClass: "fas fa-check" }),
+                      _vm._v(" Si")
+                    ])
                   ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "b-field",
-              { attrs: { label: "Departamento", expanded: "" } },
-              [
+                ),
+                _vm._v(" "),
                 _c(
-                  "b-select",
-                  { attrs: { placeholder: "Departamento", expanded: "" } },
+                  "b-radio-button",
+                  {
+                    attrs: {
+                      "native-value": false,
+                      type: "is-primary",
+                      size: "is-medium"
+                    },
+                    model: {
+                      value: _vm.radioEstado,
+                      callback: function($$v) {
+                        _vm.radioEstado = $$v
+                      },
+                      expression: "radioEstado"
+                    }
+                  },
                   [
-                    _c("option", [_vm._v("Mr.")]),
-                    _vm._v(" "),
-                    _c("option", [_vm._v("Ms.")])
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "b-field",
-              { attrs: { label: "Localidad", expanded: "" } },
-              [
-                _c(
-                  "b-select",
-                  { attrs: { placeholder: "Localidad", expanded: "" } },
-                  [
-                    _c("option", [_vm._v("Mr.")]),
-                    _vm._v(" "),
-                    _c("option", [_vm._v("Ms.")])
+                    _c("span", [
+                      _c("i", { staticClass: "fas fa-times" }),
+                      _vm._v(" No")
+                    ])
                   ]
                 )
               ],
@@ -54271,73 +54259,289 @@ var render = function() {
           ],
           1
         )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "field" },
-      [
-        _vm._m(8),
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.radioEstado,
+              expression: "radioEstado"
+            }
+          ],
+          staticClass: "field"
+        },
+        [
+          _vm._m(6),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "control" },
+            [
+              _c("b-input", {
+                attrs: {
+                  type: "textarea",
+                  minlength: "10",
+                  maxlength: "100",
+                  rows: "3",
+                  placeholder: "Requerido *"
+                }
+              })
+            ],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _vm._m(7),
+          _vm._v(" "),
+          _c(
+            "b-field",
+            { attrs: { grouped: "" } },
+            [
+              _c(
+                "b-field",
+                { attrs: { label: "Nodo", expanded: "" } },
+                [
+                  _c(
+                    "b-select",
+                    { attrs: { placeholder: "Nodo", expanded: "" } },
+                    [
+                      _c("option", [_vm._v("Mr.")]),
+                      _vm._v(" "),
+                      _c("option", [_vm._v("Ms.")])
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-field",
+                { attrs: { label: "Departamento", expanded: "" } },
+                [
+                  _c(
+                    "b-select",
+                    { attrs: { placeholder: "Departamento", expanded: "" } },
+                    [
+                      _c("option", [_vm._v("Mr.")]),
+                      _vm._v(" "),
+                      _c("option", [_vm._v("Ms.")])
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-field",
+                { attrs: { label: "Localidad", expanded: "" } },
+                [
+                  _c(
+                    "b-select",
+                    { attrs: { placeholder: "Localidad", expanded: "" } },
+                    [
+                      _c("option", [_vm._v("Mr.")]),
+                      _vm._v(" "),
+                      _c("option", [_vm._v("Ms.")])
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "field" },
+        [
+          _vm._m(8),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "Indiquen el/los barrios donde realizarán el proyecto. Separe con comas, o presione TAB"
+            )
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("b-taginput", {
+            attrs: {
+              size: "is-medium",
+              maxtags: "5",
+              icon: "map-marker",
+              type: "is-primary",
+              placeholder: "Nombre del barrio"
+            },
+            model: {
+              value: _vm.barrios,
+              callback: function($$v) {
+                _vm.barrios = $$v
+              },
+              expression: "barrios"
+            }
+          }),
+          _vm._v(" "),
+          _c("br")
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _vm._m(9),
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "Indiquen el/los barrios donde realizarán el proyecto. Separe con comas, o presione TAB"
+            "¿Qué se quiere lograr? Tratar de ser muy breves, concretos y precisos"
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "control" }, [
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "field is-grouped" }, [
+            _c("div", { staticClass: "control" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "button is-medium is-static",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-flag-checkered" })]
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "control is-expanded" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.inputObjetivos,
+                    expression: "inputObjetivos"
+                  }
+                ],
+                staticClass: "input is-medium",
+                attrs: { type: "text", placeholder: "Escriba el objetivo" },
+                domProps: { value: _vm.inputObjetivos },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.inputObjetivos = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "control" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "button is-primary is-medium",
+                  on: { click: _vm.addObjetivo }
+                },
+                [_c("i", { staticClass: "fas fa-plus" })]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "content" }, [
+            _c("table", { staticClass: "table is-narrow is-bordered" }, [
+              _vm._m(10),
+              _vm._v(" "),
+              _vm.objetivos.length
+                ? _c(
+                    "tbody",
+                    _vm._l(_vm.objetivos, function(objetivo, index) {
+                      return _c("tr", { key: index }, [
+                        _c("td", [
+                          _c("i", {
+                            staticClass: "fas fa-flag-checkered fa-fw"
+                          }),
+                          _vm._v(" " + _vm._s(objetivo))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "has-text-centered" }, [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.removeObjetivo(index)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-times" })]
+                          )
+                        ])
+                      ])
+                    })
+                  )
+                : _c("tbody", [_vm._m(11)])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _vm._m(12),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v("Coloque por cada actividad la fecha en que se realizará")
         ]),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c("b-taginput", {
-          attrs: {
-            size: "is-medium",
-            maxtags: "5",
-            icon: "map-marker",
-            type: "is-primary",
-            placeholder: "Nombre del barrio"
-          },
-          model: {
-            value: _vm.barrios,
-            callback: function($$v) {
-              _vm.barrios = $$v
-            },
-            expression: "barrios"
-          }
-        }),
-        _vm._v(" "),
-        _c("br")
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _vm._m(9),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "¿Qué se quiere lograr? Tratar de ser muy breves, concretos y precisos"
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "control" }, [
-        _c("br"),
-        _vm._v(" "),
         _c("div", { staticClass: "field is-grouped" }, [
-          _c("div", { staticClass: "control" }, [
-            _c(
-              "a",
-              {
-                staticClass: "button is-medium is-static",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                  }
+          _c(
+            "div",
+            { staticClass: "control" },
+            [
+              _c("b-datepicker", {
+                attrs: {
+                  placeholder: "Haga clic!",
+                  size: "is-medium",
+                  "date-formatter": function(date) {
+                    return date.toLocaleDateString("es-AR")
+                  },
+                  "min-date": new Date(),
+                  "max-date": new Date("12/31/2018"),
+                  "icon-pack": "far",
+                  icon: "calendar-alt"
+                },
+                model: {
+                  value: _vm.dateActividad,
+                  callback: function($$v) {
+                    _vm.dateActividad = $$v
+                  },
+                  expression: "dateActividad"
                 }
-              },
-              [_c("i", { staticClass: "fas fa-flag-checkered" })]
-            )
-          ]),
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("p", { staticClass: "control is-expanded" }, [
             _c("input", {
@@ -54345,19 +54549,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.inputObjetivos,
-                  expression: "inputObjetivos"
+                  value: _vm.inputActividad,
+                  expression: "inputActividad"
                 }
               ],
               staticClass: "input is-medium",
               attrs: { type: "text", placeholder: "Escriba el objetivo" },
-              domProps: { value: _vm.inputObjetivos },
+              domProps: { value: _vm.inputActividad },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.inputObjetivos = $event.target.value
+                  _vm.inputActividad = $event.target.value
                 }
               }
             })
@@ -54368,7 +54572,145 @@ var render = function() {
               "button",
               {
                 staticClass: "button is-primary is-medium",
-                on: { click: _vm.addObjetivo }
+                on: { click: _vm.addActividad }
+              },
+              [_c("i", { staticClass: "far fa-calendar-plus" })]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "content" }, [
+          _c("table", { staticClass: "table is-narrow is-bordered" }, [
+            _vm._m(13),
+            _vm._v(" "),
+            _vm.actividades.length
+              ? _c(
+                  "tbody",
+                  _vm._l(_vm.actividades, function(actividad, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", [
+                        _c("i", { staticClass: "far fa-calendar-check fa-fw" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(actividad.fecha.toLocaleDateString("es-AR"))
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(actividad.descripcion))]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "has-text-centered" }, [
+                        _c(
+                          "a",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.removeActividad(index)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fas fa-times" })]
+                        )
+                      ])
+                    ])
+                  })
+                )
+              : _c("tbody", [_vm._m(14)])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "field" }, [
+        _vm._m(15),
+        _vm._v(" "),
+        _vm._m(16),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("div", { staticClass: "field is-grouped" }, [
+          _c("p", { staticClass: "control is-expanded" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.inputItemRubro,
+                  expression: "inputItemRubro"
+                }
+              ],
+              staticClass: "input is-medium",
+              attrs: { type: "text", placeholder: "Rubro Item" },
+              domProps: { value: _vm.inputItemRubro },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.inputItemRubro = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "control is-expanded" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.inputItemDescripcion,
+                  expression: "inputItemDescripcion"
+                }
+              ],
+              staticClass: "input is-medium",
+              attrs: { type: "text", placeholder: "Descripcion Item" },
+              domProps: { value: _vm.inputItemDescripcion },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.inputItemDescripcion = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "control is-expanded" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.inputItemMonto,
+                  expression: "inputItemMonto"
+                }
+              ],
+              staticClass: "input is-medium",
+              attrs: { type: "text", placeholder: "Monto en AR$" },
+              domProps: { value: _vm.inputItemMonto },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.inputItemMonto = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "help" }, [
+              _vm._v("Ingrese números sin decimal, puntos o comas")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "control" }, [
+            _c(
+              "button",
+              {
+                staticClass: "button is-primary is-medium",
+                on: { click: _vm.addItem }
               },
               [_c("i", { staticClass: "fas fa-plus" })]
             )
@@ -54379,235 +54721,85 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c("table", { staticClass: "table is-narrow is-bordered" }, [
-            _vm._m(10),
+            _vm._m(17),
             _vm._v(" "),
-            _vm.objetivos.length
+            _vm.presupuesto.length
               ? _c(
                   "tbody",
-                  _vm._l(_vm.objetivos, function(objetivo, index) {
-                    return _c("tr", { key: index }, [
-                      _c("td", [
-                        _c("i", { staticClass: "fas fa-flag-checkered fa-fw" }),
-                        _vm._v(" " + _vm._s(objetivo))
-                      ]),
+                  [
+                    _vm._l(_vm.presupuesto, function(item, index) {
+                      return _c("tr", { key: index }, [
+                        _c("td", [_vm._v(_vm._s(item.rubro))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.descripcion))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "has-text-centered" }, [
+                          _vm._v("$ " + _vm._s(item.monto))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "has-text-centered" }, [
+                          _c(
+                            "a",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.removeItem(index)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-times" })]
+                          )
+                        ])
+                      ])
+                    }),
+                    _vm._v(" "),
+                    _c("tr", [
+                      _c(
+                        "th",
+                        {
+                          staticClass: "has-text-right",
+                          attrs: { colspan: "2" }
+                        },
+                        [_vm._v("Monto total:")]
+                      ),
                       _vm._v(" "),
                       _c("td", { staticClass: "has-text-centered" }, [
-                        _c(
-                          "a",
-                          {
-                            on: {
-                              click: function($event) {
-                                _vm.removeObjetivo(index)
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fas fa-times" })]
-                        )
-                      ])
+                        _vm._v("$ " + _vm._s(_vm.montoTotal))
+                      ]),
+                      _vm._v(" "),
+                      _c("td")
                     ])
-                  })
+                  ],
+                  2
                 )
-              : _c("tbody", [_vm._m(11)])
+              : _c("tbody", [_vm._m(18)])
           ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "field" }, [
-      _vm._m(12),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v("Coloque por cada actividad la fecha en que se realizará")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "field is-grouped" }, [
-        _c(
-          "div",
-          { staticClass: "control" },
-          [
-            _c("b-datepicker", {
-              attrs: {
-                placeholder: "Haga clic!",
-                size: "is-medium",
-                "date-formatter": function(date) {
-                  return date.toLocaleDateString("es-AR")
-                },
-                "min-date": new Date(),
-                "max-date": new Date("12/31/2018"),
-                "icon-pack": "far",
-                icon: "calendar-alt"
-              },
-              model: {
-                value: _vm.dateActividad,
-                callback: function($$v) {
-                  _vm.dateActividad = $$v
-                },
-                expression: "dateActividad"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("p", { staticClass: "control is-expanded" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.inputActividad,
-                expression: "inputActividad"
-              }
-            ],
-            staticClass: "input is-medium",
-            attrs: { type: "text", placeholder: "Escriba el objetivo" },
-            domProps: { value: _vm.inputActividad },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.inputActividad = $event.target.value
-              }
-            }
-          })
         ]),
         _vm._v(" "),
-        _c("p", { staticClass: "control" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button is-primary is-medium",
-              on: { click: _vm.addActividad }
-            },
-            [_c("i", { staticClass: "far fa-calendar-plus" })]
-          )
-        ])
+        _vm.presupuesto.length
+          ? _c("label", { staticClass: "label is-size-4" }, [
+              _c("i", { staticClass: "fas fa-angle-double-right" }),
+              _vm._v(" Monto total solicitado: $ " + _vm._s(_vm.montoTotal))
+            ])
+          : _vm._e()
       ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("organizacion"),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c("div", { staticClass: "content" }, [
-        _c("table", { staticClass: "table is-narrow is-bordered" }, [
-          _vm._m(13),
-          _vm._v(" "),
-          _vm.actividades.length
-            ? _c(
-                "tbody",
-                _vm._l(_vm.actividades, function(actividad, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", [
-                      _c("i", { staticClass: "far fa-calendar-check fa-fw" }),
-                      _vm._v(
-                        " " +
-                          _vm._s(actividad.fecha.toLocaleDateString("es-AR"))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(actividad.descripcion))]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "has-text-centered" }, [
-                      _c(
-                        "a",
-                        {
-                          on: {
-                            click: function($event) {
-                              _vm.removeActividad(index)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fas fa-times" })]
-                      )
-                    ])
-                  ])
-                })
-              )
-            : _c("tbody", [_vm._m(14)])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(15),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "field" },
-      [
-        _vm._m(16),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Se refiere a organizaciones y/o instituciones diferentes a la de pertenencia"
-          )
-        ]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Si el proyecto se realiza en coordinación de alguna institución y/o organización deben adjuntar la carta aval."
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "b-field",
-          [
-            _c(
-              "b-radio-button",
-              {
-                attrs: {
-                  "native-value": true,
-                  type: "is-link",
-                  size: "is-medium"
-                },
-                model: {
-                  value: _vm.radioOrganizacion,
-                  callback: function($$v) {
-                    _vm.radioOrganizacion = $$v
-                  },
-                  expression: "radioOrganizacion"
-                }
-              },
-              [
-                _c("span", [
-                  _c("i", { staticClass: "fas fa-check" }),
-                  _vm._v(" Si")
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "b-radio-button",
-              {
-                attrs: {
-                  "native-value": false,
-                  type: "is-link",
-                  size: "is-medium"
-                },
-                model: {
-                  value: _vm.radioOrganizacion,
-                  callback: function($$v) {
-                    _vm.radioOrganizacion = $$v
-                  },
-                  expression: "radioOrganizacion"
-                }
-              },
-              [
-                _c("span", [
-                  _c("i", { staticClass: "fas fa-times" }),
-                  _vm._v(" No")
-                ])
-              ]
-            )
-          ],
-          1
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _vm._m(17)
-  ])
+      _c("hr"),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm._m(19),
+      _vm._v(" "),
+      _c("br")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -54785,22 +54977,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "field" }, [
-      _c("label", { staticClass: "label is-size-4" }, [
-        _c("i", { staticClass: "fas fa-angle-double-right" }),
-        _vm._v(" Presupuesto *")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("label", { staticClass: "label is-size-4" }, [
       _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(
-        " ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * "
-      )
+      _vm._v(" Presupuesto *")
     ])
   },
   function() {
@@ -54808,11 +54987,52 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [
-      _vm._v(
-        "Para descargar los modelos de Carta Aval y Carta de conformidad de los integrantes del grupo\n    "
-      ),
-      _c("a", { attrs: { href: "" } }, [_c("b", [_vm._v("haz click aquí")])])
+      _c("span", { staticClass: "tag is-warning" }, [_vm._v("Importante")]),
+      _vm._v("  Recuerda que el tope es de $20.000.-")
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { width: "120px" } }, [_vm._v("Rubro")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Descripción")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "has-text-centered" }, [_vm._v("Monto")]),
+        _vm._v(" "),
+        _c(
+          "th",
+          { staticClass: "has-text-centered", attrs: { width: "50px" } },
+          [_c("i", { staticClass: "fas fa-times" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "has-text-centered", attrs: { colspan: "4" } }, [
+        _c("i", [_vm._v("No se han ingresado items en el presupuesto")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "button is-large is-primary is-fullwidth" },
+      [
+        _c("i", { staticClass: "fa fa-paper-plane" }),
+        _vm._v("  Guardar y enviar")
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -54842,6 +55062,924 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(317)
+/* template */
+var __vue_template__ = __webpack_require__(318)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "app/components/ingenia/form/Organizacion.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ec515e74", Component.options)
+  } else {
+    hotAPI.reload("data-v-ec515e74", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 317 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      radioOrganizacion: true,
+      tematicasOrganizacion: [],
+      file: []
+    };
+  }
+});
+
+/***/ }),
+/* 318 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "field" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Se refiere a organizaciones y/o instituciones diferentes a la de pertenencia"
+          )
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Si el proyecto se realiza en coordinación de alguna institución y/o organización deben adjuntar la carta aval."
+          )
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "b-field",
+          [
+            _c(
+              "b-radio-button",
+              {
+                attrs: {
+                  "native-value": true,
+                  type: "is-primary",
+                  size: "is-medium"
+                },
+                model: {
+                  value: _vm.radioOrganizacion,
+                  callback: function($$v) {
+                    _vm.radioOrganizacion = $$v
+                  },
+                  expression: "radioOrganizacion"
+                }
+              },
+              [
+                _c("span", [
+                  _c("i", { staticClass: "fas fa-check" }),
+                  _vm._v(" Si")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "b-radio-button",
+              {
+                attrs: {
+                  "native-value": false,
+                  type: "is-primary",
+                  size: "is-medium"
+                },
+                model: {
+                  value: _vm.radioOrganizacion,
+                  callback: function($$v) {
+                    _vm.radioOrganizacion = $$v
+                  },
+                  expression: "radioOrganizacion"
+                }
+              },
+              [
+                _c("span", [
+                  _c("i", { staticClass: "fas fa-times" }),
+                  _vm._v(" No")
+                ])
+              ]
+            )
+          ],
+          1
+        )
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _vm.radioOrganizacion
+      ? _c("div", [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "columns" }, [
+              _c("div", { staticClass: "column" }, [
+                _c(
+                  "div",
+                  { staticClass: "field" },
+                  [
+                    _c(
+                      "b-checkbox",
+                      {
+                        attrs: { "native-value": 1 },
+                        model: {
+                          value: _vm.tematicasOrganizacion,
+                          callback: function($$v) {
+                            _vm.tematicasOrganizacion = $$v
+                          },
+                          expression: "tematicasOrganizacion"
+                        }
+                      },
+                      [_vm._v("Arte y Cultura")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "field" },
+                  [
+                    _c(
+                      "b-checkbox",
+                      {
+                        attrs: { "native-value": 2 },
+                        model: {
+                          value: _vm.tematicasOrganizacion,
+                          callback: function($$v) {
+                            _vm.tematicasOrganizacion = $$v
+                          },
+                          expression: "tematicasOrganizacion"
+                        }
+                      },
+                      [_vm._v("Comunicación")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "field" },
+                  [
+                    _c(
+                      "b-checkbox",
+                      {
+                        attrs: { "native-value": 3 },
+                        model: {
+                          value: _vm.tematicasOrganizacion,
+                          callback: function($$v) {
+                            _vm.tematicasOrganizacion = $$v
+                          },
+                          expression: "tematicasOrganizacion"
+                        }
+                      },
+                      [_vm._v("Deporte y recreación")]
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "column" }, [
+                _c(
+                  "div",
+                  { staticClass: "field" },
+                  [
+                    _c(
+                      "b-checkbox",
+                      {
+                        attrs: { "native-value": 4 },
+                        model: {
+                          value: _vm.tematicasOrganizacion,
+                          callback: function($$v) {
+                            _vm.tematicasOrganizacion = $$v
+                          },
+                          expression: "tematicasOrganizacion"
+                        }
+                      },
+                      [_vm._v("Diversidad Sexual")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "field" },
+                  [
+                    _c(
+                      "b-checkbox",
+                      {
+                        attrs: { "native-value": 5 },
+                        model: {
+                          value: _vm.tematicasOrganizacion,
+                          callback: function($$v) {
+                            _vm.tematicasOrganizacion = $$v
+                          },
+                          expression: "tematicasOrganizacion"
+                        }
+                      },
+                      [_vm._v("Integración Social")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "field" },
+                  [
+                    _c(
+                      "b-checkbox",
+                      {
+                        attrs: { "native-value": 6 },
+                        model: {
+                          value: _vm.tematicasOrganizacion,
+                          callback: function($$v) {
+                            _vm.tematicasOrganizacion = $$v
+                          },
+                          expression: "tematicasOrganizacion"
+                        }
+                      },
+                      [_vm._v("Medio Ambiente")]
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "column" }, [
+                _c(
+                  "div",
+                  { staticClass: "field" },
+                  [
+                    _c(
+                      "b-checkbox",
+                      {
+                        attrs: { "native-value": 7 },
+                        model: {
+                          value: _vm.tematicasOrganizacion,
+                          callback: function($$v) {
+                            _vm.tematicasOrganizacion = $$v
+                          },
+                          expression: "tematicasOrganizacion"
+                        }
+                      },
+                      [_vm._v("Salud y Discapacidad")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "field" },
+                  [
+                    _c(
+                      "b-checkbox",
+                      {
+                        attrs: { "native-value": 8 },
+                        model: {
+                          value: _vm.tematicasOrganizacion,
+                          callback: function($$v) {
+                            _vm.tematicasOrganizacion = $$v
+                          },
+                          expression: "tematicasOrganizacion"
+                        }
+                      },
+                      [_vm._v("Ciudadanía y Participación")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm._m(4)
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "field" },
+            [
+              _vm._m(5),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("¿Donde desarrolla sus actividades la organización?")
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "b-field",
+                { attrs: { grouped: "" } },
+                [
+                  _c(
+                    "b-field",
+                    { attrs: { label: "Nodo", expanded: "" } },
+                    [
+                      _c(
+                        "b-select",
+                        { attrs: { placeholder: "Nodo", expanded: "" } },
+                        [
+                          _c("option", [_vm._v("Mr.")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Ms.")])
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-field",
+                    { attrs: { label: "Departamento", expanded: "" } },
+                    [
+                      _c(
+                        "b-select",
+                        {
+                          attrs: { placeholder: "Departamento", expanded: "" }
+                        },
+                        [
+                          _c("option", [_vm._v("Mr.")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Ms.")])
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-field",
+                    { attrs: { label: "Localidad", expanded: "" } },
+                    [
+                      _c(
+                        "b-select",
+                        { attrs: { placeholder: "Localidad", expanded: "" } },
+                        [
+                          _c("option", [_vm._v("Mr.")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("Ms.")])
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "field" },
+            [
+              _vm._m(6),
+              _vm._v(" "),
+              _vm._m(7),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "b-field",
+                [
+                  _c(
+                    "b-upload",
+                    {
+                      model: {
+                        value: _vm.file,
+                        callback: function($$v) {
+                          _vm.file = $$v
+                        },
+                        expression: "file"
+                      }
+                    },
+                    [
+                      _c(
+                        "a",
+                        { staticClass: "button is-primary" },
+                        [
+                          _c("b-icon", { attrs: { icon: "upload" } }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Explorar")])
+                        ],
+                        1
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.file && _vm.file.length
+                    ? _c("div", [
+                        _c("span", { staticClass: "file-name" }, [
+                          _vm._v(
+                            "\n             " +
+                              _vm._s(_vm.file[0].name) +
+                              "\n           "
+                          )
+                        ])
+                      ])
+                    : _c("div", [
+                        _c("span", { staticClass: "file-name" }, [
+                          _vm._v(
+                            "\n             Haga clic para subir\n           "
+                          )
+                        ])
+                      ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _vm._m(8),
+            _vm._v(" "),
+            _c("div", { staticClass: "field is-grouped" }, [
+              _c("div", { staticClass: "control" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-medium is-static",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-globe" })]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(9)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field is-grouped" }, [
+              _c("div", { staticClass: "control" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-medium is-static",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fab fa-facebook" })]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(10)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field is-grouped" }, [
+              _c("div", { staticClass: "control" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-medium is-static",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-envelope" })]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(11)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "field is-grouped" }, [
+              _c("div", { staticClass: "control" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "button is-medium is-static",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-phone" })]
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(12)
+            ])
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "label is-size-4" }, [
+      _c("i", { staticClass: "fas fa-angle-double-right" }),
+      _vm._v(
+        " ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * "
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v(
+        "Para descargar los modelos de Carta Aval y Carta de conformidad de los integrantes del grupo\n     "
+      ),
+      _c("a", { attrs: { href: "" } }, [_c("b", [_vm._v("haz click aquí")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "field" }, [
+      _c("label", { staticClass: "label is-size-4" }, [
+        _c("i", { staticClass: "fas fa-angle-double-right" }),
+        _vm._v(" Nombre de la organización *")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "input is-medium",
+        attrs: { type: "text", placeholder: "Requerido *" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "label is-size-4" }, [
+      _c("i", { staticClass: "fas fa-angle-double-right" }),
+      _vm._v(" ¿Qué temas trabaja la organización?")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "field" }, [
+      _c("input", {
+        staticClass: "input",
+        attrs: { type: "text", placeholder: "Otro tema" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "label is-size-4" }, [
+      _c("i", { staticClass: "fas fa-angle-double-right" }),
+      _vm._v(" Localidad *")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "label is-size-4" }, [
+      _c("i", { staticClass: "fas fa-angle-double-right" }),
+      _vm._v(" Carta de Aval *")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Para descargar los modelos de Carta Aval, haga "),
+      _c("a", { attrs: { href: "#", target: "_blank" } }, [_vm._v("clic aquí")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "label is-size-4" }, [
+      _c("i", { staticClass: "fas fa-angle-double-right" }),
+      _vm._v(" Redes y contacto *")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control is-expanded" }, [
+      _c("input", {
+        staticClass: "input is-medium",
+        attrs: {
+          type: "text",
+          placeholder: "URL página web (Ej: http://www.organizacion.org)"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control is-expanded" }, [
+      _c("input", {
+        staticClass: "input is-medium",
+        attrs: { type: "text", placeholder: "URL página de Facebook" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control is-expanded" }, [
+      _c("input", {
+        staticClass: "input is-medium",
+        attrs: { type: "email", placeholder: "Email de contacto" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control is-expanded" }, [
+      _c("input", {
+        staticClass: "input is-medium",
+        attrs: { type: "text", placeholder: "Ej: 0342 - 4123456" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-ec515e74", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
