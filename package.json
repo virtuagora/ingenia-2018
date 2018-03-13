@@ -36,7 +36,7 @@
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.20.2",
-    "vee-validate": "^2.0.4",
+    "vee-validate": "^2.0.5",
     "vue": "^2.5.13",
     "vue-textarea-autosize": "^1.0.3",
     "vuedraggable": "^2.16.0"
