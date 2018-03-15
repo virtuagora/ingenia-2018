@@ -2,9 +2,11 @@
   <div>
     <div>
       <div class="field">
-        <label class="label is-size-4">
+        <label class="label is-size-4" :class="{'has-text-danger': errors.has('organizacion.nombre')}">
           <i class="fas fa-angle-double-right"></i> Nombre de la organización *</label>
-        <input type="text" v-model="organizacion.nombre" class="input is-medium" placeholder="Requerido *">
+        <input type="text" v-model="organizacion.nombre" data-vv-name="organizacion.nombre" data-vv-as="'Nombre organización'" v-validate="'required'" class="input is-medium" placeholder="Requerido *">
+      <span v-show="errors.has('organizacion.nombre')" class="help is-danger">{{errors.first('organizacion.nombre')}}</span>      
+      
       </div>
       <br>
       <div class="field">
@@ -13,33 +15,33 @@
         <div class="columns">
           <div class="column">
             <div class="field">
-              <b-checkbox v-model="organizacion.tematicas" :native-value="1">Arte y Cultura</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" native-value="Arte y Cultura">Arte y Cultura</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="organizacion.tematicas" :native-value="2">Comunicación</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" native-value="Comunicación">Comunicación</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="organizacion.tematicas" :native-value="3">Deporte y recreación</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" native-value="Deporte y recreación">Deporte y recreación</b-checkbox>
             </div>
           </div>
           <div class="column">
             <div class="field">
-              <b-checkbox v-model="organizacion.tematicas" :native-value="4">Diversidad Sexual</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" native-value="Diversidad Sexual">Diversidad Sexual</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="organizacion.tematicas" :native-value="5">Integración Social</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" native-value="Integración Social">Integración Social</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="organizacion.tematicas" :native-value="6">Medio Ambiente</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" native-value="Medio Ambiente">Medio Ambiente</b-checkbox>
             </div>
 
           </div>
           <div class="column">
             <div class="field">
-              <b-checkbox v-model="organizacion.tematicas" :native-value="7">Salud y Discapacidad</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" native-value="Salud y Discapacidad">Salud y Discapacidad</b-checkbox>
             </div>
             <div class="field">
-              <b-checkbox v-model="organizacion.tematicas" :native-value="8">Ciudadanía y Participación</b-checkbox>
+              <b-checkbox v-model="organizacion.tematicas" native-value="Ciudadanía y Participación">Ciudadanía y Participación</b-checkbox>
             </div>
             <div class="field">
               <input type="text" v-model="organizacion.otraTematica" class="input" placeholder="Otro tema">
@@ -48,55 +50,32 @@
         </div>
       </div>
       <div class="field">
-        <label class="label is-size-4">
-          <i class="fas fa-angle-double-right"></i> Localidad *</label>
-        <p>¿Donde desarrolla sus actividades la organización?</p>
-        <br>
-        <b-field grouped>
-          <b-field label="Nodo" expanded>
-            <b-select v-model="organizacion.localizacion.nodo" placeholder="Nodo" expanded>
-              <option>Mr.</option>
-              <option>Ms.</option>
-            </b-select>
-          </b-field>
-          <b-field v-model="organizacion.localizacion.departamento" label="Departamento" expanded>
-            <b-select placeholder="Departamento" expanded>
-              <option>Mr.</option>
-              <option>Ms.</option>
-            </b-select>
-          </b-field>
-          <b-field v-model="organizacion.localizacion.localidad" label="Localidad" expanded>
-            <b-select placeholder="Localidad" expanded>
-              <option>Mr.</option>
-              <option>Ms.</option>
-            </b-select>
-          </b-field>
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('organizacion.localizacion.nodo') || errors.has('organizacion.localizacion.departamento') || errors.has('organizacion.localizacion.localidad') }">
+        <i class="fas fa-angle-double-right"></i> ¿Donde se implementa o implementará territorialmente el proyecto? *</label>
+      <b-field grouped>
+        <b-field label="Nodo" expanded>
+          <b-select v-model="organizacion.localizacion.nodo" data-vv-name="organizacion.localizacion.nodo" data-vv-as="'Región/Nodo'" v-validate="'required'" placeholder="Nodo" expanded>
+            <option>Mr.</option>
+            <option>Ms.</option>
+          </b-select>
         </b-field>
-      </div>
-      <!-- <div class="field">
-        <label class="label is-size-4">
-          <i class="fas fa-angle-double-right"></i> Carta de Aval *</label>
-        <p>Para descargar los modelos de Carta Aval, haga <a href="#" target="_blank">clic aquí</a></p>
-        <br>
-        <b-field>
-          <b-upload v-model="file">
-            <a class="button is-primary">
-              <b-icon icon="upload"></b-icon>
-              <span>Explorar</span>
-            </a>
-          </b-upload>
-          <div v-if="file && file.length">
-            <span class="file-name">
-              {{ file[0].name }}
-            </span>
-          </div>
-          <div v-else>
- <span class="file-name">
-              Haga clic para subir
-            </span>
-          </div>
+        <b-field label="Departamento" expanded>
+          <b-select v-model="organizacion.localizacion.departamento" placeholder="Departamento" data-vv-name="organizacion.localizacion.departamento" data-vv-as="'Departamento'" v-validate="'required'" expanded>
+            <option>Mr.</option>
+            <option>Ms.</option>
+          </b-select>
         </b-field>
-      </div> -->
+        <b-field label="Localidad" expanded>
+          <b-select v-model="organizacion.localizacion.localidad" placeholder="Localidad" data-vv-name="organizacion.localizacion.localidad" data-vv-as="'Localidad'" v-validate="'required'" expanded>
+            <option>Mr.</option>
+            <option>Ms.</option>
+          </b-select>
+        </b-field>
+      </b-field>
+      <span v-show="errors.has('organizacion.localizacion.nodo')" class="help is-danger">{{errors.first('organizacion.localizacion.nodo')}}</span>
+      <span v-show="errors.has('organizacion.localizacion.departamento')" class="help is-danger">{{errors.first('organizacion.localizacion.departamento')}}</span>
+      <span v-show="errors.has('organizacion.localizacion.localidad')" class="help is-danger">{{errors.first('organizacion.localizacion.localidad')}}</span>
+    </div>
     <br>
       <div class="field">
         <label class="label is-size-4">
@@ -108,7 +87,8 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input v-model="organizacion.contacto.web" class="input is-medium" type="text" placeholder="URL página web (Ej: http://www.organizacion.org)">
+            <input v-model="organizacion.contacto.web" data-vv-name="organizacion.contacto.web" data-vv-as="'Web de la organización'" v-validate="'url'" class="input is-medium" type="text" placeholder="URL página web (Ej: http://www.organizacion.org)">
+            <span v-show="errors.has('organizacion.contacto.web')" class="help is-danger">{{errors.first('organizacion.contacto.web')}}</span>
           </p>
         </div>
         <div class="field is-grouped">
@@ -128,7 +108,9 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input v-model="organizacion.contacto.email" class="input is-medium" type="email" placeholder="Email de contacto">
+            <input v-model="organizacion.contacto.email" data-vv-name="organizacion.contacto.email" data-vv-as="'Email de la organización'" v-validate="'email'" class="input is-medium" type="email" placeholder="Email de contacto">
+      <span v-show="errors.has('organizacion.contacto.email')" class="help is-danger">{{errors.first('organizacion.contacto.email')}}</span>
+            
           </p>
         </div>
         <div class="field is-grouped">
@@ -153,6 +135,21 @@ export default {
     return {
       
     };
+  },
+  methods: {
+    validateForm: function() {
+      let promise = new Promise((resolve, reject) => {
+        this.$validator.validateAll().then(result => {
+          if (!result) {
+            console.log("Organización: Hay errores en los datos");
+            return resolve(result);
+          }
+          console.log("Organización: OK");
+          return resolve(result);
+        });
+      });
+      return promise;
+    }
   }
 };
 </script>

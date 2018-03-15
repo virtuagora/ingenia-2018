@@ -4,8 +4,9 @@ import Buefy from 'buefy'
 import http from './http'
 import router from './router'
 import store from './store'
-
-import VeeValidate from 'vee-validate';
+import es from 'vee-validate/dist/locale/es';
+import VeeValidate, { Validator } from 'vee-validate';
+Validator.localize('es', es);
 
 Vue.use(VeeValidate);
 

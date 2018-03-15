@@ -29549,26 +29549,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__http__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__router__ = __webpack_require__(165);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__store__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vee_validate__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__base_Login_vue__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__base_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__base_Login_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__base_SignUp_vue__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__base_SignUp_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__base_SignUp_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__base_CompleteSignUp_vue__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__base_CompleteSignUp_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__base_CompleteSignUp_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__core_NodeComment_vue__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__core_NodeComment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__core_NodeComment_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__core_NodeComments_vue__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__core_NodeComments_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__core_NodeComments_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__core_NodeUsersParticipated_vue__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__core_NodeUsersParticipated_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__core_NodeUsersParticipated_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__vote_Vote_vue__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__vote_Vote_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__vote_Vote_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__vote_VoteResults_vue__ = __webpack_require__(225);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__vote_VoteResults_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__vote_VoteResults_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ingenia_form_FormProyecto_vue__ = __webpack_require__(290);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ingenia_form_FormProyecto_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__ingenia_form_FormProyecto_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_vue_textarea_autosize__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vee_validate_dist_locale_es__ = __webpack_require__(320);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vee_validate_dist_locale_es___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vee_validate_dist_locale_es__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vee_validate__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__base_Login_vue__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__base_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__base_Login_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__base_SignUp_vue__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__base_SignUp_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__base_SignUp_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__base_CompleteSignUp_vue__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__base_CompleteSignUp_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__base_CompleteSignUp_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__core_NodeComment_vue__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__core_NodeComment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__core_NodeComment_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__core_NodeComments_vue__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__core_NodeComments_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__core_NodeComments_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__core_NodeUsersParticipated_vue__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__core_NodeUsersParticipated_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__core_NodeUsersParticipated_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__vote_Vote_vue__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__vote_Vote_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__vote_Vote_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__vote_VoteResults_vue__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__vote_VoteResults_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__vote_VoteResults_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ingenia_form_FormProyecto_vue__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ingenia_form_FormProyecto_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__ingenia_form_FormProyecto_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vue_textarea_autosize__ = __webpack_require__(296);
 // Base Components
 
 
@@ -29577,8 +29579,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+__WEBPACK_IMPORTED_MODULE_6_vee_validate__["a" /* Validator */].localize('es', __WEBPACK_IMPORTED_MODULE_5_vee_validate_dist_locale_es___default.a);
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_vee_validate__["a" /* default */]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_6_vee_validate__["b" /* default */]);
 
 // VIRTUAGORA 2.0 COMPONENTS
 // Register every component that you will be using in any twig template.
@@ -29606,7 +29609,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_vee_
 // autosizer for textareas
 
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_15_vue_textarea_autosize__["default"]);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_16_vue_textarea_autosize__["default"]);
 
 // We are going to use Buefy
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_buefy___default.a, {
@@ -29628,18 +29631,18 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({ // eslint-disable-line no-new
   store: __WEBPACK_IMPORTED_MODULE_4__store__["a" /* default */],
   components: {
     // Register core componentes
-    'login': __WEBPACK_IMPORTED_MODULE_6__base_Login_vue___default.a,
-    'sign-up': __WEBPACK_IMPORTED_MODULE_7__base_SignUp_vue___default.a,
-    'complete-sign-up': __WEBPACK_IMPORTED_MODULE_8__base_CompleteSignUp_vue___default.a,
+    'login': __WEBPACK_IMPORTED_MODULE_7__base_Login_vue___default.a,
+    'sign-up': __WEBPACK_IMPORTED_MODULE_8__base_SignUp_vue___default.a,
+    'complete-sign-up': __WEBPACK_IMPORTED_MODULE_9__base_CompleteSignUp_vue___default.a,
     // Register node components
-    'node-comment': __WEBPACK_IMPORTED_MODULE_9__core_NodeComment_vue___default.a,
-    'node-comments': __WEBPACK_IMPORTED_MODULE_10__core_NodeComments_vue___default.a,
-    'node-users-participated': __WEBPACK_IMPORTED_MODULE_11__core_NodeUsersParticipated_vue___default.a,
+    'node-comment': __WEBPACK_IMPORTED_MODULE_10__core_NodeComment_vue___default.a,
+    'node-comments': __WEBPACK_IMPORTED_MODULE_11__core_NodeComments_vue___default.a,
+    'node-users-participated': __WEBPACK_IMPORTED_MODULE_12__core_NodeUsersParticipated_vue___default.a,
     // Register nodes
-    'vote-results': __WEBPACK_IMPORTED_MODULE_13__vote_VoteResults_vue___default.a,
-    'vote': __WEBPACK_IMPORTED_MODULE_12__vote_Vote_vue___default.a,
+    'vote-results': __WEBPACK_IMPORTED_MODULE_14__vote_VoteResults_vue___default.a,
+    'vote': __WEBPACK_IMPORTED_MODULE_13__vote_Vote_vue___default.a,
     // Ingenia2018
-    FormProyecto: __WEBPACK_IMPORTED_MODULE_14__ingenia_form_FormProyecto_vue___default.a
+    FormProyecto: __WEBPACK_IMPORTED_MODULE_15__ingenia_form_FormProyecto_vue___default.a
   }
 });
 
@@ -36305,7 +36308,7 @@ if (false) {
 /* unused harmony export directive */
 /* unused harmony export mixin */
 /* unused harmony export mapFields */
-/* unused harmony export Validator */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Validator; });
 /* unused harmony export ErrorBag */
 /* unused harmony export Rules */
 /* unused harmony export version */
@@ -43272,7 +43275,7 @@ var index_esm = {
 };
 
 
-/* harmony default export */ __webpack_exports__["a"] = (index_esm);
+/* harmony default export */ __webpack_exports__["b"] = (index_esm);
 
 
 /***/ }),
@@ -60700,6 +60703,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -60755,7 +60778,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   methods: {
     addObjetivo: function addObjetivo() {
-      if (this.inputObjetivos != "") {
+      if (!this.disableAddObjetivo) {
         this.proyecto.objetivos.push(this.inputObjetivos);
         this.inputObjetivos = "";
       }
@@ -60764,7 +60787,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proyecto.objetivos.splice(index, 1);
     },
     addActividad: function addActividad() {
-      if (this.inputActividad != "" && this.dateActividad != null) {
+      if (!this.disableAddActividad) {
         this.proyecto.actividades.push({
           fecha: this.dateActividad,
           descripcion: this.inputActividad
@@ -60777,19 +60800,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.proyecto.actividades.splice(index, 1);
     },
     addItem: function addItem() {
-      if (this.inputItemRubro != null && this.inputItemDescripcion != null && this.inputItemMonto != null) {
-        this.proyecto.presupuesto.push({
-          rubro: this.inputItemRubro,
-          descripcion: this.inputItemDescripcion,
-          monto: this.inputItemMonto
-        });
-        this.inputItemRubro = null;
-        this.inputItemDescripcion = null;
-        this.inputItemMonto = null;
-      }
+      var _this = this;
+
+      this.$validator.validate("inputItemMonto", this.inputItemMonto).then(function (result) {
+        if (result) {
+          if (!_this.disableAddItem) {
+            if (parseFloat(_this.inputItemMonto) + _this.montoTotal > 20000) {
+              _this.$snackbar.open("El item excede el total permitido ($20000)");
+              return;
+            }
+            _this.proyecto.presupuesto.push({
+              rubro: _this.inputItemRubro,
+              descripcion: _this.inputItemDescripcion,
+              monto: _this.inputItemMonto
+            });
+            _this.inputItemRubro = null;
+            _this.inputItemDescripcion = null;
+            _this.inputItemMonto = null;
+          }
+        } else {
+          _this.$snackbar.open("El monto debe ser un numero sin coma ni punto decimal");
+        }
+      });
     },
     removeItem: function removeItem(index) {
       this.proyecto.presupuesto.splice(index, 1);
+    },
+    submitForm: function submitForm() {
+      var _this2 = this;
+
+      Promise.all([this.$validator.validateAll(), this.proyecto.conOrganizacion == true ? this.$refs.orgForm.validateForm() : true]).then(function (values) {
+        if (values.every(function (x) {
+          return x == true;
+        })) {
+          console.log("Sending form!");
+          console.log(_this2.proyecto);
+          _this2.sending = true;
+          _this2.$snackbar.open({
+            message: "Formulario enviado!",
+            type: "is-success",
+            actionText: "OK"
+          });
+        } else {
+          _this2.$snackbar.open({
+            message: "Alguno de los campos son incorrectos. Verifique el formulario.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+        }
+      }).catch(function (result) {
+        console.log("result: ");
+        console.log(result);
+        _this2.$snackbar.open({
+          message: "Error inesperado. Intente mas tarde.",
+          type: "is-danger",
+          actionText: "Cerrar"
+        });
+      });
     }
   },
   computed: {
@@ -60799,6 +60866,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         montoTotal += parseFloat(item.monto);
       });
       return montoTotal;
+    },
+    disableAddItem: function disableAddItem() {
+      return this.inputItemRubro == null || this.inputItemRubro == "" || this.inputItemDescripcion == null || this.inputItemDescripcion == "" || this.inputItemMonto == null || this.inputItemMonto == "";
+    },
+    disableAddActividad: function disableAddActividad() {
+      return this.inputActividad == "" || this.inputActividad == null || this.dateActividad == null;
+    },
+    disableAddObjetivo: function disableAddObjetivo() {
+      return this.inputObjetivos == "" || this.inputObjetivos == null;
     }
   }
 });
@@ -60986,29 +61062,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['organizacion'],
   data: function data() {
     return {};
+  },
+
+  methods: {
+    validateForm: function validateForm() {
+      var _this = this;
+
+      var promise = new Promise(function (resolve, reject) {
+        _this.$validator.validateAll().then(function (result) {
+          if (!result) {
+            console.log("Organización: Hay errores en los datos");
+            return resolve(result);
+          }
+          console.log("Organización: OK");
+          return resolve(result);
+        });
+      });
+      return promise;
+    }
   }
 });
 
@@ -61023,7 +61099,17 @@ var render = function() {
   return _c("div", [
     _c("div", [
       _c("div", { staticClass: "field" }, [
-        _vm._m(0),
+        _c(
+          "label",
+          {
+            staticClass: "label is-size-4",
+            class: { "has-text-danger": _vm.errors.has("organizacion.nombre") }
+          },
+          [
+            _c("i", { staticClass: "fas fa-angle-double-right" }),
+            _vm._v(" Nombre de la organización *")
+          ]
+        ),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -61032,10 +61118,21 @@ var render = function() {
               rawName: "v-model",
               value: _vm.organizacion.nombre,
               expression: "organizacion.nombre"
+            },
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: "required",
+              expression: "'required'"
             }
           ],
           staticClass: "input is-medium",
-          attrs: { type: "text", placeholder: "Requerido *" },
+          attrs: {
+            type: "text",
+            "data-vv-name": "organizacion.nombre",
+            "data-vv-as": "'Nombre organización'",
+            placeholder: "Requerido *"
+          },
           domProps: { value: _vm.organizacion.nombre },
           on: {
             input: function($event) {
@@ -61045,13 +61142,29 @@ var render = function() {
               _vm.$set(_vm.organizacion, "nombre", $event.target.value)
             }
           }
-        })
+        }),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.has("organizacion.nombre"),
+                expression: "errors.has('organizacion.nombre')"
+              }
+            ],
+            staticClass: "help is-danger"
+          },
+          [_vm._v(_vm._s(_vm.errors.first("organizacion.nombre")))]
+        )
       ]),
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "columns" }, [
           _c("div", { staticClass: "column" }, [
@@ -61062,7 +61175,7 @@ var render = function() {
                 _c(
                   "b-checkbox",
                   {
-                    attrs: { "native-value": 1 },
+                    attrs: { "native-value": "Arte y Cultura" },
                     model: {
                       value: _vm.organizacion.tematicas,
                       callback: function($$v) {
@@ -61084,7 +61197,7 @@ var render = function() {
                 _c(
                   "b-checkbox",
                   {
-                    attrs: { "native-value": 2 },
+                    attrs: { "native-value": "Comunicación" },
                     model: {
                       value: _vm.organizacion.tematicas,
                       callback: function($$v) {
@@ -61106,7 +61219,7 @@ var render = function() {
                 _c(
                   "b-checkbox",
                   {
-                    attrs: { "native-value": 3 },
+                    attrs: { "native-value": "Deporte y recreación" },
                     model: {
                       value: _vm.organizacion.tematicas,
                       callback: function($$v) {
@@ -61130,7 +61243,7 @@ var render = function() {
                 _c(
                   "b-checkbox",
                   {
-                    attrs: { "native-value": 4 },
+                    attrs: { "native-value": "Diversidad Sexual" },
                     model: {
                       value: _vm.organizacion.tematicas,
                       callback: function($$v) {
@@ -61152,7 +61265,7 @@ var render = function() {
                 _c(
                   "b-checkbox",
                   {
-                    attrs: { "native-value": 5 },
+                    attrs: { "native-value": "Integración Social" },
                     model: {
                       value: _vm.organizacion.tematicas,
                       callback: function($$v) {
@@ -61174,7 +61287,7 @@ var render = function() {
                 _c(
                   "b-checkbox",
                   {
-                    attrs: { "native-value": 6 },
+                    attrs: { "native-value": "Medio Ambiente" },
                     model: {
                       value: _vm.organizacion.tematicas,
                       callback: function($$v) {
@@ -61198,7 +61311,7 @@ var render = function() {
                 _c(
                   "b-checkbox",
                   {
-                    attrs: { "native-value": 7 },
+                    attrs: { "native-value": "Salud y Discapacidad" },
                     model: {
                       value: _vm.organizacion.tematicas,
                       callback: function($$v) {
@@ -61220,7 +61333,7 @@ var render = function() {
                 _c(
                   "b-checkbox",
                   {
-                    attrs: { "native-value": 8 },
+                    attrs: { "native-value": "Ciudadanía y Participación" },
                     model: {
                       value: _vm.organizacion.tematicas,
                       callback: function($$v) {
@@ -61270,13 +61383,24 @@ var render = function() {
         "div",
         { staticClass: "field" },
         [
-          _vm._m(2),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v("¿Donde desarrolla sus actividades la organización?")
-          ]),
-          _vm._v(" "),
-          _c("br"),
+          _c(
+            "label",
+            {
+              staticClass: "label is-size-4",
+              class: {
+                "has-text-danger":
+                  _vm.errors.has("organizacion.localizacion.nodo") ||
+                  _vm.errors.has("organizacion.localizacion.departamento") ||
+                  _vm.errors.has("organizacion.localizacion.localidad")
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-angle-double-right" }),
+              _vm._v(
+                " ¿Donde se implementa o implementará territorialmente el proyecto? *"
+              )
+            ]
+          ),
           _vm._v(" "),
           _c(
             "b-field",
@@ -61289,7 +61413,20 @@ var render = function() {
                   _c(
                     "b-select",
                     {
-                      attrs: { placeholder: "Nodo", expanded: "" },
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      attrs: {
+                        "data-vv-name": "organizacion.localizacion.nodo",
+                        "data-vv-as": "'Región/Nodo'",
+                        placeholder: "Nodo",
+                        expanded: ""
+                      },
                       model: {
                         value: _vm.organizacion.localizacion.nodo,
                         callback: function($$v) {
@@ -61310,24 +61447,38 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "b-field",
-                {
-                  attrs: { label: "Departamento", expanded: "" },
-                  model: {
-                    value: _vm.organizacion.localizacion.departamento,
-                    callback: function($$v) {
-                      _vm.$set(
-                        _vm.organizacion.localizacion,
-                        "departamento",
-                        $$v
-                      )
-                    },
-                    expression: "organizacion.localizacion.departamento"
-                  }
-                },
+                { attrs: { label: "Departamento", expanded: "" } },
                 [
                   _c(
                     "b-select",
-                    { attrs: { placeholder: "Departamento", expanded: "" } },
+                    {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      attrs: {
+                        placeholder: "Departamento",
+                        "data-vv-name":
+                          "organizacion.localizacion.departamento",
+                        "data-vv-as": "'Departamento'",
+                        expanded: ""
+                      },
+                      model: {
+                        value: _vm.organizacion.localizacion.departamento,
+                        callback: function($$v) {
+                          _vm.$set(
+                            _vm.organizacion.localizacion,
+                            "departamento",
+                            $$v
+                          )
+                        },
+                        expression: "organizacion.localizacion.departamento"
+                      }
+                    },
                     [
                       _c("option", [_vm._v("Mr.")]),
                       _vm._v(" "),
@@ -61340,20 +61491,37 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "b-field",
-                {
-                  attrs: { label: "Localidad", expanded: "" },
-                  model: {
-                    value: _vm.organizacion.localizacion.localidad,
-                    callback: function($$v) {
-                      _vm.$set(_vm.organizacion.localizacion, "localidad", $$v)
-                    },
-                    expression: "organizacion.localizacion.localidad"
-                  }
-                },
+                { attrs: { label: "Localidad", expanded: "" } },
                 [
                   _c(
                     "b-select",
-                    { attrs: { placeholder: "Localidad", expanded: "" } },
+                    {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      attrs: {
+                        placeholder: "Localidad",
+                        "data-vv-name": "organizacion.localizacion.localidad",
+                        "data-vv-as": "'Localidad'",
+                        expanded: ""
+                      },
+                      model: {
+                        value: _vm.organizacion.localizacion.localidad,
+                        callback: function($$v) {
+                          _vm.$set(
+                            _vm.organizacion.localizacion,
+                            "localidad",
+                            $$v
+                          )
+                        },
+                        expression: "organizacion.localizacion.localidad"
+                      }
+                    },
                     [
                       _c("option", [_vm._v("Mr.")]),
                       _vm._v(" "),
@@ -61365,6 +61533,68 @@ var render = function() {
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("organizacion.localizacion.nodo"),
+                  expression: "errors.has('organizacion.localizacion.nodo')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [_vm._v(_vm._s(_vm.errors.first("organizacion.localizacion.nodo")))]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has(
+                    "organizacion.localizacion.departamento"
+                  ),
+                  expression:
+                    "errors.has('organizacion.localizacion.departamento')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [
+              _vm._v(
+                _vm._s(
+                  _vm.errors.first("organizacion.localizacion.departamento")
+                )
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("organizacion.localizacion.localidad"),
+                  expression:
+                    "errors.has('organizacion.localizacion.localidad')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [
+              _vm._v(
+                _vm._s(_vm.errors.first("organizacion.localizacion.localidad"))
+              )
+            ]
           )
         ],
         1
@@ -61373,7 +61603,7 @@ var render = function() {
       _c("br"),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _vm._m(3),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "field is-grouped" }, [
           _c("div", { staticClass: "control" }, [
@@ -61399,10 +61629,18 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.organizacion.contacto.web,
                   expression: "organizacion.contacto.web"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "url",
+                  expression: "'url'"
                 }
               ],
               staticClass: "input is-medium",
               attrs: {
+                "data-vv-name": "organizacion.contacto.web",
+                "data-vv-as": "'Web de la organización'",
                 type: "text",
                 placeholder: "URL página web (Ej: http://www.organizacion.org)"
               },
@@ -61419,7 +61657,23 @@ var render = function() {
                   )
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.has("organizacion.contacto.web"),
+                    expression: "errors.has('organizacion.contacto.web')"
+                  }
+                ],
+                staticClass: "help is-danger"
+              },
+              [_vm._v(_vm._s(_vm.errors.first("organizacion.contacto.web")))]
+            )
           ])
         ]),
         _vm._v(" "),
@@ -61492,10 +61746,21 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.organizacion.contacto.email,
                   expression: "organizacion.contacto.email"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "email",
+                  expression: "'email'"
                 }
               ],
               staticClass: "input is-medium",
-              attrs: { type: "email", placeholder: "Email de contacto" },
+              attrs: {
+                "data-vv-name": "organizacion.contacto.email",
+                "data-vv-as": "'Email de la organización'",
+                type: "email",
+                placeholder: "Email de contacto"
+              },
               domProps: { value: _vm.organizacion.contacto.email },
               on: {
                 input: function($event) {
@@ -61509,7 +61774,23 @@ var render = function() {
                   )
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.has("organizacion.contacto.email"),
+                    expression: "errors.has('organizacion.contacto.email')"
+                  }
+                ],
+                staticClass: "help is-danger"
+              },
+              [_vm._v(_vm._s(_vm.errors.first("organizacion.contacto.email")))]
+            )
           ])
         ]),
         _vm._v(" "),
@@ -61568,25 +61849,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { staticClass: "label is-size-4" }, [
       _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" Nombre de la organización *")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
       _vm._v(" ¿Qué temas trabaja la organización?")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" Localidad *")
     ])
   },
   function() {
@@ -61620,7 +61883,17 @@ var render = function() {
     "div",
     [
       _c("div", { staticClass: "field" }, [
-        _vm._m(0),
+        _c(
+          "label",
+          {
+            staticClass: "label is-size-4",
+            class: { "has-text-danger": _vm.errors.has("proyecto.nombre") }
+          },
+          [
+            _c("i", { staticClass: "fas fa-angle-double-right" }),
+            _vm._v(" Nombre del proyecto")
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -61639,7 +61912,12 @@ var render = function() {
               }
             ],
             staticClass: "input is-large",
-            attrs: { type: "text", placeholder: "Requerido *" },
+            attrs: {
+              "data-vv-name": "proyecto.nombre",
+              "data-vv-as": "'Nombre del proyecto'",
+              type: "text",
+              placeholder: "Requerido *"
+            },
             domProps: { value: _vm.proyecto.nombre },
             on: {
               input: function($event) {
@@ -61649,12 +61927,40 @@ var render = function() {
                 _vm.$set(_vm.proyecto, "nombre", $event.target.value)
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("proyecto.nombre"),
+                  expression: "errors.has('proyecto.nombre')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [_vm._v(_vm._s(_vm.errors.first("proyecto.nombre")))]
+          )
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _vm._m(1),
+        _c(
+          "label",
+          {
+            staticClass: "label is-size-4",
+            class: { "has-text-danger": _vm.errors.has("proyecto.resumen") }
+          },
+          [
+            _c("i", { staticClass: "fas fa-angle-double-right" }),
+            _vm._v(" Resumen del proyecto")
+          ]
+        ),
+        _vm._v(" "),
+        _c("p", [_vm._v("Breve descripción de tu proyecto")]),
         _vm._v(" "),
         _c(
           "div",
@@ -61665,11 +61971,13 @@ var render = function() {
                 {
                   name: "validate",
                   rawName: "v-validate",
-                  value: "required",
-                  expression: "'required'"
+                  value: "required|min:10|max:250",
+                  expression: "'required|min:10|max:250'"
                 }
               ],
               attrs: {
+                "data-vv-name": "proyecto.resumen",
+                "data-vv-as": "'Resumen del proyecto'",
                 type: "textarea",
                 minlength: "10",
                 maxlength: "250",
@@ -61683,27 +61991,70 @@ var render = function() {
                 },
                 expression: "proyecto.resumen"
               }
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.has("proyecto.resumen"),
+                    expression: "errors.has('proyecto.resumen')"
+                  }
+                ],
+                staticClass: "help is-danger"
+              },
+              [_vm._v(_vm._s(_vm.errors.first("proyecto.resumen")))]
+            )
           ],
           1
         )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _vm._m(2),
+        _c(
+          "label",
+          {
+            staticClass: "label is-size-4",
+            class: {
+              "has-text-danger": _vm.errors.has("proyecto.fundamentacion")
+            }
+          },
+          [
+            _c("i", { staticClass: "fas fa-angle-double-right" }),
+            _vm._v(" Fundamentación")
+          ]
+        ),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "¿Por qué vale la pena realizar el proyecto? Máximo 200 palabras"
+          )
+        ]),
         _vm._v(" "),
         _c(
           "div",
           { staticClass: "control" },
           [
             _c("b-input", {
+              directives: [
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "required|min:10|max:250",
+                  expression: "'required|min:10|max:250'"
+                }
+              ],
               attrs: {
+                "data-vv-name": "proyecto.fundamentacion",
+                "data-vv-as": "'Fundamentación'",
                 type: "textarea",
                 minlength: "10",
                 maxlength: "200",
                 rows: "3",
-                placeholder:
-                  "Requerido *. ¿Por qué vale la pena realizar el proyecto? Máximo 200 palabras"
+                placeholder: "Requerido *"
               },
               model: {
                 value: _vm.proyecto.fundamentacion,
@@ -61712,7 +62063,23 @@ var render = function() {
                 },
                 expression: "proyecto.fundamentacion"
               }
-            })
+            }),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.has("proyecto.fundamentacion"),
+                    expression: "errors.has('proyecto.fundamentacion')"
+                  }
+                ],
+                staticClass: "help is-danger"
+              },
+              [_vm._v(_vm._s(_vm.errors.first("proyecto.fundamentacion")))]
+            )
           ],
           1
         )
@@ -61722,7 +62089,17 @@ var render = function() {
         "div",
         { staticClass: "field" },
         [
-          _vm._m(3),
+          _c(
+            "label",
+            {
+              staticClass: "label is-size-4",
+              class: { "has-text-danger": _vm.errors.has("proyecto.tematica") }
+            },
+            [
+              _c("i", { staticClass: "fas fa-angle-double-right" }),
+              _vm._v(" ¿Que temática trabaja el proyecto?")
+            ]
+          ),
           _vm._v(" "),
           _c("p", [_vm._v("Seleccione la temática para saber de que trata")]),
           _vm._v(" "),
@@ -61744,6 +62121,8 @@ var render = function() {
                   ],
                   attrs: {
                     size: "is-large",
+                    "data-vv-name": "proyecto.tematica",
+                    "data-vv-as": "'Temática'",
                     placeholder: "Seleccione la temática",
                     expanded: ""
                   },
@@ -61756,37 +62135,55 @@ var render = function() {
                   }
                 },
                 [
-                  _c("option", { domProps: { value: 1 } }, [
+                  _c("option", { attrs: { value: "Integración Social" } }, [
                     _vm._v("Integración Social")
                   ]),
                   _vm._v(" "),
-                  _c("option", { domProps: { value: 2 } }, [
+                  _c("option", { attrs: { value: "Medio Ambiente" } }, [
                     _vm._v("Medio Ambiente")
                   ]),
                   _vm._v(" "),
-                  _c("option", { domProps: { value: 3 } }, [
+                  _c("option", { attrs: { value: "Deporte y recreación" } }, [
                     _vm._v("Deporte y recreación")
                   ]),
                   _vm._v(" "),
-                  _c("option", { domProps: { value: 4 } }, [
+                  _c("option", { attrs: { value: "Educación" } }, [
                     _vm._v("Educación")
                   ]),
                   _vm._v(" "),
-                  _c("option", { domProps: { value: 5 } }, [_vm._v("Cultura")]),
+                  _c("option", { attrs: { value: "Cultura" } }, [
+                    _vm._v("Cultura")
+                  ]),
                   _vm._v(" "),
-                  _c("option", { domProps: { value: 6 } }, [
+                  _c("option", { attrs: { value: "Empleo y Capacitación" } }, [
                     _vm._v("Empleo y Capacitación")
                   ]),
                   _vm._v(" "),
-                  _c("option", { domProps: { value: 7 } }, [
+                  _c("option", { attrs: { value: "Comunicación" } }, [
                     _vm._v("Comunicación")
                   ]),
                   _vm._v(" "),
-                  _c("option", { domProps: { value: 8 } }, [_vm._v("Salud")])
+                  _c("option", { attrs: { value: "Salud" } }, [_vm._v("Salud")])
                 ]
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("proyecto.tematica"),
+                  expression: "errors.has('proyecto.tematica')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [_vm._v(_vm._s(_vm.errors.first("proyecto.tematica")))]
           ),
           _vm._v(" "),
           _c(
@@ -61810,8 +62207,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 1,
-                      expression: "proyecto.tematica == 1"
+                      value: _vm.proyecto.tematica == "Integracion Social",
+                      expression: "proyecto.tematica == 'Integracion Social'"
                     }
                   ],
                   staticClass: "title is-5"
@@ -61826,8 +62223,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 1,
-                      expression: "proyecto.tematica == 1"
+                      value: _vm.proyecto.tematica == "Integracion Social",
+                      expression: "proyecto.tematica == 'Integracion Social'"
                     }
                   ]
                 },
@@ -61845,8 +62242,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 2,
-                      expression: "proyecto.tematica == 2"
+                      value: _vm.proyecto.tematica == "Medio Ambiente",
+                      expression: "proyecto.tematica == 'Medio Ambiente'"
                     }
                   ],
                   staticClass: "title is-5"
@@ -61861,8 +62258,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 2,
-                      expression: "proyecto.tematica == 2"
+                      value: _vm.proyecto.tematica == "Medio Ambiente",
+                      expression: "proyecto.tematica == 'Medio Ambiente'"
                     }
                   ]
                 },
@@ -61880,8 +62277,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 3,
-                      expression: "proyecto.tematica == 3"
+                      value: _vm.proyecto.tematica == "Deporte y recreación",
+                      expression: "proyecto.tematica == 'Deporte y recreación'"
                     }
                   ],
                   staticClass: "title is-5"
@@ -61896,8 +62293,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 3,
-                      expression: "proyecto.tematica == 3"
+                      value: _vm.proyecto.tematica == "Deporte y recreación",
+                      expression: "proyecto.tematica == 'Deporte y recreación'"
                     }
                   ]
                 },
@@ -61915,8 +62312,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 4,
-                      expression: "proyecto.tematica == 4"
+                      value: _vm.proyecto.tematica == "Educación",
+                      expression: "proyecto.tematica == 'Educación'"
                     }
                   ],
                   staticClass: "title is-5"
@@ -61931,8 +62328,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 4,
-                      expression: "proyecto.tematica == 4"
+                      value: _vm.proyecto.tematica == "Educación",
+                      expression: "proyecto.tematica == 'Educación'"
                     }
                   ]
                 },
@@ -61950,8 +62347,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 5,
-                      expression: "proyecto.tematica == 5"
+                      value: _vm.proyecto.tematica == "Cultura",
+                      expression: "proyecto.tematica == 'Cultura'"
                     }
                   ],
                   staticClass: "title is-5"
@@ -61966,8 +62363,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 5,
-                      expression: "proyecto.tematica == 5"
+                      value: _vm.proyecto.tematica == "Cultura",
+                      expression: "proyecto.tematica == 'Cultura'"
                     }
                   ]
                 },
@@ -61985,8 +62382,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 6,
-                      expression: "proyecto.tematica == 6"
+                      value: _vm.proyecto.tematica == "Empleo y Capacitación",
+                      expression: "proyecto.tematica == 'Empleo y Capacitación'"
                     }
                   ],
                   staticClass: "title is-5"
@@ -62001,8 +62398,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 6,
-                      expression: "proyecto.tematica == 6"
+                      value: _vm.proyecto.tematica == "Empleo y Capacitación",
+                      expression: "proyecto.tematica == 'Empleo y Capacitación'"
                     }
                   ]
                 },
@@ -62020,8 +62417,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 7,
-                      expression: "proyecto.tematica == 7"
+                      value: _vm.proyecto.tematica == "Comunicación",
+                      expression: "proyecto.tematica == 'Comunicación'"
                     }
                   ],
                   staticClass: "title is-5"
@@ -62036,8 +62433,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 7,
-                      expression: "proyecto.tematica == 7"
+                      value: _vm.proyecto.tematica == "Comunicación",
+                      expression: "proyecto.tematica == 'Comunicación'"
                     }
                   ]
                 },
@@ -62055,8 +62452,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 8,
-                      expression: "proyecto.tematica == 8"
+                      value: _vm.proyecto.tematica == "Salud",
+                      expression: "proyecto.tematica == 'Salud'"
                     }
                   ],
                   staticClass: "title is-5"
@@ -62071,8 +62468,8 @@ var render = function() {
                     {
                       name: "show",
                       rawName: "v-show",
-                      value: _vm.proyecto.tematica == 8,
-                      expression: "proyecto.tematica == 8"
+                      value: _vm.proyecto.tematica == "Salud",
+                      expression: "proyecto.tematica == 'Salud'"
                     }
                   ]
                 },
@@ -62091,9 +62488,19 @@ var render = function() {
       _c("br"),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _vm._m(4),
+        _c(
+          "label",
+          {
+            staticClass: "label is-size-4",
+            class: { "has-text-danger": _vm.errors.has("proyecto.enEjecucion") }
+          },
+          [
+            _c("i", { staticClass: "fas fa-angle-double-right" }),
+            _vm._v(" ¿El proyecto ya esta en ejecución o en funcionamiento? *")
+          ]
+        ),
         _vm._v(" "),
-        _vm._m(5),
+        _vm._m(0),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
@@ -62107,7 +62514,17 @@ var render = function() {
                 _c(
                   "b-radio-button",
                   {
+                    directives: [
+                      {
+                        name: "validate",
+                        rawName: "v-validate",
+                        value: "required",
+                        expression: "'required'"
+                      }
+                    ],
                     attrs: {
+                      "data-vv-name": "proyecto.enEjecucion",
+                      "data-vv-as": "'En ejecución o en funcionamiento'",
                       "native-value": true,
                       type: "is-primary",
                       size: "is-medium"
@@ -62153,6 +62570,22 @@ var render = function() {
                 )
               ],
               1
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.errors.has("proyecto.enEjecucion"),
+                    expression: "errors.has('proyecto.enEjecucion')"
+                  }
+                ],
+                staticClass: "help is-danger"
+              },
+              [_vm._v(_vm._s(_vm.errors.first("proyecto.enEjecucion")))]
             )
           ],
           1
@@ -62161,46 +62594,103 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.proyecto.enEjecucion,
-              expression: "proyecto.enEjecucion"
-            }
-          ],
-          staticClass: "field"
-        },
-        [
-          _vm._m(6),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "control" },
-            [
-              _c("b-input", {
-                attrs: {
-                  type: "textarea",
-                  minlength: "10",
-                  maxlength: "100",
-                  rows: "3",
-                  placeholder: "Requerido *"
+      _vm.proyecto.enEjecucion
+        ? _c("div", { staticClass: "field" }, [
+            _c(
+              "label",
+              {
+                staticClass: "label is-size-5",
+                class: {
+                  "has-text-danger": _vm.errors.has(
+                    "proyecto.descripcionEjecucion"
+                  )
                 }
-              })
-            ],
-            1
-          )
-        ]
-      ),
+              },
+              [
+                _c("i", { staticClass: "fas fa-caret-right" }),
+                _vm._v(" ¿De qué forma, cómo y dónde se está ejecutando?")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "control" },
+              [
+                _c("b-input", {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required|min:10|max:100",
+                      expression: "'required|min:10|max:100'"
+                    }
+                  ],
+                  attrs: {
+                    type: "textarea",
+                    "data-vv-name": "proyecto.descripcionEjecucion",
+                    "data-vv-as": "'Descripcion de la ejecución'",
+                    minlength: "10",
+                    maxlength: "100",
+                    rows: "3",
+                    placeholder: "Requerido *"
+                  },
+                  model: {
+                    value: _vm.proyecto.descripcionEjecucion,
+                    callback: function($$v) {
+                      _vm.$set(_vm.proyecto, "descripcionEjecucion", $$v)
+                    },
+                    expression: "proyecto.descripcionEjecucion"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.errors.has("proyecto.descripcionEjecucion"),
+                        expression:
+                          "errors.has('proyecto.descripcionEjecucion')"
+                      }
+                    ],
+                    staticClass: "help is-danger"
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(_vm.errors.first("proyecto.descripcionEjecucion"))
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "div",
         { staticClass: "field" },
         [
-          _vm._m(7),
+          _c(
+            "label",
+            {
+              staticClass: "label is-size-4",
+              class: {
+                "has-text-danger":
+                  _vm.errors.has("proyecto.localizacion.nodo") ||
+                  _vm.errors.has("proyecto.localizacion.departamento") ||
+                  _vm.errors.has("proyecto.localizacion.localidad")
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-angle-double-right" }),
+              _vm._v(
+                " ¿Donde se implementa o implementará territorialmente el proyecto? *"
+              )
+            ]
+          ),
           _vm._v(" "),
           _c(
             "b-field",
@@ -62213,7 +62703,20 @@ var render = function() {
                   _c(
                     "b-select",
                     {
-                      attrs: { placeholder: "Nodo", expanded: "" },
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      attrs: {
+                        "data-vv-name": "proyecto.localizacion.nodo",
+                        "data-vv-as": "'Región/Nodo'",
+                        placeholder: "Nodo",
+                        expanded: ""
+                      },
                       model: {
                         value: _vm.proyecto.localizacion.nodo,
                         callback: function($$v) {
@@ -62239,7 +62742,20 @@ var render = function() {
                   _c(
                     "b-select",
                     {
-                      attrs: { placeholder: "Departamento", expanded: "" },
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      attrs: {
+                        placeholder: "Departamento",
+                        "data-vv-name": "proyecto.localizacion.departamento",
+                        "data-vv-as": "'Departamento'",
+                        expanded: ""
+                      },
                       model: {
                         value: _vm.proyecto.localizacion.departamento,
                         callback: function($$v) {
@@ -62269,7 +62785,20 @@ var render = function() {
                   _c(
                     "b-select",
                     {
-                      attrs: { placeholder: "Localidad", expanded: "" },
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required",
+                          expression: "'required'"
+                        }
+                      ],
+                      attrs: {
+                        placeholder: "Localidad",
+                        "data-vv-name": "proyecto.localizacion.localidad",
+                        "data-vv-as": "'Localidad'",
+                        expanded: ""
+                      },
                       model: {
                         value: _vm.proyecto.localizacion.localidad,
                         callback: function($$v) {
@@ -62289,6 +62818,62 @@ var render = function() {
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("proyecto.localizacion.nodo"),
+                  expression: "errors.has('proyecto.localizacion.nodo')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [_vm._v(_vm._s(_vm.errors.first("proyecto.localizacion.nodo")))]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("proyecto.localizacion.departamento"),
+                  expression: "errors.has('proyecto.localizacion.departamento')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [
+              _vm._v(
+                _vm._s(_vm.errors.first("proyecto.localizacion.departamento"))
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("proyecto.localizacion.localidad"),
+                  expression: "errors.has('proyecto.localizacion.localidad')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [
+              _vm._v(
+                _vm._s(_vm.errors.first("proyecto.localizacion.localidad"))
+              )
+            ]
           )
         ],
         1
@@ -62298,7 +62883,17 @@ var render = function() {
         "div",
         { staticClass: "field" },
         [
-          _vm._m(8),
+          _c(
+            "label",
+            {
+              staticClass: "label is-size-4",
+              class: { "has-text-danger": _vm.errors.has("proyecto.barrios") }
+            },
+            [
+              _c("i", { staticClass: "fas fa-angle-double-right" }),
+              _vm._v("¿En que barrio/s se llevará adelante? *")
+            ]
+          ),
           _vm._v(" "),
           _c("p", [
             _vm._v(
@@ -62309,9 +62904,18 @@ var render = function() {
           _c("br"),
           _vm._v(" "),
           _c("b-taginput", {
+            directives: [
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required",
+                expression: "'required'"
+              }
+            ],
             attrs: {
+              "data-vv-name": "proyecto.barrios",
+              "data-vv-as": "'Barrios'",
               size: "is-medium",
-              maxtags: "5",
               icon: "map-marker",
               type: "is-primary",
               placeholder: "Nombre del barrio"
@@ -62325,13 +62929,39 @@ var render = function() {
             }
           }),
           _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("proyecto.barrios"),
+                  expression: "errors.has('proyecto.barrios')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [_vm._v(_vm._s(_vm.errors.first("proyecto.barrios")))]
+          ),
+          _vm._v(" "),
           _c("br")
         ],
         1
       ),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _vm._m(9),
+        _c(
+          "label",
+          {
+            staticClass: "label is-size-4",
+            class: { "has-text-danger": _vm.errors.has("proyecto.objetivos") }
+          },
+          [
+            _c("i", { staticClass: "fas fa-angle-double-right" }),
+            _vm._v(" Objetivos *")
+          ]
+        ),
         _vm._v(" "),
         _c("p", [
           _vm._v(
@@ -62387,6 +63017,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "button is-primary is-medium",
+                  attrs: { disabled: _vm.disableAddObjetivo },
                   on: { click: _vm.addObjetivo }
                 },
                 [_c("i", { staticClass: "fas fa-plus" })]
@@ -62394,11 +63025,58 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.proyecto.objetivos,
+                expression: "proyecto.objetivos"
+              },
+              {
+                name: "validate",
+                rawName: "v-validate",
+                value: "required",
+                expression: "'required'"
+              }
+            ],
+            attrs: {
+              type: "hidden",
+              "data-vv-name": "proyecto.objetivos",
+              "data-vv-as": "'Objetivos'"
+            },
+            domProps: { value: _vm.proyecto.objetivos },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.proyecto, "objetivos", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("proyecto.objetivos"),
+                  expression: "errors.has('proyecto.objetivos')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [_vm._v(_vm._s(_vm.errors.first("proyecto.objetivos")))]
+          ),
+          _vm._v(" "),
           _c("br"),
           _vm._v(" "),
           _c("div", { staticClass: "content" }, [
             _c("table", { staticClass: "table is-narrow is-bordered" }, [
-              _vm._m(10),
+              _vm._m(1),
               _vm._v(" "),
               _vm.proyecto.objetivos.length
                 ? _c(
@@ -62428,14 +63106,24 @@ var render = function() {
                       ])
                     })
                   )
-                : _c("tbody", [_vm._m(11)])
+                : _c("tbody", [_vm._m(2)])
             ])
           ])
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _vm._m(12),
+        _c(
+          "label",
+          {
+            staticClass: "label is-size-4",
+            class: { "has-text-danger": _vm.errors.has("proyecto.actividades") }
+          },
+          [
+            _c("i", { staticClass: "fas fa-angle-double-right" }),
+            _vm._v(" Calendario de Actividades *")
+          ]
+        ),
         _vm._v(" "),
         _c("p", [
           _vm._v("Coloque por cada actividad la fecha en que se realizará")
@@ -62457,7 +63145,6 @@ var render = function() {
                   },
                   "min-date": new Date(),
                   "max-date": new Date("12/31/2018"),
-                  "icon-pack": "far",
                   icon: "calendar-alt"
                 },
                 model: {
@@ -62501,6 +63188,7 @@ var render = function() {
               "button",
               {
                 staticClass: "button is-primary is-medium",
+                attrs: { disabled: _vm.disableAddActividad },
                 on: { click: _vm.addActividad }
               },
               [_c("i", { staticClass: "far fa-calendar-plus" })]
@@ -62508,11 +63196,58 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.proyecto.actividades,
+              expression: "proyecto.actividades"
+            },
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: "required",
+              expression: "'required'"
+            }
+          ],
+          attrs: {
+            type: "hidden",
+            "data-vv-name": "proyecto.actividades",
+            "data-vv-as": "'Actividades'"
+          },
+          domProps: { value: _vm.proyecto.actividades },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.proyecto, "actividades", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.has("proyecto.actividades"),
+                expression: "errors.has('proyecto.actividades')"
+              }
+            ],
+            staticClass: "help is-danger"
+          },
+          [_vm._v(_vm._s(_vm.errors.first("proyecto.actividades")))]
+        ),
+        _vm._v(" "),
         _c("br"),
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c("table", { staticClass: "table is-narrow is-bordered" }, [
-            _vm._m(13),
+            _vm._m(3),
             _vm._v(" "),
             _vm.proyecto.actividades.length
               ? _c(
@@ -62545,15 +63280,25 @@ var render = function() {
                     ])
                   })
                 )
-              : _c("tbody", [_vm._m(14)])
+              : _c("tbody", [_vm._m(4)])
           ])
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _vm._m(15),
+        _c(
+          "label",
+          {
+            staticClass: "label is-size-4",
+            class: { "has-text-danger": _vm.errors.has("proyecto.presupuesto") }
+          },
+          [
+            _c("i", { staticClass: "fas fa-angle-double-right" }),
+            _vm._v(" Presupuesto *")
+          ]
+        ),
         _vm._v(" "),
-        _vm._m(16),
+        _vm._m(5),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
@@ -62614,10 +63359,21 @@ var render = function() {
                   rawName: "v-model",
                   value: _vm.inputItemMonto,
                   expression: "inputItemMonto"
+                },
+                {
+                  name: "validate",
+                  rawName: "v-validate",
+                  value: "numeric",
+                  expression: "'numeric'"
                 }
               ],
               staticClass: "input is-medium",
-              attrs: { type: "text", placeholder: "Monto en AR$" },
+              attrs: {
+                "data-vv-name": "inputItemMonto",
+                "data-vv-as": "'Monto'",
+                type: "text",
+                placeholder: "Monto en AR$"
+              },
               domProps: { value: _vm.inputItemMonto },
               on: {
                 input: function($event) {
@@ -62629,9 +63385,13 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c("span", { staticClass: "help" }, [
-              _vm._v("Ingrese números sin decimal, puntos o comas")
-            ])
+            _vm.errors.has("inputItemMonto")
+              ? _c("span", { staticClass: "help is-danger" }, [
+                  _vm._v(_vm._s(_vm.errors.first("inputItemMonto")))
+                ])
+              : _c("span", { staticClass: "help" }, [
+                  _vm._v("Ingrese números sin decimal, puntos o comas")
+                ])
           ]),
           _vm._v(" "),
           _c("p", { staticClass: "control" }, [
@@ -62639,6 +63399,7 @@ var render = function() {
               "button",
               {
                 staticClass: "button is-primary is-medium",
+                attrs: { disabled: _vm.disableAddItem },
                 on: { click: _vm.addItem }
               },
               [_c("i", { staticClass: "fas fa-plus" })]
@@ -62646,11 +63407,58 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.proyecto.presupuesto,
+              expression: "proyecto.presupuesto"
+            },
+            {
+              name: "validate",
+              rawName: "v-validate",
+              value: "required",
+              expression: "'required'"
+            }
+          ],
+          attrs: {
+            type: "hidden",
+            "data-vv-name": "proyecto.presupuesto",
+            "data-vv-as": "'Presupuesto'"
+          },
+          domProps: { value: _vm.proyecto.presupuesto },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.proyecto, "presupuesto", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.has("proyecto.presupuesto"),
+                expression: "errors.has('proyecto.presupuesto')"
+              }
+            ],
+            staticClass: "help is-danger"
+          },
+          [_vm._v(_vm._s(_vm.errors.first("proyecto.presupuesto")))]
+        ),
+        _vm._v(" "),
         _c("br"),
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c("table", { staticClass: "table is-narrow is-bordered" }, [
-            _vm._m(17),
+            _vm._m(6),
             _vm._v(" "),
             _vm.proyecto.presupuesto.length
               ? _c(
@@ -62701,7 +63509,7 @@ var render = function() {
                   ],
                   2
                 )
-              : _c("tbody", [_vm._m(18)])
+              : _c("tbody", [_vm._m(7)])
           ])
         ]),
         _vm._v(" "),
@@ -62719,7 +63527,21 @@ var render = function() {
         "div",
         { staticClass: "field" },
         [
-          _vm._m(19),
+          _c(
+            "label",
+            {
+              staticClass: "label is-size-4",
+              class: {
+                "has-text-danger": _vm.errors.has("proyecto.conOrganizacion")
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-angle-double-right" }),
+              _vm._v(
+                " ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * "
+              )
+            ]
+          ),
           _vm._v(" "),
           _c("p", [
             _vm._v(
@@ -62741,7 +63563,17 @@ var render = function() {
               _c(
                 "b-radio-button",
                 {
+                  directives: [
+                    {
+                      name: "validate",
+                      rawName: "v-validate",
+                      value: "required",
+                      expression: "'required'"
+                    }
+                  ],
                   attrs: {
+                    "data-vv-name": "proyecto.conOrganizacion",
+                    "data-vv-as": "'Trabajo en conjunto con Organización'",
                     "native-value": true,
                     type: "is-primary",
                     size: "is-medium"
@@ -62787,6 +63619,22 @@ var render = function() {
               )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.errors.has("proyecto.conOrganizacion"),
+                  expression: "errors.has('proyecto.conOrganizacion')"
+                }
+              ],
+              staticClass: "help is-danger"
+            },
+            [_vm._v(_vm._s(_vm.errors.first("proyecto.conOrganizacion")))]
           )
         ],
         1
@@ -62796,6 +63644,7 @@ var render = function() {
       _vm._v(" "),
       _vm.proyecto.conOrganizacion
         ? _c("organizacion", {
+            ref: "orgForm",
             attrs: { organizacion: _vm.proyecto.organizacion },
             on: {
               "update:organizacion": function($event) {
@@ -62811,7 +63660,17 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _vm._m(20),
+      _c(
+        "button",
+        {
+          staticClass: "button is-large is-primary is-fullwidth",
+          on: { click: _vm.submitForm }
+        },
+        [
+          _c("i", { staticClass: "fa fa-paper-plane" }),
+          _vm._v("  Guardar y enviar")
+        ]
+      ),
       _vm._v(" "),
       _c("br")
     ],
@@ -62823,95 +63682,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" Nombre del proyecto")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" Resumen del proyecto")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" Fundamentación")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" ¿Que temática trabaja el proyecto?")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" ¿El proyecto ya esta en ejecución o en funcionamiento? *")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("p", [
       _vm._v(
         "Si se trata de una iniciativa primigenia que aun no se ha desarrollado marcar\n      "
       ),
       _c("i", { staticClass: "fas fa-times" }),
       _vm._v(" NO")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-5" }, [
-      _c("i", { staticClass: "fas fa-caret-right" }),
-      _vm._v(" ¿De qué forma, cómo y dónde se está ejecutando?")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(
-        " ¿Donde se implementa o implementará territorialmente el proyecto? *"
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v("¿En que barrio/s se llevará adelante? *")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" Objetivos *")
     ])
   },
   function() {
@@ -62944,15 +63720,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" Calendario de Actividades *")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", { attrs: { width: "120px" } }, [_vm._v("Fecha")]),
@@ -62975,15 +63742,6 @@ var staticRenderFns = [
       _c("td", { staticClass: "has-text-centered", attrs: { colspan: "3" } }, [
         _c("i", [_vm._v("No se han ingresado actividades")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(" Presupuesto *")
     ])
   },
   function() {
@@ -63024,30 +63782,6 @@ var staticRenderFns = [
         _c("i", [_vm._v("No se han ingresado items en el presupuesto")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "label is-size-4" }, [
-      _c("i", { staticClass: "fas fa-angle-double-right" }),
-      _vm._v(
-        " ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * "
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "button is-large is-primary is-fullwidth" },
-      [
-        _c("i", { staticClass: "fa fa-paper-plane" }),
-        _vm._v("  Guardar y enviar")
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -63077,6 +63811,34 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,n){ true?module.exports=n():"function"==typeof define&&define.amd?define(n):(e.__vee_validate_locale__es=e.__vee_validate_locale__es||{},e.__vee_validate_locale__es.js=n())}(this,function(){"use strict";var e,n={name:"es",messages:{_default:function(e){return"El campo "+e+" no es válido."},after:function(e,n){var o=n[0];return"El campo "+e+" debe ser posterior "+(n[1]?"o igual ":"")+"a "+o+"."},alpha_dash:function(e){return"El campo "+e+" solo debe contener letras, números y guiones."},alpha_num:function(e){return"El campo "+e+" solo debe contener letras y números."},alpha_spaces:function(e){return"El campo "+e+" solo debe contener letras y espacios."},alpha:function(e){return"El campo "+e+" solo debe contener letras."},before:function(e,n){var o=n[0];return"El campo "+e+" debe ser anterior "+(n[1]?"o igual ":"")+"a "+o+"."},between:function(e,n){return"El campo "+e+" debe estar entre "+n[0]+" y "+n[1]+"."},confirmed:function(e){return"El campo "+e+" no coincide."},credit_card:function(e){return"El campo "+e+" es inválido."},date_between:function(e,n){return"El campo "+e+" debe estar entre "+n[0]+" y "+n[1]+"."},date_format:function(e,n){return"El campo "+e+" debe tener formato formato "+n[0]+"."},decimal:function(e,n){void 0===n&&(n=[]);var o=n[0];return void 0===o&&(o="*"),"El campo "+e+" debe ser númerico y contener "+("*"===o?"":o)+" puntos decimales."},digits:function(e,n){return"El campo "+e+" debe ser númerico y contener exactamente "+n[0]+" dígitos."},dimensions:function(e,n){return"El campo "+e+" debe ser de "+n[0]+" pixeles por "+n[1]+" pixeles."},email:function(e){return"El campo "+e+" debe ser un correo electrónico válido."},ext:function(e){return"El campo "+e+" debe ser un archivo válido."},image:function(e){return"El campo "+e+" debe ser una imagen."},in:function(e){return"El campo "+e+" debe ser un valor válido."},integer:function(e){return"El campo "+e+" debe ser un entero."},ip:function(e){return"El campo "+e+" debe ser una dirección ip válida."},length:function(e,n){var o=n[0],r=n[1];return r?"El largo del campo "+e+" debe estar entre "+o+" y "+r+".":"El largo del campo "+e+" debe ser "+o+"."},max:function(e,n){return"El campo "+e+" no debe ser mayor a "+n[0]+" caracteres."},max_value:function(e,n){return"El campo "+e+" debe de ser "+n[0]+" o menor."},mimes:function(e){return"El campo "+e+" debe ser un tipo de archivo válido."},min:function(e,n){return"El campo "+e+" debe tener al menos "+n[0]+" caracteres."},min_value:function(e,n){return"El campo "+e+" debe ser "+n[0]+" o superior."},not_in:function(e){return"El campo "+e+" debe ser un valor válido."},numeric:function(e){return"El campo "+e+" debe contener solo caracteres númericos."},regex:function(e){return"El formato del campo "+e+" no es válido."},required:function(e){return"El campo "+e+" es obligatorio."},size:function(e,n){var o,r,t,a=n[0];return"El campo "+e+" debe ser menor a "+(o=a,r=1024,t=0==(o=Number(o)*r)?0:Math.floor(Math.log(o)/Math.log(r)),1*(o/Math.pow(r,t)).toFixed(2)+" "+["Byte","KB","MB","GB","TB","PB","EB","ZB","YB"][t])+"."},url:function(e){return"El campo "+e+" no es una URL válida."}},attributes:{}};"undefined"!=typeof VeeValidate&&VeeValidate.Validator.localize(((e={})[n.name]=n,e));return n});
 
 /***/ })
 /******/ ]);
