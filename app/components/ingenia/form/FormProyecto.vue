@@ -373,6 +373,7 @@ export default {
         objetivos: [],
         actividades: [],
         presupuesto: [],
+        presupuestoTotal: 0,
         conOrganizacion: null,
         organizacion: {
           nombre: null,
@@ -461,8 +462,9 @@ export default {
               return x == true;
             })
           ) {
+            this.proyecto.presupuestoTotal = this.montoTotal
             console.log("Sending form!");
-            console.log(this.proyecto);
+            console.log(JSON.stringify(this.proyecto));
             this.sending = true;
             this.$snackbar.open({
               message: "Formulario enviado!",
@@ -491,11 +493,8 @@ export default {
   },
   computed: {
     montoTotal: function() {
-      let montoTotal = 0;
-      this.proyecto.presupuesto.forEach(item => {
-        montoTotal += parseFloat(item.monto);
-      });
-      return montoTotal;
+      const reducer = (accumulator, item) => accumulator + parseFloat(item.monto);
+      return this.proyecto.presupuesto.reduce(reducer,0);
     },
     disableAddItem: function() {
       return (

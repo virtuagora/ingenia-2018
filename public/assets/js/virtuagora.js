@@ -60752,6 +60752,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         objetivos: [],
         actividades: [],
         presupuesto: [],
+        presupuestoTotal: 0,
         conOrganizacion: null,
         organizacion: {
           nombre: null,
@@ -60833,8 +60834,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (values.every(function (x) {
           return x == true;
         })) {
+          _this2.proyecto.presupuestoTotal = _this2.montoTotal;
           console.log("Sending form!");
-          console.log(_this2.proyecto);
+          console.log(JSON.stringify(_this2.proyecto));
           _this2.sending = true;
           _this2.$snackbar.open({
             message: "Formulario enviado!",
@@ -60861,11 +60863,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
   computed: {
     montoTotal: function montoTotal() {
-      var montoTotal = 0;
-      this.proyecto.presupuesto.forEach(function (item) {
-        montoTotal += parseFloat(item.monto);
-      });
-      return montoTotal;
+      var reducer = function reducer(accumulator, item) {
+        return accumulator + parseFloat(item.monto);
+      };
+      return this.proyecto.presupuesto.reduce(reducer, 0);
     },
     disableAddItem: function disableAddItem() {
       return this.inputItemRubro == null || this.inputItemRubro == "" || this.inputItemDescripcion == null || this.inputItemDescripcion == "" || this.inputItemMonto == null || this.inputItemMonto == "";
