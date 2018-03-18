@@ -19830,7 +19830,7 @@ label.panel-block:hover {
 }
 
 .footer {
-  background-color: whitesmoke;
+  background-color: #FFF;
   padding: 3rem 1.5rem 6rem;
 }
 
@@ -22502,6 +22502,10 @@ figure.is-rounded img {
   border-radius: 25%;
 }
 
+.is-poppins {
+  font-family: 'Poppins', 'Roboto', 'Segoe UI', BlinkMacSystemFont, -apple-system, "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
 nav.navbar {
   -webkit-box-shadow: 0 -6px 4px 6px #c6c6c6;
   box-shadow: 0 -6px 4px 6px #c6c6c6;
@@ -22568,5 +22572,104 @@ input.input:focus,
   background-position: center center;
   -webkit-box-shadow: inset 0px -40px 39px -45px rgba(0, 0, 0, 0.75);
   box-shadow: inset 0px -40px 39px -45px rgba(0, 0, 0, 0.75);
+}
+
+.logo-header {
+  width: 300px;
+  margin-bottom: 10px;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.content-master {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+}
+
+footer.footer {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.float-img {
+  position: absolute;
+  right: 25px;
+  top: 40px;
+  z-index: 50;
+}
+
+@media (min-width: 769px) {
+  .float-img {
+    height: 50px;
+  }
+}
+
+.float-img img {
+  height: 40px;
+}
+
+@media (min-width: 769px) {
+  .float-img img {
+    height: 50px;
+  }
+}
+
+.float-img.is-avatar {
+  right: 125px;
+}
+
+.float-img.is-avatar img {
+  border-radius: 5px;
+}
+
+@media (min-width: 769px) {
+  .float-img.is-avatar {
+    height: 50px;
+    right: 90px;
+  }
+}
+
+.float-img.is-logout {
+  right: 75px;
+}
+
+.float-img.is-logout img {
+  border-radius: 5px;
+}
+
+@media (min-width: 769px) {
+  .float-img.is-logout {
+    top: 100px;
+    right: 25px;
+  }
+}
+
+.float-img.is-login {
+  right: 75px;
+}
+
+@media (min-width: 769px) {
+  .float-img.is-login {
+    top: 100px;
+    right: 25px;
+  }
+}
+
+.float-img.is-login img {
+  border-radius: 5px;
 }
 
