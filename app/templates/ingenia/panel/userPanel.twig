@@ -1,0 +1,20 @@
+{# set show_footer = true #}
+{% set show_navbar = true %}
+{# set body_class = '' #}
+{% extends 'master.twig' %}
+{% block title %}Panel de control{% endblock %}
+{% block body %}
+  <section class="section">
+    <div class="container">
+      <router-view>
+      <div class="has-text-centered">
+        <span class="icon">
+          <i class="fas fa-cog fa-spin"></i>
+        </span>
+        Cargando . . .
+      </div>
+      </router-view>
+    </div>
+  </section>
+{% endblock %}
+{% block javascripts %}{% endblock %}

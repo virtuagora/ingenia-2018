@@ -1,5 +1,18 @@
 <template>
   <div>
+    <h1 class="title is-1">Formulario de presentación de proyectos</h1>
+          <article class="message is-link">
+            <div class="message-body has-text-centered">
+              Desde el Gabinete Joven y la Secretaría de Juventudes recomendamos tener a mano
+              <a href="mailto:ingenia@santafe.gob.ar">
+                <b>el reglamento</b>
+              </a>
+              del programa en el momento que se dispongan a completar el presente formulario. Recuerden que pueden contar con nosotros para responder sus dudas y preguntas, así como orientarlos en la tarea de presentar su proyecto. Pueden escribirnos todas las veces que sea necesario a
+              <a href="mailto:ingenia@santafe.gob.ar">
+                <b>ingenia@santafe.gob.ar</b>
+              </a>
+            </div>
+          </article>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.nombre')}">
         <i class="fas fa-angle-double-right"></i> Nombre del proyecto</label>

@@ -30,13 +30,16 @@ import Vote from './vote/Vote.vue'
 import VoteResults from './vote/VoteResults.vue'
 
 // Ingenia 2018 Componentes
+import VueCarousel from 'vue-carousel';
 import FormProyecto from './ingenia/form/FormProyecto.vue'
+
 
 // vue-textarea-autosize
 // autosizer for textareas
 import VueTextareaAutosize from 'vue-textarea-autosize'
 
 Vue.use(VueTextareaAutosize)
+Vue.use(VueCarousel)
 
 // We are going to use Buefy
 Vue.use(Buefy, {

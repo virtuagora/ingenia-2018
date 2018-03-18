@@ -94,11 +94,53 @@ $app->group('/node/create', function () {
     });
 });
 
-$app->group('/users', function () {
-    $this->get('/{id:[0-9]+}', function ($req, $res, $arg) {
-        return $this->view->render($res, 'base/userProfile.twig', [
+$app->group('/panel', function () {
+    $this->get('', function ($req, $res, $arg) {
+        return $this->view->render($res, 'ingenia/panel/userPanel.twig', []);
+    });
+    $this->get('/[{path:.*}]', function ($req, $res, $arg) {
+        return $this->view->render($res, 'ingenia/panel/userPanel.twig', [
         ]);
     });
+    // $this->get('/perfil', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/perfil/editar', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/invitaciones', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/integrante/datos', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/integrante/dni', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/ingenia/start', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/ingenia/proyecto', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/ingenia/proyecto/editar', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/ingenia/equipo', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/ingenia/equipo/editar', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/ingenia/equipo/invitaciones', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/ingenia/proyecto/imagen', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
+    // $this->get('/ingenia/publicar', function ($req, $res, $arg) {
+    //     return $this->view->render($res, 'panel/userPanel.twig', []);
+    // });
 });
 
 $app->group('/account', function () {
