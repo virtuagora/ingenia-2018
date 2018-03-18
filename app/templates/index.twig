@@ -5,72 +5,10 @@
 {% extends 'master.twig' %}
 
 {% block body %}
-  <div class="hero is-primary is-medium" id="main-hero" style="background-image: url('assets/img/trama-multicolor.svg')">
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-8">
-            <h1 class="title is-1">Ingenia 10</h1>
-            <h1 class="subtitle is-4 is-300">Crea tu cuenta, postula tu equipo, invita a tu equipo y participa hoy!</h1>
-          </div>
-          <div class="column">
-            <div class="card">
-              <div class="card-content">
-                <div class="media">
-                  <div class="media-left">
-                    <figure class="image is-48x48">
-                      <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="media-content">
-                    ¿Queres formar parte? ¡Ingresa hoy!
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-foot">
-      <nav class="tabs">
-        <div class="container">
-          <ul>
-            <li class="is-active">
-              <a>Catalogo</a>
-            </li>
-            <li>
-              <a>Ulimos 10</a>
-            </li>
-            <li>
-              <a>Inscripcion</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
+  {% include "ingenia/index/header.twig" %}
   <div class="container">
     <section class="section">
-      <div class="columns">
-        <div class="column is-6 is-offset-3">
-          <h1 class="title is-1">Formulario de presentación de proyectos</h1>
-          <article class="message is-link">
-            <div class="message-body has-text-centered">
-              Desde el Gabinete Joven y la Secretaría de Juventudes recomendamos tener a mano
-              <a href="mailto:ingenia@santafe.gob.ar">
-                <b>el reglamento</b>
-              </a>
-              del programa en el momento que se dispongan a completar el presente formulario. Recuerden que pueden contar con nosotros para responder sus dudas y preguntas, así como orientarlos en la tarea de presentar su proyecto. Pueden escribirnos todas las veces que sea necesario a
-              <a href="mailto:ingenia@santafe.gob.ar">
-                <b>ingenia@santafe.gob.ar</b>
-              </a>
-            </div>
-          </article>
-
-          <form-proyecto></form-proyecto>
-        </div>
-      </div>
+     Hola
     </section>
   </div>
-{% endblock %}
+{% endblock %}  

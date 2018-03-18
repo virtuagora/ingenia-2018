@@ -1,8 +1,78 @@
-#main-hero{
-  background-size: cover;
-  background-position: center center;
-  -webkit-box-shadow: inset 0px -40px 39px -45px rgba(0,0,0,0.75);
--moz-box-shadow: inset 0px -40px 39px -45px rgba(0,0,0,0.75);
-box-shadow: inset 0px -40px 39px -45px rgba(0,0,0,0.75);
+#main-hero {
+    background-size: cover;
+    background-position: center center;
+    -webkit-box-shadow: inset 0px -40px 39px -45px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset 0px -40px 39px -45px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0px -40px 39px -45px rgba(0, 0, 0, 0.75);
+}
 
+.logo-header {
+    width: 300px;
+    margin-bottom: 10px;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-master {
+    flex: 1 0 auto;
+}
+
+footer.footer {
+    flex-shrink: 0;
+}
+
+.float-img {
+    position: absolute;
+    right: 25px;
+    top: 40px;
+    z-index: 50;
+    @media (min-width: $tablet) {
+        height:50px;
+    }
+    img {
+        height: 40px;
+        @media (min-width: $tablet) {
+            height:50px;
+        }
+    }
+    &.is-avatar {
+        right: 125px;
+        img {
+            border-radius: 5px;
+        }
+        @media (min-width: $tablet) {
+            height: 50px;
+            right: 90px;
+        }
+    }
+    &.is-logout {
+        //top: 90px;
+        right: 75px;
+        img {
+            border-radius: 5px;
+        }
+        @media (min-width: $tablet) {
+            top: 100px;
+            right: 25px;
+        }
+    }
+    &.is-login {
+        //top: 100px;
+        right: 75px;
+        @media (min-width: $tablet) {
+            top: 100px;
+            right: 25px;
+        }
+        img {
+            border-radius: 5px;
+        }
+    }
 }

@@ -1,48 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        {% block title %}Welcome!{% endblock %} - App name
+      {% block title %}Welcome!{% endblock %}
+      - App name
     </title>
     {% block opengraph %}
-    <!-- Social Media Metatags! -->
-    <!-- <meta name="description" content="Innovate your instances of participation. Virtuagora is a free open-source web platform for digital participation. A solution that maximizes everyone's collabotarion in a digital way. Free, open, and ohh! of course, made with love"> -->
-    <!-- <meta property="og:title" content="Virtuágora, your open platform for digital participation"> -->
-    <!-- <meta property="og:description" content="Innovate your instances of participation. Virtuagora is a free open-source web platform for digital participation. A solution that maximizes everyone's collabotarion in a digital way. Free, open, and ohh! of course, made with love"> -->
-    <!-- <meta property="og:image" content="/static/social.png"> -->
-    <!-- <meta property="og:url" content="https://virtuagora.org/"> -->
-    <!-- <meta name="twitter:card" content="summary_large_image"> -->
-    <!-- <meta name="twitter:title" content="Virtuágora, your open platform for digital participation"> -->
-    <!-- <meta name="twitter:site" content="@virtuagora"> -->
-    <!-- <meta name="twitter:creator" content="@virtuagora"> -->
-    <!-- <meta name="twitter:description" content=" Innovate your instances of participation. Virtuagora is a free open-source web platform for digital participation. A solution that maximizes everyone's collabotarion in a digital way. Free, open, and ohh! of course, made with love"> -->
-    <!-- <meta name="twitter:image" content="https://virtuagora.org/static/social.png"> -->
+      <!-- Social Media Metatags! -->
+      <!-- <meta name="description" content="Innovate your instances of participation. Virtuagora is a free open-source web platform for digital participation. A solution that maximizes everyone's collabotarion in a digital way. Free, open, and ohh! of course, made with love"> -->
+      <!-- <meta property="og:title" content="Virtuágora, your open platform for digital participation"> -->
+      <!-- <meta property="og:description" content="Innovate your instances of participation. Virtuagora is a free open-source web platform for digital participation. A solution that maximizes everyone's collabotarion in a digital way. Free, open, and ohh! of course, made with love"> -->
+      <!-- <meta property="og:image" content="/static/social.png"> -->
+      <!-- <meta property="og:url" content="https://virtuagora.org/"> -->
+      <!-- <meta name="twitter:card" content="summary_large_image"> -->
+      <!-- <meta name="twitter:title" content="Virtuágora, your open platform for digital participation"> -->
+      <!-- <meta name="twitter:site" content="@virtuagora"> -->
+      <!-- <meta name="twitter:creator" content="@virtuagora"> -->
+      <!-- <meta name="twitter:description" content=" Innovate your instances of participation. Virtuagora is a free open-source web platform for digital participation. A solution that maximizes everyone's collabotarion in a digital way. Free, open, and ohh! of course, made with love"> -->
+      <!-- <meta name="twitter:image" content="https://virtuagora.org/static/social.png"> -->
     {% endblock %}
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon-16x16.png')}}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon-32x32.png')}}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{asset('favicon-96x96.png')}}">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block stylesheets %}{% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/virtuagora.css') }}">
     <!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
     {% block scriptshead %}{% endblock %}
     <script id="userState" type="application/json">
-{"user":"John","status":2,"holis":[]}
-</script>
-</head>
-   <body {% if body_class is defined %} class='{{ body_class }}' {% endif %}>
-       <div id="vue">
-           {% if show_navbar == true %}
-           {% include 'master/navbar.twig' %}
-           {% endif %}
-           {% block body %}{% endblock %}
-        </div>
-      <script src="{{asset('js/virtuagora.js')}}"></script>
-      {% block javascripts %}{% endblock %}
-   </body>
+      {
+        "user": "John",
+        "status": 2,
+        "holis": []
+      }
+    </script>
+  </head>
+  <body {% if body_class is defined %} class='{{ body_class }}' {% endif %}>
+    <div class="content-master" id="vue">
+      {% if show_navbar == true %}
+        {% include 'master/navbar.twig' %}
+      {% endif %}
+      {% block body %}{% endblock %}
+    </div>
+    {% include 'ingenia/index/footer.twig'%}
+    <script src="{{asset('js/virtuagora.js')}}"></script>
+    {% block javascripts %}{% endblock %}
+  </body>
 </html>
