@@ -14,13 +14,13 @@ class ErrorHandlerService
         $this->logger = $logger;
         $this->exceptions = $exceptions;
     }
-
+    
     public function __invoke($request, $response, $exception)
     {
         if (isset($this->logger)) {
             $this->logger->info(
-                $exception->getMessage().
-                ' ['.$exception->getFile().' - '.$exception->getLine().']'
+            $exception->getMessage().
+            ' ['.$exception->getFile().' - '.$exception->getLine().']'
             );
             //$this->logger->info($request->getHeaderLine('Accept'));
             //$this->logger->info(json_encode($request->getAttributes()));
@@ -31,8 +31,13 @@ class ErrorHandlerService
             }
         }
         return $response->withStatus(500)->withJSON([
-            'mensaje' => 'Error interno',
-            'request' => $request->getAttributes(),
+        'mensaje' => 'Error interno',
+        // TODO Ocultar en produccion
+        'log' =>  str_replace('"',"'",$exception->getMessage()),
+        'file' =>  $exception->getFile(),
+        'line' =>  $exception->getLine(),
+        
+        'request' => $request->getAttributes(),
         ]);
     }
 }
