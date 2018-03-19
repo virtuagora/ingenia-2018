@@ -16,23 +16,26 @@ Vue.use(VeeValidate);
 // Some frameworks like AXIOS ($http variable) should be globally implemented in here.
 
 // Core Components
-import Login from './base/Login.vue'
-import SignUp from './base/SignUp.vue'
-import CompleteSignUp from './base/CompleteSignUp.vue'
+// import Login from './base/Login.vue'
+// import SignUp from './base/SignUp.vue'
+// import CompleteSignUp from './base/CompleteSignUp.vue'
 
 // Node Components
-import NodeComment from './core/NodeComment.vue'
-import NodeComments from './core/NodeComments.vue'
-import NodeUsersParticipated from './core/NodeUsersParticipated.vue'
+// import NodeComment from './core/NodeComment.vue'
+// import NodeComments from './core/NodeComments.vue'
+// import NodeUsersParticipated from './core/NodeUsersParticipated.vue'
 
 // Voting Components
-import Vote from './vote/Vote.vue'
-import VoteResults from './vote/VoteResults.vue'
+// import Vote from './vote/Vote.vue'
+// import VoteResults from './vote/VoteResults.vue'
 
 // Ingenia 2018 Componentes
 import VueCarousel from 'vue-carousel';
-import FormProyecto from './ingenia/form/FormProyecto.vue'
-
+import Login from './ingenia/Login'
+import Registro from './ingenia/Registro'
+import CompletarRegistro from './ingenia/CompletarRegistro'
+import Catalogo from './ingenia/catalogo/Catalogo'
+import FormProyecto from './ingenia/form/FormProyecto'
 
 // vue-textarea-autosize
 // autosizer for textareas
@@ -61,17 +64,21 @@ new Vue({ // eslint-disable-line no-new
   store,
   components: {
     // Register core componentes
-    'login': Login,
-    'sign-up': SignUp,
-    'complete-sign-up': CompleteSignUp,
+    // 'login': Login,
+    // 'sign-up': SignUp,
+    // 'complete-sign-up': CompleteSignUp,
     // Register node components
-    'node-comment': NodeComment,
-    'node-comments': NodeComments,
-    'node-users-participated': NodeUsersParticipated,
+    // 'node-comment': NodeComment,
+    // 'node-comments': NodeComments,
+    // 'node-users-participated': NodeUsersParticipated,
     // Register nodes
-    'vote-results': VoteResults,
-    'vote': Vote,
+    // 'vote-results': VoteResults,
+    // 'vote': Vote,
     // Ingenia2018
-    FormProyecto
+    Login,
+    Registro,
+    CompletarRegistro,
+    FormProyecto,
+    Catalogo
   }
 })

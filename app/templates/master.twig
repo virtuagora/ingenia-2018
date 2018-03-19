@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-      {% block title %}Welcome!{% endblock %}
-      - App name
+      {% block title %}Inicio{% endblock %}
+      - Ingenia 10
     </title>
     {% block opengraph %}
       <!-- Social Media Metatags! -->
@@ -48,7 +48,9 @@
       {% endif %}
       {% block body %}{% endblock %}
     </div>
+{% if show_footer == true %}
     {% include 'ingenia/index/footer.twig'%}
+{% endif %}
     <script src="{{asset('js/virtuagora.js')}}"></script>
     {% block javascripts %}{% endblock %}
   </body>

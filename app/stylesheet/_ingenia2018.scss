@@ -11,6 +11,10 @@
     margin-bottom: 10px;
 }
 
+.button{
+    font-weight: 300;
+}
+
 html,
 body {
     height: 100%;
@@ -75,4 +79,36 @@ footer.footer {
             border-radius: 5px;
         }
     }
+}
+
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.strike>span {
+    position: relative;
+    display: inline-block;
+}
+
+.strike>span:before,
+.strike>span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: #7c7c7c;
+}
+
+.strike>span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.strike>span:after {
+    left: 100%;
+    margin-left: 15px;
 }

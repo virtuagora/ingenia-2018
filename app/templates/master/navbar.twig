@@ -1,9 +1,9 @@
-<nav class="navbar is-white" role="navigation" aria-label="main navigation">
+<nav class="navbar is-light" role="navigation" aria-label="main navigation">
   <div class="container">
 
     <div class="navbar-brand">
       <a class="navbar-item" href="{{base_url()}}">
-        <img src="{{asset('img/logo-v.svg')}}" alt="Ir al inicio" class="image">
+        <img src="{{asset('img/ingenia-logo.svg')}}" alt="Ir al inicio" class="image">
       </a>
 
       <button class="button navbar-burger">
@@ -13,30 +13,28 @@
       </button>
     </div>
     <div class="navbar-start">
-      <a class="navbar-item">
-        <span class="icon">
-          <i class="fas fa-heartbeat fa-lg"></i>
-        </span>&nbsp;Heartbeat
-      </a>
-<a class="navbar-item">
-  Contents
-</a>
+      
     </div>
     <div class="navbar-end">
-<a class="navbar-item" href="">
-250
-<span class="icon is-medium">
-<i class="em em-trophy"></i>
-</span>
-</a>
-    <a class="navbar-item" href="">
-<img src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg" class="is-rounded" alt="">
-    </a>
+      <a class="navbar-item" href="">
+        250&nbsp;&nbsp;
+        <span class="icon">
+          <i class="em em-muscle"></i>
+        </span>
+      </a>
       <a class="navbar-item is-hidden-desktop-only" href="{{path_for('showLogin')}}">
         <span class="icon">
           <i class="fas fa-sign-in-alt fa-lg"></i>
         </span>
-        &nbsp;Log in
+        &nbsp;Entrar
+      </a>
+      <a class="navbar-item" href="">
+        <img src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg" class="is-rounded" alt="">
+      </a>
+      <a class="navbar-item is-hidden-desktop-only" href="{{path_for('showLogin')}}">
+        <span class="icon">
+          <i class="fas fa-sign-out-alt fa-lg"></i>
+        </span>
       </a>
 
     </div>

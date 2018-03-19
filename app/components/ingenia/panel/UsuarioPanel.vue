@@ -10,13 +10,13 @@
             <router-link :to="{ name: 'panelOverview'}" exact-active-class="is-active" exact>Inicio</router-link>
           </li>
          <li>
-            <router-link :to="{ name: 'usuarioPerfil'}" exact-active-class="is-active">Ver perfil</router-link>
+            <router-link :to="{ name: 'usuarioVerPerfil'}" exact-active-class="is-active">Ver perfil</router-link>
           </li>
           <li>
             <router-link :to="{ name: 'usuarioEditarPerfil'}" exact-active-class="is-active">Editar perfil</router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'usuarioCambiarPassword'}" exact-active-class="is-active">Cambiar password</router-link>
+            <router-link :to="{ name: 'usuarioCambiarPassword'}" exact-active-class="is-active">Cambiar contraseña</router-link>
           </li>
         </ul>
         <p class="menu-label">
@@ -41,8 +41,8 @@ export default {
 
     }
   },
-  beforeCreate: function(){
-    
+  beforeMount: function(){
+    document.getElementById('loading').remove();
   }
 };
 </script>

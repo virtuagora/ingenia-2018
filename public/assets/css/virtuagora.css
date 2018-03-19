@@ -22506,6 +22506,10 @@ figure.is-rounded img {
   font-family: 'Poppins', 'Roboto', 'Segoe UI', BlinkMacSystemFont, -apple-system, "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
+img.is-centered {
+  margin: 0 auto;
+}
+
 nav.navbar {
   -webkit-box-shadow: 0 -6px 4px 6px #c6c6c6;
   box-shadow: 0 -6px 4px 6px #c6c6c6;
@@ -22577,6 +22581,10 @@ input.input:focus,
 .logo-header {
   width: 300px;
   margin-bottom: 10px;
+}
+
+.button {
+  font-weight: 300;
 }
 
 html,
@@ -22673,3 +22681,37 @@ footer.footer {
   border-radius: 5px;
 }
 
+.strike {
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.strike > span {
+  position: relative;
+  display: inline-block;
+}
+
+.strike > span:before,
+.strike > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  height: 1px;
+  background: #7c7c7c;
+}
+
+.strike > span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.strike > span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+
+
+/*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIvYXNzZXRzL2Nzcy92aXJ0dWFnb3JhLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/

@@ -4,6 +4,7 @@ import store from '../../store'
 import http from '../../http'
 
 // Panel
+import Perfil from './perfil/Perfil'
 import VerPerfil from './perfil/VerPerfil'
 import EditarPerfil from './perfil/EditarPerfil'
 import CambiarPassword from './perfil/CambiarPassword'
@@ -15,7 +16,6 @@ const routes = [
   {
     path: basePath,
     component: UsuarioPanel,
-    name: 'usuarioPanel',
     props: true,
     children: [
       {
@@ -26,10 +26,15 @@ const routes = [
       },
       {
         path: 'perfil',
-        component: VerPerfil,
-        name: 'usuarioPerfil',
+        component: Perfil,
         props: true,
         children: [
+          {
+            path: '',
+            component: VerPerfil,
+            name: 'usuarioVerPerfil',
+            props: true
+          },
           {
             path: 'editar',
             component: EditarPerfil,
