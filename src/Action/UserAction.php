@@ -14,7 +14,6 @@ class UserAction
     public function post($request, $response, $params)
     {
         $user = $this->userResource->createOne(null, $request->getParsedBody());
-        $options = ['template' => 'login.twig'];
         return $this->representation->returnMessage($request, $response, [
             'message' => 'User registered succefully',
             'status' => 200,
@@ -23,11 +22,11 @@ class UserAction
         ]);
     }
 
-    public function postEmail($request, $response, $params)
+    public function postPendingUser($request, $response, $params)
     {
         $this->userResource->createPendingUser(null, $request->getParsedBody());
         return $this->representation->returnMessage($request, $response, [
-            'message' => 'Check your email',
+            'message' => 'Pending user created',
             'status' => 200,
             'template' => 'base/emailSended.twig',
         ]);

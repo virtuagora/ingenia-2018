@@ -30,13 +30,13 @@ class UserResource extends Resource
                     'type' => 'string',
                     'format' => 'email',
                 ],
-                'activation_key' => [
+                'token' => [
                     'type' => 'string',
                     'minLength' => 10,
                     'maxLength' => 100,
                 ],
             ],
-            'required' => ['names', 'surnames', 'password', 'activation_key'],
+            'required' => ['names', 'surnames', 'password', 'token'],
             'additionalProperties' => false,
         ];
         return $schema;
@@ -46,62 +46,18 @@ class UserResource extends Resource
     {
         $v = $this->validation->fromSchema($this->retrieveSchema());
         $v->assert($data);
-        $pending = $this->db->query('App:PendingUser')
-            ->where('provider', 'local')
-            ->where('activation_key', $data['activation_key'])
-            ->first();
-        if (is_null($pending)) {
-            throw new AppException('Datos incorrectos', 400);
-        }
-        $subj = $this->db->new('App:Subject');
-        $subj->display_name = $data['names'] . ' ' . $data['surnames'];
-        $subj->img_type = 0;
-        $subj->img_hash = md5($pending->identifier);
-        $subj->type = 'User';
-        $subj->save();
-        $user = $this->db->new('App:User');
-        $user->email = $pending->identifier;
-        $user->password = $data['password'];
-        $user->names = $data['names'];
-        $user->surnames = $data['surnames'];
-        $user->subject()->associate($subj);
-        $user->save();
-        $pending->delete();
+        $token = $data['token'];
+        unset($data['token']);
+        $user = $this->identity->registerUser($data, $token);
         return $user;
     }
 
-    public function createPendingUser($subject, $data)
+    public function createPendingUser($subject, $data) // el subject sirve para invitaciones
     {
-        $v = $this->validation->fromSchema([
-            'type' => 'object',
-            'properties' => [
-                'email' => [
-                    'type' => 'string',
-                    'format' => 'email',
-                ],
-            ],
-            'required' => ['email'],
-            'additionalProperties' => false,
-        ]);
-        $v->assert($data);
-
-        $user = $this->db->query('App:User')
-            ->where('email', $data['email'])
-            ->first();
-        if (isset($user)) {
-            throw new AppException('Email already registered', 400);
-        }
-
-        // TODO si el pending user ya existe reenviar email
-        $pending = $this->db->new('App:PendingUser');
-        $pending->provider = 'local';
-        $pending->identifier = $data['email'];
-        $pending->activation_key = bin2hex(random_bytes(10));
-        $pending->save();
-        
+        $pending = $this->identity->createPendingUser('local', $data);
         $mailMsg = 'Accede con ' . $pending->activation_key;
         $mailSub = 'Registro Virtuágora';
         $this->logger->info($mailMsg);
-        $this->mailer->sendMail($mailSub, $data['email'], $mailMsg);
+        $this->mailer->sendMail($mailSub, $pending->identifier, $mailMsg);
     }
 }

@@ -21,6 +21,28 @@ class Installer
             $table->boolean('autoload');
             $table->timestamps();
         });
+        $this->db->schema()->create('regions', function($table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('region');
+            $table->string('name');
+        });
+        $this->db->schema()->create('departments', function($table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('region_id')->unsigned();
+            $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
+        });
+        $this->db->schema()->create('localities', function($table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->string('name');
+            $table->boolean('custom')->default(false);
+            $table->integer('department_id')->unsigned();
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+        });
+
         $this->db->schema()->create('subjects', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -52,10 +74,24 @@ class Installer
         $this->db->schema()->create('users', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('email')->unique();
-            $table->string('password');
+            $table->string('email')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('password')->nullable();
             $table->string('names');
             $table->string('surnames');
+
+            $table->timestamp('birthday')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('address')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('dni')->nullable();
+            $table->boolean('verified_dni')->default(false);
+            $table->string('pending_email')->nullable();
+
+            $table->integer('locality_id')->unsigned()->nullable();
+            $table->foreign('locality_id')->references('id')->on('localities');
+            $table->string('locality_other')->nullable();
+
             $table->string('token')->nullable();
             $table->timestamp('token_expiration')->nullable();
             $table->timestamp('ban_expiration')->nullable();
@@ -64,117 +100,87 @@ class Installer
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
-        });
-        $this->db->schema()->create('user_meta', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->string('key');
-            $table->text('value');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->index('key');
+            $table->index('email');
+            $table->index('facebook');
         });
         $this->db->schema()->create('pending_users', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('provider');
             $table->string('identifier');
-            $table->string('activation_key');
+            $table->string('token');
             $table->text('fields')->nullable();
             $table->timestamps();
             $table->unique(['provider', 'identifier']);
-            $table->index('activation_key');
-        });
-        $this->db->schema()->create('group_types', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->string('name')->unique();
-            //$table->string('role_policy'); // enum(single, group, empty, custom)
-            $table->text('description');
-            $table->text('allowed_relations')->nullable(); // list of allowed relations for every group
-            $table->text('meta')->nullable();
-            //$table->json('meta')->nullable();
-            $table->string('role_id')->nullable(); // role for the groups of this type
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->timestamps();
+            $table->index('token');
         });
         $this->db->schema()->create('groups', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
-            $table->string('acronym')->nullable();
             $table->text('description');
+            $table->integer('year');
+            $table->text('previous_editions'); //json
+            $table->string('parent_organization')->nullable();
+            $table->string('web')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('email')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('referer')->nullable(); //como se enteraron
+
+            $table->integer('locality_id')->unsigned();
+            $table->foreign('locality_id')->references('id')->on('localities');
+            $table->string('locality_other')->nullable();
+
             $table->integer('quota')->unsigned()->nullable();
             $table->string('trace')->nullable();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('groups')->onDelete('set null');
-            $table->integer('group_type_id')->unsigned();
-            $table->foreign('group_type_id')->references('id')->on('group_types')->onDelete('restrict');
             $table->integer('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
-        $this->db->schema()->create('group_meta', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->integer('group_id')->unsigned();
-            $table->string('key');
-            $table->text('value');
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
-            $table->index('key');
-        });
         $this->db->schema()->create('user_group', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('relation');
+            $table->string('relation'); // miembro, co-responsable, responsable
             $table->string('title')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
-        $this->db->schema()->create('nodes', function($table) {
+        $this->db->schema()->create('projects', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('title');
-            $table->string('type');
-            $table->text('content')->nullable();
-            $table->integer('points')->default(0);
-            $table->dateTime('close_date')->nullable();
-            $table->boolean('unlisted');
+            $table->string('name');
+            $table->text('abstract');
+            $table->text('foundation');
+            $table->string('topic');
+            $table->string('in_progress');
+            $table->string('neighbourhood');
+            $table->text('goal');
+            $table->text('budget');
+            $table->text('schedule');
+            $table->string('partners')->nullable();
+
+            $table->boolean('public')->default(false);
+            $table->boolean('selected')->default(false);
+            $table->boolean('has_image')->default(false);
+            $table->integer('likes')->default(0);
             $table->string('trace')->nullable();
-            $table->integer('author_id')->unsigned();
-            $table->foreign('author_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->text('notes')->nullable(); //observaciones internas
+
+            $table->integer('locality_id')->unsigned();
+            $table->foreign('locality_id')->references('id')->on('localities');
+            $table->string('locality_other')->nullable();
+
+            $table->integer('group_id')->unsigned()->nullable();
+            $table->foreign('group_id')->references('id')->on('groups');
+
             $table->timestamps();
             $table->softDeletes();
-        });
-        $this->db->schema()->create('node_meta', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->integer('node_id')->unsigned();
-            $table->string('key');
-            $table->text('value');
-            $table->foreign('node_id')->references('id')->on('nodes')->onDelete('cascade');
-            $table->index('key');
-        });
-        $this->db->schema()->create('node_node', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->string('relation')->nullable();
-            $table->integer('parent_id')->unsigned();
-            $table->foreign('parent_id')->references('id')->on('nodes')->onDelete('cascade');
-            $table->integer('child_id')->unsigned();
-            $table->foreign('child_id')->references('id')->on('nodes')->onDelete('cascade');
-        });
-        $this->db->schema()->create('node_subject', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->string('relation');
-            $table->integer('node_id')->unsigned();
-            $table->foreign('node_id')->references('id')->on('nodes')->onDelete('cascade');
-            $table->integer('subject_id')->unsigned();
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
         $this->db->schema()->create('comments', function($table) {
             $table->engine = 'InnoDB';
@@ -182,11 +188,10 @@ class Installer
             $table->text('content');
             $table->integer('votes')->default(0);
             $table->text('meta')->nullable();
-            //$table->json('meta')->nullable();
-            $table->integer('node_id')->unsigned();
-            $table->foreign('node_id')->references('id')->on('nodes')->onDelete('cascade');
+            $table->integer('project_id')->unsigned();
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->integer('author_id')->unsigned();
-            $table->foreign('author_id')->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
             $table->timestamps();
@@ -202,27 +207,7 @@ class Installer
             $table->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
             $table->timestamps();
         });
-        $this->db->schema()->create('terms', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->string('name');
-            $table->string('slug');
-            $table->string('taxonomy');
-            $table->integer('count')->unsigned()->default(0);
-            $table->timestamps();
-            $table->unique(['slug', 'taxonomy']);
-        });
-        $this->db->schema()->create('term_object', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->integer('term_id')->unsigned();
-            $table->string('object_type');
-            $table->integer('object_id')->unsigned();
-            $table->text('meta')->nullable();
-            //$table->json('meta')->nullable();
-            $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
-            $table->index(['object_type', 'object_id']);
-        });
+        
         $this->db->schema()->create('actions', function($table) {
             $table->engine = 'InnoDB';
             $table->string('id')->primary();
@@ -243,8 +228,6 @@ class Installer
             $table->integer('order')->default(0);
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('pages')->onDelete('set null');
-            $table->integer('node_id')->unsigned()->nullable();
-            $table->foreign('node_id')->references('id')->on('nodes')->onDelete('cascade');
         });
         $this->db->schema()->create('logs', function($table) {
             $table->engine = 'InnoDB';
@@ -271,70 +254,28 @@ class Installer
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
-
-        // --- Plugin suscriptions ---
-
-        $this->db->schema()->create('suscriptions', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->integer('priority')->default(0);
-            $table->integer('user_id')->unsigned();
-            $table->string('publisher_type');
-            $table->integer('publisher_id')->unsigned();
-            $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->index(['publisher_type', 'publisher_id']);
-        });
-
-        // --- Plugin content ballots ---
-
-        $this->db->schema()->create('ballots', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->text('options');
-            $table->integer('node_id')->unsigned();
-            $table->foreign('node_id')->references('id')->on('nodes')->onDelete('cascade');
-        });
-        $this->db->schema()->create('ballot_user', function($table) {
-            $table->engine = 'InnoDB';
-            $table->increments('id');
-            $table->integer('vote');
-            $table->boolean('is_public');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('ballot_id')->unsigned();
-            $table->foreign('ballot_id')->references('id')->on('ballots')->onDelete('cascade');
-            $table->timestamps();
-        });
     }
 
     public function down()
     {
-        $this->db->schema()->dropIfExists('ballot_user');
-        $this->db->schema()->dropIfExists('ballots');
-        $this->db->schema()->dropIfExists('suscriptions');
         $this->db->schema()->dropIfExists('notifications');
         $this->db->schema()->dropIfExists('logs');
         $this->db->schema()->dropIfExists('pages');
         $this->db->schema()->dropIfExists('actions');
-        $this->db->schema()->dropIfExists('term_object');
-        $this->db->schema()->dropIfExists('terms');
         $this->db->schema()->dropIfExists('comment_votes');
         $this->db->schema()->dropIfExists('comments');
-        $this->db->schema()->dropIfExists('node_subject');
-        $this->db->schema()->dropIfExists('node_node');
-        $this->db->schema()->dropIfExists('node_meta');
-        $this->db->schema()->dropIfExists('nodes');
+        $this->db->schema()->dropIfExists('projects');
         $this->db->schema()->dropIfExists('user_group');
-        $this->db->schema()->dropIfExists('group_meta');
         $this->db->schema()->dropIfExists('groups');
-        $this->db->schema()->dropIfExists('group_types');
         $this->db->schema()->dropIfExists('pending_users');
-        $this->db->schema()->dropIfExists('user_meta');
         $this->db->schema()->dropIfExists('users');
         $this->db->schema()->dropIfExists('subject_role');
         $this->db->schema()->dropIfExists('roles');
         $this->db->schema()->dropIfExists('subjects');
+        $this->db->schema()->dropIfExists('localities');
+        $this->db->schema()->dropIfExists('departments');
+        $this->db->schema()->dropIfExists('departaments');
+        $this->db->schema()->dropIfExists('regions');
         $this->db->schema()->dropIfExists('options');
     }
 
@@ -348,23 +289,19 @@ class Installer
             ], [
                 'id' => 'verified',
                 'name' => 'Verificado',
-                'show_badge' => true,
+                'show_badge' => false,
             ], [
                 'id' => 'admin',
                 'name' => 'Admnistrador',
                 'show_badge' => true,
             ], [
-                'id' => 'group-staff',
-                'name' => 'Grupo de Staff',
+                'id' => 'coordin',
+                'name' => 'Coordinador',
+                'show_badge' => true,
+            ], [
+                'id' => 'group',
+                'name' => 'Grupo',
                 'show_badge' => false,
-            ],
-        ]);
-
-        $this->db->table('group_types')->insert([
-            [
-                'name' => 'Staff',
-                'description' => 'Equipo de trabajo de Virtuagora',
-                'role_id' => 'group-staff'
             ],
         ]);
     }

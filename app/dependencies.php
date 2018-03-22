@@ -47,13 +47,18 @@ $container['session'] = function ($c) {
 $container['identity'] = function ($c) {
     return new App\Service\IdentityService([
         'local' => new App\Util\IdentityProvider\LocalIdentityProvider($c['db'], $c['validation']),
-    ]);
+        'facebook' => new App\Util\IdentityProvider\FacebookIdentityProvider($c['db'], $c['facebook']),
+    ], $c['db']);
 };
 $container['representation'] = function ($c) {
     return new App\Service\RepresentationService([
         'html' => new App\Representation\HTMLRepresentation($c['view']),
         'json' => new App\Representation\JSONRepresentation(),
     ]);
+};
+$container['facebook'] = function ($c) {
+    $settings = $c->get('settings')['facebook'];
+    return new \Facebook\Facebook($settings);
 };
 
 /*$container['App\ExampleController'] = function ($c) {

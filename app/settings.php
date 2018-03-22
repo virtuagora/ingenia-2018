@@ -24,7 +24,7 @@ return [
         'eloquent' => [
             'driver' => 'mysql',
             'host' => 'localhost',
-            'database' => 'virtuagora_next',
+            'database' => 'ingenia2018',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
@@ -35,6 +35,11 @@ return [
             'name' => 'virtuagora',
             'autorefresh' => true,
             'lifetime' => '1 hour',
+        ],
+        'facebook' => [
+            'app_id' => '191906834751311',
+            'app_secret' => '4e0365fbcb63c05f06d4af3c93d8039b',
+            'default_graph_version' => 'v2.12',
         ],
     ],
 ];

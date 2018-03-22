@@ -21,7 +21,8 @@ class PHPSessionService
                 $this->store['subject']['type'],
                 $this->store['subject']['id'],
                 $this->store['subject']['name'],
-                $this->store['subject']['roles']
+                $this->store['subject']['roles'],
+                $this->store['subject']['extra']
             );
         } else {
             return new DummySubject('Annonymous');

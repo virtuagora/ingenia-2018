@@ -7,13 +7,15 @@ class DummySubject
     protected $type;
     protected $name;
     protected $roles;
+    protected $extra;
 
-    public function __construct($type, $id = null, $name = null, $roles = null)
+    public function __construct($type, $id = null, $name = null, $roles = null, $extra = [])
     {
         $this->type = $type;
         $this->id = $id;
         $this->name = $name;
         $this->roles = $roles;
+        $this->extra = $extra;
     }
 
     public function getId()
@@ -36,6 +38,11 @@ class DummySubject
         return $this->roles;
     }
 
+    public function getExtra()
+    {
+        return $this->extra;
+    }
+
     public function toArray()
     {
         return [
@@ -43,6 +50,7 @@ class DummySubject
             'type' => $this->type,
             'name' => $this->name,
             'roles' => $this->roles,
+            'extra' => $this->extra,
         ];
     }
 

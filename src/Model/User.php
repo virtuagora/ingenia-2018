@@ -27,18 +27,26 @@ class User extends Model
     public function setNamesAttribute($value)
     {
         $this->attributes['names'] = $value;
-        $fullname = $this->attributes['names'] . ' ' . $this->attributes['surnames'];
-        $this->attributes['trace'] = mb_strtolower(trim($fullname));
+        if (isset($this->attributes['surnames'])) {
+            $fullname = $this->attributes['names'] . ' ' . $this->attributes['surnames'];
+            $this->attributes['trace'] = mb_strtolower(trim($fullname));
+        } else {
+            $this->attributes['trace'] = mb_strtolower(trim($value));
+        }
     }
 
     public function setSurnamesAttribute($value)
     {
         $this->attributes['surnames'] = $value;
-        $fullname = $this->attributes['names'] . ' ' . $this->attributes['surnames'];
-        $this->attributes['trace'] = mb_strtolower(trim($fullname));
+        if (isset($this->attributes['names'])) {
+            $fullname = $this->attributes['names'] . ' ' . $this->attributes['surnames'];
+            $this->attributes['trace'] = mb_strtolower(trim($fullname));
+        } else {
+            $this->attributes['trace'] = mb_strtolower(trim($value));
+        }
     }
 
-    public function setPaswordAttribute($value)
+    public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = password_hash($value, PASSWORD_DEFAULT);
     }
