@@ -3,17 +3,28 @@ namespace App\Service;
 
 class AuthorizationService
 {
-    public function checkPermission($subject, $action, $object, $proxy)
+    private $db;
+
+    public function __construct($db)
     {
-        $allowed = false;
+        $this->db = $db;
+    }
+
+    public function checkPermission($subject, $actName, $object = null, $proxy = null)
+    {
+        $action = $this->db->query('App:Action')->find('actName');
+        if (is_null($action)) {
+            return false;
+        }
         $subRoles = $subject->getRoles();
-        $objRelations = $object->getRelationsWith($subject);
         if (array_intersect($subRoles, $action->getAllowedRoles())) {
-            $allowed = true;
-        } elseif (array_intersect($objRelations, $action->getAllowedRelations())) {
-            $allowed = true;
+            return true;
+        }
+        if (isset($object)) {
+            $objRelations = $object->getRelationsWith($subject);
+            return array_intersect($objRelations, $action->getAllowedRelations());
         }
         //TODO verificar proxies
-        return $allowed;
+        return false;
     }
 }

@@ -63,16 +63,18 @@ $app->get('/', function ($request, $response, $args) {
     ]);
 })->setName('showHome');
 
-$app->get('/install', function ($req, $res, $arg) {
-    $installer = new \App\Util\Installer($this->db);
-    $installer->down();
-    $installer->up();
-    $installer->populate();
-
-    $loader = new \App\Util\LocalitiesLoader($this->db);
-    $loader->up();
-    
-    return $res->withJSON(['message' => 'instalación exitosa']);
+$app->get('/install[/{extra}]', function ($request, $response, $args) {
+    if (!isset($args['extra'])) {
+        $installer = new \App\Util\Installer($this->db);
+        $installer->down();
+        $installer->up();
+        $installer->populate();
+        $loader = new \App\Util\LocalitiesLoader($this->db);
+        $loader->up();
+    }
+    $actions = new \App\Util\ActionsLoader($this->db);
+    $actions->up();
+    return $response->withJSON(['message' => 'instalación exitosa']);
 });
 
 $app->get('/test', function ($req, $res, $arg) {

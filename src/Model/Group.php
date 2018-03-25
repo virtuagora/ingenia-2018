@@ -10,11 +10,12 @@ class Group extends Model
     protected $table = 'groups';
     protected $dates = ['deleted_at'];
     protected $visible = [
-        'id', 'name', 'acronym', 'description', 'quota',
-        'created_at', 'group_type', 'subject',
+        'id', 'name', 'year', 'description', 'previous_editions',
+        'parent_organization', 'web', 'facebook',
+        'locality_other', 'locality'
     ];
     protected $with = [
-        'group_type', 'subject',
+        'subject',
     ];
 
     public function subject()
@@ -25,5 +26,16 @@ class Group extends Model
     public function users()
     {
         return $this->belongsToMany('App\Model\User')->withPivot('relation', 'title');
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany('App\Model\Invitation');
+    }
+
+    public function getRelationsWith($subject)
+    {
+        $user = $this->users()->where('subject_id', $subject->getId())->first();
+        return isset($user) ? [$user->pivot->relation] : [];
     }
 }

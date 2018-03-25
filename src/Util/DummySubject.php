@@ -54,8 +54,8 @@ class DummySubject
         ];
     }
 
-    public function retrieveSubject($with = null)
+    public function getRelationsWith($subject)
     {
-        return $this->db->query('App:Subject', $with)->findOrFail($this->id);
+        return ($this->getId() == $subject->getId())? ['self']: [];
     }
 }

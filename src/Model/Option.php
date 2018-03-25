@@ -5,8 +5,17 @@ use Illuminate\Database\Eloquent\Model;
 class Option extends Model
 {
     protected $table = 'options';
-    protected $visible = ['id', 'key', 'velue', 'type', 'group', 'autoload'];
+    protected $visible = ['id', 'key', 'value', 'type', 'group', 'autoload'];
     protected $casts = [
         'autoload' => 'boolean',
     ];
+
+    public function getValueAttribute($value)
+    {
+        if ($type == 'array') {
+            return json_decode($value, true);
+        } else {
+            return $value;
+        }
+    }
 }

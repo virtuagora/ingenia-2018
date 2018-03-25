@@ -51,6 +51,21 @@ class User extends Model
         $this->attributes['password'] = password_hash($value, PASSWORD_DEFAULT);
     }
 
+    public function getPendingTasksAttribute()
+    {
+        $tasks = [];
+        if (!isset($this->attributes['email'])) {
+            $tasks[] = 'email';
+        }
+        if (!isset($this->attributes['dni'])) {
+            $tasks[] = 'dni';
+        }
+        if (!isset($this->attributes['birthday'])) {
+            $tasks[] = 'profile';
+        }
+        return $tasks;
+    }
+
     /*public function meta()
     {
         return $this->hasMany('App\Model\UserMeta');

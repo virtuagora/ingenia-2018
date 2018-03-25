@@ -16,4 +16,9 @@ class SettingsService
     {
         return $this->settings;
     }
+
+    public function getOption($option)
+    {
+        return $db->query('App:Options')->where('key', $option)->first();
+    }
 }

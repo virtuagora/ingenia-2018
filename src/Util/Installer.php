@@ -21,6 +21,12 @@ class Installer
             $table->boolean('autoload');
             $table->timestamps();
         });
+        $this->db->schema()->create('categories', function($table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->string('name');
+            $table->text('description');
+        });
         $this->db->schema()->create('regions', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
@@ -85,7 +91,7 @@ class Installer
             $table->string('address')->nullable();
             $table->string('telephone')->nullable();
             $table->string('dni')->nullable();
-            $table->boolean('verified_dni')->default(false);
+            $table->boolean('verified_dni')->nullable();
             $table->string('pending_email')->nullable();
 
             $table->integer('locality_id')->unsigned()->nullable();
@@ -151,19 +157,29 @@ class Installer
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
+        $this->db->schema()->create('invitations', function($table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->string('state'); // miembro, co-responsable, responsable
+            $table->string('email')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $table->timestamps();
+        });
         $this->db->schema()->create('projects', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name');
             $table->text('abstract');
             $table->text('foundation');
-            $table->string('topic');
-            $table->string('in_progress');
+            $table->text('previous_work')->nullable();
             $table->string('neighbourhood');
-            $table->text('goal');
+            $table->text('goals');
             $table->text('budget');
             $table->text('schedule');
-            $table->string('partners')->nullable();
+            $table->text('organization')->nullable();
 
             $table->boolean('public')->default(false);
             $table->boolean('selected')->default(false);
@@ -171,6 +187,12 @@ class Installer
             $table->integer('likes')->default(0);
             $table->string('trace')->nullable();
             $table->text('notes')->nullable(); //observaciones internas
+
+            $table->boolean('team_members_ok')->default(false);
+            $table->boolean('letters_ok')->default(false);
+
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('categories');
 
             $table->integer('locality_id')->unsigned();
             $table->foreign('locality_id')->references('id')->on('localities');
@@ -265,6 +287,8 @@ class Installer
         $this->db->schema()->dropIfExists('comment_votes');
         $this->db->schema()->dropIfExists('comments');
         $this->db->schema()->dropIfExists('projects');
+        $this->db->schema()->dropIfExists('invitations');
+        $this->db->schema()->dropIfExists('invitation');
         $this->db->schema()->dropIfExists('user_group');
         $this->db->schema()->dropIfExists('groups');
         $this->db->schema()->dropIfExists('pending_users');
@@ -276,6 +300,7 @@ class Installer
         $this->db->schema()->dropIfExists('departments');
         $this->db->schema()->dropIfExists('departaments');
         $this->db->schema()->dropIfExists('regions');
+        $this->db->schema()->dropIfExists('categories');
         $this->db->schema()->dropIfExists('options');
     }
 
@@ -303,6 +328,53 @@ class Installer
                 'name' => 'Grupo',
                 'show_badge' => false,
             ],
+        ]);
+
+        $this->db->table('options')->insert([
+            [
+                'key' => 'dni-blacklist',
+                'value' => '[]',
+                'type' => 'array',
+                'group' => 'varios',
+                'autoload' => false,
+            ], [
+                'key' => 'deadline',
+                'value' => '2018-6-8 23:59:59',
+                'type' => 'date',
+                'group' => 'varios',
+                'autoload' => true,
+            ],
+        ]);
+
+        $this->db->table('categories')->insert([
+            [
+                'name' => 'Integracion Social',
+                'description' => 'Incluimos aquí aquellos proyectos cuyos objetivos y actividades apuntaban a mejorar la convivencia a nivel social, implementando acciones destinadas a jóvenes, y a población en general, que tengan algunos de sus derechos vulnerados. Entre ellos jóvenes en situación de vulnerabilidad social, jóvenes con discapacidad, entre otros.',
+            ], [
+                'name' => 'Medio Ambiente',
+                'description' => 'Esta categoría engloba a los proyectos que se propusieron mejorar las condiciones del medio ambiente. Los mismos enfocan una amplia variedad de temáticas como ser las energías renovables, la producción verde, el reciclado de residuos, la soberanía alimentaria y la movilidad sustentable.',
+            ], [
+                'name' => 'Deporte y recreación',
+                'description' => 'Este eje integra los proyectos abocados a promover el bienestar joven mediante la organización de actividades deportivas y recreativas. En muchos casos, se trataban de proyectos que pretendían la recuperación de espacios públicos-en su mayoría plazas públicas- para tales fines.',
+            ], [
+                'name' => 'Educación',
+                'description' => 'Se incluyen en esta categoría a los proyectos juveniles cuyos objetivos y actividades tienen como fin brindar mayor educación a la sociedad en general. La educación es entendida en sentido amplio por los jóvenes, abarcando desde la enseñanza de los propios derechos hasta la educación sexual, adoptando desde formatos tradicionales de jornadas de formación básicas hasta actividades lúdicas.                ',
+            ], [
+                'name' => 'Arte y Cultura',
+                'description' => 'Caben aquí las iniciativas orientadas a al promoción de la cultura local, regional y provincial, desde diferentes expresiones artísticas: danzas, teatro, música, pintura, productos artesanales, entre otros',
+            ], [
+                'name' => 'Empleo y Capacitación',
+                'description' => 'Se encuentran en esta categoría los proyectos juveniles cuyos intereses se relacionaban con el mundo del trabajo, la posibilidad de acceder al mismo y la mejora de las condiciones laborales. Aquí, se encuentran también algunas iniciativas que, no atendiendo a las bases del Programa Ingenia, se formularon con la intención de lograr un microemprendimiento de carácter privado.',
+            ], [
+                'name' => 'Comunicación',
+                'description' => 'Se abarca con este eje a los proyectos destinados a amplificar la voz joven. Caben aquí las acciones para crear medios de comunicación gráficos y audiovisuales, como así también aquellas actividades que promocionan la participación juvenil en los medios existentes.',
+            ], [
+                'name' => 'Salud y Discapacidad',
+                'description' => 'Iniciativas que promueven una vida saludable en las juventudes. Reflexionar sobre las problemáticas vinculadas a la salud y el acceso a la misma sin olvidar que ésta no sólo depende de la biología o de la conducta del individuo, sino también de factores sociales, políticos y culturales sobre los que son necesarios actuar para producir cambios.',
+            ], [
+                'name' => 'Otra',
+                'description' => 'Otra temática.',
+            ]
         ]);
     }
 }

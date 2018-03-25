@@ -93,6 +93,10 @@ class LocalIdentityProvider
         $user->subject()->associate($subj);
         $user->save();
         $pending->delete();
+        $this->db->table('subject_role')->insert([
+            'role_id' => 'user',
+            'subject_id' => $subj->id,
+        ]);
         return $user;
     }
 }

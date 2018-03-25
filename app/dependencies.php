@@ -60,6 +60,12 @@ $container['facebook'] = function ($c) {
     $settings = $c->get('settings')['facebook'];
     return new \Facebook\Facebook($settings);
 };
+$container['authorization'] = function ($c) {
+    return new App\Service\AuthorizationService($c['db']);
+};
+$container['helper'] = function ($c) {
+    return new App\Service\HelperService($c['db'], $c['logger']);
+};
 
 /*$container['App\ExampleController'] = function ($c) {
     return new App\Controller\ExampleController($c);
