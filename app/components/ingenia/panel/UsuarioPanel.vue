@@ -27,7 +27,7 @@
         </ul>
       </aside>
     </div>
-    <div class="column is-5 is-offset-2">
+    <div class="column is-7 is-offset-1">
       <router-view></router-view>
     </div>
   </div>
@@ -41,7 +41,7 @@ export default {
 
     }
   },
-  beforeMount: function(){
+  mounted: function(){
     document.getElementById('loading').remove();
   }
 };

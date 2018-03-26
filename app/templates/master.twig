@@ -42,15 +42,15 @@
     </script>
   </head>
   <body {% if body_class is defined %} class='{{ body_class }}' {% endif %}>
-    <div class="content-master" id="vue">
+    <div id="vue" class="content-master">
       {% if show_navbar == true %}
         {% include 'master/navbar.twig' %}
       {% endif %}
       {% block body %}{% endblock %}
     </div>
-{% if show_footer == true %}
-    {% include 'ingenia/index/footer.twig'%}
-{% endif %}
+    {% if show_footer == true %}
+      {% include 'ingenia/index/footer.twig'%}
+    {% endif %}
     <script src="{{asset('js/virtuagora.js')}}"></script>
     {% block javascripts %}{% endblock %}
   </body>

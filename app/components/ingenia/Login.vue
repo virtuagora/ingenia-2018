@@ -12,7 +12,7 @@
       </button>
       <br>
       <div class="strike">
-        <span>¿No tenes cuenta todavía?</span>
+        <span>¿No tenés cuenta todavía?</span>
       </div>
       <br>
       <button @click="register = true" class="button is-primary is-outlined is-medium is-fullwidth">
@@ -86,19 +86,18 @@
       </div>
       <hr>
     </div>
-    <div v-if="loginFacebook">
-      <div class="notification is-link">
-        <i class="fas fa-cog fa-spin fa-lg fa-fw"></i>
-        Iniciando sesion con Facebook...
-      </div>
-    </div>
+    <facebook-login :fb-login-action="fbLoginAction" v-if="loginFacebook"></facebook-login>
     <br>
   </div>
 </template>
 
 <script>
+import FacebookLogin from "./FBLogin";
 export default {
-  props: ["message", "formUrl", "signUpUrl", "homeUrl"],
+  props: ["message", "formUrl", 'fbLoginAction', "signUpUrl", "homeUrl"],
+  components:{
+    FacebookLogin
+  },
   data() {
     return {
       loginEmail: false,
@@ -125,7 +124,7 @@ export default {
       // this.registro.ok = true;
     }
   },
-  mounted: function() { 
+  mounted: function() {
     document.getElementById("loading").remove();
   }
 };

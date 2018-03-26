@@ -60,12 +60,12 @@
       </b-field>
       <span v-show="errors.has('proyecto.tematica')" class="help is-danger">{{errors.first('proyecto.tematica')}}</span>
       <div class="notification is-light" v-show="proyecto.tematica != null">
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Integracion Social'">Integracion Social</h1>
-        <p v-show="proyecto.tematica == 'Integracion Social'">Incluimos aquí aquellos proyectos cuyos objetivos y actividades apuntaban a mejorar la convivencia a nivel social, implementando acciones destinadas a jóvenes, y a población en general, que tengan algunos de sus derechos vulnerados. Entre ellos jóvenes en situación de vulnerabilidad social, jóvenes con discapacidad, entre otros.</p>
+        <h1 class="title is-5" v-show="proyecto.tematica == 'Integración Social'">Integración Social</h1>
+        <p v-show="proyecto.tematica == 'Integración Social'">Incluimos aquí aquellos proyectos cuyos objetivos y actividades apuntaban a mejorar la convivencia a nivel social, implementando acciones destinadas a jóvenes, y a población en general, que tengan algunos de sus derechos vulnerados. Entre ellos jóvenes en situación de vulnerabilidad social, jóvenes con discapacidad, entre otros.</p>
         <h1 class="title is-5" v-show="proyecto.tematica == 'Medio Ambiente'">Medio Ambiente</h1>
-        <p v-show="proyecto.tematica == 'Medio Ambiente'">esta categoría engloba a los proyectos que se propusieron mejorar las condiciones del medio ambiente. Los mismos enfocan una amplia variedad de temáticas como ser la recolección sustentable de residuos, el reciclado de basura, la disminución de gases tóxicos; hasta el cuidado de otros seres vivos como plantas y animales.</p>
+        <p v-show="proyecto.tematica == 'Medio Ambiente'">Esta categoría engloba a los proyectos que se propusieron mejorar las condiciones del medio ambiente. Los mismos enfocan una amplia variedad de temáticas como ser la recolección sustentable de residuos, el reciclado de basura, la disminución de gases tóxicos; hasta el cuidado de otros seres vivos como plantas y animales.</p>
         <h1 class="title is-5" v-show="proyecto.tematica == 'Deporte y recreación'">Deporte y recreación</h1>
-        <p v-show="proyecto.tematica == 'Deporte y recreación'">este eje integra los proyectos abocados a promover el bienestar joven mediante la organización de actividades deportivas y recreativas. En muchos casos, se trataban de proyectos que pretendían la recuperación de espacios públicos-en su mayoría plazas públicas- para tales fines.</p>
+        <p v-show="proyecto.tematica == 'Deporte y recreación'">Este eje integra los proyectos abocados a promover el bienestar joven mediante la organización de actividades deportivas y recreativas. En muchos casos, se trataban de proyectos que pretendían la recuperación de espacios públicos-en su mayoría plazas públicas- para tales fines.</p>
         <h1 class="title is-5" v-show="proyecto.tematica == 'Educación'">Educación</h1>
         <p v-show="proyecto.tematica == 'Educación'">Se incluyen en esta categoría a los proyectos juveniles cuyos objetivos y actividades tienen como fin brindar mayor educación a la sociedad en general. La educación es entendida en sentido amplio por los jóvenes, abarcando desde la enseñanza de los propios derechos hasta la educación sexual, adoptando desde formatos tradicionales de jornadas de formación básicas hasta actividades lúdicas.</p>
         <h1 class="title is-5" v-show="proyecto.tematica == 'Cultura'">Cultura</h1>
@@ -75,7 +75,7 @@
         <h1 class="title is-5" v-show="proyecto.tematica == 'Comunicación'">Comunicación</h1>
         <p v-show="proyecto.tematica == 'Comunicación'">Se abarca con este eje a los proyectos destinados a amplificar la voz joven. Caben aquí las acciones para crear medios de comunicación gráficos y audiovisuales, como así también aquellas actividades que promocionan la participación juvenil en los medios existentes.</p>
         <h1 class="title is-5" v-show="proyecto.tematica == 'Salud'">Salud</h1>
-        <p v-show="proyecto.tematica == 'Salud'">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga saepe natus accusamus delectus deserunt eaque repellat nemo temporibus necessitatibus perspiciatis rerum laboriosam, perferendis soluta nam molestias repellendus magni eos in?</p>
+        <p v-show="proyecto.tematica == 'Salud'">Iniciativas que promueven una vida saludable en las juventudes. Reflexionar sobre las problemáticas vinculadas a la salud y el acceso a la misma sin olvidar que ésta no sólo depende de la biología o de la conducta del individuo, sino también de factores sociales, políticos y culturales sobre los que son necesarios actuar para producir cambios.</p>
       </div>
     </div>
     <br>
@@ -262,7 +262,7 @@
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.presupuesto')}">
         <i class="fas fa-angle-double-right"></i> Presupuesto *</label>
       <p>
-        <span class="tag is-warning">Importante</span>&nbsp;&nbsp;Recuerda que el tope es de $20.000.-</p>
+        <span class="tag is-warning">Importante</span>&nbsp;&nbsp;Recuerda que el tope es de $22.000.-</p>
       <br>
       <div class="field is-grouped">
         <p class="control is-expanded">
@@ -439,9 +439,9 @@ export default {
         .then(result => {
           if (result) {
             if (!this.disableAddItem) {
-              if (parseFloat(this.inputItemMonto) + this.montoTotal > 20000) {
+              if (parseFloat(this.inputItemMonto) + this.montoTotal > 22000) {
                 this.$snackbar.open(
-                  "El item excede el total permitido ($20000)"
+                  "El item excede el total permitido ($22000)"
                 );
                 return;
               }

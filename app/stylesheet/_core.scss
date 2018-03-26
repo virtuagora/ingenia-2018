@@ -1,3 +1,21 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-master {
+    flex: 1 0 auto;
+}
+
+footer.footer {
+    flex-shrink: 0;
+}
+
 nav.navbar {
     // background-color: transparent;
     // border-bottom: 1px solid rgba($primary, 0.3);
@@ -13,22 +31,16 @@ input.input {
     border-bottom: 1px solid #b5b5b5;
     box-shadow: none;
     padding-left: 0;
-    padding-right: 0;
-    // background-color: rgb(252, 252, 252);
-
+    padding-right: 0; // background-color: rgb(252, 252, 252);
     &:hover {
         border-bottom: 1px solid $primary;
     }
-
     &:focus {
         box-shadow: none;
-    }
-
-    // background-color: #FAFBFC;
+    } // background-color: #FAFBFC;
     // border-color: #CCCCCC;
     // &:hover {
     // }
-
     // &:focus {
     //   box-shadow: none;
     // }
@@ -36,7 +48,7 @@ input.input {
 
 .subtitle,
 .title {
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .is-login-window {
@@ -54,6 +66,7 @@ input.input {
         }
     }
 }
+
 .em {
     font-size: 18px;
 }

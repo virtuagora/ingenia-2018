@@ -8,7 +8,10 @@
     "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "https": "vendor/bin/hyper-run -s localhost:8081 -t public",
+    "http": "php -S 0.0.0.0:8000 -t public",
+    "server": "php -S 0.0.0.0:8000 -t public & vendor/bin/hyper-run -s localhost:8081 -t public"
   },
   "repository": {
     "type": "git",
@@ -45,6 +48,7 @@
     "buefy": "^0.6.3",
     "chart.js": "^2.7.1",
     "emoji-awesome": "0.0.1",
+    "facebook-sdk-promise": "^1.2.1",
     "fontawesome5-webfont": "^5.0.4",
     "install": "^0.10.4",
     "patternomaly": "^1.3.0",

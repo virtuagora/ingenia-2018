@@ -32,10 +32,12 @@ Vue.use(VeeValidate);
 // Ingenia 2018 Componentes
 import VueCarousel from 'vue-carousel';
 import Login from './ingenia/Login'
+import FBRegister from './ingenia/FBRegister'
 import Registro from './ingenia/Registro'
 import CompletarRegistro from './ingenia/CompletarRegistro'
 import Catalogo from './ingenia/catalogo/Catalogo'
 import FormProyecto from './ingenia/form/FormProyecto'
+// import VueFB from "./fb-sdk"
 
 // vue-textarea-autosize
 // autosizer for textareas
@@ -79,6 +81,7 @@ new Vue({ // eslint-disable-line no-new
     Registro,
     CompletarRegistro,
     FormProyecto,
-    Catalogo
+    Catalogo,
+    'fb-register': FBRegister,
   }
 })
