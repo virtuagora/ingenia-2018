@@ -11,7 +11,7 @@
     margin-bottom: 10px;
 }
 
-.button{
+.button {
     font-weight: 300;
 }
 
@@ -111,4 +111,18 @@ footer.footer {
 .strike>span:after {
     left: 100%;
     margin-left: 15px;
+}
+
+#logos-nosotros {
+    .image.logo {
+        max-height: 60px;
+        margin: 0 auto;
+    }
+}
+
+.logo-sf-float {
+    position: absolute;
+    float: right;
+    top: 15px;
+    right: 15px;
 }
