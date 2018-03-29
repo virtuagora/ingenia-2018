@@ -33,9 +33,13 @@
         <i class="far fa-edit fa-fw"></i> Sobre el <u>PROYECTO</u></h1>
       </div>
       <form-proyecto ref="formProyecto" :proyecto.sync="proyecto"></form-proyecto>
-      <button @click="submitForm" class="button is-large is-primary is-fullwidth">
-      <i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Guardar y enviar</button>
+      <b-message class="has-text-centered">
+        Al ingresar tu formulario, tu proyecto será agregado al catálogo. <i class="em em-smiley"></i> ¡Podras gestionar tu equipo, enviar invitaciones a los miembros para que se registren, subir los documentos faltantes, y hacer cualquier cambio que quieras al proyecto a medida que la convocatoria se mantenga abierta!
+        </b-message>
+      <button @click="submitForm" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
+      <i class="fa fa-paper-plane"></i>&nbsp;&nbsp;¡Guardar formulario y comenzar!</button>
     </section>
+    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>    
   </section>
 </template>
 
@@ -50,6 +54,7 @@ export default {
   data() {
     return {
       showForm: true,
+      isLoading: false,
       proyecto: {
         nombre: null,
         resumen: null,
@@ -131,7 +136,7 @@ export default {
             this.proyecto.presupuestoTotal = this.montoTotal;
             console.log("Sending form!");
             console.log(JSON.stringify(this.proyecto));
-            this.sending = true;
+            this.isLoading = true;
             this.$snackbar.open({
               message: "Formulario enviado!",
               type: "is-success",
@@ -140,7 +145,7 @@ export default {
           } else {
             this.$snackbar.open({
               message:
-                "Alguno de los campos son incorrectos. Verifique el formulario.",
+                "Faltan algunos datos o son incorrectos. Verifique el formulario.",
               type: "is-danger",
               actionText: "Cerrar"
             });
