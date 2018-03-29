@@ -37,7 +37,7 @@
 import loadFBSDK from "facebook-sdk-promise";
 
 export default {
-  props: ['fbLoginAction'],
+  props: ['fbLoginAction', 'fbApp' ],
   data: function() {
     return {
       FB: null,
@@ -53,7 +53,7 @@ export default {
       this.FB = FB;
       this.loaded = true;
       FB.init({
-        appId: "191906834751311",
+        appId: this.fbApp,
         autoLogAppEvents: true,
         xfbml: true,
         cookie: true,
@@ -73,10 +73,7 @@ export default {
               // Now you can redirect the user or do an AJAX request to
               // a PHP script that grabs the signed request from the cookie.
             } else {
-              this.error = true;
-              this.accessToken = 'lalalalalalall'             
-              this.$refs.sendFacebookLoginForm.submit();              
-              // alert("User cancelled login or did not fully authorize.");
+              this.error = true;           
             }
           }
         },

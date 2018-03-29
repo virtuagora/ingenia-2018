@@ -22500,6 +22500,7 @@ label.panel-block:hover {
 img.is-rounded,
 figure.is-rounded img {
   border-radius: 25%;
+  border-bottom-left-radius: 0;
 }
 
 .is-poppins {

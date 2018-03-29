@@ -1,18 +1,6 @@
 <template>
   <div>
-    <h1 class="title is-1">Formulario de presentación de proyectos</h1>
-          <article class="message is-link">
-            <div class="message-body has-text-centered">
-              Desde el Gabinete Joven y la Secretaría de Juventudes recomendamos tener a mano
-              <a href="mailto:ingenia@santafe.gob.ar">
-                <b>el reglamento</b>
-              </a>
-              del programa en el momento que se dispongan a completar el presente formulario. Recuerden que pueden contar con nosotros para responder sus dudas y preguntas, así como orientarlos en la tarea de presentar su proyecto. Pueden escribirnos todas las veces que sea necesario a
-              <a href="mailto:ingenia@santafe.gob.ar">
-                <b>ingenia@santafe.gob.ar</b>
-              </a>
-            </div>
-          </article>
+    
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.nombre')}">
         <i class="fas fa-angle-double-right"></i> Nombre del proyecto</label>
@@ -24,7 +12,7 @@
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.resumen')}">
         <i class="fas fa-angle-double-right"></i> Resumen del proyecto</label>
-      <p>Breve descripción de tu proyecto</p>
+      <p>Breve descripción de tu proyecto. Máximo 250 caracteres</p>
       <div class="control">
         <b-input v-model="proyecto.resumen" data-vv-name="proyecto.resumen" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:250'" type="textarea" minlength="10" maxlength="250" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
         </b-input>
@@ -34,9 +22,9 @@
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.fundamentacion')}">
         <i class="fas fa-angle-double-right"></i> Fundamentación</label>
-      <p>¿Por qué vale la pena realizar el proyecto? Máximo 200 palabras</p>
+      <p>¿Por qué vale la pena realizar el proyecto? Máximo 400 caracteres</p>
       <div class="control">
-        <b-input v-model="proyecto.fundamentacion" data-vv-name="proyecto.fundamentacion" data-vv-as="'Fundamentación'" v-validate="'required|min:10|max:250'" type="textarea" minlength="10" maxlength="200" rows="3" placeholder="Requerido *">
+        <b-input v-model="proyecto.fundamentacion" data-vv-name="proyecto.fundamentacion" data-vv-as="'Fundamentación'" v-validate="'required|min:10|max:400'" type="textarea" minlength="10" maxlength="400" rows="3" placeholder="Requerido *">
         </b-input>
         <span v-show="errors.has('proyecto.fundamentacion')" class="help is-danger">{{errors.first('proyecto.fundamentacion')}}</span>
       </div>
@@ -63,7 +51,7 @@
         <h1 class="title is-5" v-show="proyecto.tematica == 'Integración Social'">Integración Social</h1>
         <p v-show="proyecto.tematica == 'Integración Social'">Incluimos aquí aquellos proyectos cuyos objetivos y actividades apuntaban a mejorar la convivencia a nivel social, implementando acciones destinadas a jóvenes, y a población en general, que tengan algunos de sus derechos vulnerados. Entre ellos jóvenes en situación de vulnerabilidad social, jóvenes con discapacidad, entre otros.</p>
         <h1 class="title is-5" v-show="proyecto.tematica == 'Medio Ambiente'">Medio Ambiente</h1>
-        <p v-show="proyecto.tematica == 'Medio Ambiente'">Esta categoría engloba a los proyectos que se propusieron mejorar las condiciones del medio ambiente. Los mismos enfocan una amplia variedad de temáticas como ser la recolección sustentable de residuos, el reciclado de basura, la disminución de gases tóxicos; hasta el cuidado de otros seres vivos como plantas y animales.</p>
+        <p v-show="proyecto.tematica == 'Medio Ambiente'">Esta categoría engloba a los proyectos que se propusieron mejorar las condiciones del medio ambiente. Los mismos enfocan una amplia variedad de temáticas como ser las energías renovables, la producción verde, el reciclado de residuos, la soberanía alimentaria y la movilidad sustentable.</p>
         <h1 class="title is-5" v-show="proyecto.tematica == 'Deporte y recreación'">Deporte y recreación</h1>
         <p v-show="proyecto.tematica == 'Deporte y recreación'">Este eje integra los proyectos abocados a promover el bienestar joven mediante la organización de actividades deportivas y recreativas. En muchos casos, se trataban de proyectos que pretendían la recuperación de espacios públicos-en su mayoría plazas públicas- para tales fines.</p>
         <h1 class="title is-5" v-show="proyecto.tematica == 'Educación'">Educación</h1>
@@ -331,8 +319,8 @@
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.conOrganizacion')}">
         <i class="fas fa-angle-double-right"></i> ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * </label>
-      <p>Se refiere a organizaciones y/o instituciones diferentes a la de pertenencia</p>
-      <p>Si el proyecto se realiza en coordinación de alguna institución y/o organización deben adjuntar la carta aval.</p>
+      <p>Se refiere a organizaciones y/o instituciones <u>diferentes</u> a la que pertenece el equipo</p>
+      <p><b>IMPORTANTE:</b> Si el proyecto se realiza en coordinación con otra institución y/o organización, debera adjuntar la carta aval en el sistema en otro momento.</p>
       <br>
       <b-field>
         <b-radio-button v-model="proyecto.conOrganizacion" data-vv-name="proyecto.conOrganizacion" data-vv-as="'Trabajo en conjunto con Organización'" v-validate="'required'" :native-value="true" type="is-primary" size="is-medium">
@@ -347,20 +335,18 @@
       <span v-show="errors.has('proyecto.conOrganizacion')" class="help is-danger">{{errors.first('proyecto.conOrganizacion')}}</span>
     </div>
     <br>
-    <organizacion ref="orgForm" v-if="proyecto.conOrganizacion" :organizacion.sync="proyecto.organizacion"></organizacion>
-    <br>
-    <hr>
-    <br>
-    <button @click="submitForm" class="button is-large is-primary is-fullwidth">
-      <i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Guardar y enviar</button>
-    <br>
+    <form-organizacion ref="formProyectoOrganizacion" v-if="proyecto.conOrganizacion" :organizacion.sync="proyecto.organizacion"></form-organizacion>
   </div>
 </template>
 
 <script>
-import Organizacion from "./Organizacion";
+import FormOrganizacion from "./FormOrganizacion";
 
 export default {
+  props: ['proyecto'],
+  components: {
+    FormOrganizacion
+  },
   data() {
     return {
       radioEstado: null,
@@ -369,46 +355,8 @@ export default {
       inputItemRubro: null,
       inputItemDescripcion: null,
       inputItemMonto: null,
-      dateActividad: null,
-      proyecto: {
-        nombre: null,
-        resumen: null,
-        fundamentacion: null,
-        tematica: null,
-        enEjecucion: null,
-        descripcionEjecucion: null,
-        localizacion: {
-          nodo: null,
-          departamento: null,
-          localidad: null
-        },
-        barrios: [],
-        objetivos: [],
-        actividades: [],
-        presupuesto: [],
-        presupuestoTotal: 0,
-        conOrganizacion: null,
-        organizacion: {
-          nombre: null,
-          tematicas: [],
-          otraTematica: null,
-          localizacion: {
-            nodo: null,
-            departamento: null,
-            localidad: null
-          },
-          contacto: {
-            web: null,
-            facebook: null,
-            email: null,
-            telefono: null
-          }
-        }
-      }
+      dateActividad: null
     };
-  },
-  components: {
-    Organizacion
   },
   methods: {
     addObjetivo: function() {
@@ -464,50 +412,32 @@ export default {
     removeItem: function(index) {
       this.proyecto.presupuesto.splice(index, 1);
     },
-    submitForm: function() {
-      Promise.all([
-        this.$validator.validateAll(),
-        (this.proyecto.conOrganizacion == true ? this.$refs.orgForm.validateForm() : true)
-      ])
-        .then(values => {
-          if (
-            values.every(x => {
-              return x == true;
-            })
-          ) {
-            this.proyecto.presupuestoTotal = this.montoTotal
-            console.log("Sending form!");
-            console.log(JSON.stringify(this.proyecto));
-            this.sending = true;
-            this.$snackbar.open({
-              message: "Formulario enviado!",
-              type: "is-success",
-              actionText: "OK"
-            });
-          } else {
-            this.$snackbar.open({
-              message:
-                "Alguno de los campos son incorrectos. Verifique el formulario.",
-              type: "is-danger",
-              actionText: "Cerrar"
-            });
+    validateForm: function() {
+      let promise = new Promise((resolve, reject) => {
+        this.$validator.validateAll().then(result => {
+          if (!result) {
+            console.log("Proyecto: Hay errores en los datos");
+            return resolve(result);
           }
-        })
-        .catch(result => {
-          console.log("result: ");
-          console.log(result);
-          this.$snackbar.open({
-            message: "Error inesperado. Intente mas tarde.",
-            type: "is-danger",
-            actionText: "Cerrar"
-          });
+          console.log("Proyecto: OK");
+          return resolve(result);
         });
+      });
+      return promise;
+    },  
+    validateOrganizacionForm: function() {
+      if (this.proyecto.conOrganizacion) {
+        return this.$refs.formProyectoOrganizacion.validateForm();
+      } else {
+        return true;
+      }
     }
   },
   computed: {
     montoTotal: function() {
-      const reducer = (accumulator, item) => accumulator + parseFloat(item.monto);
-      return this.proyecto.presupuesto.reduce(reducer,0);
+      const reducer = (accumulator, item) =>
+        accumulator + parseFloat(item.monto);
+      return this.proyecto.presupuesto.reduce(reducer, 0);
     },
     disableAddItem: function() {
       return (

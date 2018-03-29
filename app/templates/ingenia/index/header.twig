@@ -9,32 +9,36 @@
         <div class="column">
           <div class="columns is-mobile is-multiline" style="justify-content: flex-end">
             <div class="column is-narrow">
-              <b-tooltip label="¡Inicia sesion!" type="is-dark" position="is-bottom">
-                <a href="{{path_for('showLogin')}}" class="">
-                  <span class="icon is-large has-text-white">
-                    <i class="fas fa-sign-in-alt fa-3x "></i>
-                  </span>&nbsp;&nbsp;
-                </a>
-              </b-tooltip>
-              <br>
-              <b-tooltip label="Cerrar sesion" type="is-dark" position="is-bottom">
-                <a href="" class="">
-                  <span class="icon is-large has-text-white">
-                    <i class="fas fa-sign-out-alt fa-3x "></i>
-                  </span>&nbsp;&nbsp;
-                </a>
-              </b-tooltip>
+              {% if subject.id %}
+                <b-tooltip label="Cerrar sesion" type="is-dark" position="is-bottom">
+                  <a href="/logout" class="">
+                    <span class="icon is-large has-text-white">
+                      <i class="fas fa-sign-out-alt fa-3x "></i>
+                    </span>&nbsp;&nbsp;
+                  </a>
+                </b-tooltip>
+              {% else %}
+                <b-tooltip label="¡Inicia sesion!" type="is-dark" position="is-bottom">
+                  <a href="{{path_for('showLogin')}}" class="">
+                    <span class="icon is-large has-text-white">
+                      <i class="fas fa-sign-in-alt fa-3x "></i>
+                    </span>&nbsp;&nbsp;
+                  </a>
+                </b-tooltip>
+              {% endif %}
             </div>
-            <div class="column is-narrow">
-              <b-tooltip label="Panel de control" type="is-dark" position="is-bottom">
-                <a href="/panel" class="">
-                  <span class="icon is-large has-text-white">
-                    <i class="fas fa-cog fa-3x "></i>
-                  </span>&nbsp;&nbsp;
-                </a>
-              </b-tooltip>
-            </div>
-            <div class="column is-narrow">
+            {% if subject.id %}
+              <div class="column is-narrow">
+                <b-tooltip label="Panel de control" type="is-dark" position="is-bottom">
+                  <a href="/panel" class="">
+                    <span class="icon is-large has-text-white">
+                      <i class="fas fa-cog fa-3x "></i>
+                    </span>&nbsp;&nbsp;
+                  </a>
+                </b-tooltip>
+              </div>
+            {% endif %}
+            <div class="column is-narrow is-hidden">
               <b-tooltip label="Mi proyecto" type="is-dark" position="is-bottom">
                 <a href="/panel/proyecto" class="">
                   <span class="icon is-large has-text-white">
@@ -43,8 +47,7 @@
                 </a>
               </b-tooltip>
             </div>
-            <div class="column is-narrow"></div>
-            <div class="column is-narrow">
+            <div class="column is-narrow is-hidden">
               <b-tooltip label="Ajustes" type="is-dark" position="is-bottom">
                 <a href="/" class="">
                   <span class="icon is-large has-text-white">
@@ -53,32 +56,34 @@
                 </a>
               </b-tooltip>
             </div>
-            <div class="column is-narrow">
+            <div class="column is-narrow is-hidden">
               <b-tooltip label="Mi proyecto" type="is-dark" position="is-bottom">
                 <a href="/panel/equipo" class="">
                   <span class="icon is-large has-text-white">
                     <i class="fas fa-users fa-3x "></i>
-                  </span>&nbsp;&nbsp;
+                  </span>
                 </a>
               </b-tooltip>
             </div>
-            <div class="column is-narrow has-text-centered">
-              <b-tooltip label="Guillermo Croppi" type="is-dark" position="is-bottom">
-                <a href="/perfil">
-                  <figure class="image is-96x96 is-rounded">
-                    <img src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg" class="" alt=""></a>
-                </figure>
-              </b-tooltip>
-              <br>
-              <a href="#" class="has-text-white">
-                <b-tooltip label="¡32 bancan mi proyecto!" type="is-dark" position="is-bottom">
-                  <span class="is-size-3 is-800" style="text-shadow: 2px 2px 0px rgb(128, 128, 128);">32</span>&nbsp;
-                  <figure class="" style="height: 38px;width: 38px;margin-top: 1px;">
-                    <img src="{{asset('img/muscle-white.svg')}}" class="" alt="">
+            {% if subject.id %}
+              <div class="column is-narrow has-text-centered">
+                <b-tooltip label="Guillermo Croppi" type="is-dark" position="is-bottom">
+                  <a href="/perfil">
+                    <figure class="image is-96x96 is-rounded">
+                      <img src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg" class="" alt=""></a>
                   </figure>
                 </b-tooltip>
-              </a>
-            </div>
+                <br>
+                <a href="#" class="has-text-white is-hidden">
+                  <b-tooltip label="¡32 bancan mi proyecto!" type="is-dark" position="is-bottom">
+                    <span class="is-size-3 is-800" style="text-shadow: 2px 2px 0px rgb(128, 128, 128);">32</span>&nbsp;
+                    <figure class="" style="height: 38px;width: 38px;margin-top: 1px;">
+                      <img src="{{asset('img/muscle-white.svg')}}" class="" alt="">
+                    </figure>
+                  </b-tooltip>
+                </a>
+              </div>
+            {% endif %}
           </div>
         </div>
       </div>

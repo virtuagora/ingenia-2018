@@ -5,7 +5,8 @@
       <div class="notification is-white has-text-centered">
         <h1 class="subtitle is-5">¡Gracias por ser parte de esta instancia participativa!</h1>
         <p>Participá bancando los proyectos que mas te gusten o presentando tu propio proyecto Ingenia<br>¡Tú participación es muy importante!
-        <i class="em em-muscle"></i></p>
+          <i class="em em-muscle"></i>
+        </p>
       </div>
       <div class="field">
         <div class="control">

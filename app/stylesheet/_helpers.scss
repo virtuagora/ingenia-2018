@@ -37,12 +37,13 @@
 img.is-rounded,
 figure.is-rounded img {
     border-radius: 25%;
+    border-bottom-left-radius: 0;
 }
 
 .is-poppins {
     font-family: 'Poppins', 'Roboto', 'Segoe UI', BlinkMacSystemFont, -apple-system, "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
-img.is-centered{
-    margin:0 auto;
+img.is-centered {
+    margin: 0 auto;
 }

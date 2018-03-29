@@ -36,8 +36,6 @@ import FBRegister from './ingenia/FBRegister'
 import Registro from './ingenia/Registro'
 import CompletarRegistro from './ingenia/CompletarRegistro'
 import Catalogo from './ingenia/catalogo/Catalogo'
-import FormProyecto from './ingenia/form/FormProyecto'
-// import VueFB from "./fb-sdk"
 
 // vue-textarea-autosize
 // autosizer for textareas
@@ -80,7 +78,6 @@ new Vue({ // eslint-disable-line no-new
     Login,
     Registro,
     CompletarRegistro,
-    FormProyecto,
     Catalogo,
     'fb-register': FBRegister,
   }

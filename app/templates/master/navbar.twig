@@ -16,17 +16,12 @@
       
     </div>
     <div class="navbar-end">
+{% if subject.id %}
       <a class="navbar-item" href="">
         250&nbsp;&nbsp;
         <span class="icon">
           <i class="em em-muscle"></i>
         </span>
-      </a>
-      <a class="navbar-item is-hidden-desktop-only" href="{{path_for('showLogin')}}">
-        <span class="icon">
-          <i class="fas fa-sign-in-alt fa-lg"></i>
-        </span>
-        &nbsp;Entrar
       </a>
       <a class="navbar-item" href="">
         <img src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg" class="is-rounded" alt="">
@@ -36,6 +31,14 @@
           <i class="fas fa-sign-out-alt fa-lg"></i>
         </span>
       </a>
+      {% else %}
+      <a class="navbar-item is-hidden-desktop-only" href="{{path_for('showLogin')}}">
+        <span class="icon">
+          <i class="fas fa-sign-in-alt fa-lg"></i>
+        </span>
+        &nbsp;Entrar
+      </a>
+      {% endif %}
 
     </div>
   </div>
