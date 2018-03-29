@@ -82,7 +82,7 @@ class GroupResource extends Resource
             ],
             'required' => [
                 'name', 'description', 'year', 'previous_editions', 'parent_organization',
-                'locality_id', 'webpage', 'facebook', 'telephone', 'email', 'referer'
+                'locality_id', 'telephone', 'email', 'referer'
             ],
             'additionalProperties' => false,
         ];
@@ -108,21 +108,28 @@ class GroupResource extends Resource
         $user->groups()->attach($invitation->group_id, ['relation' => 'miembro']);
     }
 
-    public function inviteUser($subject, $group, $email)
+    public function inviteUser($subject, $group, $data)
     {
         $v = $this->validation->fromSchema([
-            'type' => 'string',
-            'format' => 'email',
+            'type' => 'object',
+            'properties' => [
+                'email' => [
+                    'type' => 'string',
+                    'format' => 'email',
+                ],
+            ],
+            'required' => ['email'],
+            'additionalProperties' => false,
         ]);
-        $v->assert($email);
+        $v->assert($data);
+        $email = $data['email'];
 
         $countInvit = $group->invitations()->count();
         if ($countInvit > 10) {
             throw new AppException('Invitations limit reached');
         }
-
         $prevInvit = $this->db->query('App:Invitation')->where([
-            'user_id' => $user->id,
+            'email' => $email,
             'group_id' => $group->id
         ])->first();
         if (isset($prevInvit)) {
@@ -131,12 +138,12 @@ class GroupResource extends Resource
 
         $user = $this->db->query('App:User')->where('email', $email)->first();
         if (isset($user)) {
-            $invitation = $this->db->new('App:Group', [
+            $invitation = $this->db->new('App:Invitation', [
                 'user_id' => $user->id,
                 'group_id' => $group->id
             ]);
         } else {
-            $invitation = $this->db->new('App:Group', [
+            $invitation = $this->db->new('App:Invitation', [
                 'group_id' => $group->id
             ]);
             $pending = $this->identity->createPendingUser('local', [
@@ -154,6 +161,7 @@ class GroupResource extends Resource
         $invitation->state = 'pending';
         $invitation->email = $email;
         $invitation->save();
+        return $invitation;
     }
 
     public function createOne($subject, $data)
@@ -161,14 +169,17 @@ class GroupResource extends Resource
         $v = $this->validation->fromSchema($this->retrieveSchema());
         $v->assert($data);
 
-        $localidad = $this->db->query('App:Locality')->findOrFail($data['localidad']);
+        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
 
         $user = $this->helper->getUserFromSubject($subject, ['groups']);
         if (count($user->groups)) {
-            throw new AppException('User already has a group');
+            throw new AppException('Ya pertenece a un equipo');
+        }
+        if (count($user->pending_tasks)) {
+            throw new AppException('Aún debe completar su perfil de usuario');
         }
 
-        $deadline = Carbon::parse($this->settings->getSettings()['deadline']);
+        $deadline = Carbon::parse($this->options->getAutoloaded()['deadline']);
         $today = Carbon::now();
         if ($deadline->gt($today)) {
             throw new AppException('Application period is over');
@@ -187,8 +198,12 @@ class GroupResource extends Resource
         $group->year = $data['year'];
         $group->previous_editions = $data['previous_editions'];
         $group->parent_organization = $data['parent_organization'];
-        $group->webpage = $data['webpage'];
-        $group->facebook = $data['facebook'];
+        if (isset($data['webpage'])) {
+            $group->webpage = $data['webpage'];
+        }
+        if (isset($data['facebook'])) {
+            $group->facebook = $data['facebook'];
+        }
         $group->telephone = $data['telephone'];
         $group->email = $data['email'];
         $group->referer = $data['referer'];

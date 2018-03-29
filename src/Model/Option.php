@@ -12,7 +12,7 @@ class Option extends Model
 
     public function getValueAttribute($value)
     {
-        if ($type == 'array') {
+        if ($this->type == 'array') {
             return json_decode($value, true);
         } else {
             return $value;

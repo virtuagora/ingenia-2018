@@ -12,10 +12,13 @@ class Group extends Model
     protected $visible = [
         'id', 'name', 'year', 'description', 'previous_editions',
         'parent_organization', 'web', 'facebook',
-        'locality_other', 'locality'
+        'locality_other', 'locality', 'pivot'
     ];
     protected $with = [
         'subject',
+    ];
+    protected $casts = [
+        'previous_editions' => 'array',
     ];
 
     public function subject()
@@ -23,9 +26,14 @@ class Group extends Model
         return $this->belongsTo('App\Model\Subject');
     }
 
+    public function project()
+    {
+        return $this->hasOne('App\Model\Project');
+    }
+
     public function users()
     {
-        return $this->belongsToMany('App\Model\User')->withPivot('relation', 'title');
+        return $this->belongsToMany('App\Model\User', 'user_group')->withPivot('relation', 'title');
     }
 
     public function invitations()

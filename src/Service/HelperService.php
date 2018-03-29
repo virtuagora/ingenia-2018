@@ -21,4 +21,16 @@ class HelperService
             ->where('subject_id', $subject->getId())
             ->firstOrFail();
     }
+
+    public function getEntityFromId($model, $key, $params = null, $with = null)
+    {
+        $id = isset($params)? $this->getSanitizedId($key, $params): $key;
+        return $this->db->query($model, $with)->findOrFail($id);
+    }
+
+    public function getSanitizedId($attr, $params)
+    {
+        $isDigit = ctype_digit($params[$attr] ?? 'x');
+        return $isDigit ? $params[$attr] : -1;
+    }
 }

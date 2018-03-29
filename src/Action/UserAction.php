@@ -9,11 +9,26 @@ class UserAction
 {
     protected $userResource;
     protected $representation;
+    protected $helper;
+    protected $authorization;
 
-    public function __construct($userResource, $representation)
+    public function __construct($userResource, $representation, $helper, $authorization)
     {
         $this->userResource = $userResource;
         $this->representation = $representation;
+        $this->helper = $helper;
+        $this->authorization = $authorization;
+    }
+
+    // GET /usuario/{usr}
+    public function getOne($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $usuario = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params, ['groups']
+        );
+        $usuario->addVisible(['groups']);
+        return $response->withJSON($usuario->toArray());
     }
 
     public function post($request, $response, $params)
@@ -40,7 +55,10 @@ class UserAction
     public function postProfile($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
-        if (!$this->authorization->checkPermission($subject, 'updUsrProfile', $subject)) {
+        $user = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updUsrProfile', $user)) {
             throw new UnauthorizedException();
         }
         $user = $this->userResource->updateProfile($subject, $request->getParsedBody());
@@ -54,7 +72,10 @@ class UserAction
     public function postDni($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
-        if (!$this->authorization->checkPermission($subject, 'updUsrDni', $subject)) {
+        $user = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updUsrDni', $user)) {
             throw new UnauthorizedException();
         }
         $atributos = $request->getParsedBody();

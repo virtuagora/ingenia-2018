@@ -149,7 +149,8 @@ class UserResource extends Resource
         if (!isset($allowedMimes[$fileMime])) {
             throw new AppException('Tipo de documento inválido');
         }
-        $dniBlacklist = $this->settings->getOption('dni-blacklist');
+        $dniBlacklist = $this->options->getOption('dni-blacklist');
+        $this->logger->info(json_encode($subject->toArray()));
         $user = $this->helper->getUserFromSubject($subject);
         $user->dni = $data['dni'];
         if (in_array($user->dni, $dniBlacklist->value)) {

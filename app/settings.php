@@ -31,6 +31,12 @@ return [
             'collation' => 'utf8_general_ci',
             'prefix' => '',
         ],
+        'filesystem' => [
+            'adapter' => 'League\Flysystem\Adapter\Local',
+            'args' => [
+                __DIR__ . '/../var/files',
+            ],
+        ],
         'store' => [
             'name' => 'virtuagora',
             'autorefresh' => true,

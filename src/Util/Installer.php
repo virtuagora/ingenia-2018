@@ -288,7 +288,6 @@ class Installer
         $this->db->schema()->dropIfExists('comments');
         $this->db->schema()->dropIfExists('projects');
         $this->db->schema()->dropIfExists('invitations');
-        $this->db->schema()->dropIfExists('invitation');
         $this->db->schema()->dropIfExists('user_group');
         $this->db->schema()->dropIfExists('groups');
         $this->db->schema()->dropIfExists('pending_users');
