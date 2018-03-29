@@ -102,6 +102,13 @@ $app->get('/complete-sign-up', function ($request, $response, $args) {
 
 // api
 
+$app->get('/user/{usr}', 'userAction:getOne');
+$app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');
+$app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
+
+$app->post('/group', 'groupAction:post')->setName('runCreGro');
+$app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
+
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 
 $app->post('/pending-user', 'userAction:postPendingUser')->setName('runNewPendingUser');

@@ -1,7 +1,7 @@
 <?php
 namespace App\Service;
 
-class SettingsService
+class OptionsService
 {
     private $db;
     private $settings;
@@ -12,13 +12,13 @@ class SettingsService
         $this->settings = $db->table('options')->where('autoload', 'true')->get()->keyBy('key');
     }
 
-    public function getSettings()
+    public function getAutoloaded()
     {
         return $this->settings;
     }
 
     public function getOption($option)
     {
-        return $db->query('App:Options')->where('key', $option)->first();
+        return $this->db->query('App:Option')->where('key', $option)->first();
     }
 }

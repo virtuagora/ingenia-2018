@@ -56,6 +56,6 @@ class DummySubject
 
     public function getRelationsWith($subject)
     {
-        return ($this->getId() == $subject->getId())? ['self']: [];
+        return (isset($this->id) && $this->getId() == $subject->getId())? ['self']: [];
     }
 }

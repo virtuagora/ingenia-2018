@@ -11,8 +11,10 @@ class User extends Model
     protected $dates = ['deleted_at'];
     protected $visible = [
         'id', 'names', 'surnames', 'warning', 'ban_exp', 'created_at', 'subject',
+        'pending_tasks',
     ];
     protected $with = ['subject'];
+    protected $appends = ['pending_tasks'];
 
     public function subject()
     {
@@ -21,7 +23,7 @@ class User extends Model
 
     public function groups()
     {
-        return $this->belongsToMany('App\Model\Group')->withPivot('relation', 'title');
+        return $this->belongsToMany('App\Model\Group', 'user_group')->withPivot('relation', 'title');
     }
 
     public function setNamesAttribute($value)
@@ -64,6 +66,11 @@ class User extends Model
             $tasks[] = 'profile';
         }
         return $tasks;
+    }
+
+    public function getRelationsWith($subject)
+    {
+        return ($this->subject_id == $subject->getId())? ['self']: [];
     }
 
     /*public function meta()

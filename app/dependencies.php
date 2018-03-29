@@ -23,6 +23,11 @@ $container['mailer'] = function ($c) {
     );
     return $mailer;
 };
+$container['filesystem'] = function ($c) {
+    $settings = $c->get('settings')['filesystem'];
+    $adapter = new \ReflectionClass($settings['adapter']);
+    return new League\Flysystem\Filesystem($adapter->newInstanceArgs($settings['args']));
+};
 $container['view'] = function ($c) {
     $settings = $c->get('settings')['twig'];
     $view = new Slim\Views\Twig($settings['path'], $settings['options']);
@@ -61,10 +66,13 @@ $container['facebook'] = function ($c) {
     return new \Facebook\Facebook($settings);
 };
 $container['authorization'] = function ($c) {
-    return new App\Service\AuthorizationService($c['db']);
+    return new App\Service\AuthorizationService($c['db'], $c['logger']);
 };
 $container['helper'] = function ($c) {
     return new App\Service\HelperService($c['db'], $c['logger']);
+};
+$container['options'] = function ($c) {
+    return new App\Service\OptionsService($c['db']);
 };
 
 /*$container['App\ExampleController'] = function ($c) {
@@ -75,7 +83,21 @@ $container['sessionAction'] = function ($c) {
 };
 $container['userAction'] = function ($c) {
     $resource = new App\Resource\UserResource($c);
-    return new App\Action\UserAction($resource, $c['representation']);
+    return new App\Action\UserAction(
+        $resource, $c['representation'], $c['helper'], $c['authorization']
+    );
+};
+$container['projectAction'] = function ($c) {
+    $resource = new App\Resource\ProjectResource($c);
+    return new App\Action\ProjectAction(
+        $resource, $c['representation'], $c['helper'], $c['authorization']
+    );
+};
+$container['groupAction'] = function ($c) {
+    $resource = new App\Resource\GroupResource($c);
+    return new App\Action\GroupAction(
+        $resource, $c['representation'], $c['helper'], $c['authorization']
+    );
 };
 
 $container['errorHandler'] = function ($c) {
