@@ -19,6 +19,7 @@ import PublicarProyecto from './proyecto/PublicarProyecto'
 
 import Equipo from './equipo/Equipo'
 import VerInvitaciones from './equipo/VerInvitaciones'
+import EnviarInvitaciones from './equipo/EnviarInvitaciones'
 import VerEquipo from './equipo/VerEquipo'
 import VerMisDatosPersonales from './equipo/VerMisDatosPersonales'
 import SubirDNI from './equipo/SubirDNI'
@@ -133,6 +134,12 @@ const routes = [
             path: 'ver-invitaciones',
             component: VerInvitaciones,
             name: 'usuarioVerInvitaciones',
+            props: true
+          },
+          {
+            path: 'enviar-invitaciones',
+            component: EnviarInvitaciones,
+            name: 'usuarioEnviarInvitaciones',
             props: true
           },
           {

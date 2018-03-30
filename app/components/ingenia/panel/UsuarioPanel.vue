@@ -53,7 +53,10 @@
         </p>
         <ul class="menu-list">
         <li>
-          <router-link :to="{ name: 'usuarioVerInvitaciones'}" exact-active-class="is-active">Invitaciones</router-link>
+          <router-link :to="{ name: 'usuarioVerInvitaciones'}" exact-active-class="is-active">Mis invitaciones</router-link>
+        </li>
+        <li>
+          <router-link :to="{ name: 'usuarioEnviarInvitaciones'}" exact-active-class="is-active">Enviar invitaciones</router-link>
         </li>
         <li>
           <router-link :to="{ name: 'usuarioVerEquipo'}" exact-active-class="is-active">Mi equipo INGENIA</router-link>

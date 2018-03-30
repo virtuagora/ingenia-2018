@@ -22752,5 +22752,13 @@ footer.footer {
   right: 15px;
 }
 
+table.table.text-middle td {
+  vertical-align: middle;
+}
+
+table.table.text-middle td figure {
+  vertical-align: middle;
+}
+
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIvYXNzZXRzL2Nzcy92aXJ0dWFnb3JhLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/
