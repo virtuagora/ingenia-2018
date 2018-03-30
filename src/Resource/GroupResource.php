@@ -51,19 +51,37 @@ class GroupResource extends Resource
                     'minimum' => 1,
                 ],
                 'locality_other' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 250,
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 250,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
                 ],
                 'webpage' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 100,
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 100,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
                 ],
                 'facebook' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 100,
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 100,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
                 ],
                 'telephone' => [
                     'type' => 'string',
@@ -82,7 +100,8 @@ class GroupResource extends Resource
             ],
             'required' => [
                 'name', 'description', 'year', 'previous_editions', 'parent_organization',
-                'locality_id', 'telephone', 'email', 'referer'
+                'locality_id', 'locality_other', 'webpage', 'facebook', 'telephone',
+                'email', 'referer'
             ],
             'additionalProperties' => false,
         ];
@@ -198,12 +217,8 @@ class GroupResource extends Resource
         $group->year = $data['year'];
         $group->previous_editions = $data['previous_editions'];
         $group->parent_organization = $data['parent_organization'];
-        if (isset($data['webpage'])) {
-            $group->webpage = $data['webpage'];
-        }
-        if (isset($data['facebook'])) {
-            $group->facebook = $data['facebook'];
-        }
+        $group->webpage = $data['webpage'];
+        $group->facebook = $data['facebook'];
         $group->telephone = $data['telephone'];
         $group->email = $data['email'];
         $group->referer = $data['referer'];

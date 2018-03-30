@@ -44,7 +44,17 @@ class UserAction
 
     public function postPendingUser($request, $response, $params)
     {
-        $this->userResource->createPendingUser(null, $request->getParsedBody());
+        $data = $request->getParsedBody();
+        if (!isset($data['recaptcha'])) {
+            throw new AppException('CAPTCHA no recibido');
+        }
+        $gRecaptchaResponse = $data['recaptcha'];
+        unset($data['recaptcha']);
+        $captchaResp = $recaptcha->verify($gRecaptchaResponse);
+        if (!$captchaResp->isSuccess()) {
+            throw new AppException('Verificación de CAPTCHA inválida');
+        }
+        $this->userResource->createPendingUser(null, $data);
         return $this->representation->returnMessage($request, $response, [
             'message' => 'Pending user created',
             'status' => 200,
@@ -61,7 +71,7 @@ class UserAction
         if (!$this->authorization->checkPermission($subject, 'updUsrProfile', $user)) {
             throw new UnauthorizedException();
         }
-        $user = $this->userResource->updateProfile($subject, $request->getParsedBody());
+        $user = $this->userResource->updateProfile($subject, $user, $request->getParsedBody());
         return $this->representation->returnMessage($request, $response, [
             'message' => 'Profile updated succefully',
             'status' => 200,
@@ -83,7 +93,7 @@ class UserAction
             throw new AppException('No se envió un archivo');
         }
         $archivo = $request->getUploadedFiles()['archivo'];
-        $this->userResource->updateDni($subject, $atributos, $archivo);
+        $this->userResource->updateDni($subject, $user, $atributos, $archivo);
         return $this->representation->returnMessage($request, $response, [
             'message' => 'DNI loaded succefully',
             'status' => 200,

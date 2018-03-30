@@ -47,5 +47,9 @@ return [
             'app_secret' => '4e0365fbcb63c05f06d4af3c93d8039b',
             'default_graph_version' => 'v2.12',
         ],
+        'recaptcha' => [
+            'public_key' => '6LcF-CYTAAAAAOdQ_mLyGnTl6uqw1FGj7yrpfW_F',
+            'secret_key' => '6LcF-CYTAAAAACfCi_a60IK5E57PGC0xDp4Ko5ex',
+        ],
     ],
 ];
