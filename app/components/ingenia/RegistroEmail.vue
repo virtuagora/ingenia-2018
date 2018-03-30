@@ -90,7 +90,7 @@ export default {
           this.$http
             .post(this.signUpUrl, {
               identifier: this.email,
-              recaptcha: null 
+              recaptcha: this.recaptcha 
             })
             .then(response => {
               this.isLoading = false;
