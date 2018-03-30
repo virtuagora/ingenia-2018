@@ -13,8 +13,7 @@
       </div>
       <div class="field">
         <div class="control" style="display: inline-block;">
-          <vue-recaptcha :sitekey="googleKey" @verify="onVerify"
-@expired="onExpired"></vue-recaptcha>
+          <vue-recaptcha :sitekey="googleKey" @verify="onVerify" @expired="onExpired"></vue-recaptcha>
         </div>
       </div>
       <div class="field">
@@ -35,7 +34,7 @@
       <div class="notification is-success" v-show="response.replied && response.ok">
         <i class="fas fa-check fa-lg fa-fw"></i>
         El email ha sido enviado a tu casilla de correo
-        <b>{{email}}</b>. Revisá tu casilla y entre al link que hemos enviado.
+        <b>{{email}}</b>. Revisá tu casilla y entrá al link que hemos enviado.
       </div>
       <div class="notification is-danger" v-show="response.replied && !response.ok">
         <i class="fas fa-times fa-lg fa-fw"></i>
@@ -49,14 +48,14 @@
 <script>
 import VueRecaptcha from "vue-recaptcha";
 export default {
-  props: ["signUpUrl",'googleKey'],
+  props: ["signUpUrl", "googleKey"],
   components: {
     VueRecaptcha
   },
   data() {
     return {
       email: "",
-      recaptcha: '',
+      recaptcha: "",
       isLoading: false,
       response: {
         replied: null,
@@ -90,7 +89,7 @@ export default {
           this.$http
             .post(this.signUpUrl, {
               identifier: this.email,
-              recaptcha: this.recaptcha 
+              recaptcha: this.recaptcha
             })
             .then(response => {
               this.isLoading = false;
