@@ -21,7 +21,6 @@
       </div>
         <span class="help is-danger" v-show="errors.has('email')"><i class="fas fa-times-circle fa-fw"></i> Error. debe ser un email bien formado</span>          
         <span class="help is-danger" v-show="errors.has('password')"><i class="fas fa-times-circle fa-fw"></i> Error. La contraseña no puede ser vacia</span>          
-      </form>
       <br>
       <div class="field">
         <div class="control">
@@ -29,6 +28,7 @@
             <i class="fas fa-sign-in-alt fa-lg"></i>&nbsp;&nbsp;Iniciar sesión</button>
         </div>
       </div>
+      </form>
       <div class="field">
         <div class="control">
           <button @click="register = true" class="button is-primary is-inverted is-medium is-fullwidth">
@@ -48,8 +48,8 @@
         &nbsp;&nbsp;Facebook
       </button>
     </div>
-    <registro-email :signUpUrl="signUpUrl" @abort="register = false" v-if="register"></registro-email>
-    <facebook-login :fb-login-action="fbLoginAction" v-if="loginFacebook"></facebook-login>
+    <registro-email :sign-up-url="signUpUrl" :google-key="googleKey" @abort="register = false" v-if="register"></registro-email>
+    <facebook-login :fb-login-action="fbLoginAction" :facebook-key="facebookKey" v-if="loginFacebook"></facebook-login>
     <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>    
   </div>
 </template>
@@ -58,7 +58,7 @@
 import FacebookLogin from "./FBLogin";
 import RegistroEmail from "./RegistroEmail";
 export default {
-  props: ["message", "loginUrl", "fbLoginAction", "signUpUrl", "homeUrl"],
+  props: ["message", "loginUrl", 'googleKey', 'facebookKey', "fbLoginAction", "signUpUrl", "homeUrl"],
   components: {
     FacebookLogin,
     RegistroEmail

@@ -37,7 +37,7 @@
 import loadFBSDK from "facebook-sdk-promise";
 
 export default {
-  props: ['fbLoginAction', 'fbApp' ],
+  props: ['fbLoginAction', 'facebookKey' ],
   data: function() {
     return {
       FB: null,
@@ -53,7 +53,7 @@ export default {
       this.FB = FB;
       this.loaded = true;
       FB.init({
-        appId: this.fbApp,
+        appId: this.facebookKey,
         autoLogAppEvents: true,
         xfbml: true,
         cookie: true,
