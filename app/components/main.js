@@ -33,7 +33,6 @@ Vue.use(VeeValidate);
 import VueCarousel from 'vue-carousel';
 import Login from './ingenia/Login'
 import FBRegister from './ingenia/FBRegister'
-import Registro from './ingenia/Registro'
 import CompletarRegistro from './ingenia/CompletarRegistro'
 import Catalogo from './ingenia/catalogo/Catalogo'
 
@@ -76,7 +75,6 @@ new Vue({ // eslint-disable-line no-new
     // 'vote': Vote,
     // Ingenia2018
     Login,
-    Registro,
     CompletarRegistro,
     Catalogo,
     'fb-register': FBRegister,

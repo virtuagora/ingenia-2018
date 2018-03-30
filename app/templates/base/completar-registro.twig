@@ -26,19 +26,7 @@
               </span>
               Cargando . . .
             </div>
-            <login message="{{subject.type}}" login-url="{{ path_for('runLogin') }}" fb-login-action="{{path_for('fbCallbackGet')}}" fb-app="191906834751311" sign-up-url="{{ path_for('runNewPendingUser') }}" home-url="{{path_for('showHome')}}"></login>
-            <br>
-            <a href="{{base_url()}}" class="button is-white is-medium is-fullwidth is-300">
-              <i class="fas fa-home fa-fw"></i>&nbsp;Volver al inicio</a>
-            <br>
-            <br>
-            <a href="https://virtuagora.org" target="_blank"><img src="{{asset('img/logo-v.svg')}}" class="image is-32x32 is-centered" alt=""></a>
-            <br>
-            <p class="is-size-7">
-              Hecho con
-              <i class="fas fa-heart"></i>
-              por
-              <a href="https://virtuagora.org" target="_blank">Virtuágora</a><br>para Gabinete Joven</p>
+<completar-registro form-url="{{ path_for('runNewUser') }}" log-in-url="{{path_for('showLogin')}}" token="{{activation_key}}"></completar-registro>
           </div>
         </div>
       </div>

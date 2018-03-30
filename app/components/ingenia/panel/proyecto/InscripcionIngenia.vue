@@ -62,11 +62,8 @@ export default {
         tematica: null,
         enEjecucion: null,
         descripcionEjecucion: null,
-        localizacion: {
-          nodo: null,
-          departamento: null,
-          localidad: null
-        },
+        localidad: null,
+        otraLocalidad: null,
         barrios: [],
         objetivos: [],
         actividades: [],
@@ -77,11 +74,8 @@ export default {
           nombre: null,
           tematicas: [],
           otraTematica: null,
-          localizacion: {
-            nodo: null,
-            departamento: null,
-            localidad: null
-          },
+          localidad: null,
+          otraLocalidad: null,
           contacto: {
             web: null,
             facebook: null,
@@ -104,11 +98,8 @@ export default {
           nombre: null,
           tematicas: [],
           otraTematica: null,
-          localizacion: {
-            nodo: null,
-            departamento: null,
-            localidad: null
-          },
+          localidad: null,
+          otraLocalidad: null,
           contacto: {
             web: null,
             facebook: null,

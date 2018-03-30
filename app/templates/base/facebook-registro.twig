@@ -14,11 +14,6 @@
             <a href="{{base_url()}}">
               <img src="{{asset('img/ingenia-logo.svg')}}" class="image login-logo" alt="">
             </a>
-            {% if error %}
-              <div class="notification is-warning">
-                {{ error }}
-              </div>
-            {% endif %}
             <br>
             <div id="loading" class="notification is-light has-text-centered">
               <span class="icon">
@@ -26,7 +21,7 @@
               </span>
               Cargando . . .
             </div>
-            <fb-register message="{{subject.type}}" form-url="{{ path_for('fbRegister') }}" token="{{token}}"></fb-register>
+            <fb-register form-url="{{ path_for('fbRegister') }}" token="{{token}}"></fb-register>
           </div>
         </div>
       </div>

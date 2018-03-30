@@ -95,7 +95,7 @@ $app->get('/sign-up', function ($request, $response, $args) {
 })->setName('showSignUp');
 
 $app->get('/complete-sign-up', function ($request, $response, $args) {
-    return $this->view->render($response, 'base/completeSignUp.twig', [
+    return $this->view->render($response, 'base/completar-registro.twig', [
     'activation_key' => $request->getQueryParam('token'),
     ]);
 })->setName('showCompleteSignUp');

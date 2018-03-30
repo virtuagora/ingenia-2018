@@ -9,7 +9,7 @@
       </div>
     </div>
     <label class="label is-size-4">
-        <i class="fas fa-angle-double-right"></i>Mis redes sociales</label>
+        <i class="fas fa-angle-double-right"></i> Mis redes sociales</label>
     <div class="field is-grouped">
       <div class="control">
         <a class="button is-medium is-static">
@@ -54,7 +54,15 @@ export default {
   props: ["id"],
   data() {
     return {
-      user: {}
+      user: {
+        bio: null,
+        localidad: null,
+        redes:{
+          facebook: null,
+          twitter: null,
+          website: null
+        }
+      }
     };
   },
   created: function() {
