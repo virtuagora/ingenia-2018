@@ -88,7 +88,7 @@ $container['sessionAction'] = function ($c) {
 $container['userAction'] = function ($c) {
     $resource = new App\Resource\UserResource($c);
     return new App\Action\UserAction(
-        $resource, $c['representation'], $c['helper'], $c['authorization']
+        $resource, $c['representation'], $c['helper'], $c['authorization'], $c['recaptcha']
     );
 };
 $container['projectAction'] = function ($c) {

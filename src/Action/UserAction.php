@@ -11,13 +11,15 @@ class UserAction
     protected $representation;
     protected $helper;
     protected $authorization;
+    protected $recaptcha;
 
-    public function __construct($userResource, $representation, $helper, $authorization)
+    public function __construct($userResource, $representation, $helper, $authorization, $recaptcha)
     {
         $this->userResource = $userResource;
         $this->representation = $representation;
         $this->helper = $helper;
         $this->authorization = $authorization;
+        $this->recaptcha = $recaptcha;
     }
 
     // GET /usuario/{usr}
@@ -50,7 +52,7 @@ class UserAction
         }
         $gRecaptchaResponse = $data['recaptcha'];
         unset($data['recaptcha']);
-        $captchaResp = $recaptcha->verify($gRecaptchaResponse);
+        $captchaResp = $this->recaptcha->verify($gRecaptchaResponse);
         if (!$captchaResp->isSuccess()) {
             throw new AppException('Verificación de CAPTCHA inválida');
         }
