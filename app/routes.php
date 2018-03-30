@@ -87,7 +87,10 @@ $app->get('/test', function ($req, $res, $arg) {
 // views
 
 $app->get('/login', function ($request, $response, $args) {
-    return $this->view->render($response, 'base/login.twig');
+    return $this->view->render($response, 'base/login.twig', [
+        'facebookKey' => $this->get('settings')['facebook']['app_id'],
+        'googleKey' => $this->get('settings')['recaptcha']['public_key'],
+    ]);
 })->setName('showLogin');
 
 $app->get('/sign-up', function ($request, $response, $args) {
