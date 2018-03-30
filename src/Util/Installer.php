@@ -93,6 +93,7 @@ class Installer
             $table->string('dni')->nullable();
             $table->boolean('verified_dni')->nullable();
             $table->string('pending_email')->nullable();
+            $table->text('bio')->nullable();
 
             $table->integer('locality_id')->unsigned()->nullable();
             $table->foreign('locality_id')->references('id')->on('localities');

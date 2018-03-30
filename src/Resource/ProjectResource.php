@@ -11,26 +11,26 @@ class ProjectResource extends Resource
         $schema = [
             'type' => 'object',
             'properties' => [
-                'nombre' => [
+                'name' => [
                     'type' => 'string',
                     'minLength' => 1,
                     'maxLength' => 100,
                 ],
-                'resumen' => [
+                'abstract' => [
                     'type' => 'string',
                     'minLength' => 1,
                     'maxLength' => 1500,
                 ],
-                'fundamentacion' => [
+                'foundation' => [
                     'type' => 'string',
                     'minLength' => 1,
                     'maxLength' => 1000,
                 ],
-                'categoria' => [
+                'category_id' => [
                     'type' => 'integer',
                     'minimum' => 1,
                 ],
-                'descripcionEjecucion' => [
+                'previous_work' => [
                     'oneOf' => [
                         [
                             'type' => 'string',
@@ -41,17 +41,17 @@ class ProjectResource extends Resource
                         ],
                     ],
                 ],
-                'barrios' => [
+                'neighbourhood' => [
                     'type' => 'string',
                     'minLength' => 1,
                     'maxLength' => 500,
                 ],
-                'objetivos' => [
+                'goals' => [
                     'type' => 'string',
                     'minLength' => 1,
                     'maxLength' => 1000,
                 ],
-                'actividades' => [
+                'schedule' => [
                     'type' => 'array',
                     'items' => [
                         'type' => 'object',
@@ -76,7 +76,7 @@ class ProjectResource extends Resource
                         ],
                     ],
                 ],
-                'presupuesto' => [
+                'budget' => [
                     'type' => 'array',
                     'items' => [
                         'type' => 'object',
@@ -100,7 +100,7 @@ class ProjectResource extends Resource
                         ],
                     ],
                 ],
-                'organizacion' => [
+                'organization' => [
                     'oneOf' => [
                         [
                             'type' => 'object',
@@ -145,21 +145,27 @@ class ProjectResource extends Resource
                         ],
                     ],
                 ],
-
-                // TODO localidad_id y si es otra incluir localidad_otra
-                // nodo y departamento no me importan
-                'localidad' => [
+                'locality_id' => [
                     'type' => 'integer',
                     'minimum' => 1,
                 ],
-                'localidad_otra' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 250,
+                'locality_other' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 250,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
                 ],
-                /// /// /// /// ///
             ],
-            'required' => ['names', 'surnames', 'password', 'token'],
+            'required' => [
+                'name', 'abstract', 'foundation', 'category_id', 'previous_work',
+                'neighbourhood', 'goals', 'schedule', 'budget', 'organization',
+                'locality_id', 'locality_other',
+            ],
             'additionalProperties' => false,
         ];
         return $schema;
@@ -170,24 +176,35 @@ class ProjectResource extends Resource
         $v = $this->validation->fromSchema($this->retrieveSchema());
         $v->assert($data);
 
-        $localidad = $this->db->query('App:Locality')->findOrFail($data['localidad']);
-        $categoria = $this->db->query('App:Category')->findOrFail($data['categoria']);
+        $user = $this->helper->getUserFromSubject($subject);
+        $group = $user->groups()->with('project')->wherePivot('relation', 'responsable')->first();
+
+        if (is_null($group)) {
+            throw new AppException('Debe cargar un equipo primero');
+        }
+        if (is_null($group->project)) {
+            throw new AppException('El equipo ya posee un proyecto cargado');
+        }
+
+        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
+        $categoria = $this->db->query('App:Category')->findOrFail($data['category_id']);
 
         $project = $this->db->new('App:Project');
-        $project->name = $data['nombre'];
-        $project->abstract = $data['resumen'];
-        $project->foundation = $data['fundamentacion'];
-        $project->previous_work = $data['descripcionEjecucion'];
-        $project->neighbourhood = $data['barrios'];
-        $project->goals = $data['objetivos'];
-        $project->budget = $data['presupuesto'];
-        $project->schedule = $data['actividades'];
-        $project->organization = $data['organizacion'];
-        $project->category_id = $data['categoria'];
-        $project->locality_id = $data['localidad'];
-        if ($localidad->custom && isset($data['localidad_otra'])) {
-            $project->locality_other = $data['localidad_otra'];
+        $project->name = $data['name'];
+        $project->abstract = $data['abstract'];
+        $project->foundation = $data['foundation'];
+        $project->previous_work = $data['previous_work'];
+        $project->neighbourhood = $data['neighbourhood'];
+        $project->goals = $data['goals'];
+        $project->budget = $data['budget'];
+        $project->schedule = $data['schedule'];
+        $project->organization = $data['organization'];
+        $project->category_id = $data['category_id'];
+        $project->locality_id = $data['locality_id'];
+        if ($localidad->custom && isset($data['locality_other'])) {
+            $project->locality_other = $data['locality_other'];
         }
+        $project->group_id = $group->id;
         $project->save();
         return $project;
     }

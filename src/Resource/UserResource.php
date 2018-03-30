@@ -66,7 +66,7 @@ class UserResource extends Resource
         $this->mailer->sendMail($mailSub, $pending->identifier, $mailMsg);
     }
 
-    public function updateProfile($subject, $data)
+    public function updateProfile($subject, $user, $data)
     {
         $schema = [
             'type' => 'object',
@@ -94,22 +94,39 @@ class UserResource extends Resource
                     'minimum' => 1,
                 ],
                 'locality_other' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 250,
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 250,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
                 ],
+                'bio' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 500,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ]
             ],
             'required' => ['birthday', 'gender', 'address', 'telephone', 'locality_id'],
             'additionalProperties' => false,
         ];
         $v = $this->validation->fromSchema($schema);
         $v->assert($data);
-        $user = $this->helper->getUserFromSubject($subject);
         $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
         $user->birthday = $data['birthday'];
         $user->gender = $data['gender'];
         $user->address = $data['address'];
         $user->telephone = $data['telephone'];
+        $user->bio = $data['bio'];
         $user->locality_id = $data['locality_id'];
         if ($localidad->custom && isset($data['locality_other'])) {
             $user->locality_other = $data['locality_other'];
@@ -118,7 +135,7 @@ class UserResource extends Resource
         return $user;
     }
 
-    public function updateDni($subject, $data, $file)
+    public function updateDni($subject, $user, $data, $file)
     {
         $schema = [
             'type' => 'object',
@@ -134,6 +151,9 @@ class UserResource extends Resource
         ];
         $v = $this->validation->fromSchema($schema);
         $v->assert($data);
+        if ($user->verified_dni) {
+            throw new AppException('No puede actualizar su DNI una vez verificado');
+        }
         if ($file->getError() !== UPLOAD_ERR_OK) {
             throw new AppException('Hubo un error con el archivo recibido');
         }
@@ -150,8 +170,6 @@ class UserResource extends Resource
             throw new AppException('Tipo de documento inválido');
         }
         $dniBlacklist = $this->options->getOption('dni-blacklist');
-        $this->logger->info(json_encode($subject->toArray()));
-        $user = $this->helper->getUserFromSubject($subject);
         $user->dni = $data['dni'];
         if (in_array($user->dni, $dniBlacklist->value)) {
             $user->verified_dni = false;

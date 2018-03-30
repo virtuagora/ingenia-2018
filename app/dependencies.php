@@ -65,6 +65,10 @@ $container['facebook'] = function ($c) {
     $settings = $c->get('settings')['facebook'];
     return new \Facebook\Facebook($settings);
 };
+$container['recaptcha'] = function ($c) {
+    $secret = $c->get('settings')['recaptcha']['secret_key'];
+    return new \ReCaptcha\ReCaptcha($secret);
+};
 $container['authorization'] = function ($c) {
     return new App\Service\AuthorizationService($c['db'], $c['logger']);
 };
