@@ -105,6 +105,11 @@ $app->get('/complete-sign-up', function ($request, $response, $args) {
 
 // api
 
+$app->get('/category', 'miscAction:getCategories');
+$app->get('/region', 'miscAction:getRegions');
+$app->get('/region/{reg}/department', 'miscAction:getDepartments');
+$app->get('/department/{dep}/locality', 'miscAction:getLocalities');
+
 $app->get('/user/{usr}', 'userAction:getOne');
 $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');
 $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');

@@ -11,6 +11,9 @@ class Locality extends Model
     protected $visible = [
         'id', 'name', 'custom', 'department_id',
     ];
+    protected $casts = [
+        'custom' => 'boolean',
+    ];
 
     public function department()
     {

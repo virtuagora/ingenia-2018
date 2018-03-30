@@ -79,9 +79,11 @@ $container['options'] = function ($c) {
     return new App\Service\OptionsService($c['db']);
 };
 
-/*$container['App\ExampleController'] = function ($c) {
-    return new App\Controller\ExampleController($c);
-};*/
+$container['miscAction'] = function ($c) {
+    return new App\Action\MiscAction(
+        $c['db'], $c['representation'], $c['helper']
+    );
+};
 $container['sessionAction'] = function ($c) {
     return new App\Action\SessionAction($c['session'], $c['identity'], $c['view']);
 };
