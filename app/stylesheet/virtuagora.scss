@@ -1,10 +1,8 @@
 // Add the variables
 @import 'variables';
-
 // Add bulma
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
-
 // Add imports to other css or other fonts you might use
 @import "~fontawesome5-webfont/css/fontawesome-all.css";
 @import "~emoji-awesome/src/css/twitter.css";
@@ -13,10 +11,8 @@
 // @import url('https://fonts.googleapis.com/css?family=Cabin:400,400i,500,500i,600,600i,700,700i');
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900,900i');
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
-
 // Helpers: Classes that you might find useful!
 @import 'helpers';
-
 // Then add the other extensions
 @import "core";
 @import "login";

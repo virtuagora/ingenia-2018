@@ -127,9 +127,13 @@ footer.footer {
     right: 15px;
 }
 
-table.table.text-middle td{
-vertical-align: middle;
-figure{
+table.table.text-middle td {
     vertical-align: middle;
+    figure {
+        vertical-align: middle;
+    }
 }
+
+.b-checkbox.checkbox {
+    margin-left: 0.5em;
 }

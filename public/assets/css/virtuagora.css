@@ -22760,5 +22760,9 @@ table.table.text-middle td figure {
   vertical-align: middle;
 }
 
+.b-checkbox.checkbox {
+  margin-left: 0.5em;
+}
+
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIvYXNzZXRzL2Nzcy92aXJ0dWFnb3JhLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/

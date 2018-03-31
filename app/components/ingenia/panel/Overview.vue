@@ -1,6 +1,6 @@
 <template>
   <article class="content">
-    <h1 class="subtitle is-3">¡Hola Guille!</h1>
+    <h1 class="subtitle is-3">¡Hola {{formUrl}}!</h1>
     <p>¡Bienvenidx a tu panel de control! Aquí tendras control de toda tu información
       <i class="em em-wink"></i>
     </p>

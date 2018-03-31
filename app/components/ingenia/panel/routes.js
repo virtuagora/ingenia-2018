@@ -1,9 +1,13 @@
-import UsuarioPanel from './UsuarioPanel'
-import Overview from './Overview'
 import store from '../../store'
 import http from '../../http'
 
+
+
 // Panel
+import UsuarioPanel from './UsuarioPanel'
+import Overview from './Overview'
+import InscripcionIngenia from './InscripcionIngenia'
+
 import Perfil from './perfil/Perfil'
 import VerPerfil from './perfil/VerPerfil'
 import EditarPerfil from './perfil/EditarPerfil'
@@ -11,11 +15,11 @@ import EditarEmail from './perfil/EditarEmail'
 import EditarPassword from './perfil/EditarPassword'
 
 import Proyecto from './proyecto/Proyecto'
-import InscripcionIngenia from './proyecto/InscripcionIngenia'
 import VerProyecto from './proyecto/VerProyecto'
+import EditarProyecto from './proyecto/EditarProyecto'
 import SubirImagen from './proyecto/SubirImagen'
 import SubirAvalOrganizacion from './proyecto/SubirAvalOrganizacion'
-import PublicarProyecto from './proyecto/PublicarProyecto'
+import EnviarProyecto from './proyecto/EnviarProyecto'
 
 import Equipo from './equipo/Equipo'
 import VerInvitaciones from './equipo/VerInvitaciones'
@@ -40,6 +44,12 @@ const routes = [
         props: true
       },
       {
+        path: 'inscripcion',
+        component: InscripcionIngenia,
+        name: 'userInscripcionIngenia',
+        props: true
+      },
+      {
         path: 'perfil',
         component: Perfil,
         props: true,
@@ -47,25 +57,25 @@ const routes = [
           {
             path: '',
             component: VerPerfil,
-            name: 'usuarioVerPerfil',
+            name: 'userVerPerfil',
             props: true
           },
           {
             path: 'editar',
             component: EditarPerfil,
-            name: 'usuarioEditarPerfil',
+            name: 'userEditarPerfil',
             props: true
           },
           {
             path: 'cambiar-email',
             component: EditarEmail,
-            name: 'usuarioEditarEmail',
+            name: 'userEditarEmail',
             props: true
           },
           {
             path: 'cambiar-password',
             component: EditarPassword,
-            name: 'usuarioEditarPassword',
+            name: 'userEditarPassword',
             props: true
           },
         ]        
@@ -78,37 +88,31 @@ const routes = [
           {
             path: '',
             component: VerProyecto,
-            name: 'usuarioVerProyecto',
+            name: 'userVerProyecto',
             props: true
           },
           {
-          path: 'inscribirse',
-          component: InscripcionIngenia,
-          name: 'usuarioInscripcionIngenia',
-          props: true
+            path: 'editar',
+            component: EditarProyecto,
+            name: 'userEditarProyecto',
+            props: true
           },
-          // {
-          //   path: 'subir-proyecto',
-          //   component: SubirProyecto,
-          //   name: 'usuarioSubirProyecto',
-          //   props: true
-          // },
           {
-            path: 'subir-imagen',
+            path: 'imagen',
             component: SubirImagen,
-            name: 'usuarioSubirImagen',
+            name: 'userSubirImagen',
             props: true
           },
           {
-            path: 'subir-aval-organizacion',
+            path: 'aval',
             component: SubirAvalOrganizacion,
-            name: 'usuarioSubirAvalOrganizacion',
+            name: 'userSubirAvalOrganizacion',
             props: true
           },
           {
-            path: 'publicar',
-            component: PublicarProyecto,
-            name: 'usuarioPublicarProyecto',
+            path: 'enviar',
+            component: EnviarProyecto,
+            name: 'userEnviarProyecto',
             props: true
           },
         ]
@@ -121,31 +125,31 @@ const routes = [
           {
             path: '',
             component: VerEquipo,
-            name: 'usuarioVerEquipo',
+            name: 'userVerEquipo',
             props: true
           },
           {
             path: 'mis-datos',
             component: VerMisDatosPersonales,
-            name: 'usuarioVerMisDatosPersonales',
+            name: 'userVerMisDatosPersonales',
             props: true
           },
           {
             path: 'ver-invitaciones',
             component: VerInvitaciones,
-            name: 'usuarioVerInvitaciones',
+            name: 'userVerInvitaciones',
             props: true
           },
           {
             path: 'enviar-invitaciones',
             component: EnviarInvitaciones,
-            name: 'usuarioEnviarInvitaciones',
+            name: 'userEnviarInvitaciones',
             props: true
           },
           {
             path: 'subir-documento',
             component: SubirDNI,
-            name: 'usuarioSubirDNI',
+            name: 'userSubirDNI',
             props: true
           },
         ]

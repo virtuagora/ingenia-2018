@@ -3,36 +3,36 @@
     
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.nombre')}">
-        <i class="fas fa-angle-double-right"></i> Nombre del proyecto</label>
+        <i class="fas fa-angle-double-right"></i> Nombre del proyecto *</label>
       <div class="control">
-        <input v-model="proyecto.nombre" data-vv-name="proyecto.nombre" data-vv-as="'Nombre del proyecto'" type="text" v-validate="'required'" class="input is-large" placeholder="Requerido *">
+        <input v-model="proyecto.nombre" data-vv-name="proyecto.nombre" data-vv-as="'Nombre del proyecto'" type="text" v-validate="'required|min:10|max:250'" class="input is-large" placeholder="Requerido *">
         <span v-show="errors.has('proyecto.nombre')" class="help is-danger">{{errors.first('proyecto.nombre')}}</span>
       </div>
     </div>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.resumen')}">
-        <i class="fas fa-angle-double-right"></i> Resumen del proyecto</label>
-      <p>Breve descripción de tu proyecto. Máximo 250 caracteres</p>
+        <i class="fas fa-angle-double-right"></i> Resumen del proyecto *</label>
+      <p>Breve descripción de tu proyecto. Máximo 1000 caracteres</p>
       <div class="control">
-        <b-input v-model="proyecto.resumen" data-vv-name="proyecto.resumen" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:250'" type="textarea" minlength="10" maxlength="250" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
+        <b-input v-model="proyecto.resumen" data-vv-name="proyecto.resumen" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:1000'" type="textarea" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
         </b-input>
         <span v-show="errors.has('proyecto.resumen')" class="help is-danger">{{errors.first('proyecto.resumen')}}</span>
       </div>
     </div>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.fundamentacion')}">
-        <i class="fas fa-angle-double-right"></i> Fundamentación</label>
-      <p>¿Por qué vale la pena realizar el proyecto? Máximo 400 caracteres</p>
+        <i class="fas fa-angle-double-right"></i> Fundamentación *</label>
+      <p>¿Por qué vale la pena realizar el proyecto? Máximo 1500 caracteres</p>
       <div class="control">
-        <b-input v-model="proyecto.fundamentacion" data-vv-name="proyecto.fundamentacion" data-vv-as="'Fundamentación'" v-validate="'required|min:10|max:400'" type="textarea" minlength="10" maxlength="400" rows="3" placeholder="Requerido *">
+        <b-input v-model="proyecto.fundamentacion" data-vv-name="proyecto.fundamentacion" data-vv-as="'Fundamentación'" v-validate="'required|min:10|max:1500'" type="textarea" minlength="10" maxlength="1500" rows="3" placeholder="Requerido *">
         </b-input>
         <span v-show="errors.has('proyecto.fundamentacion')" class="help is-danger">{{errors.first('proyecto.fundamentacion')}}</span>
       </div>
     </div>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.tematica')}">
-        <i class="fas fa-angle-double-right"></i> ¿Que temática trabaja el proyecto?</label>
-      <p>Seleccione la temática para saber de que trata</p>
+        <i class="fas fa-angle-double-right"></i>Seleccione la del proyecto *</label>
+      <p>Defina en que categoría se enmarca el proyecto</p>
       <br>
       <b-field>
         <b-select size="is-large" data-vv-name="proyecto.tematica" data-vv-as="'Temática'" v-validate="'required'" v-model="proyecto.tematica" :disabled="categorias.length == 0" :loading="categoriasLoading" placeholder="Seleccione la temática" expanded>
@@ -71,7 +71,7 @@
       <label class="label is-size-5" :class="{'has-text-danger': errors.has('proyecto.descripcionEjecucion')}">
         <i class="fas fa-caret-right"></i> ¿De qué forma, cómo y dónde se está ejecutando?</label>
       <div class="control">
-        <b-input type="textarea" v-model="proyecto.descripcionEjecucion" data-vv-name="proyecto.descripcionEjecucion" data-vv-as="'Descripcion de la ejecución'" v-validate="'required|min:10|max:100'" minlength="10" maxlength="100" rows="3" placeholder="Requerido *">
+        <b-input type="textarea" v-model="proyecto.descripcionEjecucion" data-vv-name="proyecto.descripcionEjecucion" data-vv-as="'Descripcion de la ejecución'" v-validate="'required|min:10|max:1000'" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *">
         </b-input>
         <span v-show="errors.has('proyecto.descripcionEjecucion')" class="help is-danger">{{errors.first('proyecto.descripcionEjecucion')}}</span>
       </div>
@@ -101,7 +101,9 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input class="input is-medium" v-model="inputObjetivos" type="text" placeholder="Escriba el objetivo">
+            <input class="input is-medium" v-model="inputObjetivos" type="text" v-validate="'max:300'" placeholder="Escriba el objetivo">
+      <span v-show="errors.has('inputObjetivos')" class="help is-danger">Máximo hasta 300 caracteres</span>
+            
           </p>
           <p class="control">
             <button @click="addObjetivo" class="button is-primary is-medium" :disabled="disableAddObjetivo">
@@ -136,7 +138,7 @@
             <tbody v-else>
               <tr>
                 <td class="has-text-centered" colspan="2">
-                  <i>No se han ingresado barrios</i>
+                  <i>No se han ingresado objetivos</i>
                 </td>
               </tr>
             </tbody>
@@ -213,7 +215,7 @@
           <input class="input is-medium" v-model="inputItemDescripcion" type="text" placeholder="Descripcion Item">
         </p>
         <p class="control is-expanded">
-          <input class="input is-medium" v-model="inputItemMonto" data-vv-name="inputItemMonto" data-vv-as="'Monto'" v-validate="'numeric'" type="text" placeholder="Monto en AR$">
+          <input class="input is-medium" v-model.number="inputItemMonto" data-vv-name="inputItemMonto" data-vv-as="'Monto'" v-validate="'numeric'" type="text" placeholder="Monto en AR$">
           <span v-if="errors.has('inputItemMonto')" class="help is-danger">{{errors.first('inputItemMonto')}}</span>
           <span v-else class="help">Ingrese números sin decimal, puntos o comas</span>
 

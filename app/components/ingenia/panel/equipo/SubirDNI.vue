@@ -15,7 +15,7 @@
             </a>
           </div>
           <div class="control is-expanded">
-            <input type="string" v-model.lazy="dni" name="dni" v-validate="'required|numeric'" class="input is-medium" :class="{'is-danger': errors.has('dni')}" placeholder="Ingresa el numero de DNI">
+            <input type="string" v-model.lazy="dni" name="dni" v-validate="'required|alpha_num'" class="input is-medium" :class="{'is-danger': errors.has('dni')}" placeholder="Ingresa el numero de DNI">
             <span class="help is-danger" v-show="errors.has('dni')">Requerido. Solamente se aceptan numeros</span>
           </div>
         </div>
