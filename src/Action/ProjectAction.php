@@ -10,12 +10,14 @@ class ProjectAction
     protected $projectResource;
     protected $representation;
     protected $helper;
+    protected $authorization;
 
-    public function __construct($projectResource, $representation, $helper)
+    public function __construct($projectResource, $representation, $helper, $authorization)
     {
         $this->projectResource = $projectResource;
         $this->representation = $representation;
         $this->helper = $helper;
+        $this->authorization = $authorization;
     }
 
     // GET /proyecto/{pro}

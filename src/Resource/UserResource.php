@@ -82,7 +82,7 @@ class UserResource extends Resource
                 'address' => [
                     'type' => 'string',
                     'minLength' => 1,
-                    'maxLength' => 250,
+                    'maxLength' => 300,
                 ],
                 'telephone' => [
                     'type' => 'string',
@@ -104,19 +104,27 @@ class UserResource extends Resource
                         ],
                     ],
                 ],
+                'referer' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 200,
+                ],
                 'bio' => [
                     'oneOf' => [
                         [
                             'type' => 'string',
                             'minLength' => 1,
-                            'maxLength' => 500,
+                            'maxLength' => 300,
                         ], [
                             'type' => 'null',
                         ],
                     ],
                 ]
             ],
-            'required' => ['birthday', 'gender', 'address', 'telephone', 'locality_id'],
+            'required' => [
+                'birthday', 'gender', 'address', 'telephone',
+                'locality_id', 'locality_other', 'referer', 'bio'
+            ],
             'additionalProperties' => false,
         ];
         $v = $this->validation->fromSchema($schema);

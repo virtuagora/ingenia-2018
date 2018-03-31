@@ -38,9 +38,82 @@ class GroupResource extends Resource
                 'parent_organization' => [
                     'oneOf' => [
                         [
-                            'type' => 'string',
-                            'minLength' => 1,
-                            'maxLength' => 100,
+                            'type' => 'object',
+                            'properties' => [
+                                'name' => [
+                                    'type' => 'string',
+                                    'minLength' => 1,
+                                    'maxLength' => 50,
+                                ],
+                                'topics' => [
+                                    'type' => 'array',
+                                    'items' => [
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 100,
+                                    ],
+                                ],
+                                'locality_id' => [
+                                    'type' => 'integer',
+                                    'minimum' => 1,
+                                ],
+                                'locality_other' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 250,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'web' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 100,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'facebook' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 100,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'telephone' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 20,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'email' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'format' => 'email',
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'required' => ['name', 'topics', 'locality_id'],
+                                'additionalProperties' => false,
+                            ],
                         ], [
                             'type' => 'null',
                         ],
@@ -61,7 +134,7 @@ class GroupResource extends Resource
                         ],
                     ],
                 ],
-                'webpage' => [
+                'web' => [
                     'oneOf' => [
                         [
                             'type' => 'string',
@@ -92,16 +165,10 @@ class GroupResource extends Resource
                     'type' => 'string',
                     'format' => 'email',
                 ],
-                'referer' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 200,
-                ],
             ],
             'required' => [
                 'name', 'description', 'year', 'previous_editions', 'parent_organization',
-                'locality_id', 'locality_other', 'webpage', 'facebook', 'telephone',
-                'email', 'referer'
+                'locality_id', 'locality_other', 'web', 'facebook', 'telephone', 'email',
             ],
             'additionalProperties' => false,
         ];
@@ -217,11 +284,10 @@ class GroupResource extends Resource
         $group->year = $data['year'];
         $group->previous_editions = $data['previous_editions'];
         $group->parent_organization = $data['parent_organization'];
-        $group->webpage = $data['webpage'];
+        $group->web = $data['web'];
         $group->facebook = $data['facebook'];
         $group->telephone = $data['telephone'];
         $group->email = $data['email'];
-        $group->referer = $data['referer'];
         $group->locality_id = $data['locality_id'];
         if ($localidad->custom && isset($data['locality_other'])) {
             $project->locality_other = $data['locality_other'];

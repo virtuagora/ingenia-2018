@@ -64,6 +64,8 @@ class UserAction
         ]);
     }
 
+    // TODO postPublciProfile
+
     public function postProfile($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');

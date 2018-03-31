@@ -117,6 +117,8 @@ $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
 $app->post('/group', 'groupAction:post')->setName('runCreGro');
 $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
 
+$app->post('/project', 'projectAction:post')->setName('runCrePro');
+
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 
 $app->post('/pending-user', 'userAction:postPendingUser')->setName('runNewPendingUser');

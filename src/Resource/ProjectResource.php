@@ -14,17 +14,17 @@ class ProjectResource extends Resource
                 'name' => [
                     'type' => 'string',
                     'minLength' => 1,
-                    'maxLength' => 100,
+                    'maxLength' => 250,
                 ],
                 'abstract' => [
                     'type' => 'string',
                     'minLength' => 1,
-                    'maxLength' => 1500,
+                    'maxLength' => 1000,
                 ],
                 'foundation' => [
                     'type' => 'string',
                     'minLength' => 1,
-                    'maxLength' => 1000,
+                    'maxLength' => 1500,
                 ],
                 'category_id' => [
                     'type' => 'integer',
@@ -41,37 +41,37 @@ class ProjectResource extends Resource
                         ],
                     ],
                 ],
-                'neighbourhood' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 500,
+                'neighbourhoods' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 100,
+                    ],
                 ],
                 'goals' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 1000,
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 300,
+                    ],
                 ],
                 'schedule' => [
                     'type' => 'array',
                     'items' => [
                         'type' => 'object',
                         'properties' => [
-                            'day' => [
-                                'type' => 'integer',
-                                'minimum' => 1,
-                                'minimum' => 31,
-                            ],
-                            'month' => [
-                                'type' => 'integer',
-                                'minimum' => 1,
-                                'minimum' => 12,
+                            'date' => [
+                                'type' => 'string',
+                                'pattern' => '^\d{4}-\d{2}-\d{2}$',
                             ],
                             'activity' => [
                                 'type' => 'string',
                                 'minLength' => 1,
-                                'maxLength' => 250,
+                                'maxLength' => 300,
                             ],
-                            'required' => ['day', 'month', 'activity'],
+                            'required' => ['date', 'activity'],
                             'additionalProperties' => false,
                         ],
                     ],
@@ -89,7 +89,7 @@ class ProjectResource extends Resource
                             'description' => [
                                 'type' => 'integer',
                                 'minimum' => 1,
-                                'minimum' => 250,
+                                'minimum' => 300,
                             ],
                             'amount' => [
                                 'type' => 'number',
@@ -110,34 +110,73 @@ class ProjectResource extends Resource
                                     'minLength' => 1,
                                     'maxLength' => 50,
                                 ],
-                                'category_id' => [
-                                    'type' => 'integer',
-                                    'minimum' => 1,
+                                'topics' => [
+                                    'type' => 'array',
+                                    'items' => [
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 100,
+                                    ],
                                 ],
                                 'locality_id' => [
                                     'type' => 'integer',
                                     'minimum' => 1,
                                 ],
-                                'webpage' => [
-                                    'type' => 'string',
-                                    'minLength' => 1,
-                                    'maxLength' => 100,
+                                'locality_other' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 250,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'web' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 100,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
                                 ],
                                 'facebook' => [
-                                    'type' => 'string',
-                                    'minLength' => 1,
-                                    'maxLength' => 100,
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 100,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
                                 ],
                                 'telephone' => [
-                                    'type' => 'string',
-                                    'minLength' => 1,
-                                    'maxLength' => 20,
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 20,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
                                 ],
                                 'email' => [
-                                    'type' => 'string',
-                                    'format' => 'email',
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'format' => 'email',
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
                                 ],
-                                'required' => ['name', 'category_id', 'locality_id'],
+                                'required' => ['name', 'topics', 'locality_id'],
                                 'additionalProperties' => false,
                             ],
                         ], [
@@ -189,12 +228,14 @@ class ProjectResource extends Resource
         $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
         $categoria = $this->db->query('App:Category')->findOrFail($data['category_id']);
 
+        // calcular limite del presupuesto
+
         $project = $this->db->new('App:Project');
         $project->name = $data['name'];
         $project->abstract = $data['abstract'];
         $project->foundation = $data['foundation'];
         $project->previous_work = $data['previous_work'];
-        $project->neighbourhood = $data['neighbourhood'];
+        $project->neighbourhoods = $data['neighbourhoods'];
         $project->goals = $data['goals'];
         $project->budget = $data['budget'];
         $project->schedule = $data['schedule'];

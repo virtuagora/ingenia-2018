@@ -94,6 +94,7 @@ class Installer
             $table->boolean('verified_dni')->nullable();
             $table->string('pending_email')->nullable();
             $table->text('bio')->nullable();
+            $table->string('referer')->nullable(); //como se enteraron
 
             $table->integer('locality_id')->unsigned()->nullable();
             $table->foreign('locality_id')->references('id')->on('localities');
@@ -128,12 +129,11 @@ class Installer
             $table->text('description');
             $table->integer('year');
             $table->text('previous_editions'); //json
-            $table->string('parent_organization')->nullable();
+            $table->text('parent_organization')->nullable();
             $table->string('web')->nullable();
             $table->string('telephone')->nullable();
             $table->string('email')->nullable();
             $table->string('facebook')->nullable();
-            $table->string('referer')->nullable(); //como se enteraron
 
             $table->integer('locality_id')->unsigned();
             $table->foreign('locality_id')->references('id')->on('localities');
@@ -176,7 +176,7 @@ class Installer
             $table->text('abstract');
             $table->text('foundation');
             $table->text('previous_work')->nullable();
-            $table->string('neighbourhood');
+            $table->text('neighbourhoods');
             $table->text('goals');
             $table->text('budget');
             $table->text('schedule');

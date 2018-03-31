@@ -18,6 +18,8 @@ class Project extends Model
     protected $casts = [
         'budget' => 'array',
         'schedule' => 'array',
+        'neighbourhoods' => 'array',
+        'goals' => 'array',
     ];
 
     public function group()
