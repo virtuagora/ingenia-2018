@@ -18,33 +18,7 @@
                 <span v-show="errors.has('equipo.descripcion')" class="help is-danger">{{errors.first('equipo.descripcion')}}</span>
             </div>
         </div>
-        <div class="field">
-            <label class="label is-size-4" :class="{'has-text-danger': errors.has('equipo.localizacion.nodo') || errors.has('equipo.localizacion.departamento') || errors.has('equipo.localizacion.localidad') }">
-                <i class="fas fa-angle-double-right"></i> ¿De donde es el equipo? *</label>
-            <b-field grouped>
-                <b-field label="Nodo" expanded>
-                    <b-select v-model="equipo.localizacion.nodo" data-vv-name="equipo.localizacion.nodo" data-vv-as="'Región/Nodo'" v-validate="'required'" placeholder="Nodo" expanded>
-                        <option>Mr.</option>
-                        <option>Ms.</option>
-                    </b-select>
-                </b-field>
-                <b-field label="Departamento" expanded>
-                    <b-select v-model="equipo.localizacion.departamento" placeholder="Departamento" data-vv-name="equipo.localizacion.departamento" data-vv-as="'Departamento'" v-validate="'required'" expanded>
-                        <option>Mr.</option>
-                        <option>Ms.</option>
-                    </b-select>
-                </b-field>
-                <b-field label="Localidad" expanded>
-                    <b-select v-model="equipo.localizacion.localidad" placeholder="Localidad" data-vv-name="equipo.localizacion.localidad" data-vv-as="'Localidad'" v-validate="'required'" expanded>
-                        <option>Mr.</option>
-                        <option>Ms.</option>
-                    </b-select>
-                </b-field>
-            </b-field>
-            <span v-show="errors.has('equipo.localizacion.nodo')" class="help is-danger">{{errors.first('equipo.localizacion.nodo')}}</span>
-            <span v-show="errors.has('equipo.localizacion.departamento')" class="help is-danger">{{errors.first('equipo.localizacion.departamento')}}</span>
-            <span v-show="errors.has('equipo.localizacion.localidad')" class="help is-danger">{{errors.first('equipo.localizacion.localidad')}}</span>
-        </div>
+        <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
         <div class="field">
             <label class="label is-size-4" :class="{'has-text-danger': errors.has('equipo.fundacion')}">
                 <i class="fas fa-angle-double-right"></i> ¿En que año se conformó el grupo? *</label>
@@ -70,19 +44,27 @@
             <span v-show="errors.has('equipo.deUnaOrganizacion')" class="help is-danger">{{errors.first('equipo.deUnaOrganizacion')}}</span>
         </div>
         <br>
-        <form-organizacion ref="formEquipoOrganizacion" v-if="equipo.deUnaOrganizacion" :organizacion.sync="equipo.organizacion"></form-organizacion>
+        <form-organizacion ref="formOrganizacion" v-if="equipo.deUnaOrganizacion" :organizacion.sync="equipo.organizacion"></form-organizacion>
     </section>
 </template>
 
 <script>
-import FormOrganizacion from "../proyecto/FormOrganizacion";
+import Localidad from "./FieldLocalidad";
+import FormOrganizacion from "./FormOrganizacion";
 
 export default {
   props: ["equipo"],
   components: {
+    Localidad,
     FormOrganizacion
   },
   methods: {
+    updateLocalidad: function(id) {
+      this.equipo.localidad = id;
+    },
+    updateLocalidadCustom: function(localidadCustom) {
+      this.equipo.otraLocalidad = localidadCustom;
+    },
     validateForm: function() {
       let promise = new Promise((resolve, reject) => {
         this.$validator.validateAll().then(result => {
@@ -96,12 +78,22 @@ export default {
       });
       return promise;
     },
-    validateOrganizacionForm: function() {
+    validateOrganizacion: function() {
       if (this.equipo.deUnaOrganizacion) {
-        return this.$refs.formEquipoOrganizacion.validateForm();
+        return this.$refs.formOrganizacion.validateForm();
       } else {
         return true;
       }
+    },
+    validateLocalidadOrganizacion: function() {
+      if (this.equipo.deUnaOrganizacion) {
+        return this.$refs.formOrganizacion.validateLocalidad();
+      } else {
+        return true;
+      }
+    },
+    validateLocalidad: function() {
+      return this.$refs.localidadForm.validateForm();
     }
   }
 };

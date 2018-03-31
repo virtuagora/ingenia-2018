@@ -35,35 +35,14 @@
       <p>Seleccione la temática para saber de que trata</p>
       <br>
       <b-field>
-        <b-select size="is-large" data-vv-name="proyecto.tematica" data-vv-as="'Temática'" v-validate="'required'" v-model="proyecto.tematica" placeholder="Seleccione la temática" expanded>
-          <option value="Integración Social">Integración Social</option>
-          <option value="Medio Ambiente">Medio Ambiente</option>
-          <option value="Deporte y recreación">Deporte y recreación</option>
-          <option value="Educación">Educación</option>
-          <option value="Cultura">Cultura</option>
-          <option value="Empleo y Capacitación">Empleo y Capacitación</option>
-          <option value="Comunicación">Comunicación</option>
-          <option value="Salud">Salud</option>
+        <b-select size="is-large" data-vv-name="proyecto.tematica" data-vv-as="'Temática'" v-validate="'required'" v-model="proyecto.tematica" :disabled="categorias.length == 0" :loading="categoriasLoading" placeholder="Seleccione la temática" expanded>
+          <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.name}}</option>
+          
         </b-select>
       </b-field>
       <span v-show="errors.has('proyecto.tematica')" class="help is-danger">{{errors.first('proyecto.tematica')}}</span>
-      <div class="notification is-light" v-show="proyecto.tematica != null">
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Integración Social'">Integración Social</h1>
-        <p v-show="proyecto.tematica == 'Integración Social'">Incluimos aquí aquellos proyectos cuyos objetivos y actividades apuntaban a mejorar la convivencia a nivel social, implementando acciones destinadas a jóvenes, y a población en general, que tengan algunos de sus derechos vulnerados. Entre ellos jóvenes en situación de vulnerabilidad social, jóvenes con discapacidad, entre otros.</p>
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Medio Ambiente'">Medio Ambiente</h1>
-        <p v-show="proyecto.tematica == 'Medio Ambiente'">Esta categoría engloba a los proyectos que se propusieron mejorar las condiciones del medio ambiente. Los mismos enfocan una amplia variedad de temáticas como ser las energías renovables, la producción verde, el reciclado de residuos, la soberanía alimentaria y la movilidad sustentable.</p>
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Deporte y recreación'">Deporte y recreación</h1>
-        <p v-show="proyecto.tematica == 'Deporte y recreación'">Este eje integra los proyectos abocados a promover el bienestar joven mediante la organización de actividades deportivas y recreativas. En muchos casos, se trataban de proyectos que pretendían la recuperación de espacios públicos-en su mayoría plazas públicas- para tales fines.</p>
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Educación'">Educación</h1>
-        <p v-show="proyecto.tematica == 'Educación'">Se incluyen en esta categoría a los proyectos juveniles cuyos objetivos y actividades tienen como fin brindar mayor educación a la sociedad en general. La educación es entendida en sentido amplio por los jóvenes, abarcando desde la enseñanza de los propios derechos hasta la educación sexual, adoptando desde formatos tradicionales de jornadas de formación básicas hasta actividades lúdicas.</p>
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Cultura'">Cultura</h1>
-        <p v-show="proyecto.tematica == 'Cultura'">Caben aquí las iniciativas orientadas a al promoción de la cultura local, regional y provincial, desde diferentes expresiones artísticas: danzas, teatro, música, pintura, productos artesanales, entre otros.</p>
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Empleo y Capacitación'">Empleo y Capacitación</h1>
-        <p v-show="proyecto.tematica == 'Empleo y Capacitación'">Se encuentran en esta categoría los proyectos juveniles cuyos intereses se relacionaban con el mundo del trabajo, la posibilidad de acceder al mismo y la mejora de las condiciones laborales. Aquí, se encuentran también algunas iniciativas que, no atendiendo a las bases del Programa Ingenia, se formularon con la intención de lograr un microemprendimiento de carácter privado.</p>
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Comunicación'">Comunicación</h1>
-        <p v-show="proyecto.tematica == 'Comunicación'">Se abarca con este eje a los proyectos destinados a amplificar la voz joven. Caben aquí las acciones para crear medios de comunicación gráficos y audiovisuales, como así también aquellas actividades que promocionan la participación juvenil en los medios existentes.</p>
-        <h1 class="title is-5" v-show="proyecto.tematica == 'Salud'">Salud</h1>
-        <p v-show="proyecto.tematica == 'Salud'">Iniciativas que promueven una vida saludable en las juventudes. Reflexionar sobre las problemáticas vinculadas a la salud y el acceso a la misma sin olvidar que ésta no sólo depende de la biología o de la conducta del individuo, sino también de factores sociales, políticos y culturales sobre los que son necesarios actuar para producir cambios.</p>
+      <div class="notification is-primary" v-show="proyecto.tematica != null">
+        <p v-for="categoria in categorias" :key="categoria.id" v-show="proyecto.tematica == categoria.id">{{categoria.description}}</p>
       </div>
     </div>
     <br>
@@ -97,33 +76,7 @@
         <span v-show="errors.has('proyecto.descripcionEjecucion')" class="help is-danger">{{errors.first('proyecto.descripcionEjecucion')}}</span>
       </div>
     </div>
-    <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.localizacion.nodo') || errors.has('proyecto.localizacion.departamento') || errors.has('proyecto.localizacion.localidad') }">
-        <i class="fas fa-angle-double-right"></i> ¿Donde se implementa o implementará territorialmente el proyecto? *</label>
-      <b-field grouped>
-        <b-field label="Nodo" expanded>
-          <b-select v-model="proyecto.localizacion.nodo" data-vv-name="proyecto.localizacion.nodo" data-vv-as="'Región/Nodo'" v-validate="'required'" placeholder="Nodo" expanded>
-            <option>Mr.</option>
-            <option>Ms.</option>
-          </b-select>
-        </b-field>
-        <b-field label="Departamento" expanded>
-          <b-select v-model="proyecto.localizacion.departamento" placeholder="Departamento" data-vv-name="proyecto.localizacion.departamento" data-vv-as="'Departamento'" v-validate="'required'" expanded>
-            <option>Mr.</option>
-            <option>Ms.</option>
-          </b-select>
-        </b-field>
-        <b-field label="Localidad" expanded>
-          <b-select v-model="proyecto.localizacion.localidad" placeholder="Localidad" data-vv-name="proyecto.localizacion.localidad" data-vv-as="'Localidad'" v-validate="'required'" expanded>
-            <option>Mr.</option>
-            <option>Ms.</option>
-          </b-select>
-        </b-field>
-      </b-field>
-      <span v-show="errors.has('proyecto.localizacion.nodo')" class="help is-danger">{{errors.first('proyecto.localizacion.nodo')}}</span>
-      <span v-show="errors.has('proyecto.localizacion.departamento')" class="help is-danger">{{errors.first('proyecto.localizacion.departamento')}}</span>
-      <span v-show="errors.has('proyecto.localizacion.localidad')" class="help is-danger">{{errors.first('proyecto.localizacion.localidad')}}</span>
-    </div>
+        <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.barrios')}">
         <i class="fas fa-angle-double-right"></i>¿En que barrio/s se llevará adelante? *</label>
@@ -335,16 +288,17 @@
       <span v-show="errors.has('proyecto.conOrganizacion')" class="help is-danger">{{errors.first('proyecto.conOrganizacion')}}</span>
     </div>
     <br>
-    <form-organizacion ref="formProyectoOrganizacion" v-if="proyecto.conOrganizacion" :organizacion.sync="proyecto.organizacion"></form-organizacion>
+    <form-organizacion ref="formOrganizacion" v-if="proyecto.conOrganizacion" :organizacion.sync="proyecto.organizacion"></form-organizacion>
   </div>
 </template>
 
 <script>
+import Localidad from './FieldLocalidad'
 import FormOrganizacion from "./FormOrganizacion";
-
 export default {
   props: ['proyecto'],
   components: {
+    Localidad,
     FormOrganizacion
   },
   data() {
@@ -355,10 +309,37 @@ export default {
       inputItemRubro: null,
       inputItemDescripcion: null,
       inputItemMonto: null,
-      dateActividad: null
+      dateActividad: null,
+      categoriasLoading: false,
+      categorias: []
     };
   },
+  mounted: function() {
+    this.categoriasLoading = true;
+    this.$http
+      .get("/category")
+      .then(response => {
+        console.log(response);
+        this.categorias = response.data;
+        this.categoriasLoading = false;
+      })
+      .catch(error => {
+        console.error(error.message);
+        this.$snackbar.open({
+          message: "Error inesperado",
+          type: "is-danger",
+          actionText: "Cerrar"
+        });
+        this.categoriasLoading = false;
+      });
+  },
   methods: {
+    updateLocalidad: function(id){
+        this.proyecto.localidad = id
+    },
+    updateLocalidadCustom: function(localidadCustom){
+        this.proyecto.otraLocalidad = localidadCustom
+    },
     addObjetivo: function() {
       if (!this.disableAddObjetivo) {
         this.proyecto.objetivos.push(this.inputObjetivos);
@@ -425,12 +406,22 @@ export default {
       });
       return promise;
     },  
-    validateOrganizacionForm: function() {
+    validateOrganizacion: function() {
       if (this.proyecto.conOrganizacion) {
-        return this.$refs.formProyectoOrganizacion.validateForm();
+        return this.$refs.formOrganizacion.validateForm();
       } else {
         return true;
       }
+    },
+    validateLocalidadOrganizacion: function(){
+      if (this.proyecto.conOrganizacion) {
+        return this.$refs.formOrganizacion.validateLocalidad();
+      } else {
+        return true;
+      }
+    },
+    validateLocalidad: function(){
+        return this.$refs.localidadForm.validateForm();
     }
   },
   computed: {

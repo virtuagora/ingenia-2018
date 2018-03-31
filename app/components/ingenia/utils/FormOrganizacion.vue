@@ -49,33 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="field">
-        <label class="label is-size-4" :class="{'has-text-danger': errors.has('organizacion.localizacion.nodo') || errors.has('organizacion.localizacion.departamento') || errors.has('organizacion.localizacion.localidad') }">
-          <i class="fas fa-angle-double-right"></i> ¿Donde se implementa o implementará territorialmente el proyecto? *</label>
-        <b-field grouped>
-          <b-field label="Nodo" expanded>
-            <b-select v-model="organizacion.localizacion.nodo" data-vv-name="organizacion.localizacion.nodo" data-vv-as="'Región/Nodo'" v-validate="'required'" placeholder="Nodo" expanded>
-              <option>Mr.</option>
-              <option>Ms.</option>
-            </b-select>
-          </b-field>
-          <b-field label="Departamento" expanded>
-            <b-select v-model="organizacion.localizacion.departamento" placeholder="Departamento" data-vv-name="organizacion.localizacion.departamento" data-vv-as="'Departamento'" v-validate="'required'" expanded>
-              <option>Mr.</option>
-              <option>Ms.</option>
-            </b-select>
-          </b-field>
-          <b-field label="Localidad" expanded>
-            <b-select v-model="organizacion.localizacion.localidad" placeholder="Localidad" data-vv-name="organizacion.localizacion.localidad" data-vv-as="'Localidad'" v-validate="'required'" expanded>
-              <option>Mr.</option>
-              <option>Ms.</option>
-            </b-select>
-          </b-field>
-        </b-field>
-        <span v-show="errors.has('organizacion.localizacion.nodo')" class="help is-danger">{{errors.first('organizacion.localizacion.nodo')}}</span>
-        <span v-show="errors.has('organizacion.localizacion.departamento')" class="help is-danger">{{errors.first('organizacion.localizacion.departamento')}}</span>
-        <span v-show="errors.has('organizacion.localizacion.localidad')" class="help is-danger">{{errors.first('organizacion.localizacion.localidad')}}</span>
-      </div>
+        <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
       <br>
       <div class="field">
         <label class="label is-size-4">
@@ -137,12 +111,23 @@
 </template>
 
 <script>
+import Localidad from "./FieldLocalidad";
+
 export default {
   props: ["organizacion"],
   data() {
     return {};
   },
+  components: {
+    Localidad
+  },
   methods: {
+    updateLocalidad: function(id){
+        this.organizacion.localidad = id
+    },
+    updateLocalidadCustom: function(localidadCustom){
+        this.organizacion.otraLocalidad = localidadCustom
+    },
     validateForm: function() {
       let promise = new Promise((resolve, reject) => {
         this.$validator.validateAll().then(result => {
@@ -155,6 +140,9 @@ export default {
         });
       });
       return promise;
+    },
+    validateLocalidad: function(){
+        return this.$refs.localidadForm.validateForm();
     }
   }
 };

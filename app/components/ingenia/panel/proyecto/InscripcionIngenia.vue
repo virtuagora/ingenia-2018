@@ -24,28 +24,34 @@
       <i class="fas fa-rocket fa-fw"></i> ¡Comenzar con el formulario!</button>
     <section v-if="showForm">
       <div class="notification is-link">
-      <h1 class="title is-1 is-700">
-        <i class="far fa-edit fa-fw"></i> Sobre el <u>EQUIPO</u></h1>
+        <h1 class="title is-1 is-700">
+          <i class="far fa-edit fa-fw"></i> Sobre el
+          <u>EQUIPO</u>
+        </h1>
       </div>
       <form-equipo ref="formEquipo" :equipo.sync="equipo"></form-equipo>
       <div class="notification is-link">
-      <h1 class="title is-1 is-700">
-        <i class="far fa-edit fa-fw"></i> Sobre el <u>PROYECTO</u></h1>
+        <h1 class="title is-1 is-700">
+          <i class="far fa-edit fa-fw"></i> Sobre el
+          <u>PROYECTO</u>
+        </h1>
       </div>
       <form-proyecto ref="formProyecto" :proyecto.sync="proyecto"></form-proyecto>
       <b-message class="has-text-centered">
-        Al ingresar tu formulario, tu proyecto será agregado al catálogo. <i class="em em-smiley"></i> ¡Podras gestionar tu equipo, enviar invitaciones a los miembros para que se registren, subir los documentos faltantes, y hacer cualquier cambio que quieras al proyecto a medida que la convocatoria se mantenga abierta!
-        </b-message>
+        Al ingresar tu formulario, tu proyecto será agregado al catálogo.
+        <i class="em em-smiley"></i> ¡Podras gestionar tu equipo, enviar invitaciones a los miembros para que se registren, subir los documentos faltantes, y hacer cualquier cambio que quieras al proyecto a medida que la convocatoria se mantenga abierta!
+      </b-message>
       <button @click="submitForm" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
-      <i class="fa fa-paper-plane"></i>&nbsp;&nbsp;¡Guardar formulario y comenzar!</button>
+        <i class="fa fa-paper-plane"></i>&nbsp;&nbsp;¡Guardar formulario y comenzar!</button>
     </section>
-    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>    
+    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
   </section>
 </template>
 
 <script>
-import FormProyecto from "../proyecto/FormProyecto";
-import FormEquipo from "../equipo/FormEquipo";
+import FormEquipo from "../../utils/FormEquipo";
+import FormProyecto from "../../utils/FormProyecto";
+
 export default {
   components: {
     FormProyecto,
@@ -87,14 +93,11 @@ export default {
       equipo: {
         nombre: null,
         descripcion: null,
-        localizacion: {
-          nodo: null,
-          departamento: null,
-          localidad: null
-        },
+        localidad: null,
+        otraLocalidad: null,
         fundacion: null,
         deUnaOrganizacion: null,
-        organizacion:{
+        organizacion: {
           nombre: null,
           tematicas: [],
           otraTematica: null,
@@ -114,9 +117,14 @@ export default {
     submitForm: function() {
       Promise.all([
         this.$refs.formEquipo.validateForm(),
-        this.$refs.formEquipo.validateOrganizacionForm(),
+        this.$refs.formEquipo.validateLocalidad(),
+        this.$refs.formEquipo.validateOrganizacion(),
+        this.$refs.formEquipo.validateLocalidadOrganizacion(),
         this.$refs.formProyecto.validateForm(),
-        this.$refs.formProyecto.validateOrganizacionForm()
+        this.$refs.formProyecto.validateLocalidad(),
+        this.$refs.formProyecto.validateOrganizacion(),
+        this.$refs.formProyecto.validateLocalidadOrganizacion()
+        
       ])
         .then(values => {
           if (
