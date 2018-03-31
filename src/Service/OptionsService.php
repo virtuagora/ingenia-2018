@@ -9,7 +9,8 @@ class OptionsService
     public function __construct($db)
     {
         $this->db = $db;
-        $this->settings = $db->table('options')->where('autoload', 'true')->get()->keyBy('key');
+        $this->settings = $db->table('options')
+            ->where('autoload', true)->pluck('value', 'key');
     }
 
     public function getAutoloaded()

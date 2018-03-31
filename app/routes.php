@@ -78,8 +78,10 @@ $app->get('/install[/{extra}]', function ($request, $response, $args) {
 });
 
 $app->get('/test', function ($req, $res, $arg) {
+    $options = $this->options->getAutoloaded();
     return $res->withJSON([
-    'sub' => $this->session->authenticate($req)->toArray()
+        'sub' => $options->toArray(),
+        'raw' => $options->toArray(),
     ]);
     //return $res->withJSON($this->session->get('user'));
 });

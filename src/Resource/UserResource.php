@@ -104,26 +104,20 @@ class UserResource extends Resource
                         ],
                     ],
                 ],
+                'neighbourhood' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 100,
+                ],
                 'referer' => [
                     'type' => 'string',
                     'minLength' => 1,
                     'maxLength' => 200,
                 ],
-                'bio' => [
-                    'oneOf' => [
-                        [
-                            'type' => 'string',
-                            'minLength' => 1,
-                            'maxLength' => 300,
-                        ], [
-                            'type' => 'null',
-                        ],
-                    ],
-                ]
             ],
             'required' => [
                 'birthday', 'gender', 'address', 'telephone',
-                'locality_id', 'locality_other', 'referer', 'bio'
+                'locality_id', 'locality_other', 'referer', 'neighbourhood'
             ],
             'additionalProperties' => false,
         ];
@@ -134,11 +128,41 @@ class UserResource extends Resource
         $user->gender = $data['gender'];
         $user->address = $data['address'];
         $user->telephone = $data['telephone'];
-        $user->bio = $data['bio'];
+        $user->neighbourhood = $data['neighbourhood'];
+        $user->referer = $data['referer'];
         $user->locality_id = $data['locality_id'];
         if ($localidad->custom && isset($data['locality_other'])) {
             $user->locality_other = $data['locality_other'];
         }
+        $user->save();
+        return $user;
+    }
+
+    public function updatePublicProfile($subject, $user, $data)
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'bio' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 300,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+            ],
+            'required' => [
+                'bio',
+            ],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        $user->bio = $data['bio'];
         $user->save();
         return $user;
     }

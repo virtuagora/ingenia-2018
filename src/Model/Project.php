@@ -7,7 +7,7 @@ class Project extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'groups';
+    protected $table = 'projects';
     protected $dates = ['deleted_at'];
     protected $visible = [
         'id', 'name', 'abstract', 'foundation', 'previous_work', 'neighbourhood',

@@ -71,9 +71,9 @@ class ProjectResource extends Resource
                                 'minLength' => 1,
                                 'maxLength' => 300,
                             ],
-                            'required' => ['date', 'activity'],
-                            'additionalProperties' => false,
                         ],
+                        'required' => ['date', 'activity'],
+                        'additionalProperties' => false,
                     ],
                 ],
                 'budget' => [
@@ -87,17 +87,17 @@ class ProjectResource extends Resource
                                 'maxLength' => 50,
                             ],
                             'description' => [
-                                'type' => 'integer',
-                                'minimum' => 1,
-                                'minimum' => 300,
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 300,
                             ],
                             'amount' => [
                                 'type' => 'number',
                                 'minimum' => 1,
                             ],
-                            'required' => ['category', 'description', 'amount'],
-                            'additionalProperties' => false,
                         ],
+                        'required' => ['category', 'description', 'amount'],
+                        'additionalProperties' => false,
                     ],
                 ],
                 'organization' => [
@@ -116,6 +116,17 @@ class ProjectResource extends Resource
                                         'type' => 'string',
                                         'minLength' => 1,
                                         'maxLength' => 100,
+                                    ],
+                                ],
+                                'topic_other' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 250,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
                                     ],
                                 ],
                                 'locality_id' => [
@@ -176,9 +187,12 @@ class ProjectResource extends Resource
                                         ],
                                     ],
                                 ],
-                                'required' => ['name', 'topics', 'locality_id'],
-                                'additionalProperties' => false,
                             ],
+                            'required' => [
+                                'name', 'topics', 'topic_other', 'locality_id',
+                                'locality_other', 'web', 'facebook', 'telephone', 'email',
+                            ],
+                            'additionalProperties' => false,
                         ], [
                             'type' => 'null',
                         ],
@@ -202,7 +216,7 @@ class ProjectResource extends Resource
             ],
             'required' => [
                 'name', 'abstract', 'foundation', 'category_id', 'previous_work',
-                'neighbourhood', 'goals', 'schedule', 'budget', 'organization',
+                'neighbourhoods', 'goals', 'schedule', 'budget', 'organization',
                 'locality_id', 'locality_other',
             ],
             'additionalProperties' => false,
@@ -221,14 +235,17 @@ class ProjectResource extends Resource
         if (is_null($group)) {
             throw new AppException('Debe cargar un equipo primero');
         }
-        if (is_null($group->project)) {
+        if (!is_null($group->project)) {
             throw new AppException('El equipo ya posee un proyecto cargado');
         }
 
         $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
         $categoria = $this->db->query('App:Category')->findOrFail($data['category_id']);
 
-        // calcular limite del presupuesto
+        $totalBudget = 0;
+        foreach ($data['budget'] as $item) {
+            $totalBudget += $item['amount'];
+        }
 
         $project = $this->db->new('App:Project');
         $project->name = $data['name'];
@@ -238,6 +255,7 @@ class ProjectResource extends Resource
         $project->neighbourhoods = $data['neighbourhoods'];
         $project->goals = $data['goals'];
         $project->budget = $data['budget'];
+        $project->total_budget = $totalBudget;
         $project->schedule = $data['schedule'];
         $project->organization = $data['organization'];
         $project->category_id = $data['category_id'];
@@ -247,6 +265,10 @@ class ProjectResource extends Resource
         }
         $project->group_id = $group->id;
         $project->save();
+        if (is_null($project->organization)) {
+            $group->uploaded_letter = true;
+            $group->save();
+        }
         return $project;
     }
 }

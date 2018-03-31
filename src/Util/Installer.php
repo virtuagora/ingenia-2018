@@ -95,6 +95,7 @@ class Installer
             $table->string('pending_email')->nullable();
             $table->text('bio')->nullable();
             $table->string('referer')->nullable(); //como se enteraron
+            $table->string('neighbourhood')->nullable();
 
             $table->integer('locality_id')->unsigned()->nullable();
             $table->foreign('locality_id')->references('id')->on('localities');
@@ -134,6 +135,11 @@ class Installer
             $table->string('telephone')->nullable();
             $table->string('email')->nullable();
             $table->string('facebook')->nullable();
+
+            $table->boolean('uploaded_agreement')->default(false);
+            $table->boolean('uploaded_letter')->default(false);
+            $table->boolean('full_team')->default(false);
+            $table->boolean('verified_team')->default(false);
 
             $table->integer('locality_id')->unsigned();
             $table->foreign('locality_id')->references('id')->on('localities');
@@ -185,12 +191,10 @@ class Installer
             $table->boolean('public')->default(false);
             $table->boolean('selected')->default(false);
             $table->boolean('has_image')->default(false);
+            $table->decimal('total_budget')->default(0);
             $table->integer('likes')->default(0);
             $table->string('trace')->nullable();
             $table->text('notes')->nullable(); //observaciones internas
-
-            $table->boolean('team_members_ok')->default(false);
-            $table->boolean('letters_ok')->default(false);
 
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');

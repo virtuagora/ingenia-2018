@@ -53,6 +53,17 @@ class GroupResource extends Resource
                                         'maxLength' => 100,
                                     ],
                                 ],
+                                'topic_other' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 250,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
                                 'locality_id' => [
                                     'type' => 'integer',
                                     'minimum' => 1,
@@ -111,9 +122,12 @@ class GroupResource extends Resource
                                         ],
                                     ],
                                 ],
-                                'required' => ['name', 'topics', 'locality_id'],
-                                'additionalProperties' => false,
                             ],
+                            'required' => [
+                                'name', 'topics', 'topic_other', 'locality_id',
+                                'locality_other', 'web', 'facebook', 'telephone', 'email',
+                            ],
+                            'additionalProperties' => false,
                         ], [
                             'type' => 'null',
                         ],
@@ -253,6 +267,7 @@ class GroupResource extends Resource
     public function createOne($subject, $data)
     {
         $v = $this->validation->fromSchema($this->retrieveSchema());
+        throw new AppException(json_encode($this->retrieveSchema()));
         $v->assert($data);
 
         $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
