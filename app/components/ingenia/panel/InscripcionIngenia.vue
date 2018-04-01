@@ -162,10 +162,9 @@ export default {
           }
         })
         .catch(result => {
-          console.log("result: ");
-          console.log(result);
+          console.error(result);
           this.$snackbar.open({
-            message: "Error inesperado. Intente mas tarde.",
+            message: "Error inesperado.",
             type: "is-danger",
             actionText: "Cerrar"
           });

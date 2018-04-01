@@ -78,13 +78,13 @@
     </div>
         <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.barrios')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.neighbourhoods')}">
         <i class="fas fa-angle-double-right"></i>¿En que barrio/s se llevará adelante? *</label>
       <p>Indiquen el/los barrios donde realizarán el proyecto. Separe con comas, o presione TAB</p>
       <br>
-      <b-taginput v-model="proyecto.barrios" data-vv-name="proyecto.barrios" data-vv-as="'Barrios'" v-validate="'required'" size="is-medium" icon="map-marker" type="is-primary" placeholder="Nombre del barrio">
+      <b-taginput v-model="project.neighbourhoods" data-vv-name="project.neighbourhoods" data-vv-as="'Barrios'" v-validate="'required'" size="is-medium" icon="map-marker" type="is-primary" placeholder="Nombre del barrio">
       </b-taginput>
-      <span v-show="errors.has('proyecto.barrios')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('proyecto.barrios')}}</span>
+      <span v-show="errors.has('project.neighbourhoods')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.neighbourhoods')}}</span>
       <br>
 
     </div>
@@ -181,8 +181,8 @@
           <tbody v-if="project.schedule.length">
             <tr v-for="(actividad, index) in project.schedule" :key="index">
               <td>
-                <i class="far fa-calendar-check fa-fw"></i> {{actividad.fecha.toLocaleDateString('es-AR')}}</td>
-              <td>{{actividad.descripcion}}</td>
+                <i class="far fa-calendar-check fa-fw"></i> {{actividad.date.toLocaleDateString('es-AR')}}</td>
+              <td>{{actividad.activity}}</td>
               <td class="has-text-centered">
                 <a @click="removeActividad(index)">
                   <i class="fas fa-times"></i>
@@ -242,9 +242,9 @@
           </thead>
           <tbody v-if="project.budget.length">
             <tr v-for="(item, index) in project.budget" :key="index">
-              <td>{{item.rubro}}</td>
-              <td>{{item.descripcion}}</td>
-              <td class="has-text-centered">$ {{item.monto}}</td>
+              <td>{{item.category}}</td>
+              <td>{{item.description}}</td>
+              <td class="has-text-centered">$ {{item.amount}}</td>
               <td class="has-text-centered">
                 <a @click="removeItem(index)">
                   <i class="fas fa-times"></i>
@@ -355,8 +355,8 @@ export default {
     addActividad: function() {
       if (!this.disableAddActividad) {
         this.project.schedule.push({
-          fecha: this.dateActividad,
-          descripcion: this.inputActividad
+          date: this.dateActividad,
+          activity: this.inputActividad
         });
         this.dateActividad = null;
         this.inputActividad = null;
@@ -430,7 +430,7 @@ export default {
   computed: {
     montoTotal: function() {
       const reducer = (accumulator, item) =>
-        accumulator + parseFloat(item.monto);
+        accumulator + parseFloat(item.amount);
       return this.project.budget.reduce(reducer, 0);
     },
     disableAddItem: function() {
