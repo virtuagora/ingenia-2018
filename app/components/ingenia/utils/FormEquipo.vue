@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     updateLocalidad: function(id) {
-      this.team.locality = id;
+      this.team.locality_id = id;
     },
     updateLocalidadCustom: function(localityName) {
       this.team.locality_other = localityName;

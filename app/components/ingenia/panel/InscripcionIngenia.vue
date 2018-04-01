@@ -96,13 +96,13 @@ export default {
         description: null,
         year: null,
         previous_editions: [],
-        locality: null,
+        locality_id: null,
         locality_other: null,
         parent_organization: {
           name: null,
           topics: [],
           topic_other: null,
-          locality: null,
+          locality_id: null,
           locality_other: null,
           web: null,
           facebook: null,
@@ -191,13 +191,13 @@ export default {
         description: this.team.description,
         year: this.team.year,
         previous_editions: this.isOptional(this.team.previous_editions),
-        locality: this.team.locality,
+        locality_id: this.team.locality_id,
         locality_other: this.isOptional(this.team.locality_other),
         parent_organization: {
           name: this.team.parent_organization.name,
           topics: this.isOptional(this.team.parent_organization.topics),
           topic_other: this.isOptional(this.team.parent_organization.topic_other),
-          locality: this.team.parent_organization.locality,
+          locality_id: this.team.parent_organization.locality_id,
           locality_other: this.isOptional(
             this.team.parent_organization.locality_other
           ),
