@@ -98,17 +98,7 @@ export default {
         previous_editions: [],
         locality_id: null,
         locality_other: null,
-        parent_organization: {
-          name: null,
-          topics: [],
-          topic_other: null,
-          locality_id: null,
-          locality_other: null,
-          web: null,
-          facebook: null,
-          telephone: null,
-          email: null
-        },
+        parent_organization: null,
         web: null,
         facebook: null,
         telephone: null,
@@ -121,10 +111,9 @@ export default {
       if (value === null || value === "") {
         return null;
       }
-      if(typeof value !== 'undefined' && value.length == 0){
-        return []
-      } else
-      return value;
+      if (typeof value !== "undefined" && value.length == 0) {
+        return [];
+      } else return value;
     },
     submitEquipo: function() {
       Promise.all([
@@ -141,16 +130,15 @@ export default {
           ) {
             console.log("Sending form!");
             this.isLoading = true;
-            this.$snackbar.open({
-              message: "¡Inscripción realizada!",
-              type: "is-success",
-              actionText: "OK"
-            });
-            this.isLoading = false;
             this.$http
               .post(this.saveTeamUrl, this.payload)
               .then(response => {
-                console.log(response)
+                console.log(response);
+                this.$snackbar.open({
+                  message: "¡Inscripción realizada!",
+                  type: "is-success",
+                  actionText: "OK"
+                });
                 this.isLoading = false;
                 this.response.replied = true;
                 this.response.ok = true;
@@ -184,19 +172,27 @@ export default {
         });
     }
   },
-  computed:{
-    payload: function(){
-      return {
+  computed: {
+    payload: function() {
+      let load = {
         name: this.team.name,
         description: this.team.description,
         year: this.team.year,
         previous_editions: this.isOptional(this.team.previous_editions),
         locality_id: this.team.locality_id,
         locality_other: this.isOptional(this.team.locality_other),
-        parent_organization: {
+        web: this.isOptional(this.team.web),
+        facebook: this.isOptional(this.team.facebook),
+        telephone: this.isOptional(this.team.telephone),
+        email: this.isOptional(this.team.email)
+      };
+      if (this.team.parent_organization != null) {
+        load.parent_organization = {
           name: this.team.parent_organization.name,
           topics: this.isOptional(this.team.parent_organization.topics),
-          topic_other: this.isOptional(this.team.parent_organization.topic_other),
+          topic_other: this.isOptional(
+            this.team.parent_organization.topic_other
+          ),
           locality_id: this.team.parent_organization.locality_id,
           locality_other: this.isOptional(
             this.team.parent_organization.locality_other
@@ -205,12 +201,11 @@ export default {
           facebook: this.isOptional(this.team.parent_organization.facebook),
           telephone: this.isOptional(this.team.parent_organization.telephone),
           email: this.isOptional(this.team.parent_organization.email)
-        },
-        web: this.isOptional(this.team.web),
-        facebook: this.isOptional(this.team.facebook),
-        telephone: this.isOptional(this.team.telephone),
-        email: this.isOptional(this.team.email)
+        };
+      } else {
+        load.parent_organization = null;
       }
+      return load;
     }
   }
 };

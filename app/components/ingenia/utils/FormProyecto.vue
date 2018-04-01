@@ -2,78 +2,78 @@
   <div>
     
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.nombre')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.name')}">
         <i class="fas fa-angle-double-right"></i> Nombre del proyecto *</label>
       <div class="control">
-        <input v-model="proyecto.nombre" data-vv-name="proyecto.nombre" data-vv-as="'Nombre del proyecto'" type="text" v-validate="'required|min:10|max:250'" class="input is-large" placeholder="Requerido *">
-        <span v-show="errors.has('proyecto.nombre')" class="help is-danger">{{errors.first('proyecto.nombre')}}</span>
+        <input v-model="project.name" data-vv-name="project.name" data-vv-as="'Nombre del proyecto'" type="text" v-validate="'required|min:10|max:250'" class="input is-large" placeholder="Requerido *">
+        <span v-show="errors.has('project.name')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.name')}}</span>
       </div>
     </div>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.resumen')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.abstract')}">
         <i class="fas fa-angle-double-right"></i> Resumen del proyecto *</label>
       <p>Breve descripción de tu proyecto. Máximo 1000 caracteres</p>
       <div class="control">
-        <b-input v-model="proyecto.resumen" data-vv-name="proyecto.resumen" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:1000'" type="textarea" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
+        <b-input v-model="project.abstract" data-vv-name="project.abstract" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:1000'" type="textarea" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
         </b-input>
-        <span v-show="errors.has('proyecto.resumen')" class="help is-danger">{{errors.first('proyecto.resumen')}}</span>
+        <span v-show="errors.has('project.abstract')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.abstract')}}</span>
       </div>
     </div>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.fundamentacion')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.foundation')}">
         <i class="fas fa-angle-double-right"></i> Fundamentación *</label>
       <p>¿Por qué vale la pena realizar el proyecto? Máximo 1500 caracteres</p>
       <div class="control">
-        <b-input v-model="proyecto.fundamentacion" data-vv-name="proyecto.fundamentacion" data-vv-as="'Fundamentación'" v-validate="'required|min:10|max:1500'" type="textarea" minlength="10" maxlength="1500" rows="3" placeholder="Requerido *">
+        <b-input v-model="project.foundation" data-vv-name="project.foundation" data-vv-as="'Fundamentación'" v-validate="'required|min:10|max:1500'" type="textarea" minlength="10" maxlength="1500" rows="3" placeholder="Requerido *">
         </b-input>
-        <span v-show="errors.has('proyecto.fundamentacion')" class="help is-danger">{{errors.first('proyecto.fundamentacion')}}</span>
+        <span v-show="errors.has('project.foundation')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.foundation')}}</span>
       </div>
     </div>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.tematica')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.category_id')}">
         <i class="fas fa-angle-double-right"></i>Seleccione la del proyecto *</label>
       <p>Defina en que categoría se enmarca el proyecto</p>
       <br>
       <b-field>
-        <b-select size="is-large" data-vv-name="proyecto.tematica" data-vv-as="'Temática'" v-validate="'required'" v-model="proyecto.tematica" :disabled="categorias.length == 0" :loading="categoriasLoading" placeholder="Seleccione la temática" expanded>
+        <b-select size="is-large" data-vv-name="project.category_id" data-vv-as="'Temática'" v-validate="'required'" v-model="project.category_id" :disabled="categorias.length == 0" :loading="categoriasLoading" placeholder="Seleccione la temática" expanded>
           <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.name}}</option>
           
         </b-select>
       </b-field>
-      <span v-show="errors.has('proyecto.tematica')" class="help is-danger">{{errors.first('proyecto.tematica')}}</span>
-      <div class="notification is-primary" v-show="proyecto.tematica != null">
-        <p v-for="categoria in categorias" :key="categoria.id" v-show="proyecto.tematica == categoria.id">{{categoria.description}}</p>
+      <span v-show="errors.has('project.category_id')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.category_id')}}</span>
+      <div class="notification is-primary" v-show="project.category_id != null">
+        <p v-for="categoria in categorias" :key="categoria.id" v-show="project.category_id == categoria.id">{{categoria.description}}</p>
       </div>
     </div>
     <br>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.enEjecucion')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('enEjecucion')}">
         <i class="fas fa-angle-double-right"></i> ¿El proyecto ya esta en ejecución o en funcionamiento? *</label>
       <p>Si se trata de una iniciativa primigenia que aun no se ha desarrollado marcar
         <i class="fas fa-times"></i> NO</p>
       <br>
       <div class="control">
         <b-field>
-          <b-radio-button data-vv-name="proyecto.enEjecucion" data-vv-as="'En ejecución o en funcionamiento'" v-validate="'required'" v-model="proyecto.enEjecucion" :native-value="true" type="is-primary" size="is-medium">
+          <b-radio-button data-vv-name="enEjecucion" data-vv-as="'En ejecución o en funcionamiento'" v-validate="'required'" v-model="enEjecucion" :native-value="true" type="is-primary" size="is-medium">
             <span>
               <i class="fas fa-check"></i> Si</span>
           </b-radio-button>
-          <b-radio-button v-model="proyecto.enEjecucion" :native-value="false" type="is-primary" size="is-medium">
+          <b-radio-button v-model="enEjecucion" :native-value="false" type="is-primary" size="is-medium">
             <span>
               <i class="fas fa-times"></i> No</span>
           </b-radio-button>
         </b-field>
-        <span v-show="errors.has('proyecto.enEjecucion')" class="help is-danger">{{errors.first('proyecto.enEjecucion')}}</span>
+        <span v-show="errors.has('enEjecucion')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('enEjecucion')}}</span>
       </div>
     </div>
     <br>
-    <div class="field" v-if="proyecto.enEjecucion">
-      <label class="label is-size-5" :class="{'has-text-danger': errors.has('proyecto.descripcionEjecucion')}">
+    <div class="field" v-if="enEjecucion">
+      <label class="label is-size-5" :class="{'has-text-danger': errors.has('project.previous_work')}">
         <i class="fas fa-caret-right"></i> ¿De qué forma, cómo y dónde se está ejecutando?</label>
       <div class="control">
-        <b-input type="textarea" v-model="proyecto.descripcionEjecucion" data-vv-name="proyecto.descripcionEjecucion" data-vv-as="'Descripcion de la ejecución'" v-validate="'required|min:10|max:1000'" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *">
+        <b-input type="textarea" v-model="project.previous_work" data-vv-name="project.previous_work" data-vv-as="'Descripcion de la ejecución'" v-validate="'required|min:10|max:1000'" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *">
         </b-input>
-        <span v-show="errors.has('proyecto.descripcionEjecucion')" class="help is-danger">{{errors.first('proyecto.descripcionEjecucion')}}</span>
+        <span v-show="errors.has('project.previous_work')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.previous_work')}}</span>
       </div>
     </div>
         <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
@@ -84,12 +84,12 @@
       <br>
       <b-taginput v-model="proyecto.barrios" data-vv-name="proyecto.barrios" data-vv-as="'Barrios'" v-validate="'required'" size="is-medium" icon="map-marker" type="is-primary" placeholder="Nombre del barrio">
       </b-taginput>
-      <span v-show="errors.has('proyecto.barrios')" class="help is-danger">{{errors.first('proyecto.barrios')}}</span>
+      <span v-show="errors.has('proyecto.barrios')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('proyecto.barrios')}}</span>
       <br>
 
     </div>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.objetivos')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.goals')}">
         <i class="fas fa-angle-double-right"></i> Objetivos *</label>
       <p>¿Qué se quiere lograr? Tratar de ser muy breves, concretos y precisos</p>
       <div class="control">
@@ -101,9 +101,8 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input class="input is-medium" v-model="inputObjetivos" type="text" v-validate="'max:300'" placeholder="Escriba el objetivo">
+            <input class="input is-medium" v-model="inputObjetivos" name="inputObjetivos" type="text" v-validate="'max:300'" placeholder="Escriba el objetivo">
       <span v-show="errors.has('inputObjetivos')" class="help is-danger">Máximo hasta 300 caracteres</span>
-            
           </p>
           <p class="control">
             <button @click="addObjetivo" class="button is-primary is-medium" :disabled="disableAddObjetivo">
@@ -111,8 +110,8 @@
             </button>
           </p>
         </div>
-        <input type="hidden" v-model="proyecto.objetivos" data-vv-name="proyecto.objetivos" data-vv-as="'Objetivos'" v-validate="'required'">
-        <span v-show="errors.has('proyecto.objetivos')" class="help is-danger">{{errors.first('proyecto.objetivos')}}</span>
+        <input type="hidden" v-model="project.goals" data-vv-name="project.goals" data-vv-as="'Objetivos'" v-validate="'required'">
+        <span v-show="errors.has('project.goals')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.goals')}}</span>
         <br>
         <div class="content">
           <table class="table is-narrow is-bordered">
@@ -124,8 +123,8 @@
                 </th>
               </tr>
             </thead>
-            <tbody v-if="proyecto.objetivos.length">
-              <tr v-for="(objetivo, index) in proyecto.objetivos" :key="index">
+            <tbody v-if="project.goals.length">
+              <tr v-for="(objetivo, index) in project.goals" :key="index">
                 <td>
                   <i class="fas fa-flag-checkered fa-fw"></i> {{objetivo}}</td>
                 <td class="has-text-centered">
@@ -147,7 +146,7 @@
       </div>
     </div>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.actividades')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.schedule')}">
         <i class="fas fa-angle-double-right"></i> Calendario de Actividades *</label>
       <p>Coloque por cada actividad la fecha en que se realizará</p>
       <br>
@@ -165,8 +164,8 @@
           </button>
         </p>
       </div>
-      <input type="hidden" v-model="proyecto.actividades" data-vv-name="proyecto.actividades" data-vv-as="'Actividades'" v-validate="'required'">
-      <span v-show="errors.has('proyecto.actividades')" class="help is-danger">{{errors.first('proyecto.actividades')}}</span>
+      <input type="hidden" v-model="project.schedule" data-vv-name="project.schedule" data-vv-as="'Actividades'" v-validate="'required'">
+      <span v-show="errors.has('project.schedule')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.schedule')}}</span>
       <br>
       <div class="content">
         <table class="table is-narrow is-bordered">
@@ -179,8 +178,8 @@
               </th>
             </tr>
           </thead>
-          <tbody v-if="proyecto.actividades.length">
-            <tr v-for="(actividad, index) in proyecto.actividades" :key="index">
+          <tbody v-if="project.schedule.length">
+            <tr v-for="(actividad, index) in project.schedule" :key="index">
               <td>
                 <i class="far fa-calendar-check fa-fw"></i> {{actividad.fecha.toLocaleDateString('es-AR')}}</td>
               <td>{{actividad.descripcion}}</td>
@@ -202,7 +201,7 @@
       </div>
     </div>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.presupuesto')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.budget')}">
         <i class="fas fa-angle-double-right"></i> Presupuesto *</label>
       <p>
         <span class="tag is-warning">Importante</span>&nbsp;&nbsp;Recuerda que el tope es de $22.000.-</p>
@@ -216,7 +215,7 @@
         </p>
         <p class="control is-expanded">
           <input class="input is-medium" v-model.number="inputItemMonto" data-vv-name="inputItemMonto" data-vv-as="'Monto'" v-validate="'numeric'" type="text" placeholder="Monto en AR$">
-          <span v-if="errors.has('inputItemMonto')" class="help is-danger">{{errors.first('inputItemMonto')}}</span>
+          <span v-if="errors.has('inputItemMonto')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('inputItemMonto')}}</span>
           <span v-else class="help">Ingrese números sin decimal, puntos o comas</span>
 
         </p>
@@ -226,8 +225,8 @@
           </button>
         </p>
       </div>
-      <input type="hidden" v-model="proyecto.presupuesto" data-vv-name="proyecto.presupuesto" data-vv-as="'Presupuesto'" v-validate="'required'">
-      <span v-show="errors.has('proyecto.presupuesto')" class="help is-danger">{{errors.first('proyecto.presupuesto')}}</span>
+      <input type="hidden" v-model="project.budget" data-vv-name="project.budget" data-vv-as="'Presupuesto'" v-validate="'required'">
+      <span v-show="errors.has('project.budget')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.budget')}}</span>
       <br>
       <div class="content">
         <table class="table is-narrow is-bordered">
@@ -241,8 +240,8 @@
               </th>
             </tr>
           </thead>
-          <tbody v-if="proyecto.presupuesto.length">
-            <tr v-for="(item, index) in proyecto.presupuesto" :key="index">
+          <tbody v-if="project.budget.length">
+            <tr v-for="(item, index) in project.budget" :key="index">
               <td>{{item.rubro}}</td>
               <td>{{item.descripcion}}</td>
               <td class="has-text-centered">$ {{item.monto}}</td>
@@ -267,30 +266,30 @@
           </tbody>
         </table>
       </div>
-      <label class="label is-size-4" v-if="proyecto.presupuesto.length">
+      <label class="label is-size-4" v-if="project.budget.length">
         <i class="fas fa-angle-double-right"></i> Monto total solicitado: $ {{montoTotal}}</label>
     </div>
     <hr>
     <div class="field">
-      <label class="label is-size-4" :class="{'has-text-danger': errors.has('proyecto.conOrganizacion')}">
+      <label class="label is-size-4" :class="{'has-text-danger': errors.has('conOrganizacion')}">
         <i class="fas fa-angle-double-right"></i> ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * </label>
       <p>Se refiere a organizaciones y/o instituciones <u>diferentes</u> a la que pertenece el equipo</p>
       <p><b>IMPORTANTE:</b> Si el proyecto se realiza en coordinación con otra institución y/o organización, debera adjuntar la carta aval en el sistema en otro momento.</p>
       <br>
       <b-field>
-        <b-radio-button v-model="proyecto.conOrganizacion" data-vv-name="proyecto.conOrganizacion" data-vv-as="'Trabajo en conjunto con Organización'" v-validate="'required'" :native-value="true" type="is-primary" size="is-medium">
+        <b-radio-button v-model="conOrganizacion" data-vv-name="conOrganizacion" data-vv-as="'Trabajo en conjunto con Organización'" v-validate="'required'" :native-value="true" type="is-primary" size="is-medium">
           <span>
             <i class="fas fa-check"></i> Si</span>
         </b-radio-button>
-        <b-radio-button v-model="proyecto.conOrganizacion" :native-value="false" type="is-primary" size="is-medium">
+        <b-radio-button v-model="conOrganizacion" :native-value="false" type="is-primary" size="is-medium">
           <span>
             <i class="fas fa-times"></i> No</span>
         </b-radio-button>
       </b-field>
-      <span v-show="errors.has('proyecto.conOrganizacion')" class="help is-danger">{{errors.first('proyecto.conOrganizacion')}}</span>
+      <span v-show="errors.has('conOrganizacion')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('conOrganizacion')}}</span>
     </div>
     <br>
-    <form-organizacion ref="formOrganizacion" v-if="proyecto.conOrganizacion" :organizacion.sync="proyecto.organizacion"></form-organizacion>
+    <form-organizacion ref="formOrganizacion" v-if="conOrganizacion" :organization.sync="project.organization"></form-organizacion>
   </div>
 </template>
 
@@ -298,13 +297,15 @@
 import Localidad from './FieldLocalidad'
 import FormOrganizacion from "./FormOrganizacion";
 export default {
-  props: ['proyecto'],
+  props: ['project'],
   components: {
     Localidad,
     FormOrganizacion
   },
   data() {
     return {
+      conOrganizacion: null,
+      enEjecucion: null,
       radioEstado: null,
       inputObjetivos: null,
       inputActividad: null,
@@ -337,23 +338,23 @@ export default {
   },
   methods: {
     updateLocalidad: function(id){
-        this.proyecto.localidad = id
+        this.project.locality_id = id
     },
     updateLocalidadCustom: function(localidadCustom){
-        this.proyecto.otraLocalidad = localidadCustom
+        this.project.locality_other = localidadCustom
     },
     addObjetivo: function() {
       if (!this.disableAddObjetivo) {
-        this.proyecto.objetivos.push(this.inputObjetivos);
+        this.project.goals.push(this.inputObjetivos);
         this.inputObjetivos = "";
       }
     },
     removeObjetivo: function(index) {
-      this.proyecto.objetivos.splice(index, 1);
+      this.project.goals.splice(index, 1);
     },
     addActividad: function() {
       if (!this.disableAddActividad) {
-        this.proyecto.actividades.push({
+        this.project.schedule.push({
           fecha: this.dateActividad,
           descripcion: this.inputActividad
         });
@@ -362,7 +363,7 @@ export default {
       }
     },
     removeActividad: function(index) {
-      this.proyecto.actividades.splice(index, 1);
+      this.project.schedule.splice(index, 1);
     },
     addItem: function() {
       this.$validator
@@ -376,10 +377,10 @@ export default {
                 );
                 return;
               }
-              this.proyecto.presupuesto.push({
-                rubro: this.inputItemRubro,
-                descripcion: this.inputItemDescripcion,
-                monto: this.inputItemMonto
+              this.project.budget.push({
+                category: this.inputItemRubro,
+                description: this.inputItemDescripcion,
+                amount: this.inputItemMonto
               });
               this.inputItemRubro = null;
               this.inputItemDescripcion = null;
@@ -393,7 +394,7 @@ export default {
         });
     },
     removeItem: function(index) {
-      this.proyecto.presupuesto.splice(index, 1);
+      this.project.budget.splice(index, 1);
     },
     validateForm: function() {
       let promise = new Promise((resolve, reject) => {
@@ -409,14 +410,14 @@ export default {
       return promise;
     },  
     validateOrganizacion: function() {
-      if (this.proyecto.conOrganizacion) {
+      if (this.conOrganizacion) {
         return this.$refs.formOrganizacion.validateForm();
       } else {
         return true;
       }
     },
     validateLocalidadOrganizacion: function(){
-      if (this.proyecto.conOrganizacion) {
+      if (this.conOrganizacion) {
         return this.$refs.formOrganizacion.validateLocalidad();
       } else {
         return true;
@@ -430,7 +431,7 @@ export default {
     montoTotal: function() {
       const reducer = (accumulator, item) =>
         accumulator + parseFloat(item.monto);
-      return this.proyecto.presupuesto.reduce(reducer, 0);
+      return this.project.budget.reduce(reducer, 0);
     },
     disableAddItem: function() {
       return (
@@ -451,6 +452,25 @@ export default {
     },
     disableAddObjetivo: function() {
       return this.inputObjetivos == "" || this.inputObjetivos == null;
+    }
+  },
+  watch: {
+    conOrganizacion: function(newVal, oldVal) {
+      if (newVal) {
+        this.project.organization = {
+          name: null,
+          topics: [],
+          topic_other: null,
+          locality_id: null,
+          locality_other: null,
+          web: null,
+          facebook: null,
+          telephone: null,
+          email: null
+        };
+      } else {
+        this.project.organization = null;
+      }
     }
   }
 };

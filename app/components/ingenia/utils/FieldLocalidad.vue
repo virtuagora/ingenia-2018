@@ -26,9 +26,9 @@
         <span class="help is-danger" v-show="errors.has('localidadCustom')">Requerido. Debe ingresar el nombre de la localidad</span>
       </div>
     </div>
-    <span v-show="errors.has('regionSelected')" class="help is-danger">{{errors.first('regionSelected')}}</span>
-    <span v-show="errors.has('departamentoSelected')" class="help is-danger">{{errors.first('departamentoSelected')}}</span>
-    <span v-show="errors.has('localidadSelected')" class="help is-danger">{{errors.first('localidadSelected')}}</span>
+    <span v-show="errors.has('regionSelected')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('regionSelected')}}</span>
+    <span v-show="errors.has('departamentoSelected')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('departamentoSelected')}}</span>
+    <span v-show="errors.has('localidadSelected')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('localidadSelected')}}</span>
   </div>
 </template>
 
@@ -44,8 +44,6 @@ export default {
       localidadSelected: null,
       showCustom: false,
       localidadCustom: null,
-      mutatedLocalidad: this.localidad,
-      mutatedOtraLocalidad: this.otraLocalidad,
       regiones: [],
       departamentos: [],
       localidades: []
