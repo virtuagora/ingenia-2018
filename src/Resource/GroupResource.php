@@ -267,7 +267,6 @@ class GroupResource extends Resource
     public function createOne($subject, $data)
     {
         $v = $this->validation->fromSchema($this->retrieveSchema());
-        throw new AppException(json_encode($this->retrieveSchema()));
         $v->assert($data);
 
         $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
