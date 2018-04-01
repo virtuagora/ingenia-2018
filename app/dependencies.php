@@ -85,12 +85,13 @@ $container['miscAction'] = function ($c) {
     );
 };
 $container['sessionAction'] = function ($c) {
-    return new App\Action\SessionAction($c['session'], $c['identity'], $c['view']);
+    return new App\Action\SessionAction($c['session'], $c['identity'], $c['view'], $c['db']);
 };
 $container['userAction'] = function ($c) {
     $resource = new App\Resource\UserResource($c);
     return new App\Action\UserAction(
-        $resource, $c['representation'], $c['helper'], $c['authorization'], $c['recaptcha']
+        $resource, $c['representation'], $c['helper'], 
+        $c['authorization'], $c['recaptcha'],  $c['router']
     );
 };
 $container['projectAction'] = function ($c) {

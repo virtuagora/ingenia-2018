@@ -12,14 +12,17 @@ class UserAction
     protected $helper;
     protected $authorization;
     protected $recaptcha;
+    protected $router;
 
-    public function __construct($userResource, $representation, $helper, $authorization, $recaptcha)
-    {
+    public function __construct(
+        $userResource, $representation, $helper, $authorization, $recaptcha, $router
+    ) {
         $this->userResource = $userResource;
         $this->representation = $representation;
         $this->helper = $helper;
         $this->authorization = $authorization;
         $this->recaptcha = $recaptcha;
+        $this->router = $router;
     }
 
     // GET /usuario/{usr}
@@ -64,7 +67,22 @@ class UserAction
         ]);
     }
 
-    // TODO postPublciProfile
+    public function postPublicProfile($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $user = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updUsrProfile', $user)) {
+            throw new UnauthorizedException();
+        }
+        $user = $this->userResource->updatePublicProfile($subject, $user, $request->getParsedBody());
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Profile updated succefully',
+            'status' => 200,
+            'user' => $user->toArray(),
+        ]);
+    }
 
     public function postProfile($request, $response, $params)
     {
@@ -98,9 +116,10 @@ class UserAction
         }
         $archivo = $request->getUploadedFiles()['archivo'];
         $this->userResource->updateDni($subject, $user, $atributos, $archivo);
-        return $this->representation->returnMessage($request, $response, [
-            'message' => 'DNI loaded succefully',
-            'status' => 200,
-        ]);
+        return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
+        // return $this->representation->returnMessage($request, $response, [
+        //     'message' => 'DNI loaded succefully',
+        //     'status' => 200,
+        // ]);
     }
 }

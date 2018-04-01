@@ -318,4 +318,65 @@ class GroupResource extends Resource
 
         return $group;
     }
+
+    public function updateLetter($subject, $group, $file)
+    {
+        if (is_null($group->project->organization)) {
+            throw new AppException('El proyecto no se realiza con una organización');
+        }
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            throw new AppException('Hubo un error con el archivo recibido');
+        }
+        $fileMime = $file->getClientMediaType();
+        $allowedMimes = [
+            'application/pdf' => 'pdf',
+            'invalid/pdf' => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+            'image/jpeg' => 'jpg',
+            'image/pjpeg' => 'jpg',
+        ];
+        if (!isset($allowedMimes[$fileMime])) {
+            throw new AppException('Tipo de documento inválido');
+        }
+        $group->uploaded_letter = true;
+        $group->save();
+        $fileStrm = $file->getStream()->detach();
+        $this->filesystem->putStream(
+            'avales/'.$group->id.'.'.$allowedMimes[$fileMime],
+            $fileStrm
+        );
+        if (is_resource($fileStrm)) {
+            fclose($fileStrm);
+        }
+    }
+
+    public function updateAgreement($subject, $group, $file)
+    {
+        if ($file->getError() !== UPLOAD_ERR_OK) {
+            throw new AppException('Hubo un error con el archivo recibido');
+        }
+        $fileMime = $file->getClientMediaType();
+        $allowedMimes = [
+            'application/pdf' => 'pdf',
+            'invalid/pdf' => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+            'image/jpeg' => 'jpg',
+            'image/pjpeg' => 'jpg',
+        ];
+        if (!isset($allowedMimes[$fileMime])) {
+            throw new AppException('Tipo de documento inválido');
+        }
+        $group->uploaded_agreement = true;
+        $group->save();
+        $fileStrm = $file->getStream()->detach();
+        $this->filesystem->putStream(
+            'acuerdos/'.$group->id.'.'.$allowedMimes[$fileMime],
+            $fileStrm
+        );
+        if (is_resource($fileStrm)) {
+            fclose($fileStrm);
+        }
+    }
 }

@@ -9,6 +9,11 @@ class ActionsLoader
         $this->db = $db;
     }
 
+    public function down()
+    {
+        $this->db->table('actions')->delete();
+    }
+
     public function up()
     {
         $this->db->table('actions')->insert([
@@ -17,6 +22,8 @@ class ActionsLoader
             ['id' => 'crePro', 'group' => 'project', 'allowed_roles' => '["admin","user"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'creGro', 'group' => 'project', 'allowed_roles' => '["admin","user"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'creGroInvit', 'group' => 'project', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["responsable"]', 'allowed_proxies' => '[]'],
+            ['id' => 'updGroLetter', 'group' => 'project', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["responsable"]', 'allowed_proxies' => '[]'],
+            ['id' => 'updGroAgreement', 'group' => 'project', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["responsable"]', 'allowed_proxies' => '[]'],
         ]);
     }
 }

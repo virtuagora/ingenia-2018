@@ -20,6 +20,15 @@ class GroupAction
         $this->authorization = $authorization;
     }
 
+    // GET /grupo/{gro}
+    public function getOne($request, $response, $params)
+    {
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        return $response->withJSON($group->toArray());
+    }
+
     public function post($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -49,5 +58,41 @@ class GroupAction
             'status' => 200,
             'invitation' => $invitation->toArray(),
         ]);
+    }
+
+    public function postAgreement($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updGroAgreement', $group)) {
+            throw new UnauthorizedException();
+        }
+        $atributos = $request->getParsedBody();
+        if (empty($request->getUploadedFiles()['archivo'])) {
+            throw new AppException('No se envió un archivo');
+        }
+        $archivo = $request->getUploadedFiles()['archivo'];
+        $this->groupResource->updateAgreement($subject, $group, $archivo);
+        return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
+    }
+
+    public function postLetter($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updGroLetter', $group)) {
+            throw new UnauthorizedException();
+        }
+        $atributos = $request->getParsedBody();
+        if (empty($request->getUploadedFiles()['archivo'])) {
+            throw new AppException('No se envió un archivo');
+        }
+        $archivo = $request->getUploadedFiles()['archivo'];
+        $this->groupResource->updateLetter($subject, $group, $archivo);
+        return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
     }
 }

@@ -29,13 +29,22 @@ class Subject extends Model
         return $this->belongsToMany('App\Model\Role', 'subject_role');
     }
 
-    public function toDummy()
+    public function toDummy($extras = null)
     {
+        $attr = [
+            'img_type' => $this->img_type,
+            'img_hash' => $this->img_hash,
+            'points' => $this->points
+        ];
+        if (isset($extras)) {
+            $attr = array_merge($attr, $extras);
+        }
         return new DummySubject(
             $this->type,
             $this->id,
             $this->display_name,
-            $this->roles()->pluck('role_id')->all()
+            $this->roles()->pluck('role_id')->all(),
+            $attr
         );
     }
 }

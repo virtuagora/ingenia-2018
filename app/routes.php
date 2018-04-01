@@ -64,6 +64,7 @@ $app->get('/', function ($request, $response, $args) {
 })->setName('showHome');
 
 $app->get('/install[/{extra}]', function ($request, $response, $args) {
+    $actions = new \App\Util\ActionsLoader($this->db);
     if (!isset($args['extra'])) {
         $installer = new \App\Util\Installer($this->db);
         $installer->down();
@@ -71,8 +72,9 @@ $app->get('/install[/{extra}]', function ($request, $response, $args) {
         $installer->populate();
         $loader = new \App\Util\LocalitiesLoader($this->db);
         $loader->up();
+    } else {
+        $actions->down();
     }
-    $actions = new \App\Util\ActionsLoader($this->db);
     $actions->up();
     return $response->withJSON(['message' => 'instalación exitosa']);
 });
@@ -114,11 +116,16 @@ $app->get('/department/{dep}/locality', 'miscAction:getLocalities');
 
 $app->get('/user/{usr}', 'userAction:getOne');
 $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');
+$app->post('/user/{usr}/public-profile', 'userAction:postPublicProfile')->setName('runUpdUserPub');
 $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
 
+$app->get('/group/{gro}', 'groupAction:getOne');
 $app->post('/group', 'groupAction:post')->setName('runCreGro');
 $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
+$app->post('/group/{gro}/letter', 'groupAction:postLetter')->setName('runUpdGroLet');
+$app->post('/group/{gro}/agreement', 'groupAction:postAgreement')->setName('runUpdGroAgr');
 
+$app->get('/project/{pro}', 'projectAction:getOne');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
 
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
