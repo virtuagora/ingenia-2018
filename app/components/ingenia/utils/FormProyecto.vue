@@ -31,11 +31,11 @@
     </div>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.category_id')}">
-        <i class="fas fa-angle-double-right"></i>Seleccione la del proyecto *</label>
+        <i class="fas fa-angle-double-right"></i>Seleccione la categoria del proyecto *</label>
       <p>Defina en que categoría se enmarca el proyecto</p>
       <br>
       <b-field>
-        <b-select size="is-large" data-vv-name="project.category_id" data-vv-as="'Temática'" v-validate="'required'" v-model="project.category_id" :disabled="categorias.length == 0" :loading="categoriasLoading" placeholder="Seleccione la temática" expanded>
+        <b-select size="is-large" data-vv-name="project.category_id" data-vv-as="'Categoría'" v-validate="'required'" v-model="project.category_id" :disabled="categorias.length == 0" :loading="categoriasLoading" placeholder="Seleccione la temática" expanded>
           <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.name}}</option>
           
         </b-select>
@@ -76,6 +76,9 @@
         <span v-show="errors.has('project.previous_work')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.previous_work')}}</span>
       </div>
     </div>
+    <label class="label is-size-4">
+      <i class="fas fa-angle-double-right"></i> ¿Donde se implementa o implementará territorialmente el proyecto? *
+    </label>
         <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.neighbourhoods')}">
@@ -101,13 +104,16 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input class="input is-medium" v-model="inputObjetivos" name="inputObjetivos" type="text" v-validate="'max:300'" placeholder="Escriba el objetivo">
-      <span v-show="errors.has('inputObjetivos')" class="help is-danger">Máximo hasta 300 caracteres</span>
+            <b-input size="is-medium" v-model="inputObjetivos" name="inputObjetivos"  maxlength="300" placeholder="Escriba el objetivo"></b-input>
           </p>
           <p class="control">
+            <b-tooltip :label="disableAddObjetivo ? 'Falta información' : 'Agregar!'"
+          :type="disableAddObjetivo ? 'is-danger' : 'is-primary'"
+            position="is-bottom">
             <button @click="addObjetivo" class="button is-primary is-medium" :disabled="disableAddObjetivo">
               <i class="fas fa-plus"></i>
             </button>
+          </b-tooltip>
           </p>
         </div>
         <input type="hidden" v-model="project.goals" data-vv-name="project.goals" data-vv-as="'Objetivos'" v-validate="'required'">
@@ -152,16 +158,20 @@
       <br>
       <div class="field is-grouped">
         <div class="control">
-          <b-datepicker placeholder="Haga clic!" v-model="dateActividad" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date()" :max-date="new Date('12/31/2018')" icon="calendar-alt">
+          <b-datepicker placeholder="Hace clic!" v-model="dateActividad" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date()" :max-date="new Date('12/31/2018')" icon="calendar-alt">
           </b-datepicker>
         </div>
         <p class="control is-expanded">
-          <input class="input is-medium" v-model="inputActividad" type="text" placeholder="Escriba el objetivo">
+          <b-input size="is-medium" v-model="inputActividad" maxlength="300" placeholder="Escribí un objetivo"></b-input>
         </p>
         <p class="control">
+          <b-tooltip :label="disableAddActividad ? 'Falta información' : 'Agregar!'"
+          :type="disableAddActividad ? 'is-danger' : 'is-primary'"
+            position="is-bottom">
           <button @click="addActividad" class="button is-primary is-medium" :disabled="disableAddActividad">
             <i class="far fa-calendar-plus"></i>
           </button>
+          </b-tooltip>
         </p>
       </div>
       <input type="hidden" v-model="project.schedule" data-vv-name="project.schedule" data-vv-as="'Actividades'" v-validate="'required'">
@@ -181,7 +191,7 @@
           <tbody v-if="project.schedule.length">
             <tr v-for="(actividad, index) in project.schedule" :key="index">
               <td>
-                <i class="far fa-calendar-check fa-fw"></i> {{actividad.date.toLocaleDateString('es-AR')}}</td>
+                <i class="far fa-calendar-check fa-fw"></i> {{actividad.date}}</td>
               <td>{{actividad.activity}}</td>
               <td class="has-text-centered">
                 <a @click="removeActividad(index)">
@@ -208,10 +218,10 @@
       <br>
       <div class="field is-grouped">
         <p class="control is-expanded">
-          <input class="input is-medium" v-model="inputItemRubro" type="text" placeholder="Rubro Item">
+          <b-input size="is-medium" v-model="inputItemRubro" maxlength="50" placeholder="Rubro Item"></b-input>
         </p>
         <p class="control is-expanded">
-          <input class="input is-medium" v-model="inputItemDescripcion" type="text" placeholder="Descripcion Item">
+          <b-input size="is-medium" v-model="inputItemDescripcion" maxlength="300" placeholder="Descripción Item"></b-input>
         </p>
         <p class="control is-expanded">
           <input class="input is-medium" v-model.number="inputItemMonto" data-vv-name="inputItemMonto" data-vv-as="'Monto'" v-validate="'numeric'" type="text" placeholder="Monto en AR$">
@@ -220,9 +230,13 @@
 
         </p>
         <p class="control">
+          <b-tooltip :label="disableAddItem ? 'Falta información' : 'Agregar!'"
+          :type="disableAddItem ? 'is-danger' : 'is-primary'"
+            position="is-bottom">
           <button @click="addItem" class="button is-primary is-medium" :disabled="disableAddItem">
             <i class="fas fa-plus"></i>
           </button>
+          </b-tooltip>
         </p>
       </div>
       <input type="hidden" v-model="project.budget" data-vv-name="project.budget" data-vv-as="'Presupuesto'" v-validate="'required'">
@@ -355,7 +369,7 @@ export default {
     addActividad: function() {
       if (!this.disableAddActividad) {
         this.project.schedule.push({
-          date: this.dateActividad,
+          date: this.dateActividad.toISOString().split('T')[0],
           activity: this.inputActividad
         });
         this.dateActividad = null;

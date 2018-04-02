@@ -48,6 +48,9 @@
           </div>
         </div>
       </div>
+      <label class="label is-size-4">
+      <i class="fas fa-angle-double-right"></i> ¿De donde es la organización? *
+    </label>
       <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
       <div class="field">
         <label class="label is-size-4">

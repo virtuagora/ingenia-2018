@@ -3,6 +3,13 @@
 {# set body_class = '' #}
 {% extends 'master.twig' %}
 {% block title %}Panel de control{% endblock %}
+{% block scriptshead %}
+  <script>
+    var getUserDataUrl = function () {
+      return "{{path_for('getUser', {'usr':subject.id})}}"
+  }
+  </script>
+{% endblock %}
 {% block body %}
   <section class="section">
     <div class="container">
@@ -13,7 +20,7 @@
         Cargando . . .
       </div>
       <br>
-<router-view save-team-url="{{path_for('runCreGro')}}" save-project-url="{{path_for('runCrePro')}}"></router-view>
+      <router-view ref="userPanel" id="{{subject.id}}" save-team-url="{{path_for('runCreGro')}}" save-project-url="{{path_for('runCrePro')}}" save-user-profile-url="{{path_for('runUpdUserPro',{'usr': subject.id})}}" save-user-dni-url="{{path_for('runUpdUserDni', {'usr': subject.id})}}" send-invitation-url="{{path_for('runCreGroInv',{'gro': subject.id})}}"></router-view>
     </div>
   </section>
 {% endblock %}

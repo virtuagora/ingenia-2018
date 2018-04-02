@@ -29,8 +29,10 @@ input.input {
     border-radius: 0;
     border: 0;
     border-bottom: 1px solid #b5b5b5;
+    border-left: 1px solid #b5b5b5;
+    border-bottom-left-radius: 8px;
     box-shadow: none;
-    padding-left: 0;
+    padding-left: 10px;
     padding-right: 0; // background-color: rgb(252, 252, 252);
     &:hover {
         border-bottom: 1px solid $primary;

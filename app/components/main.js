@@ -56,7 +56,7 @@ Vue.use(Buefy, {
 // go to http.js to configure axios according to your needs
 Vue.prototype.$http = http
 
-new Vue({ // eslint-disable-line no-new
+window.vm = new Vue({ // eslint-disable-line no-new
   el: '#vue', // The id of the DOM element,
   http,
   router,

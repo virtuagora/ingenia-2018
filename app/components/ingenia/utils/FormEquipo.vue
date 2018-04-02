@@ -4,7 +4,7 @@
             <label class="label is-size-4" :class="{'has-text-danger': errors.has('team.name')}">
                 <i class="fas fa-angle-double-right"></i> Nombre del equipo</label>
             <div class="control">
-                <input :value="team.name" @input="team.name = ($event.target.value != '' ? $event.target.value : null)" data-vv-name="team.name" data-vv-as="'Nombre del equipo'" type="text" v-validate="'required'" class="input is-large" placeholder="(Requerido)">
+                <input v-model="team.name" data-vv-name="team.name" data-vv-as="'Nombre del equipo'" type="text" v-validate="'required'" class="input is-large" placeholder="(Requerido)">
                 <span v-show="errors.has('team.name')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('team.name')}}</span>
             </div>
         </div>
@@ -18,6 +18,9 @@
                 <span v-show="errors.has('team.description')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('team.description')}}</span>
             </div>
         </div>
+        <label class="label is-size-4">
+      <i class="fas fa-angle-double-right"></i> ¿De donde es el equipo? *
+    </label>
         <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
         <div class="field">
             <label class="label is-size-4" :class="{'has-text-danger': errors.has('team.year')}">

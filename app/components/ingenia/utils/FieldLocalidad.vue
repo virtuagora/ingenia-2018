@@ -1,19 +1,19 @@
 <template>
   <div class="field">
-    <label class="label is-size-4" :class="{'has-text-danger': errors.has('regionSelected') || errors.has('departamentoSelected') || errors.has('localidadSelected') || errors.has('localidadCustom') }">
-      <i class="fas fa-angle-double-right"></i> ¿Donde se implementa o implementará territorialmente el proyecto? *</label>
+        <label class="label" :class="{'has-text-danger': errors.has('regionSelected') || errors.has('departamentoSelected') || errors.has('localidadSelected') || errors.has('localidadCustom') }">
+      Seleccione región, departamento, y la localidad</label>
     <b-field grouped>
-      <b-field label="Región" expanded>
+      <b-field  expanded>
         <b-select v-model="regionSelected" data-vv-name="regionSelected" data-vv-as="'Región'" v-validate="'required'" placeholder="Región" :disabled="regiones.length == 0" :loading="regionLoading" expanded>
           <option v-for="region in regiones" :key="region.id" :value="region">{{region.name}}</option>
         </b-select>
       </b-field>
-      <b-field label="Departamento" expanded>
+      <b-field  expanded>
         <b-select v-model="departamentoSelected" placeholder="Departamento" data-vv-name="departamentoSelected" data-vv-as="'Departamento'" v-validate="'required'" :disabled="departamentos.length == 0" :loading="departamentoLoading" expanded>
           <option v-for="departamento in departamentos" :key="departamento.id" :value="departamento">{{departamento.name}}</option>
         </b-select>
       </b-field>
-      <b-field label="Localidad" expanded>
+      <b-field  expanded>
         <b-select v-model="localidadSelected" placeholder="Localidad" data-vv-name="localidadSelected" data-vv-as="'Localidad'" v-validate="'required'" :disabled="localidades.length == 0" :loading="localidadLoading" expanded>
           <option v-for="localidad in localidades" :key="localidad.id" :value="localidad">{{localidad.name}}</option>
         </b-select>

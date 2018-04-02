@@ -3,11 +3,12 @@
     <div class="has-text-centered">
       <img src="/assets/img/ingenia-logo.svg" class="image is-centered" style="max-width: 250px;">
       <br>
-      <h1 class="title is-3 is-300 has-text-primary">¡Bienvenidxs! </h1>
+      <h1 class="title is-3 is-300 has-text-primary">¡Hola {{user.names}}!</h1>
       <h1 class="subtitle is-4">Formulario de pre-inscripción</h1>
     </div>
     <br>
-    <b-message v-if="!showForm">
+    <div v-if="!showForm">
+    <b-message>
       Desde el Gabinete Joven y la Secretaría de Juventudes recomendamos tener a mano
       <a href="mailto:ingenia@santafe.gob.ar">
         <b>el reglamento</b>
@@ -17,11 +18,41 @@
         <b>ingenia@santafe.gob.ar</b>
       </a>
     </b-message>
-    <button @click="showForm = true" v-if="!showForm" class="button is-primary is-fullwidth is-large is-800">
-      <i class="fas fa-rocket fa-fw"></i> ¡Comenzar con el formulario!</button>
+    <section v-if="this.user.pending_tasks.length > 0">
+      <p>Previo a presentar tu proyecto INGENIA, debes cumplir los siguientes requerimientos.</p>
+      <div class="notification is-warning" v-show="this.user.pending_tasks.includes('email')">
+        <a href="#" class="button is-dark is-pulled-right" style="margin-left:20px;margin-bottom:10px;">Actualizar email</a>
+        <span class="is-600 is-size-5">
+          <i class="fas fa-angle-double-right fa-lg fa-fw"></i> Verificá tu email</span>
+        <br>Si te registraste usando Facebook, es importante que registres un email para ser integrante de un equipo INGENIA
+      </div>
+      <div class="notification is-warning" v-show="this.user.pending_tasks.includes('profile')">
+        <div class="is-clearfix">
+          <a href="#" class="button is-dark is-pulled-right" style="margin-left:20px">Editar datos</a>
+          <span class="is-600 is-size-4">
+            <i class="fas fa-angle-double-right fa-lg fa-fw"></i> Completá tus datos personales</span>
+        </div>
+        <br>Para ser integrante de un equipo INGENIA debes completar tus datos personales y tener entre 15 y 29 años.
+        <b>NOTA: </b>Los responsable o co-responsable de un proyecto, deben tener entre 18 y 29 años.
+      </div>
+      <div class="notification is-warning" v-show="this.user.pending_tasks.includes('dni')">
+        <a href="#" class="button is-dark is-pulled-right" style="margin-left:20px;margin-bottom:10px;">Subir DNI</a>
+        <span class="is-600 is-size-5">
+          <i class="fas fa-angle-double-right fa-lg fa-fw"></i> Carga tu DNI</span>
+        <br>Como requisito del reglamento, es fundamental que subas un archivo con tu DNI.
+      </div>
+    </section>
+    <div v-else>
+      <div class="notification is-success">
+        <i class="fas fa-check fa-fw"></i> ¡Ya te encontras en condiciones para crear tu proyecto INGENIA!
+      </div>
+      <button @click="showForm = true" v-if="!showForm" class="button is-primary is-fullwidth is-large is-800">
+        <i class="fas fa-rocket fa-fw"></i> ¡Comenzar con el formulario!</button>
+    </div>
+    </div>
     <section v-if="showForm && !response.replied">
       <b-message>
-        El primer paso es inscribir los datos del equipo. No te preocupes por los integrantes, eso lo podras hacer mas tarde.
+        El primer paso es inscribir los datos del equipo. No te preocupes por los integrantes del mismo, eso lo podrás hacer mas tarde.
       </b-message>
       <div class="notification is-link">
         <h1 class="title is-1 is-700">
@@ -36,40 +67,31 @@
     </section>
     <section v-if="showForm && response.replied && response.ok">
       <div class="notification is-success">
-        <h1 class="title is-5">
-          <i class="fas fa-check fa-fw"></i> ¡Tu equipo ha sido guardado y ya estas pre-inscripto en Ingenia!</h1>
+          <i class="fas fa-check fa-fw"></i> ¡Tu equipo ha sido guardado! ¡Ahora podes ingresar los datos de tu proyecto INGENIA e invitar a mas personas a tu equipo!
       </div>
       <h1 class="title is-3">No te olvides de lo siguiente...</h1>
       <div class="content">
         <p>
           <i class="fas fa-arrow-right fa-fw fa-lg"></i> Completá el formulario de tu proyecto Ingenia para que tu proyecto se vea en la plataforma. Podes editarlo hasta que envies el formulario para su admisión antes de la fecha de cierre.</p>
         <p>
-          <i class="fas fa-arrow-right fa-fw fa-lg"></i> Cargá tu datos personales de la inscripción
-          <span class="has-text-danger">(Requisito para todos los integrantes del equipo)</span>
-        </p>
+          <i class="fas fa-arrow-right fa-fw fa-lg"></i> Invitá al co-responsable de tu proyecto INGENIA enviandole una invitación a ser parte del equipo. <b>Es requisito que tu proyecto tenga un co-responsable asignado.</b></p>
         <p>
-          <i class="fas fa-arrow-right fa-fw fa-lg"></i> Cargá tu DNI.
-          <span class="has-text-danger">(Requisito para todos los integrantes del equipo)</span>
-        </p>
-        <p>
-          <i class="fas fa-arrow-right fa-fw fa-lg"></i> Invitá al co-responsable de tu proyecto INGENIA enviandole una invitación a ser parte del equipo.</p>
-        <p>
-          <i class="fas fa-arrow-right fa-fw fa-lg"></i> Invitá a otros miembros a tu equipo enviandoles invitaciones por email.</p>
+          <i class="fas fa-arrow-right fa-fw fa-lg"></i> Invitá a otros miembros a tu equipo enviandoles invitaciones por email. ¡Recordales que completen sus datos para poder aceptar la invitación!</p>
         <p>
           <i class="fas fa-arrow-right fa-fw fa-lg"></i> ¿Tu proyecto se hace en conjunto con alguna institución u organización? Descargá la
-          <a href="">carta de aval</a> que debe ir firmada para subirla mas tarde.</p>
+          <a href="">carta de aval</a> que debe ir firmada para subirla más tarde.</p>
         <p>
           <i class="fas fa-arrow-right fa-fw fa-lg"></i> Asegurate de imprimir y hacer firmar la
-          <a href="">carta de conformidad de los integrantes del equipo</a> que debe ir firmada por todos. Luego subila a la plataforma.</p>
+          <a href="">carta de conformidad del equipo</a> que debe ir firmada por todos para subirla más tarde.</p>
         <p>
           <i class="fas fa-arrow-right fa-fw fa-lg"></i> Completá tu perfil público para que todos sepan quien sos (Ayudas a que la gente quiera ayudarte)</p>
       </div>
-      <h1 class="subtitle is-5 is-spaced">Tenes tiempo de hacer modificaciones, invitar gente a tu equipo, cumplir con otros requerimientos (DNI, cartas, etc)
+      <h1 class="subtitle is-5 is-spaced">Tenes tiempo de hacer modificaciones, invitar gente a tu equipo, cumplir con otros requerimientos (Documentacion, sumar gente a tu equipo, etc.)
         <u>hasta la fecha de cierre</u>
       </h1>
-      <h1 class="title is-4 is-700 has-text-link">No te olvides que cuando termines de completar todos los datos, antes de la fecha de cierre, debes enviar el proyecto a evaluación</h1>
+      <h1 class="title is-4 is-700 has-text-link">No te olvides que cuando termines de completar todos los datos, antes de la fecha de cierre, <u>debes enviar el proyecto a evaluación</u></h1>
     </section>
-    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
+    <b-loading :active.sync="isLoading"></b-loading>
   </section>
 </template>
 
@@ -103,8 +125,12 @@ export default {
         facebook: null,
         telephone: null,
         email: null
-      }
+      },
+      user: {}
     };
+  },
+  created: function() {
+    this.user = this.$store.state.user;
   },
   methods: {
     isOptional: function(value) {
@@ -133,7 +159,6 @@ export default {
             this.$http
               .post(this.saveTeamUrl, this.payload)
               .then(response => {
-                console.log(response);
                 this.$snackbar.open({
                   message: "¡Inscripción realizada!",
                   type: "is-success",

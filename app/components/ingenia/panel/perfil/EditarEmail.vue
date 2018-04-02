@@ -1,16 +1,15 @@
 <template>
   <section>
-    <h1 class="subtitle is-3">Cambiar mi email asociado</h1>
-    <div class="notification">Escriba aqui el mail asociado a su cuenta</div>
-    <b-field horizontal label="Email actual">
-      <input type="email" v-model="user.email" id="" class="input">
+    <h1 class="subtitle is-3">Actualizar mi email</h1>
+    <b-message>Uno de los requerimientos para ser integrante de un equipo INGENIA o presentar un proyecto INGENIA es el de tener una dirección de email verificada. A continuación escribí tu dirección de email. Un email te llegará para que puedas validar tu email.</b-message>
+    <section v-if="this.user.pending_tasks.includes('email')">
+    <b-field horizontal custom-class="is-medium" label="Nuevo email">
+      <input type="email" v-model="email" class="input is-medium" v-validate="'email'">
     </b-field>
-    <b-field horizontal label="Nuevo email">
-      <input type="email" v-model="user.email" id="" class="input">
-    </b-field>
-    <b-field horizontal label="Repita el nuevo email">
-      <input type="email" v-model="user.email" id="" class="input">
-    </b-field>
+    </section>
+    <div class="notification is-success" v-else>
+      <i class="fas fa-check fa-fw"></i> Tu mail ha sido ingresado y verificado correctamente
+    </div>
   </section>
 </template>
 
@@ -19,10 +18,8 @@ export default {
   props: ["id"],
   data() {
     return {
-      user: {},
-      actualEmail: null,
-      nuevoEmail: null,
-      confirmarEmail: null      
+      email: null,
+      user: {}
     };
   },
   created: function() {

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import http from './http'
 
 Vue.use(Vuex)
 
@@ -10,6 +11,17 @@ const store = new Vuex.Store({
   mutations: {
     bind: function (state, user) {
       Object.assign(state, user);
+    },
+    updateUser: function(state){
+      http.get(window.getUserDataUrl())
+        .then(response => {
+          console.log('User updated. Forcing panel to update');
+          state.user = response.data
+          vm.$refs.userPanel.forceUserUpdate();
+        })
+        .catch(e => {
+          console.error(e)
+        })
     }
   },
   getters: {
