@@ -1,13 +1,14 @@
 <template>
   <div>
-    <h1 class="subtitle is-3">Subir DNI</h1>
-    <p>Uno de los requerimientos para admitir el proyecto INGENIA y para formar parte de un equipo INGENIA es el de subir y validar el DNI de todos los integrantes del equipo.</p>
-    <br>
-    <div class="notification is-success" v-show="cargado">
-      <i class="fas fa-check fa-fw"></i>DNI enviado con éxito. ¡Muchas gracias!
+    <h1 class="subtitle is-3">Subir mi DNI</h1>
+     <b-message>
+      Uno de los requerimientos para ser integrante de un equipo INGENIA o presentar un proyecto INGENIA es el de enviar una imagen o archivo donde se vea la parte delantera y trasera del DNI.
+    </b-message>
+    <div class="notification is-success"  v-show="!this.user.pending_tasks.includes('dni')">
+      <i class="fas fa-check fa-fw"></i>Tu DNI ha sido enviado y guardado correctamente
     </div>
     <div>
-      <form action="" ref="formDNI" method="post" enctype="multipart/form-data">
+      <form :action="saveUserDniUrl" ref="formDNI" method="post" enctype="multipart/form-data">
         <div class="field is-grouped">
           <div class="control">
             <a @click.prevent class="button is-medium is-static">
@@ -15,7 +16,7 @@
             </a>
           </div>
           <div class="control is-expanded">
-            <input type="string" v-model.lazy="dni" name="dni" v-validate="'required|alpha_num'" class="input is-medium" :class="{'is-danger': errors.has('dni')}" placeholder="Ingresa el numero de DNI">
+            <input type="string" v-model="dni" name="dni" v-validate="'required|alpha_num'" class="input is-medium" :class="{'is-danger': errors.has('dni')}" placeholder="Ingresa el numero de DNI">
             <span class="help is-danger" v-show="errors.has('dni')">Requerido. Solamente se aceptan numeros</span>
           </div>
         </div>
@@ -24,7 +25,7 @@
         <br>Maximo: 3MB. Se aceptan .jpg o .jepg
       </b-message>
         <b-field class="file is-medium">
-          <b-upload v-model="files" name="documento" accept="image/jpeg" v-validate="'required|size:3072|mimes:image/jpeg'">
+          <b-upload v-model="files" name="archivo" accept="image/jpeg" v-validate="'required|size:3072|mimes:image/jpeg'">
             <a class="button is-link is-medium">
               <b-icon icon="upload"></b-icon>
               <span>Click para cargar</span>
@@ -34,7 +35,7 @@
             {{ files && files.length ? files[0].name : 'Seleccione un archivo para subir...' }}
           </span>
         </b-field>
-        <p v-show="errors.has('documento')" class="has-text-danger">Requerido. Debe ser una imagen .JPG de hasta 3MB como máximo.</p>
+        <p v-show="errors.has('archivo')" class="has-text-danger">Requerido. Debe ser una imagen .JPG de hasta 3MB como máximo.</p>
         <div class="field">
           <div class="control is-clearfix">
             <a @click="submit" type="submit" class="button is-primary is-medium is-pulled-right" :class="{'is-loading': isLoading}">
@@ -43,18 +44,25 @@
         </div>
       </form>
     </div>
-    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
+    <b-loading :active.sync="isLoading"></b-loading>
   </div>
 </template>
 
 <script>
 export default {
+  props: ['saveUserDniUrl'],
   data() {
     return {
+      user: {
+      },
       cargado: false,
       files: [],
+      dni: null,
       isLoading: false
     };
+  },
+  created: function() {
+    this.user = this.$store.state.user;
   },
   methods: {
     submit: function() {
@@ -63,14 +71,14 @@ export default {
         .then(result => {
           if (!result) {
             this.$snackbar.open({
-              message: "Error en el formulario. Verifíquelo",
+              message: "Algunos datos faltan o son incorrectos. Verifíquelos.",
               type: "is-danger",
               actionText: "Cerrar"
             });
             return false;
           }
           this.isLoading = true;
-          // this.$refs.formDNI.submit();
+          this.$refs.formDNI.submit();
         })
         .catch(error => {
           this.$snackbar.open({

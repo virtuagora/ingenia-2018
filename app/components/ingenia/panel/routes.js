@@ -13,6 +13,9 @@ import VerPerfil from './perfil/VerPerfil'
 import EditarPerfil from './perfil/EditarPerfil'
 import EditarEmail from './perfil/EditarEmail'
 import EditarPassword from './perfil/EditarPassword'
+import VerInvitaciones from './perfil/VerInvitaciones'
+import EditarMisDatosPersonales from './perfil/EditarMisDatosPersonales'
+import SubirDNI from './perfil/SubirDNI'
 
 import Proyecto from './proyecto/Proyecto'
 import VerProyecto from './proyecto/VerProyecto'
@@ -22,11 +25,10 @@ import SubirAvalOrganizacion from './proyecto/SubirAvalOrganizacion'
 import EnviarProyecto from './proyecto/EnviarProyecto'
 
 import Equipo from './equipo/Equipo'
-import VerInvitaciones from './equipo/VerInvitaciones'
-import EnviarInvitaciones from './equipo/EnviarInvitaciones'
 import VerEquipo from './equipo/VerEquipo'
-import VerMisDatosPersonales from './equipo/VerMisDatosPersonales'
-import SubirDNI from './equipo/SubirDNI'
+import EditarEquipo from './equipo/EditarEquipo'
+import EnviarInvitaciones from './equipo/EnviarInvitaciones'
+import SubirConformidad from './equipo/SubirConformidad'
 
 
 const basePath = '/panel'
@@ -76,6 +78,24 @@ const routes = [
             path: 'cambiar-password',
             component: EditarPassword,
             name: 'userEditarPassword',
+            props: true
+          },
+          {
+            path: 'invitaciones',
+            component: VerInvitaciones,
+            name: 'userVerInvitaciones',
+            props: true
+          },
+          {
+            path: 'mis-datos',
+            component: EditarMisDatosPersonales,
+            name: 'userEditarMisDatosPersonales',
+            props: true
+          },
+          {
+            path: 'subir-documento',
+            component: SubirDNI,
+            name: 'userSubirDNI',
             props: true
           },
         ]        
@@ -129,15 +149,9 @@ const routes = [
             props: true
           },
           {
-            path: 'mis-datos',
-            component: VerMisDatosPersonales,
-            name: 'userVerMisDatosPersonales',
-            props: true
-          },
-          {
-            path: 'ver-invitaciones',
-            component: VerInvitaciones,
-            name: 'userVerInvitaciones',
+            path: 'editar',
+            component: EditarEquipo,
+            name: 'userEditarEquipo',
             props: true
           },
           {
@@ -147,9 +161,9 @@ const routes = [
             props: true
           },
           {
-            path: 'subir-documento',
-            component: SubirDNI,
-            name: 'userSubirDNI',
+            path: 'conformidad',
+            component: SubirConformidad,
+            name: 'userSubirConformidad',
             props: true
           },
         ]
@@ -157,7 +171,7 @@ const routes = [
     ],
     beforeEnter: (to, from, next) => {
       console.log('First time entering, getting user...')
-      http.get('https://jsonplaceholder.typicode.com/users/' + (Math.floor(Math.random() * 10) + 1) )
+      http.get(window.getUserDataUrl())
         .then(response => {
           // JSON responses are automatically parsed.
           store.commit('bind', { user: response.data })

@@ -8,7 +8,7 @@
       <img src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg" alt="">
     </figure>
     <div class="media-content" v-if="user != {}">
-      <h1 class="title is-1">{{user.name}}</h1>
+      <h1 class="title is-1">{{user.subject.display_name}}</h1>
       <div class="field">
         <label class="label">Acerca de mí</label>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad ut optio incidunt accusamus vero earum nostrum exercitationem blanditiis dolor ea cumque, eveniet nisi suscipit alias cupiditate illo recusandae nulla hic.</p>
@@ -19,7 +19,7 @@
       </div>
       <div class="field">
         <label class="label">Ciudad</label>
-        <p>{{user.address.city}}</p>
+        <p>WhoKnows</p>
       </div>
       <div class="field">
         <label class="label">Redes sociales</label>
