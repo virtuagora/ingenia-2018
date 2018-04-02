@@ -1,14 +1,35 @@
 <template>
-  <router-view 
-  :save-team-url="saveTeamUrl"
-:save-project-url="saveProjectUrl"
+<router-view 
+:id="id" 
+:user-url="userUrl"
 :save-user-profile-url="saveUserProfileUrl"
-:save-user-dni-url="saveUserDniUrl"
-:send-invitation-url="sendInvitationUrl"></router-view>
+:save-user-dni-url="saveUserDniUrl" 
+:save-user-public-profile-url="saveUserPublicProfileUrl"
+:team-url="teamUrl"
+:save-team-url="saveTeamUrl"
+:send-invitation-url="sendInvitationUrl"
+:save-letter-url="saveLetterUrl"
+:save-agreement-url="saveAgreementUrl"
+:project-url="projectUrl"
+:save-project-url="saveProjectUrl"
+></router-view>
 </template>
 
 <script>
 export default {
-  props:["saveTeamUrl", "saveProjectUrl",'saveUserProfileUrl','saveUserDniUrl','sendInvitationUrl']
+  props: [
+    "id",
+	"userUrl",
+	"saveUserProfileUrl",
+	"saveUserDniUrl",
+	"saveUserPublicProfileUrl",
+	"teamUrl",
+	"saveTeamUrl",
+	"sendInvitationUrl",
+	"saveLetterUrl",
+	"saveAgreementUrl",
+	"projectUrl",
+	"saveProjectUrl",
+  ],
 }
 </script>

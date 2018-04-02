@@ -28,6 +28,9 @@ const store = new Vuex.Store({
     get: (state) => {
       return key => {return state[key]}
       // return state
+    },
+    getUserGroup: (state) => {
+      return state.user.groups[0]
     }
   }
 })

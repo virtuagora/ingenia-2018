@@ -12,12 +12,12 @@
     </div>
     <div v-show="!pendiente">
       <b-message>
-        A continuación, por favor, suba un pdf, foto o escaneo donde se vea la carta aval firmada por la organización
-        <br>Maximo: 3MB. Se aceptan .jpg o .jepg
+        En el siguiente campo subí un archivo donde se vea la carta de aval firmada por la organización.
+        <br>Tamaño del archivo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
       </b-message>
       <form action="" ref="formAval" method="post" enctype="multipart/form-data">
         <b-field class="file is-medium">
-          <b-upload v-model="files" name="carta" v-validate="'required|size:3072|mimes:image/jpeg,application/pdf'">
+          <b-upload v-model="files" name="archivo" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
             <a class="button is-link is-medium">
               <b-icon icon="upload"></b-icon>
               <span>Click para cargar</span>
@@ -27,7 +27,7 @@
             {{ files && files.length ? files[0].name : 'Seleccione un archivo para subir...' }}
           </span>
         </b-field>
-        <p v-show="errors.has('carta')" class="has-text-danger">Requerido. Debe ser un documento .PDF, o una imagen/escaneo .JPG de hasta 3MB como máximo.</p>
+        <p v-show="errors.has('archivo')" class="has-text-danger">Requerido. Debe ser un archivo .JPG, .JPEG, .PDF, .DOC o .DOCX de hasta 3MB como máximo.</p>
         <div class="field">
           <div class="control is-clearfix">
             <a @click="submit" type="submit" class="button is-primary is-medium is-pulled-right" :class="{'is-loading': isLoading}">
@@ -42,14 +42,19 @@
 
 <script>
 export default {
+  props: ['saveLetterUrl'],
   data() {
     return {
       pendiente: false,
       rechazado: false,
       verificado: false,
       files: [],
-      isLoading: false
+      isLoading: false,
+      user: {}
     };
+  },
+  created: function() {
+    this.user = this.$store.state.user;
   },
   methods: {
     submit: function() {
@@ -65,7 +70,7 @@ export default {
             return false;
           }
           this.isLoading = true;
-          // this.$refs.formAval.submit();
+          this.$refs.formAval.submit();
         })
         .catch(error => {
           this.$snackbar.open({
@@ -75,6 +80,18 @@ export default {
           });
           return false;
         });
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log('Authorized')
+    if (
+      vm.$store.state.user.groups[0] !== undefined &&
+      vm.$store.state.user.groups[0].pivot.relation === "responsable"
+    ) {
+      next();
+    } else {
+      console.log('Unauthorized - Kicking to dashboard!')
+      next({ name: "panelOverview" });
     }
   }
 };

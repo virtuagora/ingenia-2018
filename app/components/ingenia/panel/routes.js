@@ -26,6 +26,7 @@ import EnviarProyecto from './proyecto/EnviarProyecto'
 
 import Equipo from './equipo/Equipo'
 import VerEquipo from './equipo/VerEquipo'
+import VerIntegrantes from './equipo/VerIntegrantes'
 import EditarEquipo from './equipo/EditarEquipo'
 import EnviarInvitaciones from './equipo/EnviarInvitaciones'
 import SubirConformidad from './equipo/SubirConformidad'
@@ -146,6 +147,12 @@ const routes = [
             path: '',
             component: VerEquipo,
             name: 'userVerEquipo',
+            props: true
+          },
+          {
+            path: 'integrantes',
+            component: VerIntegrantes,
+            name: 'userVerIntegrantes',
             props: true
           },
           {

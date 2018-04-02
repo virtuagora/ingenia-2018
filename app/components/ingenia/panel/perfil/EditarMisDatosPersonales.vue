@@ -123,8 +123,12 @@ export default {
         locality_other: null,
         neighbourhood: null,
         referer: null
-      }
+      },
+      user:{}
     };
+  },
+  created: function() {
+    this.user = this.$store.state.user;
   },
   methods: {
     isOptional: function(value) {
@@ -155,7 +159,7 @@ export default {
             console.log("Sending form!");
             this.isLoading = true;
             this.$http
-              .post(this.saveUserProfileUrl, this.payload)
+              .post(this.saveUserProfileUrl.replace(':usr',this.user.id), this.payload)
               .then(response => {
                 this.$snackbar.open({
                   message: "Tus datos personales han sido actualizados",

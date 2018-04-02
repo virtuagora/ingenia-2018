@@ -6,6 +6,21 @@
 
 <script>
 export default {
-  
+  data() {
+    return {
+      user: {},
+      group: {}
+    };
+  },
+  created: function() {
+    this.user = this.$store.state.user;
+    // this.group = this.user.groups[0];
+  },
+  methods: {
+    openDeleteUser: function(id) {
+      this.userSelected = id;
+      this.showModal = true;
+    }
+  }
 }
 </script>

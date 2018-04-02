@@ -46,44 +46,47 @@
               </li>
             </ul>
           </li>
-          <li>
+          <li v-if="user.groups[0] === undefined ">
             <router-link :to="{ name: 'userInscripcionIngenia'}" exact-active-class="is-active">¡Presentá un nuevo proyecto!</router-link>
           </li>
         </ul>
-        <p class="menu-label">
+        <p class="menu-label" v-if="user.groups[0] !== undefined">
           Mi equipo Ingenia 2018
         </p>
-        <ul class="menu-list">
+        <ul class="menu-list" v-if="user.groups[0] !== undefined">
           <li>
-            <router-link :to="{ name: 'userVerEquipo'}" exact-active-class="is-active">Mi equipo INGENIA</router-link>
+            <router-link :to="{ name: 'userVerEquipo'}" exact-active-class="is-active">Ver mi equipo</router-link>
           </li>
-          <li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userEditarEquipo'}" exact-active-class="is-active">Editar datos del equipo</router-link>
           </li>
-          <li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
+            <router-link :to="{ name: 'userVerIntegrantes'}" exact-active-class="is-active">Integrantes del equipo</router-link>
+          </li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userEnviarInvitaciones'}" exact-active-class="is-active">Enviar invitaciones</router-link>
           </li>
-          <li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userSubirConformidad'}" exact-active-class="is-active">Subir carta de conformidad </router-link>
           </li>
         </ul>
-        <p class="menu-label">
+        <p class="menu-label" v-if="user.groups[0] !== undefined">
           Mi proyecto Ingenia 2018
         </p>
-        <ul class="menu-list">
+        <ul class="menu-list" v-if="user.groups[0] !== undefined">
           <li>
-            <router-link :to="{ name: 'userVerProyecto'}" exact-active-class="is-active">Mi proyecto INGENIA</router-link>
+            <router-link :to="{ name: 'userVerProyecto'}" exact-active-class="is-active">Ver mi proyecto</router-link>
           </li>
-          <li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userEditarProyecto'}" exact-active-class="is-active">Editar datos del proyecto</router-link>
           </li>
-          <li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userSubirImagen'}" exact-active-class="is-active">Subir imagen del proyecto</router-link>
           </li>
-          <li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userSubirAvalOrganizacion'}" exact-active-class="is-active">Subir carta de aval</router-link>
           </li>
-          <li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userEnviarProyecto'}" class="is-size-5" exact-active-class="is-active">
               <i class="fas fa-paper-plane fa-fw"></i> ¡Enviar proyecto!</router-link>
           </li>
@@ -92,7 +95,20 @@
       </aside>
     </div>
     <div class="column is-7 is-offset-1">
-      <router-view :save-team-url="saveTeamUrl" :save-project-url="saveProjectUrl" :save-user-profile-url="saveUserProfileUrl" :save-user-dni-url="saveUserDniUrl" :send-invitation-url="sendInvitationUrl"></router-view>
+<router-view 
+:id="id" 
+:user-url="userUrl"
+:save-user-profile-url="saveUserProfileUrl"
+:save-user-dni-url="saveUserDniUrl" 
+:save-user-public-profile-url="saveUserPublicProfileUrl"
+:team-url="teamUrl"
+:save-team-url="saveTeamUrl"
+:send-invitation-url="sendInvitationUrl"
+:save-letter-url="saveLetterUrl"
+:save-agreement-url="saveAgreementUrl"
+:project-url="projectUrl"
+:save-project-url="saveProjectUrl"
+></router-view>
     </div>
   </div>
 </template>
@@ -101,11 +117,17 @@
 export default {
   props: [
     "id",
-    "saveTeamUrl",
-    "saveProjectUrl",
-    "saveUserProfileUrl",
-    "saveUserDniUrl",
-    "sendInvitationUrl"
+	"userUrl",
+	"saveUserProfileUrl",
+	"saveUserDniUrl",
+	"saveUserPublicProfileUrl",
+	"teamUrl",
+	"saveTeamUrl",
+	"sendInvitationUrl",
+	"saveLetterUrl",
+	"saveAgreementUrl",
+	"projectUrl",
+	"saveProjectUrl",
   ],
   data() {
     return {

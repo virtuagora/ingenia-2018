@@ -4,16 +4,16 @@
       <form ref="formLocalLogin" :action="loginUrl" method="POST">
 
       <div class="field-is-marginless">
-        <div class="control has-icons-left" style="border: 1px solid #CACACA;border-bottom: 0;">
-          <input type="email" name="email" v-model.lazy="loginEmail" v-validate="'required|email'" class="input is-medium has-text-centered" :class="{'is-danger': errors.has('email')}" placeholder="Dirección de email">
+        <div class="control has-icons-left" >
+          <input type="email" name="email" v-model.lazy="loginEmail" v-validate="'required|email'" class="input is-medium has-text-centered" style="border-left:0; border-radius:0" :class="{'is-danger': errors.has('email')}" placeholder="Dirección de email">
           <span class="icon is-left">
             <i class="fas fa-envelope fa-lg fa-fw"></i>
           </span>
         </div>
       </div>
       <div class="field">
-        <div class="control has-icons-left" style="border: 1px solid #CACACA;border-bottom: 0;border-top:0;">
-          <input type="password" name="password" v-model.lazy="loginPassword" v-validate="'required'" class="input is-medium has-text-centered" :class="{'is-danger': errors.has('password')}" placeholder="Contraseña">
+        <div class="control has-icons-left">
+          <input type="password" name="password" v-model.lazy="loginPassword" v-validate="'required'" class="input is-medium has-text-centered" style="border-left:0; border-radius:0" :class="{'is-danger': errors.has('password')}" placeholder="Contraseña">
           <span class="icon is-left">
             <i class="fas fa-lock fa-lg fa-fw"></i>
           </span>
