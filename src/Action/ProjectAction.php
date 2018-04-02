@@ -23,9 +23,13 @@ class ProjectAction
     // GET /proyecto/{pro}
     public function getOne($request, $response, $params)
     {
+        $subject = $request->getAttribute('subject');
         $proyecto = $this->helper->getEntityFromId(
             'App:Project', 'pro', $params
         );
+        if ($this->authorization->checkPermission($subject, 'retProFull', $proyecto)) {
+            $proyecto->addVisible(['goals', 'schedule', 'budget']);
+        }
         return $response->withJSON($proyecto->toArray());
     }
 

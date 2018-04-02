@@ -24,6 +24,7 @@ class SessionAction
             $user = $result['user'];
             $group = $user->groups->first();
             $session = $this->session->signIn($user->subject->toDummy([
+                'user_id' => $user->id,
                 'group' => [
                     'id' => $group->id,
                     'relation' => $group->pivot->relation,

@@ -10,9 +10,9 @@ class Project extends Model
     protected $table = 'projects';
     protected $dates = ['deleted_at'];
     protected $visible = [
-        'id', 'name', 'abstract', 'foundation', 'previous_work', 'neighbourhood',
-        'goals', 'budget', 'schedule', 'organization', 'has_image', 'likes',
-        'locality_other', 'locality', 'group', 'category',
+        'id', 'name', 'abstract', 'foundation', 'previous_work',
+        'neighbourhoods', 'organization', 'locality_id', 'locality_other',
+        'has_image', 'likes', 'group', 'category',
     ];
     protected $with = [];
     protected $casts = [
@@ -36,5 +36,11 @@ class Project extends Model
     public function locality()
     {
         return $this->belongsTo('App\Model\Locality');
+    }
+
+    public function getRelationsWith($subject)
+    {
+        $user = $this->group->users()->where('subject_id', $subject->getId())->first();
+        return isset($user) ? [$user->pivot->relation] : [];
     }
 }
