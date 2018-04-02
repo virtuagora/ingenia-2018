@@ -28,7 +28,7 @@
             <router-link :to="{ name: 'userVerInvitaciones'}" exact-active-class="is-active">Mis invitaciones</router-link>
           </li>
           <li>
-            <a>Mis datos personales</a>
+            <a><i class="fas fa-angle-down "></i> Mis datos personales</a>
           </li>
           <li>
             <ul>

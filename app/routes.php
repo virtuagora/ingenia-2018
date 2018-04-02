@@ -114,7 +114,7 @@ $app->get('/region', 'miscAction:getRegions');
 $app->get('/region/{reg}/department', 'miscAction:getDepartments');
 $app->get('/department/{dep}/locality', 'miscAction:getLocalities');
 
-$app->get('/user/{usr}', 'userAction:getOne');
+$app->get('/user/{usr}', 'userAction:getOne')->setName('getUser');
 $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');
 $app->post('/user/{usr}/public-profile', 'userAction:postPublicProfile')->setName('runUpdUserPub');
 $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
