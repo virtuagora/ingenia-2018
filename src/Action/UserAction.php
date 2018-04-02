@@ -30,9 +30,17 @@ class UserAction
     {
         $subject = $request->getAttribute('subject');
         $usuario = $this->helper->getEntityFromId(
-            'App:User', 'usr', $params, ['groups']
+            'App:User', 'usr', $params, ['groups.project']
         );
-        $usuario->addVisible(['groups']);
+        if ($this->authorization->checkPermission($subject, 'retUsrFull', $usuario)) {
+            $visible = [
+                'groups', 'birthday', 'gender', 'address', 'telephone',
+                'neighbourhood', 'referer', 'email'
+            ];
+        } else {
+            $visible = ['groups'];
+        }
+        $usuario->addVisible($visible);
         return $response->withJSON($usuario->toArray());
     }
 

@@ -9,7 +9,7 @@ class DummySubject
     protected $roles;
     protected $extra;
 
-    public function __construct($type, $id = null, $name = null, $roles = null, $extra = [])
+    public function __construct($type, $id = null, $name = null, $roles = [], $extra = [])
     {
         $this->type = $type;
         $this->id = $id;

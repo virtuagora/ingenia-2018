@@ -23,9 +23,13 @@ class GroupAction
     // GET /grupo/{gro}
     public function getOne($request, $response, $params)
     {
+        $subject = $request->getAttribute('subject');
         $group = $this->helper->getEntityFromId(
             'App:Group', 'gro', $params
         );
+        if ($this->authorization->checkPermission($subject, 'retGroFull', $group)) {
+            $group->addVisible(['telephone', 'email']);
+        }
         return $response->withJSON($group->toArray());
     }
 

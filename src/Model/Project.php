@@ -20,6 +20,7 @@ class Project extends Model
         'schedule' => 'array',
         'neighbourhoods' => 'array',
         'goals' => 'array',
+        'organization' => 'array',
     ];
 
     public function group()

@@ -12,13 +12,14 @@ class Group extends Model
     protected $visible = [
         'id', 'name', 'year', 'description', 'previous_editions',
         'parent_organization', 'web', 'facebook',
-        'locality_other', 'locality', 'pivot'
+        'locality_other', 'locality', 'pivot', 'project',
     ];
     protected $with = [
         'subject',
     ];
     protected $casts = [
         'previous_editions' => 'array',
+        'parent_organization' => 'array',
     ];
 
     public function subject()
