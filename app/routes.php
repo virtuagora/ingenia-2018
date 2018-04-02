@@ -19,11 +19,11 @@ $app->post('/fb-callback', function ($request, $response, $args) {
         return $response->withRedirect('/idle');
     } elseif ($result['status'] == 'pending-user') {
         return $this->view->render($response, 'test/fb-register.twig', [
-            'token' => $result['token'],
+        'token' => $result['token'],
         ]);
     } else {
         return $this->view->render($response, 'test/fb-login-link.twig', [
-            'link' => $result['status'],
+        'link' => $result['status'],
         ]);
     }
 })->setName('fbCallbackGet');
@@ -40,14 +40,14 @@ $app->post('/fb-register', function ($request, $response, $args) {
 $app->get('/idle', function ($request, $response, $args) {
     $sub = $request->getAttribute('subject');
     return $this->view->render($response, 'test/simple.twig', [
-        'text' => $sub->getType(),
+    'text' => $sub->getType(),
     ]);
 });
 
 $app->get('/logout', function ($request, $response, $args) {
     $this->session->signOut();
     return $this->view->render($response, 'test/simple.twig', [
-        'text' => 'holis',
+    'text' => 'holis',
     ]);
 });
 
@@ -82,8 +82,8 @@ $app->get('/install[/{extra}]', function ($request, $response, $args) {
 $app->get('/test', function ($req, $res, $arg) {
     $options = $this->options->getAutoloaded();
     return $res->withJSON([
-        'sub' => $options->toArray(),
-        'raw' => $options->toArray(),
+    'sub' => $options->toArray(),
+    'raw' => $options->toArray(),
     ]);
     //return $res->withJSON($this->session->get('user'));
 });
@@ -92,8 +92,8 @@ $app->get('/test', function ($req, $res, $arg) {
 
 $app->get('/login', function ($request, $response, $args) {
     return $this->view->render($response, 'base/login.twig', [
-        'facebookKey' => $this->get('settings')['facebook']['app_id'],
-        'googleKey' => $this->get('settings')['recaptcha']['public_key'],
+    'facebookKey' => $this->get('settings')['facebook']['app_id'],
+    'googleKey' => $this->get('settings')['recaptcha']['public_key'],
     ]);
 })->setName('showLogin');
 
@@ -119,13 +119,13 @@ $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUser
 $app->post('/user/{usr}/public-profile', 'userAction:postPublicProfile')->setName('runUpdUserPub');
 $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
 
-$app->get('/group/{gro}', 'groupAction:getOne');
+$app->get('/group/{gro}', 'groupAction:getOne')->setName('getGroup');
 $app->post('/group', 'groupAction:post')->setName('runCreGro');
 $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
 $app->post('/group/{gro}/letter', 'groupAction:postLetter')->setName('runUpdGroLet');
 $app->post('/group/{gro}/agreement', 'groupAction:postAgreement')->setName('runUpdGroAgr');
 
-$app->get('/project/{pro}', 'projectAction:getOne');
+$app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
 
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
