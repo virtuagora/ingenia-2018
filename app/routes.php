@@ -113,6 +113,7 @@ $app->get('/category', 'miscAction:getCategories');
 $app->get('/region', 'miscAction:getRegions');
 $app->get('/region/{reg}/department', 'miscAction:getDepartments');
 $app->get('/department/{dep}/locality', 'miscAction:getLocalities');
+$app->get('/locality/{loc}', 'miscAction:getLocality');
 
 $app->get('/user/{usr}', 'userAction:getOne')->setName('getUser');
 $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');

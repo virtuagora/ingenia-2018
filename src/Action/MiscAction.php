@@ -40,4 +40,11 @@ class MiscAction
         $locs = $this->db->query('App:Locality')->where('department_id', $depId)->get();
         return $response->withJSON($locs->toArray());
     }
+
+    public function getLocality($request, $response, $params)
+    {
+        $locId = $this->helper->getSanitizedId('loc', $params);
+        $locality = $this->db->query('App:Locality', ['department.region'])->findOrFail($locId);
+        return $response->withJSON($locality->toArray());
+    }
 }

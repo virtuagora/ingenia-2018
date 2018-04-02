@@ -9,7 +9,7 @@ class Locality extends Model
     public $timestamps = false;
     protected $table = 'localities';
     protected $visible = [
-        'id', 'name', 'custom', 'department_id',
+        'id', 'name', 'custom', 'department_id', 'department',
     ];
     protected $casts = [
         'custom' => 'boolean',

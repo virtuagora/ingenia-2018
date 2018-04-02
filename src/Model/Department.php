@@ -9,7 +9,7 @@ class Department extends Model
     public $timestamps = false;
     protected $table = 'departments';
     protected $visible = [
-        'id', 'name', 'region_id',
+        'id', 'name', 'region_id', 'region',
     ];
 
     public function region()

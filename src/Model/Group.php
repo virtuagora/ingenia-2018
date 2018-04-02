@@ -12,6 +12,8 @@ class Group extends Model
     protected $visible = [
         'id', 'name', 'year', 'description', 'previous_editions',
         'parent_organization', 'web', 'facebook',
+        'uploaded_agreement', 'uploaded_letter', 'full_team', 
+        'second_in_charge', 'verified_team',
         'locality_other', 'locality', 'pivot', 'project',
     ];
     protected $with = [
