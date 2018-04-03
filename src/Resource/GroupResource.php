@@ -193,9 +193,9 @@ class GroupResource extends Resource
     {
         $user = $this->helper->getUserFromSubject($subject, ['groups']);
         $invitation = $this->db->query('App:Invitation')->where([
-        'id' => $invId,
-        'state' => 'pending',
-        'user_id' => $user->id,
+            'id' => $invId,
+            'state' => 'pending',
+            'user_id' => $user->id,
         ])->firstOrFail();
         if (count($user->groups)) {
             throw new AppException('User already has a group');
@@ -206,53 +206,54 @@ class GroupResource extends Resource
         $invitation->state = 'accepted';
         $invitation->save();
         $user->groups()->attach($invitation->group_id, ['relation' => 'miembro']);
+        $group = $this->db->query('App:Group')
+            ->withCount('users')
+            ->find($invitation->group_id);
+        if ($group->users_count > 5) {
+            $group->full_team = true;
+            $group->save();
+        }
     }
     
     public function inviteUser($subject, $group, $data)
     {
         $v = $this->validation->fromSchema([
-        'type' => 'object',
-        'properties' => [
-        'email' => [
-        'type' => 'string',
-        'format' => 'email',
-        ],
-        ],
-        'required' => ['email'],
-        'additionalProperties' => false,
+            'type' => 'object',
+            'properties' => [
+                'email' => [
+                    'type' => 'string',
+                    'format' => 'email',
+                ],
+            ],
+            'required' => ['email'],
+            'additionalProperties' => false,
         ]);
         $v->assert($data);
         $email = $data['email'];
-        
         $countInvit = $group->invitations()->count();
         if ($countInvit > 10) {
             throw new AppException('Invitations limit reached');
         }
         $prevInvit = $this->db->query('App:Invitation')->where([
-        'email' => $email,
-        'group_id' => $group->id
+            'email' => $email,
+            'group_id' => $group->id
         ])->first();
         if (isset($prevInvit)) {
             throw new AppException('User already invited');
         }
-        
         $user = $this->db->query('App:User')->where('email', $email)->first();
         if (isset($user)) {
             $invitation = $this->db->new('App:Invitation', [
-            'user_id' => $user->id,
-            'group_id' => $group->id
+                'user_id' => $user->id,
+                'group_id' => $group->id
             ]);
         } else {
             $invitation = $this->db->new('App:Invitation', [
-            'group_id' => $group->id
+                'group_id' => $group->id
             ]);
             $pending = $this->identity->createPendingUser('local', [
-            'identifier' => $email,
+                'identifier' => $email,
             ]);
-            // $pending->fields = [
-            //     'group_id' => $group->id,
-            // ];
-            // $pending->save();
             $mailMsg = 'Invitado Accede con ' . $pending->token;
             $mailSub = 'Registro Virtuágora';
             $this->logger->info($mailMsg);
@@ -319,6 +320,33 @@ class GroupResource extends Resource
         return $group;
     }
     
+    public function updateOne($subject, $group, $data)
+    {
+        $v = $this->validation->fromSchema($this->retrieveSchema());
+        $v->assert($data);
+        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
+        $deadline = Carbon::parse($this->options->getAutoloaded()['deadline']);
+        $today = Carbon::now();
+        if ($today->gt($deadline)) {
+            throw new AppException('Application period is over');
+        }
+        $group->name = $data['name'];
+        $group->description = $data['description'];
+        $group->year = $data['year'];
+        $group->previous_editions = $data['previous_editions'];
+        $group->parent_organization = $data['parent_organization'];
+        $group->web = $data['web'];
+        $group->facebook = $data['facebook'];
+        $group->telephone = $data['telephone'];
+        $group->email = $data['email'];
+        $group->locality_id = $data['locality_id'];
+        if ($localidad->custom && isset($data['locality_other'])) {
+            $project->locality_other = $data['locality_other'];
+        }
+        $group->save();
+        return $group;
+    }
+
     public function updateLetter($subject, $group, $file)
     {
         if (is_null($group->project->organization)) {
@@ -378,5 +406,26 @@ class GroupResource extends Resource
         if (is_resource($fileStrm)) {
             fclose($fileStrm);
         }
+    }
+
+    public function postCompleted($subject, $group)
+    {
+        if ($group->public) {
+            throw new AppException('El proyecto ya está publicado');
+        }
+        if (!$group->uploaded_agreement) {
+            throw new AppException('Debe cargar el acuerdo de conformidad primero');
+        }
+        if (!$group->uploaded_letter) {
+            throw new AppException('Debe cargar la carta aval de la organización primero');
+        }
+        if (!$group->full_team) {
+            throw new AppException('El equipo no cuenta con la cantidad suficiente de integrantes');
+        }
+        if (!$group->second_in_charge) {
+            throw new AppException('El equipo debe contar con un co-responsable');
+        }
+        $group->public = true;
+        $group->save();
     }
 }
