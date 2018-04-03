@@ -20,7 +20,7 @@
         <i class="fas fa-check fa-fw"></i> Datos enviados y guardados con éxito
       </div>
       <button @click="submit" v-show="!response.ok" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
-        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar mis datos</button>
+        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
       <b-loading :active.sync="isLoading"></b-loading>
     </section>
   </div>
@@ -42,7 +42,19 @@ export default {
         ok: false
       },
       user: {},
-      team: {}
+      team: {
+        name: null,
+        description: null,
+        year: null,
+        previous_editions: [],
+        locality_id: null,
+        locality_other: null,
+        parent_organization: null,
+        web: null,
+        facebook: null,
+        telephone: null,
+        email: null
+      },
     }
   },
   methods: {

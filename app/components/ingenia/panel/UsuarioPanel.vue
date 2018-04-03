@@ -74,19 +74,22 @@
           Mi proyecto Ingenia 2018
         </p>
         <ul class="menu-list" v-if="user.groups[0] !== undefined">
-          <li>
+          <li v-if="user.groups[0].project === null">
+            <router-link :to="{ name: 'userEditarProyecto'}" exact-active-class="is-active">Cargar proyecto</router-link>
+          </li>
+          <li v-if="user.groups[0].project !== null">
             <router-link :to="{ name: 'userVerProyecto'}" exact-active-class="is-active">Ver mi proyecto</router-link>
           </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable'">
+          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
             <router-link :to="{ name: 'userEditarProyecto'}" exact-active-class="is-active">Editar datos del proyecto</router-link>
           </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable'">
+          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
             <router-link :to="{ name: 'userSubirImagen'}" exact-active-class="is-active">Subir imagen del proyecto</router-link>
           </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable'">
+          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
             <router-link :to="{ name: 'userSubirAvalOrganizacion'}" exact-active-class="is-active">Subir carta de aval</router-link>
           </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable'">
+          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
             <router-link :to="{ name: 'userEnviarProyecto'}" class="is-size-5" exact-active-class="is-active">
               <i class="fas fa-paper-plane fa-fw"></i> ¡Enviar proyecto!</router-link>
           </li>
@@ -103,11 +106,15 @@
 :save-user-public-profile-url="saveUserPublicProfileUrl"
 :team-url="teamUrl"
 :save-team-url="saveTeamUrl"
+:edit-team-url="editTeamUrl"
 :send-invitation-url="sendInvitationUrl"
-:save-letter-url="saveLetterUrl"
+:team-users-url="teamUsersUrl"
+:team-invitations-url="teamInvitationsUrl"
 :save-agreement-url="saveAgreementUrl"
 :project-url="projectUrl"
 :save-project-url="saveProjectUrl"
+:edit-project-url="editProjectUrl"
+:save-letter-url="saveLetterUrl"
 ></router-view>
     </div>
   </div>
@@ -123,11 +130,15 @@ export default {
 	"saveUserPublicProfileUrl",
 	"teamUrl",
 	"saveTeamUrl",
+  "editTeamUrl",
 	"sendInvitationUrl",
-	"saveLetterUrl",
+  "teamUsersUrl",
+  "teamInvitationsUrl",
 	"saveAgreementUrl",
 	"projectUrl",
 	"saveProjectUrl",
+  "editProjectUrl",
+	"saveLetterUrl",
   ],
   data() {
     return {

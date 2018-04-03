@@ -8,7 +8,7 @@
       <i class="fas fa-check fa-fw"></i>Tu DNI ha sido enviado y guardado correctamente
     </div>
     <div>
-      <form :action="saveUserDniUrl" ref="formDNI" method="post" enctype="multipart/form-data">
+      <form :action="formUrl" ref="formDNI" method="post" enctype="multipart/form-data">
         <div class="field is-grouped">
           <div class="control">
             <a @click.prevent class="button is-medium is-static">
@@ -53,8 +53,7 @@ export default {
   props: ['saveUserDniUrl'],
   data() {
     return {
-      user: {
-      },
+      user: {},
       cargado: false,
       files: [],
       dni: null,
@@ -88,6 +87,11 @@ export default {
           });
           return false;
         });
+    }
+  },
+  computed: {
+    formUrl: function(){
+      return this.saveUserDniUrl.replace(':usr',this.user.id)
     }
   }
 };

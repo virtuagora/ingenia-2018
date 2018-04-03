@@ -13,7 +13,7 @@ class Group extends Model
         'id', 'name', 'year', 'description', 'previous_editions',
         'parent_organization', 'web', 'facebook',
         'uploaded_agreement', 'uploaded_letter', 'full_team', 
-        'second_in_charge', 'verified_team',
+        'second_in_charge', 'verified_team', 'locality_id',
         'locality_other', 'locality', 'pivot', 'project',
     ];
     protected $with = [

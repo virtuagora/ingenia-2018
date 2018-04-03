@@ -6,7 +6,7 @@
       </div>
       <div class="field">
         <div class="control">
-          <input type="email" name="email" v-model.lazy="email" v-validate="'required|email'" class="input is-large has-text-centered" placeholder="Email">
+          <input type="email" name="email" v-model.lazy="email" v-validate="'required|email'" style="border-left:0; border-radius:0;padding-left:0" class="input is-large has-text-centered" placeholder="Email">
           <span class="help is-danger" v-show="errors.has('email')">
             <i class="fas fa-times-circle fa-fw"></i> Error. debe ser un email bien formado</span>
         </div>
@@ -41,7 +41,7 @@
         Error enviando el email a "{{email}}". Por favor intente más tarde. Si el problema persiste, contactesé con Gabinete Joven
       </div>
     </div>
-    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
+    <b-loading :active.sync="isLoading"></b-loading>
   </div>
 </template>
 

@@ -7,11 +7,15 @@
 :save-user-public-profile-url="saveUserPublicProfileUrl"
 :team-url="teamUrl"
 :save-team-url="saveTeamUrl"
+:edit-team-url="editTeamUrl"
 :send-invitation-url="sendInvitationUrl"
-:save-letter-url="saveLetterUrl"
+:team-users-url="teamUsersUrl"
+:team-invitations-url="teamInvitationsUrl"
 :save-agreement-url="saveAgreementUrl"
 :project-url="projectUrl"
 :save-project-url="saveProjectUrl"
+:edit-project-url="editProjectUrl"
+:save-letter-url="saveLetterUrl"
 ></router-view>
 </template>
 
@@ -25,11 +29,15 @@ export default {
 	"saveUserPublicProfileUrl",
 	"teamUrl",
 	"saveTeamUrl",
+  "editTeamUrl",
 	"sendInvitationUrl",
-	"saveLetterUrl",
+  "teamUsersUrl",
+  "teamInvitationsUrl",
 	"saveAgreementUrl",
 	"projectUrl",
 	"saveProjectUrl",
+  "editProjectUrl",
+	"saveLetterUrl",
   ],
 }
 </script>

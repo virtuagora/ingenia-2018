@@ -6,7 +6,7 @@
 {% block scriptshead %}
   <script>
     var getUserDataUrl = function () {
-      return "{{path_for('getUser', {'usr':subject.id})}}"
+      return "{{path_for('getUser', {'usr':subject.extra.user_id})}}"
   }
   </script>
 {% endblock %}
@@ -22,18 +22,22 @@
       <br>
 <router-view 
 ref="userPanel" 
-id="{{subject.id}}" 
+id="{{subject.extra.user_id}}"
 user-url="{{path_for('getUser',{'usr': ':usr'})}}"
 save-user-profile-url="{{path_for('runUpdUserPro',{'usr': ':usr'})}}"
 save-user-dni-url="{{path_for('runUpdUserDni', {'usr': ':usr'})}}" 
 save-user-public-profile-url="{{path_for('runUpdUserPub',{'usr': ':usr'})}}"
 team-url="{{path_for('getGroup',{'gro': ':gro'})}}"
 save-team-url="{{path_for('runCreGro')}}"
+edit-team-url="TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
 send-invitation-url="{{path_for('runCreGroInv',{'gro': ':gro'})}}"
-save-letter-url="{{path_for('runUpdGroLet',{'gro': ':gro'})}}"
+team-users-url="TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+team-invitations-url="TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
 save-agreement-url="{{path_for('runUpdGroAgr',{'gro': ':gro'})}}"
 project-url="{{path_for('getPro',{'pro': ':pro'})}}"
 save-project-url="{{path_for('runCrePro')}}"
+edit-project-url="TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+save-letter-url="{{path_for('runUpdGroLet',{'gro': ':gro'})}}"
        ></router-view>
 
     </div>

@@ -22758,5 +22758,9 @@ table.table.text-middle td figure {
   margin-left: 0.5em;
 }
 
+.content p {
+  white-space: pre-wrap;
+}
+
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIvYXNzZXRzL2Nzcy92aXJ0dWFnb3JhLmNzcyIsInNvdXJjZVJvb3QiOiIifQ==*/

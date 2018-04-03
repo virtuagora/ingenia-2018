@@ -50,7 +50,7 @@
     </div>
     <registro-email :sign-up-url="signUpUrl" :google-key="googleKey" @abort="register = false" v-if="register"></registro-email>
     <facebook-login :fb-login-action="fbLoginAction" :facebook-key="facebookKey" v-if="loginFacebook"></facebook-login>
-    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>    
+    <b-loading :active.sync="isLoading"></b-loading>    
   </div>
 </template>
 

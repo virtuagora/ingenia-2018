@@ -58,9 +58,9 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input v-model="profile.telephone"  data-vv-name="profile.telephone" data-vv-as="'Teléfono'" class="input is-medium" type="text" v-validate="'required|max:20'" placeholder="(Requerido) Ej: 0342 - 4123456">
+            <input v-model="profile.telephone" data-vv-name="profile.telephone" data-vv-as="'Teléfono'" class="input is-medium" type="text" v-validate="'required|max:20'" placeholder="(Requerido) Ej: 0342 - 4123456">
             <span v-show="errors.has('profile.telephone')" class="help is-danger">
-        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('profile.telephone')}}</span>
+              <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('profile.telephone')}}</span>
           </p>
         </div>
       </div>
@@ -92,8 +92,8 @@
     <div class="notification is-success" v-show="response.ok">
       <i class="fas fa-check fa-fw"></i> Datos enviados y guardados con éxito
     </div>
-<button @click="submit" v-show="!response.ok" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
-        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar mis datos</button>
+    <button @click="submit" v-show="!response.ok" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
+      <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar mis datos</button>
     <b-loading :active.sync="isLoading"></b-loading>
   </div>
 
@@ -102,7 +102,7 @@
 <script>
 import Localidad from "../../utils/FieldLocalidad";
 export default {
-  props: ['saveUserProfileUrl'],
+  props: ["saveUserProfileUrl"],
   components: {
     Localidad
   },
@@ -111,7 +111,7 @@ export default {
       isLoading: false,
       genderList: ["Hombre", "Mujer", "HombreTrans", "MujerTrans", "Intersex"],
       inputBirthday: null,
-      response:{
+      response: {
         ok: false
       },
       profile: {
@@ -124,7 +124,7 @@ export default {
         neighbourhood: null,
         referer: null
       },
-      user:{}
+      user: {}
     };
   },
   created: function() {
@@ -159,7 +159,7 @@ export default {
             console.log("Sending form!");
             this.isLoading = true;
             this.$http
-              .post(this.saveUserProfileUrl.replace(':usr',this.user.id), this.payload)
+              .post(this.formUrl, this.payload)
               .then(response => {
                 this.$snackbar.open({
                   message: "Tus datos personales han sido actualizados",
@@ -168,7 +168,7 @@ export default {
                 });
                 this.isLoading = false;
                 this.response.ok = true;
-                this.$store.commit('updateUser')
+                this.$store.commit("updateUser");
               })
               .catch(error => {
                 console.error(error.message);
@@ -210,6 +210,9 @@ export default {
         neighbourhood: this.profile.neighbourhood,
         referer: this.isOptional(this.profile.referer)
       };
+    },
+    formUrl: function() {
+      return this.saveUserProfileUrl.replace(":usr", this.user.id);
     }
   },
   watch: {

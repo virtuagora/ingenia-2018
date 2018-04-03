@@ -5,7 +5,7 @@
     </div>
     <br>
     <b-message class="has-text-centered">
-      Ingresá aquí todos los datos requeridos sobre el proyecto. Estos datos serán visibles para todos los que vayan a visitar el punto de encuentro del proyecto!
+      Ingresá aquí todos los datos requeridos sobre el proyecto. ¡Estos datos serán visibles para todos los que visiten el punto de encuentro del proyecto! Podes editarlo cuantas veces necesites, hasta que envies el proyecto.
     </b-message>
     <div class="notification is-link">
       <h1 class="title is-1 is-700">
@@ -15,9 +15,12 @@
     </div>
     <form-proyecto ref="formProyecto" :project.sync="project"></form-proyecto>
     <br>
-    <button @click="submitProyecto" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
-      <i class="fa fa-save"></i>&nbsp;&nbsp;Guardar datos del proyecto</button>
-    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
+    <div class="notification is-success" v-show="response.ok">
+        <i class="fas fa-check fa-fw"></i> Datos enviados y guardados con éxito
+      </div>
+      <button @click="submit" v-show="!response.ok" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
+        <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
+      <b-loading :active.sync="isLoading"></b-loading>
   </section>
 </template>
 
@@ -25,7 +28,7 @@
 import FormProyecto from '../../utils/FormProyecto'
 
 export default {
-  props: ['saveProjectUrl'],
+  props: ['saveProjectUrl','editProjectUrl'],
   components: {
     FormProyecto
   },
@@ -41,7 +44,7 @@ export default {
         abstract: null,
         foundation: null,
         category_id: null,
-        previousWork: null,
+        previous_work: null,
         locality_id: null,
         locality_other: null,
         neighbourhoods: [],
@@ -65,7 +68,7 @@ export default {
         return [];
       } else return value;
     },
-    submitProyecto: function() {
+    submit: function() {
       Promise.all([
         this.$refs.formProyecto.validateForm(),
         this.$refs.formProyecto.validateLocalidad(),
@@ -81,7 +84,7 @@ export default {
             console.log("Sending form!");
             this.isLoading = true;
             this.$http
-              .post(this.saveProjectUrl, this.payload)
+              .post(this.urlPost, this.payload)
               .then(response => {
                 console.log(response);
                 this.$snackbar.open({
@@ -90,6 +93,8 @@ export default {
                   actionText: "OK"
                 });
                 this.isLoading = false;
+                this.response.ok = true;
+                this.$store.commit('updateUser')
               })
               .catch(error => {
                 console.error(error.message);
@@ -120,13 +125,20 @@ export default {
     }
   },
   computed: {
+    urlPost: function(){
+      if(this.user.groups[0].project !== null){
+        return this.editProjectUrl.replace(':pro',this.user.groups[0].project.id)
+      } else {
+        return this.saveProjectUrl
+      }
+    },
     payload: function() {
       let load = {
         name: this.project.name,
         abstract: this.project.abstract,
         foundation: this.project.foundation,
         category_id: this.project.category_id,
-        previousWork: this.isOptional(this.project.previousWork),
+        previous_work: this.isOptional(this.project.previous_work),
         locality_id: this.project.locality_id,
         locality_other: this.isOptional(this.project.locality_other),
         neighbourhoods: this.project.neighbourhoods,

@@ -15,7 +15,7 @@
         En el siguiente campo subí un archivo donde se vea la carta de aval firmada por la organización.
         <br>Tamaño del archivo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
       </b-message>
-      <form action="" ref="formAval" method="post" enctype="multipart/form-data">
+      <form :action="formUrl" ref="formAval" method="post" enctype="multipart/form-data">
         <b-field class="file is-medium">
           <b-upload v-model="files" name="archivo" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
             <a class="button is-link is-medium">
@@ -80,6 +80,11 @@ export default {
           });
           return false;
         });
+    }
+  },
+  computed:{
+    formUrl: function(){
+      return this.saveLetterUrl.replace(':gro',this.user.groups[0].id)
     }
   },
   beforeRouteEnter(to, from, next) {

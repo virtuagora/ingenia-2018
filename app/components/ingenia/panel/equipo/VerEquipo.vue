@@ -8,6 +8,11 @@
         <b>Acerca del equipo</b>
       </h5>
       <p>{{group.description}}</p>
+      <h5>
+        <b>Ubicación</b>
+      </h5>
+      <Localidad :locality-id="group.locality_id" :locality-other="group.locality_other"></Localidad>
+      <br>
       <table class="table is-narrow is-bordered">
         <tbody>
           <tr>
@@ -22,8 +27,8 @@
               {{group.previous_editions.length ? group.previous_editions.join(', ') : 'No registra'}}
             </td>
           </tr>
-           <tr v-if="group.email">
-            <th>Telefono de contacto</th>
+          <tr v-if="group.email">
+            <th>Email de contacto</th>
             <td>{{group.email}}</td>
           </tr>
           <tr v-if="group.telephone">
@@ -31,7 +36,7 @@
             <td>{{group.telephone}}</td>
           </tr>
           <tr>
-            <th>Pagina web</th>
+            <th>Página web</th>
             <td>{{group.web ? group.web : 'No registra'}}</td>
           </tr>
           <tr>
@@ -42,17 +47,53 @@
       </table>
     </div>
     <div v-if="group.parent_organization">
-    <h1 class="subtitle is-5">El equipo no es parte de una organización</h1>
+      <h1 class="subtitle is-5">El equipo es parte de una organización</h1>
+      <h1 class="title is-3">{{group.parent_organization.name}}</h1>
+      <div class="content">
+        <h5>
+          <b>Tematicas que trabaja la organización</b>
+        </h5>
+        <p>{{arrayTopics.join(', ')}}</p>
+        <h5>
+          <b>Ubicación de la organización</b>
+        </h5>
+        <Localidad :locality-id="group.parent_organization.locality_id" :locality-other="group.parent_organization.locality_other"></Localidad>
+        <br>
+        <table class="table is-narrow is-bordered">
+          <tbody>
+            <tr>
+              <th>Email de contacto</th>
+              <td>{{group.parent_organization.email ? group.parent_organization.email : 'No registra'}}</td>
+            </tr>
+            <tr>
+              <th>Telefono de contacto</th>
+              <td>{{group.parent_organization.telephone ? group.parent_organization.telephone : 'No registra'}}</td>
+            </tr>
+            <tr>
+              <th>Página web</th>
+              <td>{{group.parent_organization.web ? group.parent_organization.web : 'No registra'}}</td>
+            </tr>
+            <tr>
+              <th>Facebook</th>
+              <td>{{group.parent_organization.facebook ? group.parent_organization.facebook : 'No registra'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="content" v-else>
-    <h1 class="subtitle is-4">El equipo es parte de una organización</h1>
-    <h1 class="title is-2">{{group.parent_organization.name}}</h1>
+      <h1 class="subtitle is-5">El equipo no es parte de una organización</h1>
     </div>
   </div>
 </template>
 
 <script>
+import Localidad from "../../utils/GetLocalidad";
+
 export default {
+  components: {
+    Localidad
+  },
   data() {
     return {
       user: {},
@@ -67,6 +108,17 @@ export default {
     openDeleteUser: function(id) {
       this.userSelected = id;
       this.showModal = true;
+    }
+  },
+  computed: {
+    arrayTopics: function() {
+      if (this.group.parent_organization) {
+        let arr = this.group.parent_organization.topics.slice();
+        arr.push(this.group.parent_organization.topic_other);
+        return arr;
+      } else {
+        [""];
+      }
     }
   }
 };
