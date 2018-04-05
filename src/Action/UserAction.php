@@ -44,6 +44,14 @@ class UserAction
         return $response->withJSON($usuario->toArray());
     }
 
+    // GET /usuario/{usr}/invitation
+    public function getInvitations($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $invitations = $userResource->getInvitations($subject);
+        return $response->withJSON($invitations->toArray());
+    }
+
     public function post($request, $response, $params)
     {
         $user = $this->userResource->createOne(null, $request->getParsedBody());

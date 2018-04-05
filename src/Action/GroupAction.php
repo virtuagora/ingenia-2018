@@ -99,4 +99,20 @@ class GroupAction
         $this->groupResource->updateLetter($subject, $group, $archivo);
         return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
     }
+
+    public function postCompleted($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updGroCompleted', $group)) {
+            throw new UnauthorizedException();
+        }
+        $this->groupResource->updateAgreement($subject, $group);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Proyecto enviado para participar',
+            'status' => 200,
+        ]);
+    }
 }

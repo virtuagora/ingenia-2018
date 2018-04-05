@@ -139,6 +139,7 @@ class Installer
             $table->boolean('uploaded_agreement')->default(false);
             $table->boolean('uploaded_letter')->default(false);
             $table->boolean('full_team')->default(false);
+            $table->boolean('second_in_charge')->default(false);
             $table->boolean('verified_team')->default(false);
 
             $table->integer('locality_id')->unsigned();

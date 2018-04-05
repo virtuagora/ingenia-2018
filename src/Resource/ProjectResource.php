@@ -271,4 +271,38 @@ class ProjectResource extends Resource
         }
         return $project;
     }
+
+    public function updateOne($subject, $project, $data)
+    {
+        $v = $this->validation->fromSchema($this->retrieveSchema());
+        $v->assert($data);
+        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
+        $categoria = $this->db->query('App:Category')->findOrFail($data['category_id']);
+        $totalBudget = 0;
+        foreach ($data['budget'] as $item) {
+            $totalBudget += $item['amount'];
+        }
+        $project->name = $data['name'];
+        $project->abstract = $data['abstract'];
+        $project->foundation = $data['foundation'];
+        $project->previous_work = $data['previous_work'];
+        $project->neighbourhoods = $data['neighbourhoods'];
+        $project->goals = $data['goals'];
+        $project->budget = $data['budget'];
+        $project->total_budget = $totalBudget;
+        $project->schedule = $data['schedule'];
+        $project->organization = $data['organization'];
+        $project->category_id = $data['category_id'];
+        $project->locality_id = $data['locality_id'];
+        if ($localidad->custom && isset($data['locality_other'])) {
+            $project->locality_other = $data['locality_other'];
+        }
+        $project->save();
+        if (is_null($project->organization)) {
+            $group = $project->group;
+            $group->uploaded_letter = true;
+            $group->save();
+        }
+        return $project;
+    }
 }
