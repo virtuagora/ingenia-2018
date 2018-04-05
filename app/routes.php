@@ -152,16 +152,16 @@ $app->group('/settings', function () {
     });
 });
 
-$app->group('/node/create', function () {
-    $this->get('', function ($req, $res, $arg) {
-        return $this->view->render($res, 'node/create.twig', [
-        ]);
-    });
-    $this->get('/[{path:.*}]', function ($req, $res, $arg) {
-        return $this->view->render($res, 'node/create.twig', [
-        ]);
-    });
-});
+// $app->group('/node/create', function () {
+//     $this->get('', function ($req, $res, $arg) {
+//         return $this->view->render($res, 'node/create.twig', [
+//         ]);
+//     });
+//     $this->get('/[{path:.*}]', function ($req, $res, $arg) {
+//         return $this->view->render($res, 'node/create.twig', [
+//         ]);
+//     });
+// });
 
 $app->group('/panel', function () {
     $this->get('', function ($req, $res, $arg) {
@@ -171,45 +171,6 @@ $app->group('/panel', function () {
         return $this->view->render($res, 'ingenia/panel/userPanel.twig', [
         ]);
     });
-    // $this->get('/perfil', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/perfil/editar', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/invitaciones', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/integrante/datos', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/integrante/dni', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/ingenia/start', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/ingenia/proyecto', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/ingenia/proyecto/editar', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/ingenia/equipo', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/ingenia/equipo/editar', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/ingenia/equipo/invitaciones', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/ingenia/proyecto/imagen', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
-    // $this->get('/ingenia/publicar', function ($req, $res, $arg) {
-    //     return $this->view->render($res, 'panel/userPanel.twig', []);
-    // });
 });
 
 $app->group('/account', function () {
@@ -222,6 +183,40 @@ $app->group('/account', function () {
         ]);
     });
 });
+
+$app->group('/proyecto', function () {
+    $this->get('/{pro}', function($request, $response, $params){
+        $proyecto = $this->helper->getEntityFromId(
+        'App:Project', 'pro', $params
+        );
+        $proyecto->addVisible(['goals', 'schedule', 'budget','category_id']);
+        // return $response->withJSON($proyecto->toArray());
+        return $this->view->render($response, 'ingenia/project/showProject.twig', [
+        'project' => $proyecto,
+        ]);
+    });
+    $this->get('/{pro}/[{path:.*}]', function($request, $response, $params){
+        $proyecto = $this->helper->getEntityFromId(
+        'App:Project', 'pro', $params
+        );
+        $proyecto->addVisible(['goals', 'schedule', 'budget','category_id']);
+        // return $response->withJSON($proyecto->toArray());
+        return $this->view->render($response, 'ingenia/project/showProject.twig', [
+        'project' => $proyecto,
+        ]);
+    });
+});
+
+// $app->get('/proyecto/{pro}', function($request, $response, $params){
+//     $proyecto = $this->helper->getEntityFromId(
+//     'App:Project', 'pro', $params
+//     );
+//     $proyecto->addVisible(['goals', 'schedule', 'budget','category_id']);
+//     // return $response->withJSON($proyecto->toArray());
+//     return $this->view->render($response, 'ingenia/project/showProject.twig', [
+//     'project' => $proyecto,
+//     ]);
+// })->setName('shwPro');
 
 $app->get('/testing2', function ($req, $res, $arg) {
     return $this->view->render($res, 'base/completeSignUp.twig', [

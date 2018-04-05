@@ -46,7 +46,8 @@
       {% if show_navbar == true %}
         {% include 'master/navbar.twig' %}
       {% endif %}
-      {% block body %}{% endblock %}
+      {% block body %}
+      {% endblock %}
     </div>
     {% if show_footer == true %}
       {% include 'ingenia/index/footer.twig'%}

@@ -11,7 +11,7 @@ class ProjectAction
     protected $representation;
     protected $helper;
     protected $authorization;
-
+    
     public function __construct($projectResource, $representation, $helper, $authorization)
     {
         $this->projectResource = $projectResource;
@@ -19,20 +19,20 @@ class ProjectAction
         $this->helper = $helper;
         $this->authorization = $authorization;
     }
-
+    
     // GET /proyecto/{pro}
     public function getOne($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
         $proyecto = $this->helper->getEntityFromId(
-            'App:Project', 'pro', $params
+        'App:Project', 'pro', $params
         );
         if ($this->authorization->checkPermission($subject, 'retProFull', $proyecto)) {
             $proyecto->addVisible(['goals', 'schedule', 'budget']);
         }
         return $response->withJSON($proyecto->toArray());
     }
-
+    
     public function post($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -41,12 +41,12 @@ class ProjectAction
         }
         $project = $this->projectResource->createOne($subject, $request->getParsedBody());
         return $this->representation->returnMessage($request, $response, [
-            'message' => 'Project created succefully',
-            'status' => 200,
-            'project' => $project->toArray(),
+        'message' => 'Project created succefully',
+        'status' => 200,
+        'project' => $project->toArray(),
         ]);
     }
-
+    
     public function postPicture($req, $res, $arg)
     {
         if (!$this->session->has('user')) {
@@ -64,18 +64,18 @@ class ProjectAction
         $imgFile = $files['imagen'];
         if ($imgFile->getError() == UPLOAD_ERR_NO_FILE) {
             return $res->withRedirect(
-                $this->helper->completePathFor('proViewGet', ['pro' => $project->id])
+            $this->helper->completePathFor('proViewGet', ['pro' => $project->id])
             );
         } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
             throw new \App\Util\AppException(
-                'Hubo un error con la imagen recibida ('.$imgFile->getError().')',
-                400
+            'Hubo un error con la imagen recibida ('.$imgFile->getError().')',
+            400
             );
         }
         $imgStrm = $this->image->make($imgFile->getStream()->detach())
-            ->fit(800, 565, function ($constraint) {
-                $constraint->upsize();
-            })->encode('jpg', 75);
+        ->fit(800, 565, function ($constraint) {
+            $constraint->upsize();
+        })->encode('jpg', 75);
         $this->filesystem->put('project/'.$project->id.'.jpg', $imgStrm);
         if (is_resource($imgStrm)) {
             fclose($imgStrm);
@@ -85,10 +85,10 @@ class ProjectAction
             $project->save();
         }
         return $res->withRedirect(
-            $this->helper->completePathFor('proViewGet', ['pro' => $project->id])
+        $this->helper->completePathFor('proViewGet', ['pro' => $project->id])
         );
     }
-
+    
     public function postVote($req, $res, $arg)
     {
         if (!$this->session->has('user')) {
@@ -106,11 +106,11 @@ class ProjectAction
             $this->db->table('options')->where('key', 'votos')->decrement('value');
         }
         return $res->withJSON([
-            'mensaje' => $vote? '¡Proyecto bancado!': 'Proyecto ya no bancado.',
-            'vote' => $vote,
+        'mensaje' => $vote? '¡Proyecto bancado!': 'Proyecto ya no bancado.',
+        'vote' => $vote,
         ]);
     }
-
+    
     public function postComment($req, $res, $arg)
     {
         if (!$this->session->has('user')) {
@@ -129,11 +129,11 @@ class ProjectAction
         $comment->save();
         $this->db->table('options')->where('key', 'comentarios')->increment('value');
         return $res->withJSON([
-            'mensaje' => 'Comentario realizado.',
-            'id' => $comment->id,
+        'mensaje' => 'Comentario realizado.',
+        'id' => $comment->id,
         ]);
     }
-
+    
     public function postReply($req, $res, $arg)
     {
         if (!$this->session->has('user')) {
@@ -155,11 +155,11 @@ class ProjectAction
         $comment->save();
         $this->db->table('options')->where('key', 'comentarios')->increment('value');
         return $res->withJSON([
-            'mensaje' => 'Comentario respondido.',
-            'id' => $comment->id,
+        'mensaje' => 'Comentario respondido.',
+        'id' => $comment->id,
         ]);
     }
-
+    
     public function postCommentVote($req, $res, $arg)
     {
         if (!$this->session->has('user')) {
@@ -179,8 +179,20 @@ class ProjectAction
         $comment->votes = $comment->raters->sum('pivot.value');
         $comment->save();
         return $res->withJSON([
-            'mensaje' => 'Comentario votado.',
-            'likes' => $comment->votes,
+        'mensaje' => 'Comentario votado.',
+        'likes' => $comment->votes,
+        ]);
+    }
+    
+    public function showProject($request, $response, $params)
+    {
+        $proyecto = $this->helper->getEntityFromId(
+        'App:Project', 'pro', $params
+        );
+        $proyecto->addVisible(['goals', 'schedule', 'budget','category_id']);
+        // return $response->withJSON($proyecto->toArray());
+        return $this->view->render($response, 'ingenia/project/showProject.twig', [
+        'project' => $proyecto,
         ]);
     }
 }

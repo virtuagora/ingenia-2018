@@ -1,0 +1,30 @@
+{% set show_footer = true %}
+{% set show_navbar = true %}
+{% extends 'master.twig' %}
+{% block title %}Vote{% endblock %}
+{% block body %}
+<div class="hero is-dark" style="background-image: url('/assets/img/patternbg.svg')">
+    <div class="container">
+      <div class="hero-body" style="padding-bottom:0;">
+        <div class="columns">
+          <div class="column is-8">
+            <div class="tags">
+              <span class="tag is-white is-large">
+                Categoria
+              </span>
+            </div>
+            <h1 class="title is-1">{{project.name}}</h1>
+            <h3 class="title is-3 is-marginless">{{project.group.name}}</h3>
+            <get-localidad locality-id="{{ project.group.locality_id }}" locality-other="{{ project.group.locality_other }}"></get-localidad>
+          </div>
+          <div class="column">
+            <vote-project></vote-project>
+          </div>
+        </div>
+      </div>
+      <navbar-project></navbar-project>
+    </div>
+  </div>
+  <router-view :project="{{project}}"></router-view>
+{% endblock %}
+{% block javascripts %}{% endblock %}

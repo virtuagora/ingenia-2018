@@ -36,6 +36,9 @@ import Login from './ingenia/Login'
 import FBRegister from './ingenia/FBRegister'
 import CompletarRegistro from './ingenia/CompletarRegistro'
 import Catalogo from './ingenia/catalogo/Catalogo'
+import GetLocalidad from './ingenia/utils/GetLocalidad'
+import VoteProject from './ingenia/project/VoteProject'
+import NavbarProject from './ingenia/project/NavbarProject'
 
 // vue-textarea-autosize
 // autosizer for textareas
@@ -78,6 +81,9 @@ window.vm = new Vue({ // eslint-disable-line no-new
     Login,
     CompletarRegistro,
     Catalogo,
+    GetLocalidad,
+    VoteProject,
+    NavbarProject,
     'fb-register': FBRegister,
   }
 })

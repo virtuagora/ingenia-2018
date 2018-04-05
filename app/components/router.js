@@ -9,6 +9,7 @@ import VueRouter from 'vue-router'
 
 import routeUserPanel from './ingenia/panel/routes'
 import routeAdminPanel from './ingenia/admin/routes'
+import routeProject from './ingenia/project/routes'
 
 Vue.use(VueRouter)
 
@@ -16,8 +17,8 @@ let routes = [].concat(
   // routeSettings,
   // routeAccount,
   // routeCreateNode
-  // routeAdminPanel,
-  routeUserPanel
+  routeUserPanel,
+  routeProject
 )
 
 
