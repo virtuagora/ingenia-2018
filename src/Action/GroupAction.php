@@ -25,10 +25,10 @@ class GroupAction
     {
         $subject = $request->getAttribute('subject');
         $group = $this->helper->getEntityFromId(
-            'App:Group', 'gro', $params
+            'App:Group', 'gro', $params, ['invitations']
         );
         if ($this->authorization->checkPermission($subject, 'retGroFull', $group)) {
-            $group->addVisible(['telephone', 'email']);
+            $group->addVisible(['telephone', 'email', 'invitations']);
         }
         return $response->withJSON($group->toArray());
     }
@@ -61,6 +61,74 @@ class GroupAction
             'message' => 'Invitación enviada',
             'status' => 200,
             'invitation' => $invitation->toArray(),
+        ]);
+    }
+
+    public function postRequest($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'creGroInvReq')) {
+            throw new UnauthorizedException();
+        }
+        $invitation = $this->groupResource->requestInvitation(
+            $subject, $group, $request->getParsedBody()
+        );
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Solicitud enviada',
+            'status' => 200,
+            'invitation' => $invitation->toArray(),
+        ]);
+    }
+
+    public function putCorresponsable($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        $usrId = $this->helper->getSanitizedId('usr', $params);
+        if (!$this->authorization->checkPermission($subject, 'updGroSecond', $group)) {
+            throw new UnauthorizedException();
+        }
+        if ($group->second_in_charge) {
+            throw new AppException('El grupo ya cuenta con un co-responsable');
+        }
+        $updated = $group->users()->updateExistingPivot(
+            $usrId, ['relation' => 'co-responsable']
+        );
+        if ($updated) {
+            $group->second_in_charge = true;
+            $group->save();
+        }
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Usuario designado como responsable',
+            'status' => 200,
+        ]);
+    }
+
+    public function deleteCorresponsable($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        $usrId = $this->helper->getSanitizedId('usr', $params);
+        if (!$this->authorization->checkPermission($subject, 'updGroSecond', $group)) {
+            throw new UnauthorizedException();
+        }
+        $updated = $group->users()->updateExistingPivot(
+            $usrId, ['relation' => 'miembro']
+        );
+        if ($updated) {
+            $group->second_in_charge = false;
+            $group->save();
+        }
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Usuario designado como miembro',
+            'status' => 200,
         ]);
     }
 

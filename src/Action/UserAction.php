@@ -25,31 +25,23 @@ class UserAction
         $this->router = $router;
     }
 
-    // GET /usuario/{usr}
+    // GET /user/{usr}
     public function getOne($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
         $usuario = $this->helper->getEntityFromId(
-            'App:User', 'usr', $params, ['groups.project']
+            'App:User', 'usr', $params, ['groups.project', 'invitations']
         );
         if ($this->authorization->checkPermission($subject, 'retUsrFull', $usuario)) {
             $visible = [
                 'groups', 'birthday', 'gender', 'address', 'telephone',
-                'neighbourhood', 'referer', 'email'
+                'neighbourhood', 'referer', 'email', 'invitations',
             ];
         } else {
             $visible = ['groups'];
         }
         $usuario->addVisible($visible);
         return $response->withJSON($usuario->toArray());
-    }
-
-    // GET /usuario/{usr}/invitation
-    public function getInvitations($request, $response, $params)
-    {
-        $subject = $request->getAttribute('subject');
-        $invitations = $userResource->getInvitations($subject);
-        return $response->withJSON($invitations->toArray());
     }
 
     public function post($request, $response, $params)

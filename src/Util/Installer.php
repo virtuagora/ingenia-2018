@@ -170,6 +170,7 @@ class Installer
             $table->increments('id');
             $table->string('state'); // miembro, co-responsable, responsable
             $table->string('email')->nullable();
+            $table->string('comment')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('group_id')->unsigned();

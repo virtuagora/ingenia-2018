@@ -115,8 +115,6 @@ $app->get('/region/{reg}/department', 'miscAction:getDepartments');
 $app->get('/department/{dep}/locality', 'miscAction:getLocalities');
 $app->get('/locality/{loc}', 'miscAction:getLocality');
 
-$app->get('/invitation', 'userAction:getInvitations')->setName('getInvitations');
-
 $app->get('/user/{usr}', 'userAction:getOne')->setName('getUser');
 $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');
 $app->post('/user/{usr}/public-profile', 'userAction:postPublicProfile')->setName('runUpdUserPub');
@@ -127,7 +125,8 @@ $app->post('/group', 'groupAction:post')->setName('runCreGro');
 $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
 $app->post('/group/{gro}/letter', 'groupAction:postLetter')->setName('runUpdGroLet');
 $app->post('/group/{gro}/agreement', 'groupAction:postAgreement')->setName('runUpdGroAgr');
-$app->post('/group/{gro}/completed', 'groupAction:postCompleted')->setName('runUpdGroCom');
+$app->put('/group/{gro}/second/{usr}', 'groupAction:putSecond')->setName('runCreGroSec');
+$app->delete('/group/{gro}/second/{usr}', 'groupAction:deleteSecond')->setName('runDelGroSec');
 
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');

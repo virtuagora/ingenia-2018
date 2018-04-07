@@ -26,6 +26,11 @@ class User extends Model
         return $this->belongsToMany('App\Model\Group', 'user_group')->withPivot('relation', 'title');
     }
 
+    public function invitations()
+    {
+        return $this->hasMany('App\Model\Invitation');
+    }
+
     public function setNamesAttribute($value)
     {
         $this->attributes['names'] = $value;

@@ -205,7 +205,7 @@ class GroupResource extends Resource
         }
         $invitation->state = 'accepted';
         $invitation->save();
-        $user->groups()->attach($invitation->group_id, ['relation' => 'miembro']);
+        $user->groups()->syncWithoutDetaching($invitation->group_id, ['relation' => 'miembro']);
         $group = $this->db->query('App:Group')
             ->withCount('users')
             ->find($invitation->group_id);
@@ -263,6 +263,54 @@ class GroupResource extends Resource
         $invitation->email = $email;
         $invitation->save();
         return $invitation;
+    }
+
+    public function requestInvitation($subject, $group, $data)
+    {
+        $v = $this->validation->fromSchema([
+            'type' => 'object',
+            'properties' => [
+                'comment' => [
+                    'type' => 'string',
+                    'maxLength' => 250,
+                ],
+            ],
+            'additionalProperties' => false,
+        ]);
+        $v->assert($data);
+        $user = $this->helper->getUserFromSubject($subject, ['groups']);
+        if (count($user->groups)) {
+            throw new AppException('Ya pertenece a un equipo');
+        }
+        if (count($user->pending_tasks)) {
+            throw new AppException('Aún debe completar su perfil de usuario');
+        }
+        $invitation = $this->db->query('App:Invitation')->firstOrNew([
+            'user_id' => $user->id,
+            'group_id' => $group->id,
+        ]);
+        $invitation->state = 'requested';
+        $invitation->comment = $data['comment'];
+        $invitation->save();
+        return $invitation;
+    }
+
+    public function acceptRequest($subject, $invitation)
+    {
+        $user = $invitation->user;
+        if (count($user->groups)) {
+            throw new AppException('User already has a group');
+        }
+        $invitation->state = 'accepted';
+        $invitation->save();
+        $user->groups()->syncWithoutDetaching($invitation->group_id, ['relation' => 'miembro']);
+        $group = $this->db->query('App:Group')
+            ->withCount('users')
+            ->find($invitation->group_id);
+        if ($group->users_count > 5) {
+            $group->full_team = true;
+            $group->save();
+        }
     }
     
     public function createOne($subject, $data)

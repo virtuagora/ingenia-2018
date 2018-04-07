@@ -66,14 +66,6 @@ class UserResource extends Resource
         $this->mailer->sendMail($mailSub, $pending->identifier, $mailMsg);
     }
 
-    public function getInvitations($subject)
-    {
-        return $this->db->query('App:Invitation')
-            ->whereHas('user', function ($qry) use ($subject) {
-                $qry->where('subject_id', $subject->getId());
-            })->get();
-    }
-
     public function updateProfile($subject, $user, $data)
     {
         $schema = [
