@@ -11,7 +11,7 @@ class User extends Model
     protected $dates = ['deleted_at'];
     protected $visible = [
         'id', 'names', 'surnames', 'warning', 'ban_exp', 'created_at', 'subject',
-        'locality_id', 'locality_other', 'pending_tasks',
+        'locality_id', 'locality_other', 'pending_tasks', 'bio',
     ];
     protected $with = ['subject'];
     protected $appends = ['pending_tasks'];
