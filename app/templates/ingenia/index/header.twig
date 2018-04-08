@@ -67,12 +67,8 @@
             </div>
             {% if subject.id %}
               <div class="column is-narrow has-text-centered">
-                <b-tooltip label="Guillermo Croppi" type="is-dark" position="is-bottom">
-                  <a href="/perfil">
-                    <figure class="image is-96x96 is-rounded">
-                      <img src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg" class="" alt=""></a>
-                  </figure>
-                </b-tooltip>
+              <Avatar :subject="{{subject.extra|json_encode}}" size="96"/>
+                
                 <br>
                 <a href="#" class="has-text-white is-hidden">
                   <b-tooltip label="¡32 bancan mi proyecto!" type="is-dark" position="is-bottom">

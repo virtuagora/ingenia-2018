@@ -32,22 +32,26 @@
     {% block stylesheets %}{% endblock %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/virtuagora.css') }}">
     <!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
-    {% block scriptshead %}{% endblock %}
-    <script id="userState" type="application/json">
-      {
-        "user": "John",
-        "status": 2,
-        "holis": []
+    <script>
+      var getUserDataUrl = function () {
+        return "{{subject.extra.user_id is defined ? path_for('getUser', {'usr':subject.extra.user_id}) : 'null' }}"
+      }
+
+      var getUserId = function(){
+        return {
+id: {{subject.extra.user_id is defined ? subject.extra.user_id : 'null' }}
+        }
       }
     </script>
+    {% block scriptshead %}{% endblock %}
+    
   </head>
   <body {% if body_class is defined %} class='{{ body_class }}' {% endif %}>
     <div id="vue" class="content-master">
       {% if show_navbar == true %}
         {% include 'master/navbar.twig' %}
       {% endif %}
-      {% block body %}
-      {% endblock %}
+      {% block body %}{% endblock %}
     </div>
     {% if show_footer == true %}
       {% include 'ingenia/index/footer.twig'%}

@@ -1,4 +1,6 @@
   <template>
+  <section>
+
   <div class="columns">
     <div class="column is-3">
       <aside class="menu">
@@ -25,7 +27,7 @@
         </p>
         <ul class="menu-list">
           <li>
-            <router-link :to="{ name: 'userVerInvitaciones'}" exact-active-class="is-active">Mis invitaciones</router-link>
+            <router-link :to="{ name: 'userVerInvitaciones'}" exact-active-class="is-active"> <i class="far fa-envelope fa-fw"></i> Mis invitaciones ({{this.user.invitations.length}})</router-link>
           </li>
           <li>
             <a><i class="fas fa-angle-down "></i> Mis datos personales</a>
@@ -118,6 +120,7 @@
 ></router-view>
     </div>
   </div>
+  </section>
 </template>
 
 <script>
@@ -147,12 +150,12 @@ export default {
   },
   created: function() {
     this.user = this.$store.state.user;
-  },
+  },  
   mounted: function() {
     document.getElementById("loading").remove();
   },
   methods: {
-    forceUserUpdate: function() {
+    forceUpdate: function() {
       this.user = this.$store.state.user;
     }
   },

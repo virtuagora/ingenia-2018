@@ -176,19 +176,19 @@ const routes = [
         ]
       }
     ],
-    beforeEnter: (to, from, next) => {
-      console.log('First time entering, getting user...')
-      http.get(window.getUserDataUrl())
-        .then(response => {
-          // JSON responses are automatically parsed.
-          store.commit('bind', { user: response.data })
-          next()
-        })
-        .catch(e => {
-          console.log(e)
-          next()
-        })
-    }
+    // beforeEnter: (to, from, next) => {
+    //   console.log('First time entering, getting user...')
+    //   http.get(window.getUserDataUrl())
+    //     .then(response => {
+    //       // JSON responses are automatically parsed.
+    //       store.commit('bind', { user: response.data })
+    //       next()
+    //     })
+    //     .catch(e => {
+    //       console.log(e)
+    //       next()
+    //     })
+    // }
   }
 
   // {

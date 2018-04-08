@@ -48,7 +48,7 @@ const routes = [
     //     .catch(e => {
     //       console.log(e)
     //       next()
-    //     })
+    //     })un problema criti
     // }
   }
 ]

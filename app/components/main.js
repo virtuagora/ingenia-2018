@@ -61,6 +61,28 @@ Vue.use(Buefy, {
 // go to http.js to configure axios according to your needs
 Vue.prototype.$http = http
 
+Vue.mixin({
+  methods: {
+    forceUpdate: function(ref){
+      http.get(window.getUserDataUrl())
+        .then(response => {
+          console.log('Updating user');
+          store.commit('bind', { user: response.data })
+
+          vm.$refs[ref].forceUpdate()
+        })
+        .catch(e => {
+          console.error(e)
+          vm.$snackbar.open({
+            message: "Error al conectarse con el servidor. Por favor, recarge la página.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+        })
+    }
+  }
+})
+
 window.vm = new Vue({ // eslint-disable-line no-new
   el: '#vue', // The id of the DOM element,
   http,
@@ -88,5 +110,16 @@ window.vm = new Vue({ // eslint-disable-line no-new
     Avatar,
     'fb-register': FBRegister,
   },
- 
+  created: function () {
+    store.dispatch('prepareData', window.getUserId()).then(x => {
+      http.get(window.getUserDataUrl())
+        .then(response => {
+          console.log('Updating user');
+          store.commit('bind', { user: response.data })
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    })
+  }
 })

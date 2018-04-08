@@ -7,7 +7,13 @@
     <label class="label is-size-5">
       <i class="fas fa-angle-double-right"></i> ¿De donde sos? *
     </label>
-    <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
+    <Localidad v-if="showLocalityField" ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
+    <div v-else>
+      <button @click="cleanLocalidad" class="button is-light is-pulled-right">Cambiar mi ubicación</button>
+      <show-localidad :locality-id="profile.locality_id" :locality-other="profile.locality_other"></show-localidad>
+      <br>
+      <br>
+    </div>
     <div class="columns">
       <div class="column">
         <div class="field">
@@ -80,12 +86,32 @@
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('enEjecucion')}">
         <i class="fas fa-angle-double-right"></i> (Opcional) ¿Cómo te enteraste de Ingenia?</label>
-      <p>Algunas posibles fuentes pueden ser: Por una amiga o amigo, te avisó el Gabinete Joven, lo escuchaste o viste en la radio, televisión, diarios, revistas, o en las redes sociales (¿Cual?) o de otra forma (¡Contanos!) </p>
-      <br>
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <b-radio v-model="profile.referer" native-value="Nos aviso un/a amigo/a">Nos aviso un/a amigo/a</b-radio>
+          </div>
+          <div class="field">
+            <b-radio v-model="profile.referer" native-value="Nos aviso el Gabinete Joven">Nos aviso el Gabinete Joven</b-radio>
+          </div>
+          <div class="field">
+            <b-radio v-model="profile.referer" native-value="Lo escuchamos/vimos por radio/TV">Lo escuchamos/vimos por radio/TV</b-radio>
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <b-radio v-model="profile.referer" native-value="Lo vimos en diarios/revistas">Lo vimos en diarios/revistas</b-radio>
+          </div>
+          <div class="field">
+            <b-radio v-model="profile.referer" native-value="Lo vimos en las Redes Sociales">Lo vimos en las redes sociales</b-radio>
+          </div>
+        </div>
+      </div>
+      <label class="label">Por otro forma:</label>
       <div class="control">
-        <b-input v-model="profile.referer" data-vv-name="profile.referer" data-vv-as="'Como te enteraste'" v-validate="'max:200'" type="textarea" minlength="10" maxlength="200" rows="3" placeholder="Opcional. ¿Como te enteraste de Ingenia?">
+        <b-input v-model="profile.referer_other" data-vv-name="profile.referer_other" data-vv-as="'Como te enteraste'" v-validate="'max:200'" type="textarea" minlength="10" maxlength="200" rows="3" placeholder="Opcional. ¿Como te enteraste de Ingenia?">
         </b-input>
-        <span v-show="errors.has('profile.referer')" class="help is-danger">
+        <span v-show="errors.has('profile.referer_other')" class="help is-danger">
           <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('profile.referer')}}</span>
       </div>
     </div>
@@ -101,10 +127,12 @@
 
 <script>
 import Localidad from "../../utils/FieldLocalidad";
+import ShowLocalidad from "../../utils/GetLocalidad";
 export default {
   props: ["saveUserProfileUrl"],
   components: {
-    Localidad
+    Localidad,
+    ShowLocalidad
   },
   data() {
     return {
@@ -114,6 +142,7 @@ export default {
       response: {
         ok: false
       },
+      showLocalityField: false,
       profile: {
         birthday: null,
         gender: null,
@@ -122,13 +151,27 @@ export default {
         locality_id: null,
         locality_other: null,
         neighbourhood: null,
-        referer: null
+        referer: null,
+        referer_other: null,
       },
       user: {}
     };
   },
   created: function() {
     this.user = this.$store.state.user;
+    this.profile = {
+      birthday: this.user.birthday,
+        gender: this.user.gender,
+        address: this.user.address,
+        telephone: this.user.telephone,
+        locality_id: this.user.locality_id,
+        locality_other: this.user.locality_other,
+        neighbourhood: this.user.neighbourhood,
+        referer: this.isOptional(this.user.referer),
+        referer_other: this.isOptional(this.user.referer_other),
+      }
+      this.showLocalityField = this.user.locality_id === null ? true : false 
+      this.inputBirthday = this.user.birthday === null ? null : new Date(this.user.birthday)
   },
   methods: {
     isOptional: function(value) {
@@ -145,10 +188,15 @@ export default {
     updateLocalidadCustom: function(localidadCustom) {
       this.profile.locality_other = localidadCustom;
     },
+    cleanLocalidad: function(){
+      this.profile.locality_id = null
+      this.profile.locality_other = null
+      this.showLocalityField = true
+    },
     submit: function() {
       Promise.all([
         this.$validator.validateAll(),
-        this.$refs.localidadForm.validateForm()
+        (this.showLocalityField ? this.$refs.localidadForm.validateForm() : true)
       ])
         .then(values => {
           if (
@@ -168,7 +216,7 @@ export default {
                 });
                 this.isLoading = false;
                 this.response.ok = true;
-                this.$store.commit("updateUser");
+                this.forceUpdate('userPanel')
               })
               .catch(error => {
                 console.error(error.message);
@@ -208,7 +256,8 @@ export default {
         locality_id: this.profile.locality_id,
         locality_other: this.isOptional(this.profile.locality_other),
         neighbourhood: this.profile.neighbourhood,
-        referer: this.isOptional(this.profile.referer)
+        referer: this.isOptional(this.profile.referer),
+        referer_other: this.isOptional(this.profile.referer_other)
       };
     },
     formUrl: function() {
