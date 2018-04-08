@@ -71,6 +71,7 @@ export default {
   },
   created: function() {
     this.user = this.$store.state.user;
+    this.bio = this.user.bio
   },
   methods: {
     isOptional: function(value) {
@@ -98,7 +99,7 @@ export default {
                 });
                 this.isLoading = false;
                 this.response.ok = true;
-                this.$store.commit("updateUser");
+                this.forceUpdate('userPanel')
               })
               .catch(error => {
                 console.error(error.message);

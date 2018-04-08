@@ -157,7 +157,7 @@ export default {
       user: {}
     };
   },
-  created: function() {
+  created: function() { 
     this.user = this.$store.state.user;
     this.profile = {
       birthday: this.user.birthday,
