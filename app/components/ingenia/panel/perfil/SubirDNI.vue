@@ -22,10 +22,10 @@
         </div>
       <b-message>
         A continuación, por favor, suba una foto o escaneo de la parte posterior y anterior de su DNI
-        <br>Maximo: 3MB. Se aceptan .jpg o .jepg
+        <br>Maximo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
       </b-message>
         <b-field class="file is-medium">
-          <b-upload v-model="files" name="archivo" accept="image/jpeg" v-validate="'required|size:3072|mimes:image/jpeg'">
+          <b-upload v-model="files" name="archivo" accept="image/jpeg" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
             <a class="button is-link is-medium">
               <b-icon icon="upload"></b-icon>
               <span>Click para cargar</span>
@@ -35,7 +35,7 @@
             {{ files && files.length ? files[0].name : 'Seleccione un archivo para subir...' }}
           </span>
         </b-field>
-        <p v-show="errors.has('archivo')" class="has-text-danger">Requerido. Debe ser una imagen .JPG de hasta 3MB como máximo.</p>
+        <p v-show="errors.has('archivo')" class="has-text-danger">Requerido. Debe ser un archivo .JPG, .JPEG, .PDF, .DOC o .DOCX de hasta 3MB como máximo.</p>
         <div class="field">
           <div class="control is-clearfix">
             <a @click="submit" type="submit" class="button is-primary is-medium is-pulled-right" :class="{'is-loading': isLoading}">
