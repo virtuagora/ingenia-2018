@@ -95,6 +95,7 @@ class Installer
             $table->string('pending_email')->nullable();
             $table->text('bio')->nullable();
             $table->string('referer')->nullable(); //como se enteraron
+            $table->string('referer_other')->nullable();
             $table->string('neighbourhood')->nullable();
 
             $table->integer('locality_id')->unsigned()->nullable();

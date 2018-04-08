@@ -36,6 +36,7 @@ class UserAction
             $visible = [
                 'groups', 'birthday', 'gender', 'address', 'telephone',
                 'neighbourhood', 'referer', 'email', 'invitations',
+                'referer_other',
             ];
         } else {
             $visible = ['groups'];

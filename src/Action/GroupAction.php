@@ -83,6 +83,38 @@ class GroupAction
         ]);
     }
 
+    public function postUserFromInvitation($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $invitation = $this->helper->getEntityFromId(
+            'App:Invitation', 'inv', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'creGroUsrInv', $invitation)) {
+            throw new UnauthorizedException();
+        }
+        $invitation = $this->groupResource->acceptInvitation($subject, $invitation);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Invitación aceptada',
+            'status' => 200,
+        ]);
+    }
+
+    public function postUserFromRequest($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $invitation = $this->helper->getEntityFromId(
+            'App:Invitation', 'inv', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'creGroUsrReq', $invitation)) {
+            throw new UnauthorizedException();
+        }
+        $invitation = $this->groupResource->acceptRequest($subject, $invitation);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Solicitud aceptada',
+            'status' => 200,
+        ]);
+    }
+
     public function putCorresponsable($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');

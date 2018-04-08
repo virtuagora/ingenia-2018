@@ -123,10 +123,14 @@ $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
 $app->get('/group/{gro}', 'groupAction:getOne')->setName('getGroup');
 $app->post('/group', 'groupAction:post')->setName('runCreGro');
 $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
+$app->post('/group/{gro}/request', 'groupAction:postRequest')->setName('runCreGroReq');
 $app->post('/group/{gro}/letter', 'groupAction:postLetter')->setName('runUpdGroLet');
 $app->post('/group/{gro}/agreement', 'groupAction:postAgreement')->setName('runUpdGroAgr');
 $app->put('/group/{gro}/second/{usr}', 'groupAction:putSecond')->setName('runCreGroSec');
 $app->delete('/group/{gro}/second/{usr}', 'groupAction:deleteSecond')->setName('runDelGroSec');
+
+$app->post('/group/accept-inv/{inv}', 'groupAction:postUserFromInv')->setName('runCreGroUsrInv');
+$app->post('/group/accept-req/{inv}', 'groupAction:postUserFromReq')->setName('runCreGroUsrReq');
 
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');

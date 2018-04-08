@@ -189,14 +189,14 @@ class GroupResource extends Resource
         return $schema;
     }
     
-    public function acceptInvitation($subject, $invId)
+    public function acceptInvitation($subject, $invitation)
     {
         $user = $this->helper->getUserFromSubject($subject, ['groups']);
-        $invitation = $this->db->query('App:Invitation')->where([
-            'id' => $invId,
-            'state' => 'pending',
-            'user_id' => $user->id,
-        ])->firstOrFail();
+        // $invitation = $this->db->query('App:Invitation')->where([
+        //     'id' => $invId,
+        //     'state' => 'pending',
+        //     'user_id' => $user->id,
+        // ])->firstOrFail();
         if (count($user->groups)) {
             throw new AppException('User already has a group');
         }

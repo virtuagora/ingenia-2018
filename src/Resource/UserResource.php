@@ -110,14 +110,31 @@ class UserResource extends Resource
                     'maxLength' => 100,
                 ],
                 'referer' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 200,
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 250,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+                'referer_other' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 250,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
                 ],
             ],
             'required' => [
-                'birthday', 'gender', 'address', 'telephone',
-                'locality_id', 'locality_other', 'referer', 'neighbourhood'
+                'birthday', 'gender', 'address', 'telephone', 'neighbourhood',
+                'locality_id', 'locality_other', 'referer', 'referer_other'
             ],
             'additionalProperties' => false,
         ];
