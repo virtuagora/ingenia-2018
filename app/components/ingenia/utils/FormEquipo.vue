@@ -134,7 +134,7 @@ export default {
     };
   },
   mounted: function() {
-    for (let i = 2000; i <= 2017; i++) {
+    for (let i = 2011; i <= 2017; i++) {
       this.listPreviousEditions.push(i);
     }
     for (let i = 1900; i <= 2018; i++) {
