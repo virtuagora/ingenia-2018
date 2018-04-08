@@ -5,9 +5,9 @@
       <i class="em em-wink"></i>
     </p>
     <div class="notification is-light is-clearfix">
-      <a href="#" class="button is-dark is-dark is-pulled-right">Editar perfil</a>
+      <router-link :to="{ name: 'userVerPerfil'}" class="button is-dark is-dark is-pulled-right">Editar perfil</router-link>
       <span class="is-600 is-size-5">
-        <i class="fas fa-angle-double-right fa-lg fa-fw"></i> No te olvides de completar tu perfil!</span>
+        <i class="fas fa-angle-double-right fa-lg fa-fw"></i> ¡Mantené tu perfíl actualizado!</span>
       <br>Completá tus datos para que otras personas sepan quien sos<br>Si presentás un proyecto
       <b>Ingenia</b> te recomendamos que lo hagas para que la gente se sume a tu proyecto!
     </div>
