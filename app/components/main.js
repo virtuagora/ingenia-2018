@@ -37,6 +37,7 @@ import FBRegister from './ingenia/FBRegister'
 import CompletarRegistro from './ingenia/CompletarRegistro'
 import Catalogo from './ingenia/catalogo/Catalogo'
 import GetLocalidad from './ingenia/utils/GetLocalidad'
+import Avatar from './ingenia/utils/Avatar'
 import VoteProject from './ingenia/project/VoteProject'
 import NavbarProject from './ingenia/project/NavbarProject'
 
@@ -84,6 +85,8 @@ window.vm = new Vue({ // eslint-disable-line no-new
     GetLocalidad,
     VoteProject,
     NavbarProject,
+    Avatar,
     'fb-register': FBRegister,
-  }
+  },
+ 
 })

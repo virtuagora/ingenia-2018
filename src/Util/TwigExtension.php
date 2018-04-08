@@ -25,6 +25,7 @@ class TwigExtension extends Twig_Extension
             new Twig_SimpleFunction('path_for', [$this, 'pathFor']),
             new Twig_SimpleFunction('base_url', [$this, 'baseUrl']),
             new Twig_SimpleFunction('is_current_path', [$this, 'isCurrentPath']),
+            new Twig_SimpleFunction('avatar_url', array($this, 'avatarUrlFunction'))
         ];
     }
 
@@ -66,6 +67,18 @@ class TwigExtension extends Twig_Extension
     public function setBaseUrl($baseUrl)
     {
         $this->uri = $baseUrl;
+    }
+
+    public function avatarUrlFunction($type, $hash, $size) {
+        switch ($type) {
+            case 0:
+                return 'https://www.gravatar.com/avatar/'.$hash.'?d=identicon&s='.$size;
+            case 1:
+                return 'http://graph.facebook.com/'.$hash.'/picture?width='.$size;
+            default:
+                return 'https://www.gravatar.com/avatar/'.$hash.'?d=identicon&s='.$size;
+                // return Slim\Slim::getInstance()->request()->getRootUri().'/img/usuario/'.$hash.'/'.$size.'.png';
+        }
     }
 
     public function getName()
