@@ -147,6 +147,7 @@ class UserResource extends Resource
         $user->telephone = $data['telephone'];
         $user->neighbourhood = $data['neighbourhood'];
         $user->referer = $data['referer'];
+        $user->referer_other = $data['referer_other'];
         $user->locality_id = $data['locality_id'];
         if ($localidad->custom && isset($data['locality_other'])) {
             $user->locality_other = $data['locality_other'];
