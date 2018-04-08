@@ -112,6 +112,7 @@ window.vm = new Vue({ // eslint-disable-line no-new
   },
   created: function () {
     store.dispatch('prepareData', window.getUserId()).then(x => {
+      if(window.getUserId().id !== null){
       http.get(window.getUserDataUrl())
         .then(response => {
           console.log('Updating user');
@@ -120,6 +121,7 @@ window.vm = new Vue({ // eslint-disable-line no-new
         .catch(e => {
           console.log(e)
         })
+      }
     })
   }
 })

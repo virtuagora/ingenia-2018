@@ -4,7 +4,10 @@
      <b-message>
       Uno de los requerimientos para ser integrante de un equipo INGENIA o presentar un proyecto INGENIA es el de enviar una imagen o archivo donde se vea la parte delantera y trasera del DNI.
     </b-message>
-    <div class="notification is-success"  v-show="!this.user.pending_tasks.includes('dni')">
+    <div class="notification" v-show="verifying">
+      <i class="fas fa-cog fa-spin"></i>&nbsp;Revisando si enviaste el DNI . . .
+    </div>
+    <div class="notification is-success"  v-show="!this.user.pending_tasks.includes('dni') && !verifying">
       <i class="fas fa-check fa-fw"></i>Tu DNI ha sido enviado y guardado correctamente
     </div>
     <div>
@@ -57,11 +60,19 @@ export default {
       cargado: false,
       files: [],
       dni: null,
+      verifying: true,
       isLoading: false
     };
   },
   created: function() {
     this.user = this.$store.state.user;
+  },
+  mounted: function() {
+    setTimeout(() => {
+      this.forceUpdate('userPanel') 
+      this.user = this.$store.state.user;
+      this.verifying = false;    
+      }, 3000)
   },
   methods: {
     submit: function() {
