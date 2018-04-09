@@ -49,7 +49,7 @@ $app->get('/logout', function ($request, $response, $args) {
     return $this->view->render($response, 'test/simple.twig', [
     'text' => 'holis',
     ]);
-});
+})->setName('showLogout');
 
 
 ///
@@ -129,8 +129,8 @@ $app->post('/group/{gro}/agreement', 'groupAction:postAgreement')->setName('runU
 $app->put('/group/{gro}/second/{usr}', 'groupAction:putSecond')->setName('runCreGroSec');
 $app->delete('/group/{gro}/second/{usr}', 'groupAction:deleteSecond')->setName('runDelGroSec');
 
-$app->post('/group/accept-inv/{inv}', 'groupAction:postUserFromInv')->setName('runCreGroUsrInv');
-$app->post('/group/accept-req/{inv}', 'groupAction:postUserFromReq')->setName('runCreGroUsrReq');
+$app->post('/group/accept-inv/{inv}', 'groupAction:postUserFromInvitation')->setName('runCreGroUsrInv');
+$app->post('/group/accept-req/{inv}', 'groupAction:postUserFromRequest')->setName('runCreGroUsrReq');
 
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
