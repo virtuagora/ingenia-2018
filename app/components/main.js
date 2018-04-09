@@ -68,7 +68,6 @@ Vue.mixin({
         .then(response => {
           console.log('Updating user');
           store.commit('bind', { user: response.data })
-
           vm.$refs[ref].forceUpdate()
         })
         .catch(e => {
@@ -110,7 +109,7 @@ window.vm = new Vue({ // eslint-disable-line no-new
     Avatar,
     'fb-register': FBRegister,
   },
-  created: function () {
+  beforeCreate: function () {
     store.dispatch('prepareData', window.getUserId()).then(x => {
       if(window.getUserId().id !== null){
       http.get(window.getUserDataUrl())

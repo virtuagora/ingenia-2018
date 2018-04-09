@@ -25,6 +25,6 @@
       <navbar-project></navbar-project>
     </div>
   </div>
-  <router-view :project="{{project}}"></router-view>
+  <router-view :project="{{project}}" send-request-join="{{path_for('runCreGroReq',{'gro': ':gro'})}}"></router-view>
 {% endblock %}
 {% block javascripts %}{% endblock %}

@@ -248,7 +248,7 @@
             <tr>
               <th width="120px">Rubro</th>
               <th>Descripción</th>
-              <th class="has-text-centered">Monto</th>
+              <th class="has-text-centered" width="70px">Monto</th>
               <th width="50px" class="has-text-centered">
                 <i class="fas fa-times"></i>
               </th>

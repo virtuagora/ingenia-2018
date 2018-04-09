@@ -17,7 +17,6 @@ export default {
     };
   },
   mounted: function() {
-    console.log(this.localityId)
     this.isLoading = true;
     this.$http.get("/locality/" + this.localityId).then(response => {
       this.isLoading = false;

@@ -27,7 +27,7 @@
         </p>
         <ul class="menu-list">
           <li>
-            <router-link :to="{ name: 'userVerInvitaciones'}" exact-active-class="is-active"> <i class="far fa-envelope fa-fw"></i> Mis invitaciones ({{this.user.invitations.length}})</router-link>
+            <router-link :to="{ name: 'userVerInvitaciones'}" exact-active-class="is-active"> <i class="far fa-envelope fa-fw"></i> Mis invitaciones y solicitudes ({{this.user.invitations.length}})</router-link>
           </li>
           <li>
             <a><i class="fas fa-angle-down "></i> Mis datos personales</a>
@@ -117,6 +117,10 @@
 :save-project-url="saveProjectUrl"
 :edit-project-url="editProjectUrl"
 :save-letter-url="saveLetterUrl"
+:accept-group-invitation="acceptGroupInvitation"
+:accept-group-request="acceptGroupRequest"
+:remove-group-user="removeGroupUser"
+:remove-group-invitation="removeGroupInvitation"
 ></router-view>
     </div>
   </div>
@@ -142,6 +146,10 @@ export default {
 	"saveProjectUrl",
   "editProjectUrl",
 	"saveLetterUrl",
+  "acceptGroupInvitation",
+  "acceptGroupRequest",
+  "removeGroupUser",
+  "removeGroupInvitation",
   ],
   data() {
     return {

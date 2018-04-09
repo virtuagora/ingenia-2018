@@ -11,7 +11,7 @@
             <div class="column is-narrow">
               {% if subject.id %}
                 <b-tooltip label="Cerrar sesion" type="is-dark" position="is-bottom">
-                  <a href="/logout" class="">
+                  <a href="{{path_for('showLogout')}}" class="">
                     <span class="icon is-large has-text-white">
                       <i class="fas fa-sign-out-alt fa-3x "></i>
                     </span>&nbsp;&nbsp;
@@ -86,14 +86,14 @@
     </div>
   </div>
   <div class="hero-foot">
-    <nav class="tabs">
+<nav class="tabs is-boxed">
       <div class="container">
         <ul>
           <li class="is-active">
-            <a>Catalogo</a>
+            <a>Catálogo</a>
           </li>
           <li>
-            <a>Ulimos 10</a>
+            <a>Ultimos 10</a>
           </li>
           <li>
             <a>Reglamento</a>
