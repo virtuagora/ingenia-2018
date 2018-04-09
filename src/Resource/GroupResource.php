@@ -205,7 +205,9 @@ class GroupResource extends Resource
         }
         $invitation->state = 'accepted';
         $invitation->save();
-        $user->groups()->syncWithoutDetaching($invitation->group_id, ['relation' => 'miembro']);
+        $user->groups()->syncWithoutDetaching([
+            $invitation->group_id => ['relation' => 'miembro']
+        ]);
         $group = $this->db->query('App:Group')
             ->withCount('users')
             ->find($invitation->group_id);
@@ -303,7 +305,9 @@ class GroupResource extends Resource
         }
         $invitation->state = 'accepted';
         $invitation->save();
-        $user->groups()->syncWithoutDetaching($invitation->group_id, ['relation' => 'miembro']);
+        $user->groups()->syncWithoutDetaching([
+            $invitation->group_id => ['relation' => 'miembro'],
+        ]);
         $group = $this->db->query('App:Group')
             ->withCount('users')
             ->find($invitation->group_id);
