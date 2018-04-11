@@ -226,6 +226,15 @@ class GroupResource extends Resource
                     'type' => 'string',
                     'format' => 'email',
                 ],
+                'comment' => [
+                    [
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 250,
+                    ], [
+                        'type' => 'null',
+                    ],
+                ],
             ],
             'required' => ['email'],
             'additionalProperties' => false,
@@ -263,6 +272,9 @@ class GroupResource extends Resource
         }
         $invitation->state = 'pending';
         $invitation->email = $email;
+        if (isset($data['comment'])) {
+            $invitation->comment = $data['comment'];
+        }
         $invitation->save();
         return $invitation;
     }
@@ -273,8 +285,13 @@ class GroupResource extends Resource
             'type' => 'object',
             'properties' => [
                 'comment' => [
-                    'type' => 'string',
-                    'maxLength' => 250,
+                    [
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 250,
+                    ], [
+                        'type' => 'null',
+                    ],
                 ],
             ],
             'additionalProperties' => false,
@@ -292,7 +309,9 @@ class GroupResource extends Resource
             'group_id' => $group->id,
         ]);
         $invitation->state = 'requested';
-        $invitation->comment = $data['comment'];
+        if (isset($data['comment'])) {
+            $invitation->comment = $data['comment'];
+        }
         $invitation->save();
         return $invitation;
     }

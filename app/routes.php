@@ -107,6 +107,8 @@ $app->get('/complete-sign-up', function ($request, $response, $args) {
     ]);
 })->setName('showCompleteSignUp');
 
+$app->get('/update-email/{usr}/{tkn}', 'userAction:updateEmail')->setName('runUpdUserEma');
+
 // api
 
 $app->get('/category', 'miscAction:getCategories');
@@ -119,8 +121,10 @@ $app->get('/user/{usr}', 'userAction:getOne')->setName('getUser');
 $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');
 $app->post('/user/{usr}/public-profile', 'userAction:postPublicProfile')->setName('runUpdUserPub');
 $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
+$app->post('/user/{usr}/pending-email', 'userAction:postPendingEmail')->setName('runUpdUserPem');
 
 $app->get('/group/{gro}', 'groupAction:getOne')->setName('getGroup');
+$app->get('/group/{gro}/usuario', 'groupAction:getUsuarios')->setName('getGroUsr');
 $app->post('/group', 'groupAction:post')->setName('runCreGro');
 $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
 $app->post('/group/{gro}/request', 'groupAction:postRequest')->setName('runCreGroReq');

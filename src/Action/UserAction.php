@@ -93,6 +93,35 @@ class UserAction
         ]);
     }
 
+    public function postPendingEmail($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $user = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updUsrProfile', $user)) {
+            throw new UnauthorizedException();
+        }
+        $this->userResource->updatePendingEmail($subject, $user, $request->getParsedBody());
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Se envió un correo con los pasos para actulizar dirección',
+            'status' => 200,
+        ]);
+    }
+
+    public function updateEmail($request, $response, $params)
+    {
+        $user = $this->helper->getEntityFromId('App:User', 'usr', $params);
+        $data = [
+            'token' => $this->helper->getSanitizedStr('tkn', $params),
+        ];
+        $this->userResource->updateEmail($user, $data);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Email actualizado',
+            'status' => 200,
+        ]);
+    }
+
     public function postProfile($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
