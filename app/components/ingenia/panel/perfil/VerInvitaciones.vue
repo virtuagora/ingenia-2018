@@ -28,9 +28,9 @@
       </article>
     </div>
     <hr>
-    <h1 class="title is-4">Solicitudes enviadas para participar de equipos recibidas</h1>
+    <h1 class="title is-4">Solicitudes enviadas a equipos</h1>
     <div class="notification" v-show="cantSolicitudes == 0">
-      No tiene solicitudes enviadas.
+      No ha enviado solicitudes.
     </div>
     <div class="box" v-for="(invitation, index) in user.invitations" v-if="invitation.state == 'requested'" :key="index">
       <article class="media">

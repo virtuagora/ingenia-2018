@@ -20,6 +20,7 @@
     </b-message>
     <section v-if="this.user.pending_tasks.length > 0">
       <p>Previo a presentar tu proyecto INGENIA, debes cumplir los siguientes requerimientos.</p>
+      <br>
       <div class="notification is-warning" v-show="this.user.pending_tasks.includes('email')">
         <a href="#" class="button is-dark is-pulled-right" style="margin-left:20px;margin-bottom:10px;">Actualizar email</a>
         <span class="is-600 is-size-5">

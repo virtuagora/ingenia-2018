@@ -30,9 +30,6 @@
           <Localidad :locality-id="project.locality_id" :locality-other="project.locality_other"></Localidad>
         </div>
         <div class="column">
-          <div class="notification is-link">
-
-          </div>
           <h5>
             <b>Barrios en que se implementara</b>
           </h5>

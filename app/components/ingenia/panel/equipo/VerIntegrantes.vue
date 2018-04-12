@@ -165,11 +165,11 @@ export default {
     this.user = this.$store.state.user;
   },
   mounted: function() {
-    this.getEquipo();
+    this.getEquipo(this.user.groups[0].id);
   },
   methods: {
-    getEquipo: function() {
-      this.$http.get("/group/3").then(response => {
+    getEquipo: function(id) {
+      this.$http.get("/group/"+id).then(response => {
         this.isLoading = false;
         console.log(response.data);
         this.group = response.data;
