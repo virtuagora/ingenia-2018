@@ -2,6 +2,7 @@
 
 namespace App\Resource;
 
+use Carbon\Carbon;
 use App\Util\Exception\AppException;
 
 class UserResource extends Resource
@@ -183,6 +184,75 @@ class UserResource extends Resource
         $user->bio = $data['bio'];
         $user->save();
         return $user;
+    }
+
+    public function updatePendingEmail($subject, $user, $data)
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'email' => [
+                    'type' => 'string',
+                    'format' => 'email',
+                    'minLength' => 1,
+                    'maxLength' => 300,
+                ],
+            ],
+            'required' => [
+                'email',
+            ],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        $user->pending_email = $data['email'];
+        $user->token = 'email:'.bin2hex(random_bytes(10));
+        $user->token_expiration = Carbon::tomorrow();
+        $user->save();
+        $link = $this->helper->pathFor('runUpdUserEma', true, [
+            'usr' => $user->id,
+            'tkn' => $user->token,
+        ]);
+        $mailMsg = 'Link de cambio ' . $link;
+        $mailSub = 'Registro Virtuágora';
+        $this->logger->info($mailMsg);
+        $this->mailer->sendMail($mailSub, $data['email'], $mailMsg);
+    }
+
+    public function updateEmail($user, $data)
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'token' => [
+                    'type' => 'string',
+                    'pattern' => '^email:[A-z0-9]+$',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ],
+            ],
+            'required' => [
+                'token',
+            ],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        if ($user->token != $data['token']) {
+            throw new AppException('Token inválido');
+        }
+        if ($user->token_expiration->lt(Carbon::now())) {
+            throw new AppException('Token expirado');
+        }
+        $other = $this->db->query('App:User')->where('email', $user->pending_email)->first();
+        if (isset($other)) {
+            throw new AppException('Esa dirección de email ya está registrada');
+        }
+        $user->email = $user->pending_email;
+        $user->pending_email = null;
+        $user->token = null;
+        $user->token_expiration = null;
+        $user->save();
     }
 
     public function updateDni($subject, $user, $data, $file)

@@ -73,7 +73,9 @@ $container['authorization'] = function ($c) {
     return new App\Service\AuthorizationService($c['db'], $c['logger']);
 };
 $container['helper'] = function ($c) {
-    return new App\Service\HelperService($c['db'], $c['logger']);
+    return new App\Service\HelperService(
+        $c['db'], $c['router'], $c['request'], $c['logger']
+    );
 };
 $container['options'] = function ($c) {
     return new App\Service\OptionsService($c['db']);

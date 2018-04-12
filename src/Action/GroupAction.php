@@ -32,6 +32,15 @@ class GroupAction
         }
         return $response->withJSON($group->toArray());
     }
+    
+    // GET /grupo/{gro}/usuario
+    public function getUsuarios($request, $response, $params)
+    {
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params, ['users']
+        );
+        return $response->withJSON($group->users->toArray());
+    }
 
     public function post($request, $response, $params)
     {
@@ -56,7 +65,9 @@ class GroupAction
         if (!$this->authorization->checkPermission($subject, 'creGroInvit', $group)) {
             throw new UnauthorizedException();
         }
-        $invitation = $this->groupResource->inviteUser($subject, $group, $request->getParsedBody());
+        $invitation = $this->groupResource->inviteUser(
+            $subject, $group, $request->getParsedBody()
+        );
         return $this->representation->returnMessage($request, $response, [
             'message' => 'Invitación enviada',
             'status' => 200,

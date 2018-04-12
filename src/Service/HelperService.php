@@ -9,10 +9,29 @@ class HelperService
     private $db;
     private $logger;
     
-    public function __construct($db, $logger)
+    public function __construct($db, $router, $request, $logger)
     {
         $this->db = $db;
         $this->logger = $logger;
+        $this->router = $router;
+        $this->request = $request;
+    }
+
+    public function baseUrl($request = null)
+    {
+        if (is_null($request)) {
+            $request = $this->request;
+        }
+        return $request->getUri()->getBaseUrl();
+    }
+
+    public function pathFor($name, $full = false, $params = [], $query = [])
+    {
+        if ($full) {
+            return $this->baseUrl().$this->router->pathFor($name, $params, $query);
+        } else {
+            return $this->router->pathFor($name, $params, $query);
+        }
     }
 
     public function getUserFromSubject(DummySubject $subject, $with = null)
@@ -32,5 +51,11 @@ class HelperService
     {
         $isDigit = ctype_digit($params[$attr] ?? 'x');
         return $isDigit ? $params[$attr] : -1;
+    }
+
+    public function getSanitizedStr($attr, $params)
+    {
+        // TODO hacer validacion de verdad
+        return $params[$attr]?? null;
     }
 }
