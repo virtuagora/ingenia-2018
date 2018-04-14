@@ -3,11 +3,14 @@ import Vuex from 'vuex'
 import http from './http'
 import createPersistedState from 'vuex-persistedstate'
 
+import moment from "moment";
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    user: null
+    user: null,
+    expires: null,
   },
   mutations: {
     checkUser: function(state,session){
@@ -16,35 +19,45 @@ const store = new Vuex.Store({
       if(session.id == null){
         console.warn('Anonymous. Null user.')        
         state.user = null
-        return false;
+        state.expires = null
+        return;
       }
       // If there is a user in the session
       else {
         console.log('-- Has session')        
         if(state.user != null){
           if (state.user.id == session.id){
-          console.log('---- Same User, same session.')                    
+          console.log('---- Same User, same session.')      
+            return;
           } else {
           console.warn('---- Not the same user, cleaning. Needs to update!')
+            state.user = null
+            return;            
           }
         } else {
           console.warn('---- No local data, Needs to update!')
+          return;
         }
       }
     },
-    bind: function (state, user) {
-      Object.assign(state, user);
+    bind: function (state, element) {
+      Object.assign(state, element);
     },
     updateUser: function(state, session){
       if(session.id != null){
-      http.get(window.getUserDataUrl())
-        .then(response => {
-          console.log('User updated. Saviiiiiiiiiiiiing!');
-          Object.assign(state, {user: response.data})
-        })
-        .catch(e => {
-          console.error(e)
-        })
+        if(Date.now() > state.expires){
+          http.get(window.getUserDataUrl())
+            .then(response => {
+              console.log('User updated. Saving!');
+              Object.assign(state, { user: response.data })
+              Object.assign(state, { expires: Date.now() + 5*60*1000 })
+            })
+            .catch(e => {
+              console.error(e)
+            })
+        } else {
+          console.log('Data still fresh');          
+        }
       } else {
         console.log('No need to fetch user');
       }
@@ -67,7 +80,7 @@ const store = new Vuex.Store({
     prepareData: function ({commit}, session){
       return new Promise((resolve, reject) => {
           commit('checkUser', session)
-          resolve()
+          resolve(true)
       })
     }
   },
@@ -85,7 +98,7 @@ const store = new Vuex.Store({
   },
   plugins: [createPersistedState({
     key: 'virtuagora-v2',
-    paths: ['user']
+    paths: ['user', 'expires']
   })]
 })
 
