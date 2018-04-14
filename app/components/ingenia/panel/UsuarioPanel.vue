@@ -163,7 +163,7 @@ export default {
     document.getElementById("loading").remove();
   },
   methods: {
-    forceUpdate: function() {
+    updateUserState: function() {
       this.user = this.$store.state.user;
     }
   },

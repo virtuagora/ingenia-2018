@@ -71,7 +71,7 @@ Vue.mixin({
           store.commit('bind', { expires: Date.now() + 5 * 60 * 1000 })
           if (ref != null || ref != undefined) {
             console.log('Updating ref: ' + ref);            
-            vm.$refs[ref].forceUpdate()
+            vm.$refs[ref].updateUserState()
           }
         })
         .catch(e => {

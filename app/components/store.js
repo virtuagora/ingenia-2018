@@ -43,38 +43,6 @@ const store = new Vuex.Store({
     bind: function (state, element) {
       Object.assign(state, element);
     },
-    updateUser: function(state, session){
-      if(session.id != null){
-        if(Date.now() > state.expires){
-          http.get(window.getUserDataUrl())
-            .then(response => {
-              console.log('User updated. Saving!');
-              Object.assign(state, { user: response.data })
-              Object.assign(state, { expires: Date.now() + 5*60*1000 })
-            })
-            .catch(e => {
-              console.error(e)
-            })
-        } else {
-          console.log('Data still fresh');          
-        }
-      } else {
-        console.log('No need to fetch user');
-      }
-    },
-    // forceUpdateUser: function (state) {
-    //     http.get(window.getUserDataUrl())
-    //       .then(response => {
-    //         console.log('User updated. Saving!');
-    //         state.user = response.data
-    //         state.sync = true            
-    //         // vm.$refs.userPanel.forceUserUpdate();
-    //       })
-    //       .catch(e => {
-    //         console.error(e)
-    //         state.sync = false            
-    //       })
-    // }
   },
   actions: {
     prepareData: function ({commit}, session){

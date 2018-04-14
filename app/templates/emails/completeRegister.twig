@@ -1,0 +1,9 @@
+{% extends 'emails/master.twig' %}
+
+{% block body %}
+  {% include 'emails/utils/paragraph.twig' with {'text':'¡Bienvenido a Ingenia! Para completar tu registro, te pedimos por favor que completes tus datos accediendo al siguiente link:'}%}
+  {% include 'emails/utils/button.twig' with {'url': url ,'label': 'Completar registro'}%}
+  {% include 'emails/utils/paragraph.twig' with {'text':'Una vez registrado ya vas a poder comenzar a participar bancando proyectos, ser parte de un equipo INGENIA, o presentar tu propio equipo y proyecto INGENIA.'}%}
+  {% include 'emails/utils/paragraph.twig' with {'text':'¡Estamos muy felices que seas parte de Ingenia! ¡Te esperamos!'}%}
+  {% include 'emails/utils/paragraph.twig' with {'text':'El equipo de Ingenia y Virtuágora'}%}
+{% endblock %}

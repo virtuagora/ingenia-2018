@@ -1,0 +1,11 @@
+{% extends 'emails/master.twig' %}
+
+{% block body %}
+{% include 'emails/utils/paragraph.twig' with {'text':'La siguiente invitacion llega del equipo "' ~ team ~ '" para invitarte a ser parte de Ingenia'}%}
+{% include 'emails/utils/quote.twig' with {'text': comment }%}
+{% include 'emails/utils/paragraph.twig' with {'text':'Para aceptar la invitación, debes estar registradx en la plataforma con el mail por el cual te llegó este correo. Si estas registradx en la plataforma, la invitacion deberia estar en tu panel de control'} %}
+{% include 'emails/utils/paragraph.twig' with {'text':'Si te registraste utilizando Facebook, acordate de vincular tu cuenta de email, para que te llegue la invitación a tu bandeja.'} %}
+{% include 'emails/utils/button.twig' with {'url': url ,'label': 'Registrate para formar parte del equipo'}%}
+{% include 'emails/utils/paragraph.twig' with {'text':'¡Estamos muy felices que seas parte de Ingenia! ¡Te esperamos!'}%}
+{% include 'emails/utils/paragraph.twig' with {'text':'El equipo de Ingenia y Virtuágora'}%}
+{% endblock %}
