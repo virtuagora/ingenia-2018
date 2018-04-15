@@ -65,12 +65,12 @@ class GroupAction
         $user = $group->users->where(
             'id',
             $this->helper->getSanitizedId('usr', $params)
-        );
+        )->first();
+        if (is_null($user)) {
+            throw new AppException('Usuario no encontrado');
+        }
         if ($user->subject_id == $subject->getId()) {
             throw new AppException('No puede eliminarse a si mismo');
-        }
-        if (empty($user)) {
-            throw new AppException('Usuario no encontrado');
         }
         if (!$this->authorization->checkPermission($subject, 'updGroSecond', $group)) {
             throw new UnauthorizedException();
