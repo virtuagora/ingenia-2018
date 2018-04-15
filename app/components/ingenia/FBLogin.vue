@@ -69,9 +69,9 @@ export default {
               alert(response.authResponse.accessToken);
               this.success = true;
               this.accessToken = response.authResponse.accessToken;
-              this.$refs.sendFacebookLoginForm.submit();
               document.getElementById("access").value =
                 response.authResponse.accessToken;
+              this.$refs.sendFacebookLoginForm.submit();
               // Now you can redirect the user or do an AJAX request to
               // a PHP script that grabs the signed request from the cookie.
             } else {
