@@ -22,6 +22,11 @@ class Group extends Model
     protected $casts = [
         'previous_editions' => 'array',
         'parent_organization' => 'array',
+        'uploaded_agreement' => 'boolean',
+        'uploaded_letter' => 'boolean',
+        'full_team' => 'boolean', 
+        'second_in_charge' => 'boolean',
+        'verified_team' => 'boolean',
     ];
 
     public function subject()

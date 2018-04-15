@@ -10,183 +10,265 @@ class GroupResource extends Resource
     public function retrieveSchema($options = [])
     {
         $schema = [
-        'type' => 'object',
-        'properties' => [
-        'name' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ],
-        'description' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 1000,
-        ],
-        'year' => [
-        'type' => 'integer',
-        'minimum' => 1900,
-        'maximun' => 2018,
-        ],
-        'previous_editions' => [
-        'type' => 'array',
-        'items' => [
-        'type' => 'integer',
-        'minimum' => 2000,
-        'maximun' => 2017,
-        ],
-        ],
-        'parent_organization' => [
-        'oneOf' => [
-        [
-        'type' => 'object',
-        'properties' => [
-        'name' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 50,
-        ],
-        'topics' => [
-        'type' => 'array',
-        'items' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ],
-        ],
-        'topic_other' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 250,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'locality_id' => [
-        'type' => 'integer',
-        'minimum' => 1,
-        ],
-        'locality_other' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 250,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'web' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'facebook' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'telephone' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 20,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'email' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'format' => 'email',
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        ],
-        'required' => [
-        'name', 'topics', 'topic_other', 'locality_id',
-        'locality_other', 'web', 'facebook', 'telephone', 'email',
-        ],
-        'additionalProperties' => false,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'locality_id' => [
-        'type' => 'integer',
-        'minimum' => 1,
-        ],
-        'locality_other' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 250,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'web' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'facebook' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'telephone' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 20,
-        ],
-        'email' => [
-        'type' => 'string',
-        'format' => 'email',
-        ],
-        ],
-        'required' => [
-        'name', 'description', 'year', 'previous_editions', 'parent_organization',
-        'locality_id', 'locality_other', 'web', 'facebook', 'telephone', 'email',
-        ],
-        'additionalProperties' => false,
+            'type' => 'object',
+            'properties' => [
+                'name' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 100,
+                ],
+                'description' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 1000,
+                ],
+                'year' => [
+                    'type' => 'integer',
+                    'minimum' => 1900,
+                    'maximun' => 2018,
+                ],
+                'previous_editions' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'integer',
+                        'minimum' => 2000,
+                        'maximun' => 2017,
+                    ],
+                ],
+                'parent_organization' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'object',
+                            'properties' => [
+                                'name' => [
+                                    'type' => 'string',
+                                    'minLength' => 1,
+                                    'maxLength' => 50,
+                                ],
+                                'topics' => [
+                                    'type' => 'array',
+                                    'items' => [
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 100,
+                                    ],
+                                ],
+                                'topic_other' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 250,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'locality_id' => [
+                                    'type' => 'integer',
+                                    'minimum' => 1,
+                                ],
+                                'locality_other' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 250,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'web' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 100,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'facebook' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 100,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'telephone' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 20,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'email' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'format' => 'email',
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                            'required' => [
+                                'name', 'topics', 'topic_other', 'locality_id', 'web', 
+                                'locality_other', 'facebook', 'telephone', 'email',
+                            ],
+                            'additionalProperties' => false,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+                'locality_id' => [
+                    'type' => 'integer',
+                    'minimum' => 1,
+                ],
+                'locality_other' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 250,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+                'web' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 100,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+                'facebook' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 100,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+                'telephone' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 20,
+                ],
+                'email' => [
+                    'type' => 'string',
+                    'format' => 'email',
+                ],
+            ],
+            'required' => [
+                'name', 'description', 'year', 'previous_editions', 'parent_organization',
+                'locality_id', 'locality_other', 'web', 'facebook', 'telephone', 'email',
+            ],
+            'additionalProperties' => false,
         ];
         return $schema;
+    }
+
+    public function createOne($subject, $data)
+    {
+        $v = $this->validation->fromSchema($this->retrieveSchema());
+        $v->assert($data);
+        
+        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
+        
+        $user = $this->helper->getUserFromSubject($subject, ['groups']);
+        if (count($user->groups)) {
+            throw new AppException('Ya pertenece a un equipo');
+        }
+        if (count($user->pending_tasks)) {
+            throw new AppException('Aún debe completar su perfil de usuario');
+        }
+        
+        $deadline = Carbon::parse($this->options->getAutoloaded()['deadline']);
+        $today = Carbon::now();
+        if ($today->gt($deadline)) {
+            throw new AppException('Application period is over');
+        }
+        
+        $subGr = $this->db->new('App:Subject');
+        $subGr->display_name = $data['name'];
+        $subGr->img_type = 0;
+        $subGr->img_hash = md5($data['email']);
+        $subGr->type = 'Group';
+        $subGr->save();
+        
+        $group = $this->db->new('App:Group');
+        $group->name = $data['name'];
+        $group->description = $data['description'];
+        $group->year = $data['year'];
+        $group->previous_editions = $data['previous_editions'];
+        $group->parent_organization = $data['parent_organization'];
+        $group->web = $data['web'];
+        $group->facebook = $data['facebook'];
+        $group->telephone = $data['telephone'];
+        $group->email = $data['email'];
+        $group->locality_id = $data['locality_id'];
+        if ($localidad->custom && isset($data['locality_other'])) {
+            $project->locality_other = $data['locality_other'];
+        }
+        $group->subject()->associate($subGr);
+        $group->save();
+        
+        $group->users()->attach($user->id, ['relation' => 'responsable']);
+        
+        $this->db->table('subject_role')->insert([
+        'role_id' => 'group',
+        'subject_id' => $subGr->id,
+        ]);
+        
+        return $group;
+    }
+    
+    public function updateOne($subject, $group, $data)
+    {
+        $v = $this->validation->fromSchema($this->retrieveSchema());
+        $v->assert($data);
+        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
+        $deadline = Carbon::parse($this->options->getAutoloaded()['deadline']);
+        $today = Carbon::now();
+        if ($today->gt($deadline)) {
+            throw new AppException('Application period is over');
+        }
+        $group->name = $data['name'];
+        $group->description = $data['description'];
+        $group->year = $data['year'];
+        $group->previous_editions = $data['previous_editions'];
+        $group->parent_organization = $data['parent_organization'];
+        $group->web = $data['web'];
+        $group->facebook = $data['facebook'];
+        $group->telephone = $data['telephone'];
+        $group->email = $data['email'];
+        $group->locality_id = $data['locality_id'];
+        if ($localidad->custom && isset($data['locality_other'])) {
+            $project->locality_other = $data['locality_other'];
+        }
+        $group->save();
+        return $group;
     }
     
     public function acceptInvitation($subject, $invitation)
@@ -334,88 +416,6 @@ class GroupResource extends Resource
             $group->full_team = true;
             $group->save();
         }
-    }
-    
-    public function createOne($subject, $data)
-    {
-        $v = $this->validation->fromSchema($this->retrieveSchema());
-        $v->assert($data);
-        
-        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
-        
-        $user = $this->helper->getUserFromSubject($subject, ['groups']);
-        if (count($user->groups)) {
-            throw new AppException('Ya pertenece a un equipo');
-        }
-        if (count($user->pending_tasks)) {
-            throw new AppException('Aún debe completar su perfil de usuario');
-        }
-        
-        $deadline = Carbon::parse($this->options->getAutoloaded()['deadline']);
-        $today = Carbon::now();
-        if ($today->gt($deadline)) {
-            throw new AppException('Application period is over');
-        }
-        
-        $subGr = $this->db->new('App:Subject');
-        $subGr->display_name = $data['name'];
-        $subGr->img_type = 0;
-        $subGr->img_hash = md5($data['email']);
-        $subGr->type = 'Group';
-        $subGr->save();
-        
-        $group = $this->db->new('App:Group');
-        $group->name = $data['name'];
-        $group->description = $data['description'];
-        $group->year = $data['year'];
-        $group->previous_editions = $data['previous_editions'];
-        $group->parent_organization = $data['parent_organization'];
-        $group->web = $data['web'];
-        $group->facebook = $data['facebook'];
-        $group->telephone = $data['telephone'];
-        $group->email = $data['email'];
-        $group->locality_id = $data['locality_id'];
-        if ($localidad->custom && isset($data['locality_other'])) {
-            $project->locality_other = $data['locality_other'];
-        }
-        $group->subject()->associate($subGr);
-        $group->save();
-        
-        $group->users()->attach($user->id, ['relation' => 'responsable']);
-        
-        $this->db->table('subject_role')->insert([
-        'role_id' => 'group',
-        'subject_id' => $subGr->id,
-        ]);
-        
-        return $group;
-    }
-    
-    public function updateOne($subject, $group, $data)
-    {
-        $v = $this->validation->fromSchema($this->retrieveSchema());
-        $v->assert($data);
-        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
-        $deadline = Carbon::parse($this->options->getAutoloaded()['deadline']);
-        $today = Carbon::now();
-        if ($today->gt($deadline)) {
-            throw new AppException('Application period is over');
-        }
-        $group->name = $data['name'];
-        $group->description = $data['description'];
-        $group->year = $data['year'];
-        $group->previous_editions = $data['previous_editions'];
-        $group->parent_organization = $data['parent_organization'];
-        $group->web = $data['web'];
-        $group->facebook = $data['facebook'];
-        $group->telephone = $data['telephone'];
-        $group->email = $data['email'];
-        $group->locality_id = $data['locality_id'];
-        if ($localidad->custom && isset($data['locality_other'])) {
-            $project->locality_other = $data['locality_other'];
-        }
-        $group->save();
-        return $group;
     }
 
     public function updateLetter($subject, $group, $file)

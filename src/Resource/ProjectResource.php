@@ -226,18 +226,28 @@ class ProjectResource extends Resource
 
     public function createOne($subject, $data)
     {
-        $v = $this->validation->fromSchema($this->retrieveSchema());
-        $v->assert($data);
-
         $user = $this->helper->getUserFromSubject($subject);
         $group = $user->groups()->with('project')->wherePivot('relation', 'responsable')->first();
-
         if (is_null($group)) {
             throw new AppException('Debe cargar un equipo primero');
         }
         if (!is_null($group->project)) {
             throw new AppException('El equipo ya posee un proyecto cargado');
         }
+        return $this->persist($project, $group, $data);
+    }
+
+    public function updateOne($subject, $project, $data)
+    {
+        $group = $project->group;
+        return $this->persist($project, $group, $data);
+    }
+
+    // TODO comprobar deadline
+    public function persist($project, $group, $data)
+    {
+        $v = $this->validation->fromSchema($this->retrieveSchema());
+        $v->assert($data);
 
         $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
         $categoria = $this->db->query('App:Category')->findOrFail($data['category_id']);
@@ -247,7 +257,6 @@ class ProjectResource extends Resource
             $totalBudget += $item['amount'];
         }
 
-        $project = $this->db->new('App:Project');
         $project->name = $data['name'];
         $project->abstract = $data['abstract'];
         $project->foundation = $data['foundation'];
@@ -266,40 +275,6 @@ class ProjectResource extends Resource
         $project->group_id = $group->id;
         $project->save();
         if (is_null($project->organization)) {
-            $group->uploaded_letter = true;
-            $group->save();
-        }
-        return $project;
-    }
-
-    public function updateOne($subject, $project, $data)
-    {
-        $v = $this->validation->fromSchema($this->retrieveSchema());
-        $v->assert($data);
-        $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
-        $categoria = $this->db->query('App:Category')->findOrFail($data['category_id']);
-        $totalBudget = 0;
-        foreach ($data['budget'] as $item) {
-            $totalBudget += $item['amount'];
-        }
-        $project->name = $data['name'];
-        $project->abstract = $data['abstract'];
-        $project->foundation = $data['foundation'];
-        $project->previous_work = $data['previous_work'];
-        $project->neighbourhoods = $data['neighbourhoods'];
-        $project->goals = $data['goals'];
-        $project->budget = $data['budget'];
-        $project->total_budget = $totalBudget;
-        $project->schedule = $data['schedule'];
-        $project->organization = $data['organization'];
-        $project->category_id = $data['category_id'];
-        $project->locality_id = $data['locality_id'];
-        if ($localidad->custom && isset($data['locality_other'])) {
-            $project->locality_other = $data['locality_other'];
-        }
-        $project->save();
-        if (is_null($project->organization)) {
-            $group = $project->group;
             $group->uploaded_letter = true;
             $group->save();
         }
