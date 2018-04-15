@@ -62,9 +62,11 @@ export default {
       FB.login(
         response => {
           {
+            console.log(response)            
             if (response.authResponse) {
-              //alert('You are logged in &amp; cookie set!');
-              //alert(response.authResponse.accessToken);
+              console.log('Welcome!  Fetching your information.... ');
+              alert('You are logged in &amp; cookie set!');
+              alert(response.authResponse.accessToken);
               this.success = true;
               this.accessToken = response.authResponse.accessToken;
               this.$refs.sendFacebookLoginForm.submit();
@@ -73,6 +75,7 @@ export default {
               // Now you can redirect the user or do an AJAX request to
               // a PHP script that grabs the signed request from the cookie.
             } else {
+              console.log('User cancelled login or did not fully authorize.');
               this.error = true;           
             }
           }
