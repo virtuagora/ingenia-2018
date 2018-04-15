@@ -2,10 +2,9 @@
   <div>
     <div v-if="!loginFacebook && !register">
       <form ref="formLocalLogin" :action="loginUrl" method="POST">
-
       <div class="field-is-marginless">
         <div class="control has-icons-left" >
-          <input type="email" name="email" v-model.lazy="loginEmail" v-validate="'required|email'" class="input is-medium has-text-centered" style="border-left:0; border-radius:0" :class="{'is-danger': errors.has('email')}" placeholder="Dirección de email">
+          <input type="email" name="email" v-model.lazy="loginEmail" required v-validate="'required|email'" class="input is-medium has-text-centered" style="border-left:0; border-radius:0" :class="{'is-danger': errors.has('email')}" placeholder="Dirección de email">
           <span class="icon is-left">
             <i class="fas fa-envelope fa-lg fa-fw"></i>
           </span>
@@ -13,7 +12,7 @@
       </div>
       <div class="field">
         <div class="control has-icons-left">
-          <input type="password" name="password" v-model.lazy="loginPassword" v-validate="'required'" class="input is-medium has-text-centered" style="border-left:0; border-radius:0" :class="{'is-danger': errors.has('password')}" placeholder="Contraseña">
+          <input type="password" name="password" v-model.lazy="loginPassword" required v-validate="'required'" class="input is-medium has-text-centered" style="border-left:0; border-radius:0" :class="{'is-danger': errors.has('password')}" placeholder="Contraseña">
           <span class="icon is-left">
             <i class="fas fa-lock fa-lg fa-fw"></i>
           </span>

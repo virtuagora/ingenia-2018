@@ -63,7 +63,16 @@ Vue.prototype.$http = http
 
 Vue.mixin({
   methods: {
+    isOptional: function (value) {
+      if (value === null || value === "") {
+        return null;
+      }
+      if (typeof value !== "undefined" && value.length == 0) {
+        return [];
+      } else return value;
+    },
     forceUpdateState: function (ref) {
+      return new Promise((resolve, reject) => {
       http.get(window.getUserDataUrl())
         .then(response => {
           console.log('Updating user');
@@ -73,6 +82,7 @@ Vue.mixin({
             console.log('Updating ref: ' + ref);            
             vm.$refs[ref].updateUserState()
           }
+          resolve(response.data)
         })
         .catch(e => {
           console.error(e)
@@ -81,7 +91,9 @@ Vue.mixin({
             type: "is-danger",
             actionText: "Cerrar"
           });
+          reject(e)          
         })
+      })
     },
     updateState: function () {
       if(Date.now() > store.state.expires){
@@ -134,8 +146,11 @@ window.vm = new Vue({ // eslint-disable-line no-new
     'fb-register': FBRegister,
   },
   beforeCreate: function () {
-    store.dispatch('prepareData', window.getUserId()).then(x => {
+    store.dispatch('prepareData', window.getUserId()).then(response => {
+      // response => true if the user state expired.
+      if(response){
       this.updateState()
+      }
     })
   }
 })

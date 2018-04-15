@@ -1,9 +1,9 @@
 <template>
+    <figure :class="'image is-rounded is-' + size + 'x' + size" >
   <a :href="'/user/' + userId">
-    <figure :class="'image is-rounded is-' + size + 'x' + size">
         <img :src="url" :alt="userName">
-    </figure>
   </a>
+    </figure>
 </template>
 
 <script>

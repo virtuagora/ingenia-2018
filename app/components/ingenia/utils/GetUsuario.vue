@@ -16,7 +16,7 @@ export default {
       user: null
     };
   },
-  mounted: function() {
+  created: function() {
     this.isLoading = true;
     this.$http
       .get("/user/" + this.id)

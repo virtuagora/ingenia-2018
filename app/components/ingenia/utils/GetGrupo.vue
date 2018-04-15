@@ -13,7 +13,9 @@ export default {
   data(){
     return {
       isLoading: false,
-      group: null
+      group: {
+        name: null
+      }
     }
   },
   mounted: function(){

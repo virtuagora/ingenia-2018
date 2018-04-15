@@ -43,8 +43,8 @@ return [
             'lifetime' => '1 hour',
         ],
         'facebook' => [
-            'app_id' => '191906834751311',
-            'app_secret' => '4e0365fbcb63c05f06d4af3c93d8039b',
+            'app_id' => '360875627728979',
+            'app_secret' => '69bb431bb9ffcdce6fddd186ed062d76',
             'default_graph_version' => 'v2.12',
         ],
         'recaptcha' => [

@@ -18,16 +18,17 @@ export default {
 
   },
   beforeRouteEnter(to, from, next) {
-    console.log('Authorized')
-    if (
-      vm.$store.state.user.groups[0] !== undefined &&
-      vm.$store.state.user.groups[0].pivot.relation === "responsable"
-    ) {
-      next();
-    } else {
-      console.log('Unauthorized - Kicking to dashboard!')
-      next({ name: "panelOverview" });
-    }
+    next(vm => {
+      if (
+        vm.user.groups[0] !== undefined &&
+        vm.user.groups[0].pivot.relation === "responsable"
+      ) {
+        console.log("Authorized");
+      } else {
+        console.log("Unauthorized - Kicking to dashboard!");
+        next({ name: "panelOverview" });
+      }
+    });
   }
 }
 </script>

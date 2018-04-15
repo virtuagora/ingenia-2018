@@ -124,7 +124,7 @@ $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
 $app->post('/user/{usr}/pending-email', 'userAction:postPendingEmail')->setName('runUpdUserPem');
 
 $app->get('/group/{gro}', 'groupAction:getOne')->setName('getGroup');
-$app->get('/group/{gro}/usuario', 'groupAction:getUsuarios')->setName('getGroUsr');
+$app->get('/group/{gro}/user', 'groupAction:getUsuarios')->setName('getGroUsr');
 $app->post('/group', 'groupAction:post')->setName('runCreGro');
 $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
 $app->post('/group/{gro}/request', 'groupAction:postRequest')->setName('runCreGroReq');

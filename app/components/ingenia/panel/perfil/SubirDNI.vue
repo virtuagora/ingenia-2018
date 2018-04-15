@@ -1,13 +1,13 @@
 <template>
   <div>
     <h1 class="subtitle is-3">Subir mi DNI</h1>
-     <b-message>
+    <b-message>
       Uno de los requerimientos para ser integrante de un equipo INGENIA o presentar un proyecto INGENIA es el de enviar una imagen o archivo donde se vea la parte delantera y trasera del DNI.
     </b-message>
     <div class="notification" v-show="verifying">
       <i class="fas fa-cog fa-spin"></i>&nbsp;Revisando si enviaste el DNI . . .
     </div>
-    <div class="notification is-success"  v-show="!this.user.pending_tasks.includes('dni') && !verifying">
+    <div class="notification is-success" v-show="!this.user.pending_tasks.includes('dni') && !verifying">
       <i class="fas fa-check fa-fw"></i>Tu DNI ha sido enviado y guardado correctamente
     </div>
     <div>
@@ -15,7 +15,7 @@
         <div class="field is-grouped">
           <div class="control">
             <a @click.prevent class="button is-medium is-static">
-                N° DNI
+              N° DNI
             </a>
           </div>
           <div class="control is-expanded">
@@ -23,10 +23,10 @@
             <span class="help is-danger" v-show="errors.has('dni')">Requerido. Solamente se aceptan numeros</span>
           </div>
         </div>
-      <b-message>
-        A continuación, por favor, suba una foto o escaneo de la parte posterior y anterior de su DNI
-        <br>Maximo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
-      </b-message>
+        <b-message>
+          A continuación, por favor, suba una foto o escaneo de la parte posterior y anterior de su DNI
+          <br>Maximo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
+        </b-message>
         <b-field class="file is-medium">
           <b-upload v-model="files" name="archivo" accept="image/jpeg" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
             <a class="button is-link is-medium">
@@ -53,7 +53,7 @@
 
 <script>
 export default {
-  props: ['saveUserDniUrl'],
+  props: ["saveUserDniUrl"],
   data() {
     return {
       user: {},
@@ -68,11 +68,18 @@ export default {
     this.user = this.$store.state.user;
   },
   mounted: function() {
-    setTimeout(() => {
-      this.forceUpdate('userPanel') 
-      this.user = this.$store.state.user;
-      this.verifying = false;    
-      }, 3000)
+    this.forceUpdateState("userPanel")
+      .then(user => {
+        this.user = this.$store.state.user;
+        this.verifying = false;
+      })
+      .catch(e => {
+        this.$snackbar.open({
+          message: "Error al verificar el DNI, por favor recargue la página.",
+          type: "is-danger",
+          actionText: "Cerrar"
+        });
+      });
   },
   methods: {
     submit: function() {
@@ -101,8 +108,8 @@ export default {
     }
   },
   computed: {
-    formUrl: function(){
-      return this.saveUserDniUrl.replace(':usr',this.user.id)
+    formUrl: function() {
+      return this.saveUserDniUrl.replace(":usr", this.user.id);
     }
   }
 };

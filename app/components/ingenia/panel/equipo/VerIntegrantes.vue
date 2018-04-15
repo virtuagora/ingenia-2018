@@ -6,19 +6,31 @@
       <thead>
         <tr>
           <th>Nombre y apellido</th>
-          <th>Email</th>
           <th class="has-text-centered" width="60px">Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Guillermo Croppi
+        <tr v-for="(member,index) in members" :key="index">
+          <td>
+            <Avatar :subject="member.subject" class="inline-image" size="24" /> {{member.subject.display_name}}
           </td>
-          <td>guillermocroppi@gmail.com</td>
           <td class="has-text-centered">
-            <button @click="openRemoveUser(2, 'Guillermo Croppi')" class="button is-outlined is-small is-danger">
-              <i class="far fa-trash-alt"></i>
-            </button>
+            <div class="field is-grouped">
+              <div class="control">
+                <b-tooltip label="Asignar co-responsable" type="is-dark">
+                  <button @click="openRemoveUser(2, 'Guillermo Croppi')" class="button is-outlined is-small is-dark">
+                    <i class="fas fa-shield-alt"></i>
+                  </button>
+                </b-tooltip>
+              </div>
+              <div class="control">
+                <b-tooltip label="Quitar del equipo" type="is-dark">
+                  <button @click="openRemoveUser(2, 'Guillermo Croppi')" class="button is-outlined is-small is-danger">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </b-tooltip>
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -37,10 +49,10 @@
         <tr v-if="cantInvitaciones == 0">
           <td colspan="2">No se han hecho invitaciones</td>
         </tr>
-        <tr v-for="(invitation, index) in group.invitations" v-if="invitation.state == 'pending' || invitation.state == 'accepted'" :key="index">
+        <tr v-for="(invitation, index) in group.invitations" v-if="invitation.state == 'pending'" :key="index">
           <td>{{invitation.email}}<br>
             <p class="is-size-7 nl2br">
-              <i>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur, sint exercitationem? Dolor, nam fugit eos modi, vel maiores quod voluptatibus sunt enim molestias reprehenderit earum et aperiam laborum cupiditate. Odio?</i>
+              <i>{{invitation.comment}}</i>
             </p>
           </td>
           <td class="has-text-centered">
@@ -70,17 +82,16 @@
 
         </tr>
       </thead>
-      <tbody>
-        <tr v-if="cantSolicitudes == 0">
-          <td colspan="2">No se han recibido solicitudes</td>
-        </tr>
+      <tbody v-if="cantSolicitudes > 0">
         <tr v-for="(invitation, index) in group.invitations" v-if="invitation.state == 'requested'" :key="index">
-          <td><get-usuario :id="invitation.user_id" />
-          <p class="is-size-7 nl2br">
+          <td>
+            <get-usuario :id="invitation.user_id" />
+            <p class="is-size-7 nl2br">
               <i>{{invitation.comment}}</i>
-            </p></td>
+            </p>
+          </td>
           <td class="has-text-centered">
-              <i class="fas fa-clock fa-fw"></i>&nbsp;Solicitado
+            <i class="fas fa-clock fa-fw"></i>&nbsp;Solicitado
           </td>
           <td class="has-text-centered">
             <button @click="openRemoveInvitation(invitation.id, invitation.email)" class="button is-outlined is-small is-success">
@@ -89,8 +100,13 @@
           </td>
         </tr>
       </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="2">No se han recibido solicitudes</td>
+        </tr>
+      </tbody>
     </table>
-    <b-modal ref="modalNow" :active.sync="showRemoveModal" :width="640" scroll="keep">
+    <b-modal ref="modalRemoveUser" :active.sync="showRemoveModal" :width="640" scroll="keep">
       <div class="notification is-danger">
         <article class="media">
           <figure class="media-left">
@@ -107,12 +123,12 @@
             </div>
           </div>
           <div class="media-right">
-            <button @click="$refs.modalNow.close()" class="delete"></button>
+            <button @click="$refs.modalRemoveUser.close()" class="delete"></button>
           </div>
         </article>
       </div>
     </b-modal>
-    <b-modal ref="modalNow" :active.sync="showRemoveInvitationModal" :width="640" scroll="keep">
+    <b-modal ref="modalAcceptRequest" :active.sync="showRemoveModal" :width="640" scroll="keep">
       <div class="notification is-danger">
         <article class="media">
           <figure class="media-left">
@@ -121,7 +137,29 @@
             </span>
           </figure>
           <div class="media-content">
-            <h1 class="title is-4">¿Desea eliminar la invitacion a {{deleteInvitationEmail}}?</h1>
+            <h1 class="title is-4">¿Desea aceptar a {{deleteUserName}} del equipo?</h1>
+            <div class="field">
+              <div class="control">
+                <button @click="submitRemoveUser" class="button is-white is-outlined">Si, quitar del equipo</button>
+              </div>
+            </div>
+          </div>
+          <div class="media-right">
+            <button @click="$refs.modalAcceptRequest.close()" class="delete"></button>
+          </div>
+        </article>
+      </div>
+    </b-modal>
+    <b-modal ref="modalRemoveInvitation" :active.sync="showRemoveInvitationModal" :width="640" scroll="keep">
+      <div class="notification is-danger">
+        <article class="media">
+          <figure class="media-left">
+            <span class="icon is-medium">
+              <i class="fas fa-trash-alt fa-2x"></i>
+            </span>
+          </figure>
+          <div class="media-content">
+            <h1 class="title is-4">¿Desea eliminar la invitación a {{deleteInvitationEmail}}?</h1>
             <div class="field">
               <div class="control">
                 <button @click="submitRemoveUser" class="button is-white is-outlined">Si, eliminar</button>
@@ -129,7 +167,7 @@
             </div>
           </div>
           <div class="media-right">
-            <button @click="$refs.modalNow.close()" class="delete"></button>
+            <button @click="$refs.modalRemoveInvitation.close()" class="delete"></button>
           </div>
         </article>
       </div>
@@ -139,26 +177,35 @@
 </template>
 
 <script>
-import GetUsuario from '../../utils/GetUsuario'
+import GetUsuario from "../../utils/GetUsuario";
+import Avatar from "../../utils/Avatar";
 
 export default {
   props: ["acceptGroupRequest", "removeGroupUser", "removeGroupInvitation"],
-  components:{
-    GetUsuario
+  components: {
+    GetUsuario,
+    Avatar
   },
   data() {
     return {
       isLoading: true,
+      response: {
+        ok: true
+      },
       showRemoveModal: false,
       deleteUser: null,
       deleteUserName: null,
       showRemoveInvitationModal: false,
       deleteInvitation: null,
       deleteInvitationEmail: null,
+      showAcceptRequestModal: false,
+      acceptRequestUser: null,
+      acceptRequestName: null,
       user: {},
       group: {
         invitations: []
-      }
+      },
+      members: []
     };
   },
   created: function() {
@@ -169,11 +216,24 @@ export default {
   },
   methods: {
     getEquipo: function(id) {
-      this.$http.get("/group/"+id).then(response => {
-        this.isLoading = false;
-        console.log(response.data);
-        this.group = response.data;
-      });
+      Promise.all([
+        this.$http.get("/group/" + id),
+        this.$http.get("/group/" + id + "/members")
+      ])
+        .then(responses => {
+          this.group = responses[0].data;
+          this.members = responses[1].data;
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+        });
     },
     openRemoveUser: function(id, name) {
       this.deleteUser = id;
@@ -184,6 +244,11 @@ export default {
       this.deleteInvitation = id;
       this.deleteInvitationEmail = email;
       this.showRemoveInvitationModal = true;
+    },
+    openAcceptRequest: function(id, email) {
+      this.acceptRequestUser = id;
+      this.acceptRequestName = email;
+      this.showAcceptRequestModal = true;
     },
     submitRemoveUser: function() {
       this.showRemoveModal = false;
@@ -199,13 +264,67 @@ export default {
           });
           this.isLoading = false;
           this.response.ok = true;
-          this.$store.commit("updateUser");
+          this.getEquipo(this.user.groups[0].id);
         })
         .catch(error => {
           console.error(error.message);
           this.isLoading = false;
           this.$snackbar.open({
-            message: "Error inesperado",
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    },
+    submitRemoveInvitation: function() {
+      this.showRemoveModal = false;
+      console.log("Sending form!");
+      this.isLoading = true;
+      this.$http
+        .post(this.saveTeamUrl, this.deleteUser)
+        .then(response => {
+          this.$snackbar.open({
+            message: "Los datos del equipo han sido actualizados",
+            type: "is-success",
+            actionText: "OK"
+          });
+          this.isLoading = false;
+          this.response.ok = true;
+          this.getEquipo(this.user.groups[0].id);
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    },
+    submitAcceptRequest: function() {
+      this.showRemoveModal = false;
+      console.log("Sending form!");
+      this.isLoading = true;
+      this.$http
+        .post(this.saveTeamUrl, this.deleteUser)
+        .then(response => {
+          this.$snackbar.open({
+            message: "Los datos del equipo han sido actualizados",
+            type: "is-success",
+            actionText: "OK"
+          });
+          this.isLoading = false;
+          this.response.ok = true;
+          this.getEquipo(this.user.groups[0].id);
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
             type: "is-danger",
             actionText: "Cerrar"
           });
@@ -216,7 +335,7 @@ export default {
   computed: {
     cantInvitaciones: function() {
       return this.group.invitations.filter(x => {
-        return x.state == "accepted" || x.state == "pending";
+        return x.state == "pending";
       }).length;
     },
     cantSolicitudes: function() {
@@ -224,6 +343,19 @@ export default {
         return x.state == "requested";
       }).length;
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (
+        vm.user.groups[0] !== undefined &&
+        vm.user.groups[0].pivot.relation === "responsable"
+      ) {
+        console.log("Authorized");
+      } else {
+        console.log("Unauthorized - Kicking to dashboard!");
+        next({ name: "panelOverview" });
+      }
+    });
   }
 };
 </script>

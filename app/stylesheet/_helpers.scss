@@ -47,3 +47,8 @@ figure.is-rounded img {
 img.is-centered {
     margin: 0 auto;
 }
+
+figure.inline-image,
+img.inline-image {
+    display: inline-block;
+}

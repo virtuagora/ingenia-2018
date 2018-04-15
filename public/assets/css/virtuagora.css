@@ -22503,6 +22503,11 @@ img.is-centered {
   margin: 0 auto;
 }
 
+figure.inline-image,
+img.inline-image {
+  display: inline-block;
+}
+
 html,
 body {
   height: 100%;

@@ -99,7 +99,7 @@ export default {
                 });
                 this.isLoading = false;
                 this.response.ok = true;
-                this.forceUpdate('userPanel')
+                this.forceUpdateState('userPanel')
               })
               .catch(error => {
                 console.error(error.message);

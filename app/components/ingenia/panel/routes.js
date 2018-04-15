@@ -12,7 +12,7 @@ import Perfil from './perfil/Perfil'
 import VerPerfil from './perfil/VerPerfil'
 import EditarPerfil from './perfil/EditarPerfil'
 import EditarEmail from './perfil/EditarEmail'
-import EditarPassword from './perfil/EditarPassword'
+import EditarAvatar from './perfil/EditarAvatar'
 import VerInvitaciones from './perfil/VerInvitaciones'
 import EditarMisDatosPersonales from './perfil/EditarMisDatosPersonales'
 import SubirDNI from './perfil/SubirDNI'
@@ -76,9 +76,9 @@ const routes = [
             props: true
           },
           {
-            path: 'cambiar-password',
-            component: EditarPassword,
-            name: 'userEditarPassword',
+            path: 'cambiar-avatar',
+            component: EditarAvatar,
+            name: 'userEditarAvatar',
             props: true
           },
           {

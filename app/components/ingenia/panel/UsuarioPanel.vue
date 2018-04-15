@@ -18,7 +18,7 @@
             <router-link :to="{ name: 'userEditarPerfil'}" exact-active-class="is-active">Editar perfil público</router-link>
           </li>
           <li>
-            <router-link :to="{ name: 'userEditarPassword'}" exact-active-class="is-active">Cambiar contraseña</router-link>
+            <router-link :to="{ name: 'userEditarAvatar'}" exact-active-class="is-active">Cambiar avatar</router-link>
           </li>
         </ul>
         <hr>
@@ -26,7 +26,7 @@
           INGENIA 2018
         </p>
         <ul class="menu-list">
-          <li>
+          <li v-if="user.groups[0] === undefined">
             <router-link :to="{ name: 'userVerInvitaciones'}" exact-active-class="is-active"> <i class="far fa-envelope fa-fw"></i> Mis invitaciones y solicitudes ({{this.user.invitations.length}})</router-link>
           </li>
           <li>

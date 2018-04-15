@@ -84,7 +84,9 @@ export default {
           });
           this.isLoading = false;
           this.response.ok = true;
-          this.forceUpdate("userPanel");
+          this.forceUpdateState("userPanel").then(user => {
+            this.user = user;
+          });
           this.$router.push({ name: "panelOverview" });
         })
         .catch(error => {
@@ -102,7 +104,7 @@ export default {
   computed: {
     cantInvitaciones: function() {
       return this.user.invitations.filter(x => {
-        return x.state == "accepted" || x.state == "pending";
+        return x.state == "pending";
       }).length;
     },
     cantSolicitudes: function() {

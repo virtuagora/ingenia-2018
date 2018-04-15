@@ -9,15 +9,25 @@
     </b-message>
     <div class="field is-grouped">
       <div class="control">
-            <a @click.prevent class="button is-large is-static">
-              <span class="icon">
-                <i class="fas fa-envelope"></i>
-              </span>
-            </a>
-          </div>
+        <a @click.prevent class="button is-large is-static">
+          <span class="icon">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </a>
+      </div>
       <div class="control is-expanded">
         <input type="email" v-model.lazy="email" name="email" v-validate="'email'" class="input is-large" :class="{'is-danger': errors.has('email')}">
-        <span class="help is-danger" v-show="errors.has('email')"><i class="fas fa-times-circle fa-fw"></i>&nbsp;ERROR. Debe ser un email bien formado</span>
+        <span class="help is-danger" v-show="errors.has('email')">
+          <i class="fas fa-times-circle fa-fw"></i>&nbsp;ERROR. Debe ser un email bien formado</span>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">
+        <i class="fas fa-angle-double-right"></i> Escribí un mensaje, invitando a que participe! (Max.: 200 caracteres)</label>
+      <div class="control">
+        <b-input maxlength="200" v-model="comment" name="comment" type="textarea" rows="2" minlength="10" v-validate="'required|min:10|max:200'"></b-input>
+        <span class="help is-danger" v-show="errors.has('comment')">
+          <i class="fas fa-times-circle fa-fw"></i>&nbsp;¡ATENCIÓN! ¡Al menos un mensaje es requerido!</span>
       </div>
     </div>
     <div class="field">
@@ -35,17 +45,17 @@
 
 <script>
 export default {
-  props: ['sendInvitationUrl'],
+  props: ["sendInvitationUrl"],
   data() {
     return {
       isLoading: false,
       email: null,
       emailSent: null,
+      comment: "¡Hola! Soy "+ this.$store.state.user.names + " y me gustaría que seas parte del equipo INGENIA: " + this.$store.state.user.groups[0].name,
       response: {
         ok: false
       }
-      
-    }
+    };
   },
   methods: {
     submit: function() {
@@ -64,34 +74,39 @@ export default {
           }
           this.isLoading = true;
           this.$http
-              .post(this.sendInvitationUrl.replace(':gro',this.$store.getters.getUserGroup.id), this.payload )
-              .then(response => {
-                console.log(response);
-                this.$snackbar.open({
-                  message: "Invitación enviada con exito",
-                  type: "is-success",
-                  actionText: "OK"
-                });
-                this.isLoading = false;
-                this.response.ok = true;
-                this.emailSent = this.email;
-                this.email = null;
-              })
-              .catch(error => {
-                console.error(error.message);
-                this.isLoading = false;
-                this.$snackbar.open({
-                  message: "Error inesperado",
-                  type: "is-danger",
-                  actionText: "Cerrar"
-                });
-                return false;
+            .post(
+              this.sendInvitationUrl.replace(
+                ":gro",
+                this.$store.getters.getUserGroup.id
+              ),
+              this.payload
+            )
+            .then(response => {
+              console.log(response);
+              this.$snackbar.open({
+                message: "Invitación enviada con exito",
+                type: "is-success",
+                actionText: "OK"
               });
-          
+              this.isLoading = false;
+              this.response.ok = true;
+              this.emailSent = this.email;
+              this.email = null;
+            })
+            .catch(error => {
+              console.error(error.message);
+              this.isLoading = false;
+              this.$snackbar.open({
+                message: "Error inesperado",
+                type: "is-danger",
+                actionText: "Cerrar"
+              });
+              return false;
+            });
         })
         .catch(error => {
-                console.error(error.message);
-          
+          console.error(error.message);
+
           this.$snackbar.open({
             message: "Error inesperado",
             type: "is-danger",
@@ -102,23 +117,25 @@ export default {
     }
   },
   computed: {
-    payload: function(){
-      return{
-        email: this.email
-      }
+    payload: function() {
+      return {
+        email: this.email,
+        comment: this.isOptional(this.comment)
+      };
     }
   },
   beforeRouteEnter(to, from, next) {
-    console.log('Authorized')
-    if (
-      vm.$store.state.user.groups[0] !== undefined &&
-      vm.$store.state.user.groups[0].pivot.relation === "responsable"
-    ) {
-      next();
-    } else {
-      console.log('Unauthorized - Kicking to dashboard!')
-      next({ name: "panelOverview" });
-    }
+    next(vm => {
+      if (
+        vm.user.groups[0] !== undefined &&
+        vm.user.groups[0].pivot.relation === "responsable"
+      ) {
+        console.log("Authorized");
+      } else {
+        console.log("Unauthorized - Kicking to dashboard!");
+        next({ name: "panelOverview" });
+      }
+    });
   }
 };
 </script>

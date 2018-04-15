@@ -17,7 +17,7 @@ const store = new Vuex.Store({
       // If the session is an anonymous one, drop the user state
       console.log('Checking session')
       if(session.id == null){
-        console.warn('Anonymous. Null user.')        
+        console.info('Anonymous. Null user.')        
         state.user = null
         state.expires = null
         return;
@@ -27,15 +27,15 @@ const store = new Vuex.Store({
         console.log('-- Has session')        
         if(state.user != null){
           if (state.user.id == session.id){
-          console.log('---- Same User, same session.')      
+          console.info('---- Same User, same session.')      
             return;
           } else {
-          console.warn('---- Not the same user, cleaning. Needs to update!')
+          console.info('---- Not the same user, cleaning. Needs to update!')
             state.user = null
             return;            
           }
         } else {
-          console.warn('---- No local data, Needs to update!')
+          console.info('---- No local data, Needs to update!')
           return;
         }
       }
@@ -48,7 +48,13 @@ const store = new Vuex.Store({
     prepareData: function ({commit}, session){
       return new Promise((resolve, reject) => {
           commit('checkUser', session)
-          resolve(true)
+          if(session.id != null){
+            // There is a session, get user.
+            resolve(true)
+          } else {
+            // NO session, NO user
+            resolve(false)
+          }
       })
     }
   },

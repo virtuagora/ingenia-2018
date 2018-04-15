@@ -3,7 +3,7 @@
     <i class="fas fa-cog fa-spin"></i>&nbsp;Cargando . . .
   </div>
   <div v-else>
-    <p><i class="fas fa-map-marker "></i>&nbsp;{{locality.custom ? 'Otra (' + localityOther + ')' : locality.name}}, {{locality.department.name}}, {{locality.department.region.name}} (Región {{locality.department.region.region}})</p>
+    <p><i class="fas fa-map-marker "></i>&nbsp;{{locality.custom ? 'Otra (' + localityOther + ')' : locality.name}}, {{locality.department.name}}, Región {{locality.department.region.region}} ({{locality.department.region.name}})</p>
   </div>
 </template>
 
