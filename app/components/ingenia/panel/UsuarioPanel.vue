@@ -91,12 +91,7 @@
           <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
             <router-link :to="{ name: 'userSubirAvalOrganizacion'}" exact-active-class="is-active">Subir carta de aval</router-link>
           </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
-            <router-link :to="{ name: 'userEnviarProyecto'}" class="is-size-5" exact-active-class="is-active">
-              <i class="fas fa-paper-plane fa-fw"></i> ¡Enviar proyecto!</router-link>
-          </li>
         </ul>
-
       </aside>
     </div>
     <div class="column is-7 is-offset-1">

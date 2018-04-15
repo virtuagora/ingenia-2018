@@ -52,11 +52,11 @@
     "fontawesome5-webfont": "^5.0.4",
     "install": "^0.10.4",
     "patternomaly": "^1.3.0",
-    "vue-carousel": "^0.6.9",
+    "vue-carousel": "^0.6.14",
     "vue-chartjs": "^3.3.1",
     "vue-recaptcha": "^1.1.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "vuex-persistedstate": "^2.5.1"
+    "vuex-persistedstate": "^2.5.2"
   }
 }

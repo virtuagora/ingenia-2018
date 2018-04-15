@@ -45,7 +45,8 @@
       <div class="notification is-link" v-else>
         <i class="fas fa-info fa-fw"></i> ¡Felicidades! ¡Sos parte del equipo {{user.groups[0].name}}!
       </div>
-      <h1 class="subtitle is-4">¿Que podes hacer ahora?</h1>
+      <h1 class="title is-3"><i class="fas fa-tasks"></i> ¡Revisen si faltan datos a completar!</h1>
+      <p class="subtitle is-5">Nota: El listado se actualiza cada <i class="fas fa-clock"></i> 5 minutos</p>
       <div class="notification is-light is-clearfix" v-if="user.groups[0] === undefined && user.invitations.length > 0">
         <router-link :to="{ name: 'userVerInvitaciones'}" class="button is-dark is-dark is-pulled-right" style="margin-left:20px;margin-bottom:10px;">Ver invitaciones y solicitudes</router-link>
         <span class="is-600 is-size-5">
@@ -56,7 +57,7 @@
       </div>
       <div class="" v-if="user.groups[0] !== undefined">
           <div class="notification is-light is-clearfix" v-if="user.groups[0].pivot.relation == 'responsable'">
-            <router-link :to="{ name: 'userVerInvitaciones'}" class="button is-dark is-dark is-pulled-right" style="margin-left:20px;margin-bottom:10px;">Ver integrantes</router-link>
+            <router-link :to="{ name: 'userVerIntegrantes'}" class="button is-dark is-dark is-pulled-right" style="margin-left:20px;margin-bottom:10px;">Ver integrantes</router-link>
             <span class="is-600 is-size-5">
               <i class="fas fa-angle-double-right fa-lg fa-fw"></i>Acordate de revisar invitaciones y solicitudes pendientes</span>
             <p>

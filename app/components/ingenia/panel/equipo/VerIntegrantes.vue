@@ -49,7 +49,6 @@
         <tr>
           <th>Email</th>
           <th class="has-text-centered" width="150px">Estado</th>
-          <th class="has-text-centered" width="60px">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -69,11 +68,6 @@
             <span v-if="invitation.state == 'pending'">
               <i class="fas fa-clock fa-fw"></i>&nbsp;Pendiente
             </span>
-          </td>
-          <td class="has-text-centered">
-            <button @click="openRemoveInvitation(invitation.id, invitation.email)" class="button is-outlined is-small is-danger">
-              <i class="fas fa-times"></i>
-            </button>
           </td>
         </tr>
       </tbody>
@@ -132,7 +126,7 @@
             </div>
           </div>
           <div class="media-right">
-            <button @click="$refs.modalAcceptRequest.close()" class="delete"></button>
+            <button @click="$refs.modalRemoveUser.close()" class="delete"></button>
           </div>
         </article>
       </div>
@@ -164,7 +158,7 @@
         </article>
       </div>
     </b-modal>
-    <b-modal ref="modalRemoveInvitation" :active.sync="showRemoveInvitationModal" :width="640" scroll="keep">
+    <!-- <b-modal ref="modalRemoveInvitation" :active.sync="showRemoveInvitationModal" :width="640" scroll="keep">
       <div class="notification is-danger">
         <article class="media">
           <figure class="media-left">
@@ -185,7 +179,7 @@
           </div>
         </article>
       </div>
-    </b-modal>
+    </b-modal> -->
     <b-loading :active.sync="isLoading"></b-loading>
   </div>
 </template>
@@ -217,9 +211,9 @@ export default {
       showRemoveModal: false,
       deleteUser: null,
       deleteUserName: null,
-      showRemoveInvitationModal: false,
-      deleteInvitation: null,
-      deleteInvitationEmail: null,
+      // showRemoveInvitationModal: false,
+      // deleteInvitation: null,
+      // deleteInvitationEmail: null,
       showAcceptRequestModal: false,
       acceptRequestId: null,
       acceptRequestComment: null,
@@ -262,11 +256,11 @@ export default {
       this.deleteUserName = name;
       this.showRemoveModal = true;
     },
-    openRemoveInvitation: function(id, email) {
-      this.deleteInvitation = id;
-      this.deleteInvitationEmail = email;
-      this.showRemoveInvitationModal = true;
-    },
+    // openRemoveInvitation: function(id, email) {
+    //   this.deleteInvitation = id;
+    //   this.deleteInvitationEmail = email;
+    //   this.showRemoveInvitationModal = true;
+    // },
     openAcceptRequest: function(id, comment) {
       this.acceptRequestId = id;
       this.acceptRequestComment = comment;
@@ -299,33 +293,33 @@ export default {
           return false;
         });
     },
-    submitRemoveInvitation: function() {
-      this.showRemoveModal = false;
-      console.log("Sending form!");
-      this.isLoading = true;
-      this.$http
-        .post(this.saveTeamUrl, this.deleteUser)
-        .then(response => {
-          this.$snackbar.open({
-            message: "Los datos del equipo han sido actualizados",
-            type: "is-success",
-            actionText: "OK"
-          });
-          this.isLoading = false;
-          this.response.ok = true;
-          this.getEquipo(this.user.groups[0].id);
-        })
-        .catch(error => {
-          console.error(error.message);
-          this.isLoading = false;
-          this.$snackbar.open({
-            message: "Error inesperado. Recarge la pagina.",
-            type: "is-danger",
-            actionText: "Cerrar"
-          });
-          return false;
-        });
-    },
+    // submitRemoveInvitation: function() {
+    //   this.showRemoveModal = false;
+    //   console.log("Sending form!");
+    //   this.isLoading = true;
+    //   this.$http
+    //     .post(this.saveTeamUrl, this.deleteUser)
+    //     .then(response => {
+    //       this.$snackbar.open({
+    //         message: "Los datos del equipo han sido actualizados",
+    //         type: "is-success",
+    //         actionText: "OK"
+    //       });
+    //       this.isLoading = false;
+    //       this.response.ok = true;
+    //       this.getEquipo(this.user.groups[0].id);
+    //     })
+    //     .catch(error => {
+    //       console.error(error.message);
+    //       this.isLoading = false;
+    //       this.$snackbar.open({
+    //         message: "Error inesperado. Recarge la pagina.",
+    //         type: "is-danger",
+    //         actionText: "Cerrar"
+    //       });
+    //       return false;
+    //     });
+    // },
     submitAcceptRequest: function() {
       this.showAcceptRequestModal = false;
       console.log("Sending form!");

@@ -8,7 +8,7 @@
       <b>DNI Rechazado.</b> Vuelva a subir un formulario valido
     </div>
     <div v-show="!pendiente">
-      <b-message>Uno de los requisitos para que tu proyecto sea admitido en INGENIA es que los integrantes de tu equipo INGENIA firmen la carta de conformidad. Una vez que termines de armar tu equipo, hacé que firmen todos la carta. Cuando lo tengas listo, en el siguiente campo subí un archivo donde se vea la carta de conformidad firmada por todos los integrantes.
+      <b-message>Uno de los requisitos para que tu proyecto sea admitido en INGENIA es que los integrantes de tu equipo firme la carta de conformidad. Una vez que termines de armar el equipo, todos deben firmar la carta. Una vez listo, subí un archivo donde se vea la carta de conformidad firmada por todos los integrantes.
         <br>Tamaño del archivo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
       </b-message>
       <form :action="saveAgreementUrl.replace(':gro',this.user.groups[0].id)" ref="formConformidad" method="post" enctype="multipart/form-data">
@@ -23,7 +23,7 @@
             {{ files && files.length ? files[0].name : 'Seleccione un archivo para subir...' }}
           </span>
         </b-field>
-        <p v-show="errors.has('archivo')" class="has-text-danger">Requerido. Debe ser un archivo .JPG, .JPEG, .PDF, .DOC o .DOCX de hasta 3MB como máximo.</p>
+        <p v-show="errors.has('archivo')" class="has-text-danger">Requerido. Debe ser un archivo .JPG, .JPEG, .PDF, .DOC o .DOCX de hasta 3MB como máximo.<br></p>
         <div class="field">
           <div class="control is-clearfix">
             <a @click="submit" type="submit" class="button is-primary is-medium is-pulled-right" :class="{'is-loading': isLoading}">
