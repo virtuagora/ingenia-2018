@@ -66,6 +66,9 @@ class GroupAction
             'id',
             $this->helper->getSanitizedId('usr', $params)
         );
+        if ($user->subject_id == $subject->getId()) {
+            throw new AppException('No puede eliminarse a si mismo');
+        }
         if (empty($user)) {
             throw new AppException('Usuario no encontrado');
         }
@@ -80,6 +83,7 @@ class GroupAction
         }
         $group->users()->detach($user);
         $group->save();
+        $user->invitations()->where('group_id', $group->id)->delete();
         return $this->representation->returnMessage($request, $response, [
             'message' => 'el usuario ya no pertenece al equipo',
             'status' => 200,
