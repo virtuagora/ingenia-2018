@@ -23,12 +23,11 @@
       <p class="is-size-7">La acción fue cancelada o no se dieron los permisos necesarios para proceder. Vuelva a intentar recargando la página.</p>
     </div>
     <div v-show="loaded && !error && success" class="notification is-link">
-      <i class="fas fa-cog fa-check fa-lg fa-fw"></i>
       <i class="fas fa-cog fa-spin fa-lg fa-fw"></i>
-      Iniciando sesión.. ¡Un segundo!
+      Iniciando sesión..
     </div>
     <form ref="sendFacebookLoginForm" :action="fbLoginAction" method="post">
-      <input type="hidden" name="access" :value="accessToken">
+      <input type="hidden" id="fbAccessToken" name="access" :value="accessToken">
     </form>
   </div>
 </template>
@@ -62,14 +61,12 @@ export default {
       FB.login(
         response => {
           {
-            console.log(response)            
             if (response.authResponse) {
-              console.log('Welcome!  Fetching your information.... ');
-              alert('You are logged in &amp; cookie set!');
-              alert(response.authResponse.accessToken);
+              // alert('You are logged in &amp; cookie set!');
+              // alert(response.authResponse.accessToken);
               this.success = true;
               this.accessToken = response.authResponse.accessToken;
-              document.getElementById("access").value =
+              document.getElementById("fbAccessToken").value =
                 response.authResponse.accessToken;
               this.$refs.sendFacebookLoginForm.submit();
               // Now you can redirect the user or do an AJAX request to
