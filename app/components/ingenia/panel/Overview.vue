@@ -73,7 +73,7 @@
           <div class="notification is-success" v-else>
            <i class="fas fa-check fa-fw"></i> ¡Bien! ¡Ya completaste el cupo mínimo de tu equipo INGENIA!
           </div>
-          <div class="notification is-light is-clearfix" v-if="!user.groups[0].full_team">
+          <div class="notification is-light is-clearfix" v-if="!user.groups[0].second_in_charge">
             <span class="is-600 is-size-5">
               <i class="fas fa-angle-double-right fa-lg fa-fw"></i>Deben asignar un co-responsable del equipo</span>
             <p>
@@ -81,7 +81,7 @@
             </p>
           </div>
           <div class="notification is-success" v-else>
-           <i class="fas fa-check fa-fw"></i> ¡Bien! ¡Ya completaste el cupo mínimo de tu equipo INGENIA!
+           <i class="fas fa-check fa-fw"></i> ¡Bien! ¡Han asignado correctamente a un co-responsable en su equipo INGENIA!
           </div>
            <div class="notification is-light" v-if="!user.groups[0].uploaded_agreement">
             <span class="is-600 is-size-5">
