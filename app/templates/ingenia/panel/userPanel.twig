@@ -33,11 +33,14 @@ project-url="{{path_for('getPro',{'pro': ':pro'})}}"
 save-project-url="{{path_for('runCrePro')}}"
 edit-project-url="TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
 save-letter-url="{{path_for('runUpdGroLet',{'gro': ':gro'})}}"
+get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}"
 accept-group-invitation="{{path_for('runCreGroUsrInv', {'inv': ':inv'})}}"
 accept-group-request="{{path_for('runCreGroUsrReq', {'inv': ':inv'})}}"
 remove-group-user="TOODOOOOOOOOOOOOOOOOOOOOO"
 remove-group-invitation="TOOODOOOOOOOOOOOOO"
-       ></router-view>
+assign-group-second="{{path_for('runCreGroSec', {'gro': ':gro','usr':':usr'})}}"
+delete-group-second="{{path_for('runDelGroSec', {'gro': ':gro','usr':':usr'})}}"
+></router-view>
 
     </div>
   </section>

@@ -16,10 +16,13 @@
 :save-project-url="saveProjectUrl"
 :edit-project-url="editProjectUrl"
 :save-letter-url="saveLetterUrl"
+:get-group-members="getGroupMembers"
 :accept-group-invitation="acceptGroupInvitation"
 :accept-group-request="acceptGroupRequest"
 :remove-group-user="removeGroupUser"
 :remove-group-invitation="removeGroupInvitation"
+:assign-group-second="assignGroupSecond"
+:delete-group-second="deleteGroupSecond"
 ></router-view>
 </template>
 
@@ -42,10 +45,13 @@ export default {
 	"saveProjectUrl",
   "editProjectUrl",
 	"saveLetterUrl",
-	"acceptGroupInvitation",
+  "getGroupMembers",
+  "acceptGroupInvitation",
   "acceptGroupRequest",
   "removeGroupUser",
   "removeGroupInvitation",
+  "assignGroupSecond",
+  "deleteGroupSecond"
   ],
 }
 </script>

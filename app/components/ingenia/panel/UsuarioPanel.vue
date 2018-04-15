@@ -117,10 +117,13 @@
 :save-project-url="saveProjectUrl"
 :edit-project-url="editProjectUrl"
 :save-letter-url="saveLetterUrl"
+:get-group-members="getGroupMembers"
 :accept-group-invitation="acceptGroupInvitation"
 :accept-group-request="acceptGroupRequest"
 :remove-group-user="removeGroupUser"
 :remove-group-invitation="removeGroupInvitation"
+:assign-group-second="assignGroupSecond"
+:delete-group-second="deleteGroupSecond"
 ></router-view>
     </div>
   </div>
@@ -146,10 +149,13 @@ export default {
 	"saveProjectUrl",
   "editProjectUrl",
 	"saveLetterUrl",
+  "getGroupMembers",
   "acceptGroupInvitation",
   "acceptGroupRequest",
   "removeGroupUser",
   "removeGroupInvitation",
+  "assignGroupSecond",
+  "deleteGroupSecond"
   ],
   data() {
     return {
@@ -167,10 +173,5 @@ export default {
       this.user = this.$store.state.user;
     }
   },
-  // beforeRouteUpdate(to, from, next) {
-  //   console.log("Usuario Actualizado");
-  //   this.user = this.$store.state.user;
-  //   next();
-  // }
 };
 </script>

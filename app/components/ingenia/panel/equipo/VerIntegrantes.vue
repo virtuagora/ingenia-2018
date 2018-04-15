@@ -13,19 +13,24 @@
         <tr v-for="(member,index) in members" :key="index">
           <td>
             <Avatar :subject="member.subject" class="inline-image" size="24" /> {{member.subject.display_name}}
+            <span class="tag is-warning is-pulled-right" v-if="member.pivot.relation === 'responsable'"><i class="fas fa-star"></i>&nbsp;Responsable</span>
+            <div class="tags has-addons is-pulled-right" v-if="member.pivot.relation === 'co-responsable'">
+              <span class="tag is-link"><i class="fas fa-shield-alt"></i>&nbsp;Co-responsable</span>
+              <a @click="removeSecondInCharge(member.id)" class="tag is-delete"></a>
+            </div>
           </td>
           <td class="has-text-centered">
-            <div class="field is-grouped">
-              <div class="control">
+            <div class="field is-grouped is-centered">
+              <div class="control" v-if="!group.second_in_charge && member.pivot.relation !== 'responsable'">
                 <b-tooltip label="Asignar co-responsable" type="is-dark">
-                  <button @click="openRemoveUser(2, 'Guillermo Croppi')" class="button is-outlined is-small is-dark">
+                  <button @click="assignSecondInCharge(member.id)" class="button is-outlined is-small is-link">
                     <i class="fas fa-shield-alt"></i>
                   </button>
                 </b-tooltip>
               </div>
               <div class="control">
                 <b-tooltip label="Quitar del equipo" type="is-dark">
-                  <button @click="openRemoveUser(2, 'Guillermo Croppi')" class="button is-outlined is-small is-danger">
+                  <button @click="openRemoveUser(member.id)" class="button is-outlined is-small is-danger">
                     <i class="far fa-trash-alt"></i>
                   </button>
                 </b-tooltip>
@@ -181,7 +186,15 @@ import GetUsuario from "../../utils/GetUsuario";
 import Avatar from "../../utils/Avatar";
 
 export default {
-  props: ["acceptGroupRequest", "removeGroupUser", "removeGroupInvitation"],
+  props: [
+    "teamUrl",
+    "getGroupMembers",
+    "assignGroupSecond",
+    "deleteGroupSecond",
+    "acceptGroupRequest",
+    "removeGroupUser",
+    "removeGroupInvitation"
+  ],
   components: {
     GetUsuario,
     Avatar
@@ -217,8 +230,8 @@ export default {
   methods: {
     getEquipo: function(id) {
       Promise.all([
-        this.$http.get("/group/" + id),
-        this.$http.get("/group/" + id + "/members")
+        this.$http.get(this.fetchTeamUrl),
+        this.$http.get(this.fetchGroupMembers)
       ])
         .then(responses => {
           this.group = responses[0].data;
@@ -316,7 +329,6 @@ export default {
             type: "is-success",
             actionText: "OK"
           });
-          this.isLoading = false;
           this.response.ok = true;
           this.getEquipo(this.user.groups[0].id);
         })
@@ -330,9 +342,69 @@ export default {
           });
           return false;
         });
-    }
+    },
+    assignSecondInCharge: function(id){
+      console.log("Sending form!");
+      let formUrl = this.assignGroupSecond.replace(":gro", this.user.groups[0].id)
+      formUrl = formUrl.replace(":usr", id)
+      this.isLoading = true;
+      this.$http
+        .put(formUrl)
+        .then(response => {
+          this.$snackbar.open({
+            message: "El co-responsable ha sido asignado correctamente",
+            type: "is-success",
+            actionText: "OK"
+          });
+          this.response.ok = true;
+          this.getEquipo(this.user.groups[0].id);
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    },
+    removeSecondInCharge: function(id){
+      console.log("Sending form!");
+      let formUrl = this.deleteGroupSecond.replace(":gro", this.user.groups[0].id)
+      formUrl = formUrl.replace(":usr", id)
+      this.isLoading = true;
+      this.$http
+        .delete(formUrl)
+        .then(response => {
+          this.$snackbar.open({
+            message: "El co-responsable ha sido desvinculado correctamente",
+            type: "is-success",
+            actionText: "OK"
+          });
+          this.response.ok = true;
+          this.getEquipo(this.user.groups[0].id);
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    },
   },
   computed: {
+    fetchTeamUrl: function() {
+      return this.teamUrl.replace(":gro", this.user.groups[0].id);
+    },
+    fetchGroupMembers: function() {
+      return this.getGroupMembers.replace(":gro", this.user.groups[0].id);
+    },
     cantInvitaciones: function() {
       return this.group.invitations.filter(x => {
         return x.state == "pending";
