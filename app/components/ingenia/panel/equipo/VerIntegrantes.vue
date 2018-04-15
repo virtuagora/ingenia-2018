@@ -16,21 +16,23 @@
             <span class="tag is-warning is-pulled-right" v-if="member.pivot.relation === 'responsable'"><i class="fas fa-star"></i>&nbsp;Responsable</span>
             <div class="tags has-addons is-pulled-right" v-if="member.pivot.relation === 'co-responsable'">
               <span class="tag is-link"><i class="fas fa-shield-alt"></i>&nbsp;Co-responsable</span>
+              <b-tooltip label="Quitar co-responsable" type="is-dark">
               <a @click="removeSecondInCharge(member.id)" class="tag is-delete"></a>
+              </b-tooltip>
             </div>
           </td>
-          <td class="has-text-centered">
-            <div class="field is-grouped is-centered">
-              <div class="control" v-if="!group.second_in_charge && member.pivot.relation !== 'responsable'">
+          <td>
+            <div class="field is-grouped">
+              <div class="control is-expanded has-text-centered" v-if="!group.second_in_charge && member.pivot.relation !== 'responsable'">
                 <b-tooltip label="Asignar co-responsable" type="is-dark">
-                  <button @click="assignSecondInCharge(member.id)" class="button is-outlined is-small is-link">
+                  <button @click="assignSecondInCharge(member.id)" class="button is-fullwidth is-outlined is-small is-link">
                     <i class="fas fa-shield-alt"></i>
                   </button>
                 </b-tooltip>
               </div>
-              <div class="control">
+              <div class="control is-expanded has-text-centered" v-if="member.pivot.relation !== 'responsable'">
                 <b-tooltip label="Quitar del equipo" type="is-dark">
-                  <button @click="openRemoveUser(member.id)" class="button is-outlined is-small is-danger">
+                  <button @click="openRemoveUser(member.id, member.subject.display_name)" class="button is-fullwidth is-outlined is-small is-danger">
                     <i class="far fa-trash-alt"></i>
                   </button>
                 </b-tooltip>
@@ -99,7 +101,7 @@
             <i class="fas fa-clock fa-fw"></i>&nbsp;Solicitado
           </td>
           <td class="has-text-centered">
-            <button @click="openRemoveInvitation(invitation.id, invitation.email)" class="button is-outlined is-small is-success">
+            <button @click="openAcceptRequest(invitation.id, invitation.comment)" class="button is-outlined is-small is-success">
               <i class="fas fa-check"></i>
             </button>
           </td>
@@ -120,21 +122,23 @@
             </span>
           </figure>
           <div class="media-content">
-            <h1 class="title is-4">¿Desea quitar a {{deleteUserName}} del equipo?</h1>
+            <h1 class="title is-4">¿Desea eliminar a {{deleteUserName}} del equipo?</h1>
+            <p>Si desea volver a agregarlo al equipo, debera volver a enviar la invitación</p>
+            <br>
             <div class="field">
               <div class="control">
-                <button @click="submitRemoveUser" class="button is-white is-outlined">Si, quitar del equipo</button>
+                <button @click="submitRemoveUser" class="button is-white">Si, quitar del equipo</button>
               </div>
             </div>
           </div>
           <div class="media-right">
-            <button @click="$refs.modalRemoveUser.close()" class="delete"></button>
+            <button @click="$refs.modalAcceptRequest.close()" class="delete"></button>
           </div>
         </article>
       </div>
     </b-modal>
-    <b-modal ref="modalAcceptRequest" :active.sync="showRemoveModal" :width="640" scroll="keep">
-      <div class="notification is-danger">
+    <b-modal ref="modalAcceptRequest" :active.sync="showAcceptRequestModal" :width="640" scroll="keep">
+      <div class="box">
         <article class="media">
           <figure class="media-left">
             <span class="icon is-medium">
@@ -142,10 +146,15 @@
             </span>
           </figure>
           <div class="media-content">
-            <h1 class="title is-4">¿Desea aceptar a {{deleteUserName}} del equipo?</h1>
+            <h1 class="title is-4">¿Desea aceptar la solicitud?</h1>
+            <p>Mensaje recibido:</p>
+             <p class="is-size-7 nl2br">
+              <i>{{acceptRequestComment}}</i>
+            </p>
+            <br>
             <div class="field">
               <div class="control">
-                <button @click="submitRemoveUser" class="button is-white is-outlined">Si, quitar del equipo</button>
+                <button @click="submitAcceptRequest" class="button is-success">Si, agregar al equipo</button>
               </div>
             </div>
           </div>
@@ -167,7 +176,7 @@
             <h1 class="title is-4">¿Desea eliminar la invitación a {{deleteInvitationEmail}}?</h1>
             <div class="field">
               <div class="control">
-                <button @click="submitRemoveUser" class="button is-white is-outlined">Si, eliminar</button>
+                <button @click="submitRemoveUser" class="button is-white is-outlined">Si, eliminar invitación</button>
               </div>
             </div>
           </div>
@@ -212,8 +221,8 @@ export default {
       deleteInvitation: null,
       deleteInvitationEmail: null,
       showAcceptRequestModal: false,
-      acceptRequestUser: null,
-      acceptRequestName: null,
+      acceptRequestId: null,
+      acceptRequestComment: null,
       user: {},
       group: {
         invitations: []
@@ -258,25 +267,25 @@ export default {
       this.deleteInvitationEmail = email;
       this.showRemoveInvitationModal = true;
     },
-    openAcceptRequest: function(id, email) {
-      this.acceptRequestUser = id;
-      this.acceptRequestName = email;
+    openAcceptRequest: function(id, comment) {
+      this.acceptRequestId = id;
+      this.acceptRequestComment = comment;
       this.showAcceptRequestModal = true;
     },
     submitRemoveUser: function() {
       this.showRemoveModal = false;
       console.log("Sending form!");
       this.isLoading = true;
+      let formUrl = this.removeGroupUser.replace(":gro", this.user.groups[0].id)
+      formUrl = formUrl.replace(":usr", this.deleteUser)
       this.$http
-        .post(this.saveTeamUrl, this.deleteUser)
+        .delete(formUrl)
         .then(response => {
           this.$snackbar.open({
-            message: "Los datos del equipo han sido actualizados",
+            message: this.deleteUserName + " se eliminó del equipo correctamente",
             type: "is-success",
             actionText: "OK"
           });
-          this.isLoading = false;
-          this.response.ok = true;
           this.getEquipo(this.user.groups[0].id);
         })
         .catch(error => {
@@ -318,18 +327,18 @@ export default {
         });
     },
     submitAcceptRequest: function() {
-      this.showRemoveModal = false;
+      this.showAcceptRequestModal = false;
       console.log("Sending form!");
+      let formUrl = this.acceptGroupRequest.replace(":inv", this.acceptRequestId)
       this.isLoading = true;
       this.$http
-        .post(this.saveTeamUrl, this.deleteUser)
+        .post(formUrl)
         .then(response => {
           this.$snackbar.open({
-            message: "Los datos del equipo han sido actualizados",
+            message: "Solicitud aceptada ¡Nuevo miembro del equipo! 🎉",
             type: "is-success",
             actionText: "OK"
           });
-          this.response.ok = true;
           this.getEquipo(this.user.groups[0].id);
         })
         .catch(error => {

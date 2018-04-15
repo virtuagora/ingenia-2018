@@ -93,12 +93,15 @@
           <div class="notification is-success" v-else>
            <i class="fas fa-check fa-fw"></i> ¡Genial! ¡La carta de conformidad ya fue entregada con éxito!
           </div>
-          <div class="notification is-light" v-if="user.groups[0].project.organization !== null && user.groups[0].uploaded_letter">
+          <div class="notification is-light" v-if="user.groups[0].project.organization !== null && !user.groups[0].uploaded_letter">
            <span class="is-600 is-size-5">
               <i class="fas fa-angle-double-right fa-lg fa-fw"></i>Aún deben entregar la carta de aval de la organización</span>
             <p>
               Tu proyecto se realiza en conjunto con la organizacion <b>{{user.groups[0].project.organization.name}}</b> por lo que es requerido que suban la carta con el aval de la organización firmada por ellos.
             </p>
+          </div>
+          <div class="notification is-success" v-else>
+           <i class="fas fa-check fa-fw"></i> ¡Genial! ¡Han subido correctamente la carta la carta de aval de la organización
           </div>
       </div>
     </section>
