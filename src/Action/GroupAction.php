@@ -56,6 +56,36 @@ class GroupAction
         ]);
     }
 
+    public function deleteUser($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params, ['users']
+        );
+        $user = $group->users->where(
+            'id',
+            $this->helper->getSanitizedId('usr', $params)
+        );
+        if (empty($user)) {
+            throw new AppException('Usuario no encontrado');
+        }
+        if (!$this->authorization->checkPermission($subject, 'updGroSecond', $group)) {
+            throw new UnauthorizedException();
+        }
+        if ($user->pivot->relation == 'co-responsable') {
+            $group->second_in_charge = false;
+        }
+        if (count($group->users) <= 5) {
+            $group->full_team = false;
+        }
+        $group->users()->detach($user);
+        $group->save();
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'el usuario ya no pertenece al equipo',
+            'status' => 200,
+        ]);
+    }
+
     public function postInvitation($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -126,7 +156,7 @@ class GroupAction
         ]);
     }
 
-    public function putCorresponsable($request, $response, $params)
+    public function putSecond($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
         $group = $this->helper->getEntityFromId(
@@ -152,7 +182,7 @@ class GroupAction
         ]);
     }
 
-    public function deleteCorresponsable($request, $response, $params)
+    public function deleteSecond($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
         $group = $this->helper->getEntityFromId(
