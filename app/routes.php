@@ -18,7 +18,7 @@ $app->post('/fb-callback', function ($request, $response, $args) {
         $session = $this->session->signIn($user->subject->toDummy());
         return $response->withRedirect('/idle');
     } elseif ($result['status'] == 'pending-user') {
-        return $this->view->render($response, 'test/fb-register.twig', [
+        return $this->view->render($response, 'base/facebook-registro.twig', [
         'token' => $result['token'],
         ]);
     } else {
