@@ -49,7 +49,7 @@
             </ul>
           </li>
           <li v-if="user.groups[0] === undefined ">
-            <router-link :to="{ name: 'userInscripcionIngenia'}" exact-active-class="is-active">¡Presentá un nuevo proyecto!</router-link>
+            <router-link :to="{ name: 'userInscripcionIngenia'}" exact-active-class="is-active">¡Presentá un proyecto!</router-link>
           </li>
         </ul>
         <p class="menu-label" v-if="user.groups[0] !== undefined">
