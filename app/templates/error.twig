@@ -6,7 +6,7 @@
 
 {% block body %}
   <a href="{{path_for('showHome')}}" target="_blank">
-<img alt="" class="error-logo-float" src="{{ asset('img/v-g.svg') }}">
+    <img alt="" class="error-logo-float" src="{{ asset('img/v-g.svg') }}">
   </a>
   <section class="hero is-dark is-fullheight">
     <div class="hero-body">
@@ -16,19 +16,20 @@
             <span class="icon is-large">
               <i class="fa fa-times-circle fa-3x"></i>
             </span>
-            <h1 class="title is-3 is-raleway">Uups... <i class="em em-frowning"></i></h1>
+            <h1 class="title is-3 is-raleway">Uups...
+              <i class="em em-frowning"></i>
+            </h1>
             <h4 class="subtitle is-5">{{message}}</h4>
-<p>Si el problema persiste, no dudes en contactar a Gabinete Joven enviando un email a
-<a href="mailto:gabinetejoven@santafe.gob.ar">gabinetejoven@santafe.gob.ar</a>, o si queres reportar un problema, contactate con Virtuágora enviandonos un DM en
-<i class="fab fa-twitter fa-fw"></i>
-<a href="https://twitter.com/virtuagora">/virtuagora</a>
-o un mensaje en 
-<i class="fab fa-facebook-square fa-fw"></i>
-<a href="https://facebook.com/virtuagora">/virtuagora</a>
-</p>
-                <br>
+            <p>Si el problema persiste o si queres reportar un problema, contactate con Virtuágora enviandonos un DM en Twitter
+              <i class="fab fa-twitter fa-fw"></i>
+              <a href="https://twitter.com/virtuagora">/virtuagora</a>
+              o un mensaje en Facebook
+              <i class="fab fa-facebook-square fa-fw"></i>
+              <a href="https://facebook.com/virtuagora">/virtuagora</a>
+            </p>
+            <br>
             <a class="button is-white is-outlined" href="{{path_for('showHome')}}">
-                <i class="fas fa-home"></i>&nbsp;&nbsp;Ir al inicio</a>
+              <i class="fas fa-home"></i>&nbsp;&nbsp;Ir al inicio</a>
           </div>
         </div>
       </div>
