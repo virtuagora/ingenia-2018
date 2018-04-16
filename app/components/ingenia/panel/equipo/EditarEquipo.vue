@@ -8,6 +8,7 @@
       <b-message class="has-text-centered">
         Acá podes editar los datos de tu equipo. Podes cambiarlos hasta que envies tu proyecto.
       </b-message>
+      <section v-if="fetchResponse.replied && fetchResponse.ok">
       <div class="notification is-link">
         <h1 class="title is-1 is-700">
           <i class="far fa-edit fa-fw"></i> Sobre el
@@ -21,6 +22,12 @@
       </div>
       <button @click="submit" v-show="!response.ok" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
         <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
+      </section>
+      <section v-if="fetchResponse.replied && !fetchResponse.ok">
+        <div class="notification is-danger">
+        <i class="fas fa-times fa-fw"></i> Error al conseguir los datos del equipo. Vuelva a cargar la página
+      </div>
+      </section>
       <b-loading :active.sync="isLoading"></b-loading>
     </section>
   </div>
@@ -30,13 +37,17 @@
 import FormEquipo from '../../utils/FormEquipo'
 
 export default {
-  props: ["saveTeamUrl"],
+  props: ["teamUrl","editTeamUrl"],
   components:{
     FormEquipo
   },
   data(){
     return {
-      isLoading: false,
+      isLoading: true,
+      fetchResponse:{
+        replied: false,
+        ok: false
+      },
       response:{
         replied: false,
         ok: false
@@ -57,6 +68,38 @@ export default {
       },
     }
   },
+   created: function() {
+    this.user = this.$store.state.user;
+  },
+  mounted: function(){
+    this.$http.get(this.fetchTeamUrl)
+    .then(response => {
+      this.team.name = response.data.name
+      this.team.description = response.data.description
+      this.team.year = response.data.year
+      this.team.previous_editions = response.data.previous_editions
+      this.team.locality_id = response.data.locality_id
+      this.team.locality_other = response.data.locality_other
+      this.team.parent_organization = response.data.parent_organization ? response.data.parent_organization : false
+      this.team.web = response.data.web
+      this.team.facebook = response.data.facebook
+      this.team.telephone = response.data.telephone
+      this.team.email = response.data.email
+      this.fetchResponse.replied = true;
+      this.fetchResponse.ok = true;
+      this.isLoading = false
+    }).catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.fetchResponse.replied = true;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+  },
   methods: {
     submit: function() {
       Promise.all([
@@ -74,7 +117,7 @@ export default {
             console.log("Sending form!");
             this.isLoading = true;
             this.$http
-              .post(this.saveTeamUrl, this.payload)
+              .post(this.postEditTeamUrl, this.payload)
               .then(response => {
                 this.$snackbar.open({
                   message: "Los datos del equipo han sido actualizados",
@@ -83,7 +126,7 @@ export default {
                 });
                 this.isLoading = false;
                 this.response.ok = true;
-                this.$store.commit('updateUser')
+                this.forceUpdateState('userPanel')
               })
               .catch(error => {
                 console.error(error.message);
@@ -111,6 +154,48 @@ export default {
             actionText: "Cerrar"
           });
         });
+    }
+  },
+  computed:{
+    fetchTeamUrl: function(){
+      return this.teamUrl.replace(':gro',this.user.groups[0].id)
+    },
+    postEditTeamUrl: function(){
+      return this.editTeamUrl.replace(':gro',this.user.groups[0].id)
+    },
+    payload: function() {
+      let load = {
+        name: this.team.name,
+        description: this.team.description,
+        year: this.team.year,
+        previous_editions: this.isOptional(this.team.previous_editions),
+        locality_id: this.team.locality_id,
+        locality_other: this.isOptional(this.team.locality_other),
+        web: this.isOptional(this.team.web),
+        facebook: this.isOptional(this.team.facebook),
+        telephone: this.isOptional(this.team.telephone),
+        email: this.isOptional(this.team.email)
+      };
+      if (this.team.parent_organization != null) {
+        load.parent_organization = {
+          name: this.team.parent_organization.name,
+          topics: this.isOptional(this.team.parent_organization.topics),
+          topic_other: this.isOptional(
+            this.team.parent_organization.topic_other
+          ),
+          locality_id: this.team.parent_organization.locality_id,
+          locality_other: this.isOptional(
+            this.team.parent_organization.locality_other
+          ),
+          web: this.isOptional(this.team.parent_organization.web),
+          facebook: this.isOptional(this.team.parent_organization.facebook),
+          telephone: this.isOptional(this.team.parent_organization.telephone),
+          email: this.isOptional(this.team.parent_organization.email)
+        };
+      } else {
+        load.parent_organization = null;
+      }
+      return load;
     }
   },
   beforeRouteEnter(to, from, next) {

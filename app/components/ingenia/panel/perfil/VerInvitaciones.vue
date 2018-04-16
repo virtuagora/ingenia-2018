@@ -82,12 +82,11 @@ export default {
             type: "is-success",
             actionText: "OK"
           });
-          this.isLoading = false;
-          this.response.ok = true;
           this.forceUpdateState("userPanel").then(user => {
+            this.isLoading = false;
             this.user = user;
+            this.$router.push({ name: "panelOverview" });
           });
-          this.$router.push({ name: "panelOverview" });
         })
         .catch(error => {
           console.error(error.message);

@@ -44,7 +44,7 @@
       </div>
       <section v-else>
         <div class="notification is-link">
-          <i class="fas fa-info fa-fw"></i> ¡Felicidades! ¡Sos parte del equipo {{user.groups[0].name}}!
+          <i class="fas fa-info fa-fw"></i> ¡Felicidades! ¡Sos parte del equipo <b>{{user.groups[0].name}}</b>! <i class="em em-muscle"></i>
         </div>
         <h1 class="title is-3">
           <i class="fas fa-tasks"></i> ¡Revisen si faltan datos a completar!</h1>
@@ -106,7 +106,7 @@
           </p>
         </div>
         <div class="notification is-success" v-else>
-          <i class="fas fa-check fa-fw"></i> ¡Genial! ¡Han subido correctamente la carta la carta de aval de la organización
+          <i class="fas fa-check fa-fw"></i> ¡Genial! ¡Han subido correctamente la carta de aval de la organización
         </div>
         </section>
         <div class="notification is-warning" v-else>

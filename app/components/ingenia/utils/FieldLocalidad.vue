@@ -54,7 +54,6 @@ export default {
     this.$http
       .get("/region")
       .then(response => {
-        console.log(response);
         this.regiones = response.data;
         this.regionLoading = false;
       })

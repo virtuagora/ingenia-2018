@@ -17,12 +17,12 @@ $app->post('/fb-callback', function ($request, $response, $args) {
         $user = $result['user'];
         $group = $user->groups->first();
         $session = $this->session->signIn($user->subject->toDummy([
-            'user_id' => $user->id,
-            'group' => [
-                'id' => $group->id,
-                'relation' => $group->pivot->relation,
-                'name' => $group->name,
-            ],
+        'user_id' => $user->id,
+        'group' => [
+        'id' => $group->id,
+        'relation' => $group->pivot->relation,
+        'name' => $group->name,
+        ],
         ]));
         return $response->withRedirect('/');
     } elseif ($result['status'] == 'pending-user') {
@@ -42,12 +42,12 @@ $app->post('/fb-register', function ($request, $response, $args) {
     $user = $this->identity->registerUser([], $data['token']);
     $group = $user->groups->first();
     $session = $this->session->signIn($user->subject->toDummy([
-        'user_id' => $user->id,
-        'group' => [
-            'id' => $group->id,
-            'relation' => $group->pivot->relation,
-            'name' => $group->name,
-        ],
+    'user_id' => $user->id,
+    'group' => [
+    'id' => $group->id,
+    'relation' => $group->pivot->relation,
+    'name' => $group->name,
+    ],
     ]));
     return $response->withRedirect('/');
 })->setName('fbRegister');
@@ -62,9 +62,7 @@ $app->get('/idle', function ($request, $response, $args) {
 
 $app->get('/logout', function ($request, $response, $args) {
     $this->session->signOut();
-    return $this->view->render($response, 'test/simple.twig', [
-    'text' => 'holis',
-    ]);
+    return $response->withRedirect('/');
 })->setName('showLogout');
 
 

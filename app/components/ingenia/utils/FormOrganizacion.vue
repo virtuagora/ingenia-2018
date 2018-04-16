@@ -51,7 +51,13 @@
       <label class="label is-size-4">
       <i class="fas fa-angle-double-right"></i> ¿De donde es la organización? *
     </label>
-      <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
+      <Localidad v-if="showLocalityField" ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
+        <div v-else>
+        <button @click="cleanLocalidad" class="button is-light is-pulled-right">Cambiar ubicación</button>
+        <show-localidad :locality-id="dummyOrganization.locality_id" :locality-other="dummyOrganization.locality_other"></show-localidad>
+        <br>
+        <br>
+        </div>
       <div class="field">
         <label class="label is-size-4">
           <i class="fas fa-angle-double-right"></i> Redes y contacto</label>
@@ -112,16 +118,23 @@
 
 <script>
 import Localidad from "./FieldLocalidad";
+import ShowLocalidad from "./GetLocalidad";
+
 
 export default {
   props: ["organization"],
   data() {
     return {
-      dummyOrganization: this.organization
+      dummyOrganization: this.organization,
+      showLocalityField: false,      
     };
   },
   components: {
-    Localidad
+    Localidad,
+    ShowLocalidad
+  },
+  created: function(){
+      this.showLocalityField = this.dummyOrganization.locality_id === null ? true : false     
   },
   methods: {
     updateLocalidad: function(id) {
@@ -144,8 +157,13 @@ export default {
       return promise;
     },
     validateLocalidad: function() {
-      return this.$refs.localidadForm.validateForm();
-    }
+      return (this.showLocalityField ? this.$refs.localidadForm.validateForm() : true);
+    },
+    cleanLocalidad: function(){
+      this.dummyOrganization.locality_id = null
+      this.dummyOrganization.locality_other = null
+      this.showLocalityField = true
+    },
   }
 };
 </script>

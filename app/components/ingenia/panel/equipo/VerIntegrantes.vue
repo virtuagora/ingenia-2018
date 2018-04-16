@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1 class="subtitle is-3">Integrantes del equipo</h1>
-    <h1 class="title is-5">Integrantes del equipo registrados</h1>
     <table class="table is-fullwidth text-middle">
       <thead>
         <tr>
@@ -53,7 +52,7 @@
       </thead>
       <tbody>
         <tr v-if="cantInvitaciones == 0">
-          <td colspan="2">No se han hecho invitaciones</td>
+          <td colspan="2">No hay invitaciones para listar</td>
         </tr>
         <tr v-for="(invitation, index) in group.invitations" v-if="invitation.state == 'pending'" :key="index">
           <td>{{invitation.email}}<br>
@@ -103,7 +102,7 @@
       </tbody>
       <tbody v-else>
         <tr>
-          <td colspan="2">No se han recibido solicitudes</td>
+          <td colspan="2">No hay solicitudes para listar</td>
         </tr>
       </tbody>
     </table>

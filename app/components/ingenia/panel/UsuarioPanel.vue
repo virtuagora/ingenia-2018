@@ -75,12 +75,15 @@
         <p class="menu-label" v-if="user.groups[0] !== undefined">
           Mi proyecto Ingenia 2018
         </p>
-        <ul class="menu-list" v-if="user.groups[0] !== undefined">
-          <li v-if="user.groups[0].project === null">
+        <ul class="menu-list" v-if="user.groups[0] !== undefined ">
+          <li v-if="user.groups[0].project === null && user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userEditarProyecto'}" exact-active-class="is-active">Cargar proyecto</router-link>
           </li>
           <li v-if="user.groups[0].project !== null">
             <router-link :to="{ name: 'userVerProyecto'}" exact-active-class="is-active">Ver mi proyecto</router-link>
+          </li>
+          <li v-if="user.groups[0].project === null && user.groups[0].pivot.relation != 'responsable'">
+            <i class="fas fa-info-circle fa-fw"></i> El responsable aún no ha cargado los datos del proyecto
           </li>
           <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
             <router-link :to="{ name: 'userEditarProyecto'}" exact-active-class="is-active">Editar datos del proyecto</router-link>
