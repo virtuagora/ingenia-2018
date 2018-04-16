@@ -71,9 +71,11 @@ export default {
               this.$refs.sendFacebookLoginForm.submit();
               // Now you can redirect the user or do an AJAX request to
               // a PHP script that grabs the signed request from the cookie.
+              return false;
             } else {
               console.log('User cancelled login or did not fully authorize.');
-              this.error = true;           
+              this.error = true;
+              return false;                         
             }
           }
         },
