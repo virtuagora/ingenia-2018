@@ -62,12 +62,12 @@ class UserResource extends Resource
     {
         $pending = $this->identity->createPendingUser('local', $data);
         // $mailMsg = 'Accede con ' . $pending->token;
-        // $mailSub = 'Registro Virtuágora';
 
-        $link = $this->helper->pathFor('showCompleteSignUp', true, [
-            'token' => $user->token,
+        $mailSub = 'Registro en Ingenia';
+        $link = $this->helper->pathFor('showCompleteSignUp', true, [], [
+            'token' => $pending->token,
         ]);
-        $mailMsg = $this->view->fetch('emails/completeRegister', [
+        $mailMsg = $this->view->fetch('emails/completeRegister.twig', [
             'url' => $link,
         ]);
 
