@@ -96,6 +96,7 @@ $app->get('/install[/{extra}]', function ($request, $response, $args) {
 });
 
 $app->get('/test', function ($req, $res, $arg) {
+    throw new \App\Util\Exception\AppException('CAPTCHA no recibido', 501);
     $options = $this->options->getAutoloaded();
     return $res->withJSON([
     'sub' => $options->toArray(),
@@ -142,6 +143,7 @@ $app->post('/user/{usr}/pending-email', 'userAction:postPendingEmail')->setName(
 $app->get('/group/{gro}', 'groupAction:getOne')->setName('getGroup');
 $app->get('/group/{gro}/user', 'groupAction:getUsuarios')->setName('getGroUsr');
 $app->post('/group', 'groupAction:post')->setName('runCreGro');
+$app->post('/group/{gro}', 'groupAction:patch')->setName('runUpdGro');
 $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('runCreGroInv');
 $app->post('/group/{gro}/request', 'groupAction:postRequest')->setName('runCreGroReq');
 $app->post('/group/{gro}/letter', 'groupAction:postLetter')->setName('runUpdGroLet');
@@ -155,6 +157,7 @@ $app->post('/group/accept-req/{inv}', 'groupAction:postUserFromRequest')->setNam
 
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
+$app->post('/project/{pro}', 'projectAction:patch')->setName('runUpdPro');
 
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 

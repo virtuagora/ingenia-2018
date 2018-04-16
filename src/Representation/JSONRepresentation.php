@@ -11,8 +11,10 @@ class JSONRepresentation implements RepresentationInterface
 
     public function returnMessage($response, $options)
     {
-        return $response->withJSON([
-            'message' => $options['message'],
+        $data = array_diff_key($options, [
+            'status' => '',
+            'template' => '',
         ]);
+        return $response->withJSON($data);
     }
 }

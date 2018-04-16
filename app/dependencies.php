@@ -80,6 +80,9 @@ $container['helper'] = function ($c) {
 $container['options'] = function ($c) {
     return new App\Service\OptionsService($c['db']);
 };
+$container['image'] = function ($c) {
+    return new Intervention\Image\ImageManager(['driver' => 'imagick']);
+};
 
 $container['miscAction'] = function ($c) {
     return new App\Action\MiscAction(
@@ -113,28 +116,33 @@ $container['errorHandler'] = function ($c) {
     return new App\Service\ErrorHandlerService(
         [
             '\Respect\Validation\Exceptions\NestedValidationException' => function($r, $e) {
-                return $r->withStatus(400)->withJSON([
-                    'mensaje' => 'Datos ingresados inválidos',
-                    'errores' => $e->getMessages(),
-                ]);
+                return [
+                    'message' => 'Datos ingresados inválidos',
+                    'status' => 400,
+                    'errors' => $e->getMessages(),
+                ];
             },
             '\Illuminate\Database\Eloquent\ModelNotFoundException' => function($r, $e) {
-                return $r->withStatus(404)->withJSON([
-                    'mensaje' => 'Recurso no encontrado',
-                ]);
+                return [
+                    'message' => 'Recurso no encontrado',
+                    'status' => 400,
+                ];
             },
             '\App\Util\Exception\AppException' => function($r, $e) {
-                return $r->withStatus($e->getCode())->withJSON([
-                    'mensaje' => $e->getMessage(),
-                ]);
+                return [
+                    'message' => $e->getMessage(),
+                    'status' => $e->getCode(),
+                ];
             },
             '\App\Util\Exception\SystemException' => function($r, $e) {
-                return $r->withStatus(500)->withJSON([
+                return [
                     'mensaje' => 'Error crítico del sistema',
-                ]);
+                    'status' => 500,
+                ];
             },
         ],
-        $c->get('logger')
+        $c->get('logger'),
+        $c->get('representation')
     );
 };
 

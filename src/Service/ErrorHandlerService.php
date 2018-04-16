@@ -9,10 +9,11 @@ class ErrorHandlerService
     protected $logger;
     protected $exceptions;
     
-    public function __construct(array $exceptions, $logger = null)
+    public function __construct(array $exceptions, $logger = null, $representation)
     {
         $this->logger = $logger;
         $this->exceptions = $exceptions;
+        $this->representation = $representation;
     }
     
     public function __invoke($request, $response, $exception)
@@ -25,19 +26,25 @@ class ErrorHandlerService
             //$this->logger->info($request->getHeaderLine('Accept'));
             //$this->logger->info(json_encode($request->getAttributes()));
         }
-        foreach($this->exceptions as $trigger => $handler) {
+        $errorData = [
+            'message' => 'Error interno',
+            'status' => 500,
+        ];
+        foreach ($this->exceptions as $trigger => $handler) {
             if ($exception instanceof $trigger) {
-                return call_user_func($handler, $response, $exception);
+                $errorData = call_user_func($handler, $response, $exception);
+                break;
             }
         }
-        return $response->withStatus(500)->withJSON([
-        'mensaje' => 'Error interno',
-        // TODO Ocultar en produccion
-        'log' =>  str_replace('"',"'",$exception->getMessage()),
-        'file' =>  $exception->getFile(),
-        'line' =>  $exception->getLine(),
-        
-        'request' => $request->getAttributes(),
-        ]);
+        return $this->representation->returnMessage(
+            $request,
+            $response,
+            array_merge($errorData, [
+                'template' => 'error.twig',
+                'log' =>  str_replace('"',"'",$exception->getMessage()),
+                'file' =>  $exception->getFile(),
+                'line' =>  $exception->getLine(),
+            ])
+        );
     }
 }

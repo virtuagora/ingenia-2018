@@ -234,6 +234,7 @@ class ProjectResource extends Resource
         if (!is_null($group->project)) {
             throw new AppException('El equipo ya posee un proyecto cargado');
         }
+        $project = $this->db->new('App:Project');
         return $this->persist($project, $group, $data);
     }
 

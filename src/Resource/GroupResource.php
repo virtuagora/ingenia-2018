@@ -347,10 +347,17 @@ class GroupResource extends Resource
             $pending = $this->identity->createPendingUser('local', [
                 'identifier' => $email,
             ]);
-            $mailMsg = 'Invitado Accede con ' . $pending->token;
-            $mailSub = 'Registro Virtuágora';
-            $this->logger->info($mailMsg);
-            $this->mailer->sendMail($mailSub, $pending->identifier, $mailMsg);
+
+            $mailSub = 'Te han invitado a participar de Ingenia';
+            $link = $this->helper->pathFor('showCompleteSignUp', true, [], [
+                'token' => $pending->token,
+            ]);
+            $mailMsg = $this->view->fetch('emails/sendInvitation.twig', [
+                'url' => $link,
+                'comment' => isset($data['comment'])? $data['comment']: '',
+            ]);
+            $this->logger->info($link);
+            $this->mailer->sendMail($mailSub, $pending->identifier, $mailMsg, 'text/html');
         }
         $invitation->state = 'pending';
         $invitation->email = $email;

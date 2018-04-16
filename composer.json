@@ -33,6 +33,7 @@
         "facebook/graph-sdk": "^5.4.4",
         "league/flysystem": "^1.0",
         "guzzlehttp/guzzle": "^6.2",
+        "intervention/image": "^2.3",
         "augusthur/json-respector": "dev-master",
         "google/recaptcha": "~1.1"
     },

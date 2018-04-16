@@ -19,7 +19,7 @@ class HTMLRepresentation implements RepresentationInterface
             $template = isset($options['template'])?
                 $options['template']:
                 // TODO armar plantilla default
-                'default.twig';
+                'message.twig';
             return $this->view->render($response, $template, [
                 'resource' => $resource,
             ]);
@@ -31,7 +31,7 @@ class HTMLRepresentation implements RepresentationInterface
         $template = isset($options['template']) ?
             $options['template'] :
             // TODO armar plantilla default
-            'default.twig';
+            'message.twig';
         return $this->view->render($response, $template, [
             'message' => $options['message'],
         ]);

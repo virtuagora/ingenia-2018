@@ -41,9 +41,27 @@ class ProjectAction
         }
         $project = $this->projectResource->createOne($subject, $request->getParsedBody());
         return $this->representation->returnMessage($request, $response, [
-        'message' => 'Project created succefully',
-        'status' => 200,
-        'project' => $project->toArray(),
+            'message' => 'Project created succefully',
+            'status' => 200,
+            'project' => $project->toArray(),
+        ]);
+    }
+
+    public function patch($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        $atributos = $request->getParsedBody();
+        $project = $this->groupResource->updateOne($subject, $project, $atributos);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Información del proyecto actualizada exitosamente',
+            'status' => 200,
+            'project' => $project->toArray(),
         ]);
     }
     

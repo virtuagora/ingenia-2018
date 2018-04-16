@@ -56,6 +56,24 @@ class GroupAction
         ]);
     }
 
+    public function patch($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updGro', $group)) {
+            throw new UnauthorizedException();
+        }
+        $atributos = $request->getParsedBody();
+        $group = $this->groupResource->updateOne($subject, $group, $atributos);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Información del grupo actualizada exitosamente',
+            'status' => 200,
+            'group' => $group->toArray(),
+        ]);
+    }
+
     public function deleteUser($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
