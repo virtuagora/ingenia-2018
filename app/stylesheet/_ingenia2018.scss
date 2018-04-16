@@ -138,6 +138,15 @@ table.table.text-middle td {
     margin-left: 0.5em;
 }
 
-.content p.nl2br, p.nl2br {
+.content p.nl2br,
+p.nl2br {
     white-space: pre-wrap;
+}
+
+.error-logo-float {
+    position: absolute;
+    float: right;
+    top: 15px;
+    right: 15px;
+    width:100px;
 }

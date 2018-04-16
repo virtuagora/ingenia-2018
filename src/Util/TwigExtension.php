@@ -74,7 +74,7 @@ class TwigExtension extends Twig_Extension
             case 0:
                 return 'https://www.gravatar.com/avatar/'.$hash.'?d=identicon&s='.$size;
             case 1:
-                return 'http://graph.facebook.com/'.$hash.'/picture?width='.$size;
+                return 'https://graph.facebook.com/'.$hash.'/picture?width='.$size;
             default:
                 return 'https://www.gravatar.com/avatar/'.$hash.'?d=identicon&s='.$size;
                 // return Slim\Slim::getInstance()->request()->getRootUri().'/img/usuario/'.$hash.'/'.$size.'.png';

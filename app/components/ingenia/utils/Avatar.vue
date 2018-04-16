@@ -21,7 +21,7 @@ export default {
           );
         case 1:
           return (
-            "http://graph.facebook.com/" +
+            "https://graph.facebook.com/" +
             this.subject.img_hash +
             "/picture?width=" +
             this.size
