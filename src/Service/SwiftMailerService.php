@@ -21,7 +21,7 @@ class SwiftMailerService
             );
             $transport->setUsername($options['username']);
             $transport->setPassword($options['password']);
-            $this->sender = [$options['username'] => 'INGENIA'];
+            $this->sender = $options['sender'];
         } elseif ($transport == 'sendmail') {
             $transport = new \Swift_SendmailTransport($options['command']);
         } elseif ($transport == 'mail') {
