@@ -61,10 +61,18 @@ class UserResource extends Resource
     public function createPendingUser($subject, $data) // el subject sirve para invitaciones
     {
         $pending = $this->identity->createPendingUser('local', $data);
-        $mailMsg = 'Accede con ' . $pending->token;
-        $mailSub = 'Registro Virtuágora';
-        $this->logger->info($mailMsg);
-        $this->mailer->sendMail($mailSub, $pending->identifier, $mailMsg);
+        // $mailMsg = 'Accede con ' . $pending->token;
+        // $mailSub = 'Registro Virtuágora';
+
+        $link = $this->helper->pathFor('showCompleteSignUp', true, [
+            'token' => $user->token,
+        ]);
+        $mailMsg = $this->view->fetch('emails/completeRegister', [
+            'url' => $link,
+        ]);
+
+        $this->logger->info($link);
+        $this->mailer->sendMail($mailSub, $pending->identifier, $mailMsg, 'text/html');
     }
 
     public function updateProfile($subject, $user, $data)

@@ -15,8 +15,16 @@ $app->post('/fb-callback', function ($request, $response, $args) {
     $result = $this->identity->signIn('facebook', $request->getParsedBody());
     if ($result['status'] == 'success') {
         $user = $result['user'];
-        $session = $this->session->signIn($user->subject->toDummy());
-        return $response->withRedirect('/idle');
+        $group = $user->groups->first();
+        $session = $this->session->signIn($user->subject->toDummy([
+            'user_id' => $user->id,
+            'group' => [
+                'id' => $group->id,
+                'relation' => $group->pivot->relation,
+                'name' => $group->name,
+            ],
+        ]));
+        return $response->withRedirect('/');
     } elseif ($result['status'] == 'pending-user') {
         return $this->view->render($response, 'base/facebook-registro.twig', [
         'token' => $result['token'],
@@ -32,8 +40,16 @@ $app->post('/fb-callback', function ($request, $response, $args) {
 $app->post('/fb-register', function ($request, $response, $args) {
     $data = $request->getParsedBody();
     $user = $this->identity->registerUser([], $data['token']);
-    $session = $this->session->signIn($user->subject->toDummy());
-    return $response->withRedirect('/idle');
+    $group = $user->groups->first();
+    $session = $this->session->signIn($user->subject->toDummy([
+        'user_id' => $user->id,
+        'group' => [
+            'id' => $group->id,
+            'relation' => $group->pivot->relation,
+            'name' => $group->name,
+        ],
+    ]));
+    return $response->withRedirect('/');
 })->setName('fbRegister');
 
 // pantalla que muestra si el usuario está identificado o no

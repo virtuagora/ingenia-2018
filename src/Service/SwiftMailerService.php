@@ -4,16 +4,24 @@ namespace App\Service;
 
 class SwiftMailerService
 {
-    private $mailer;
+    protected $mailer;
+    protected $sender;
     
     public function __construct($transport, $options)
     {
+        $this->sender = ['test@test.com' => 'Testing'];
         if ($transport == 'null') {
             $transport = new \Swift_NullTransport();
         } elseif ($transport == 'smtp') {
-            $transport = new \Swift_SmtpTransport($options['host'], $options['port']);
+            $security = isset($options['security']) ? $options['security'] : null;
+            $transport = new \Swift_SmtpTransport(
+                $options['host'],
+                $options['port'],
+                $security
+            );
             $transport->setUsername($options['username']);
             $transport->setPassword($options['password']);
+            $this->sender = [$options['username'] => 'INGENIA'];
         } elseif ($transport == 'sendmail') {
             $transport = new \Swift_SendmailTransport($options['command']);
         } elseif ($transport == 'mail') {
@@ -27,7 +35,7 @@ class SwiftMailerService
         return $this->mailer->send($message);
     }
 
-    public function sendMail($subject, $to, $body)
+    public function sendMail($subject, $to, $body, $mime = 'text/plain')
     {
         $message = new \Swift_Message($subject);
         $message->setTo($to);
@@ -42,8 +50,9 @@ class SwiftMailerService
                 }
             }
         } else {
-            $message->setBody($body);
+            $message->setBody($body, $mime);
         }
+        $message->setFrom($this->sender);
         return $this->send($message);
     }
     
