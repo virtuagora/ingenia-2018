@@ -90,7 +90,6 @@ export default {
         this.$http
           .get("/region/" + newVal.id + "/department")
           .then(response => {
-            console.log(response);
             this.departamentoLoading = false;
             this.departamentos = response.data;
             this.localidades = [];
@@ -117,7 +116,6 @@ export default {
         this.$http
           .get("/department/" + newVal.id + "/locality")
           .then(response => {
-            console.log(response);
             this.localidades = response.data;
             this.localidadLoading = false;
           })
