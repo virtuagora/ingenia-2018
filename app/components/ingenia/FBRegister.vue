@@ -21,7 +21,7 @@
         Iniciando sesión...
       </div>
     </div>
-    <form ref="facebookRegisterForm" :action="formUrl">
+    <form ref="facebookRegisterForm" :action="formUrl" method="POST">
       <input type="hidden" name="token" :value="token">
     </form>
   </div>
