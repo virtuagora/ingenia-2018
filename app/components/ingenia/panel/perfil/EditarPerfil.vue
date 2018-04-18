@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class="tabs">
+  <ul>
+    <li :class="{'is-active': $route.name == 'userVerPerfil'}"><router-link :to="{ name: 'userVerPerfil'}">Ver perfil</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarPerfil'}"><router-link :to="{ name: 'userEditarPerfil'}">Editar perfil</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarAvatar'}"><router-link :to="{ name: 'userEditarAvatar'}">Cambiar avatar</router-link></li>
+  </ul>
+</div>
     <h1 class="subtitle is-3">Editar perfil</h1>
     <div class="field">
       <label class="label is-size-4">

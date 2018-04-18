@@ -51,7 +51,7 @@
       <label class="label is-size-4">
       <i class="fas fa-angle-double-right"></i> ¿De donde es la organización? *
     </label>
-      <Localidad v-if="showLocalityField" ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
+      <Localidad v-if="showLocalityField" ref="localidadOrganizationForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
         <div v-else>
         <button @click="cleanLocalidad" class="button is-light is-pulled-right">Cambiar ubicación</button>
         <show-localidad :locality-id="dummyOrganization.locality_id" :locality-other="dummyOrganization.locality_other"></show-localidad>
@@ -157,7 +157,7 @@ export default {
       return promise;
     },
     validateLocalidad: function() {
-      return (this.showLocalityField ? this.$refs.localidadForm.validateForm() : true);
+      return (this.showLocalityField ? this.$refs.localidadOrganizationForm.validateForm() : true);
     },
     cleanLocalidad: function(){
       this.dummyOrganization.locality_id = null

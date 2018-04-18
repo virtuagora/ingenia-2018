@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div class="notification is-warning has-text-centered">
-      <b>
-        <i class="fas fa-eye"></i> Estas viendo tu perfil público</b><br>Los datos personales para participar de un proyecto no se ven publicamente
-    </div>
+    <div class="tabs">
+  <ul>
+    <li :class="{'is-active': $route.name == 'userVerPerfil'}"><router-link :to="{ name: 'userVerPerfil'}">Ver perfil</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarPerfil'}"><router-link :to="{ name: 'userEditarPerfil'}">Editar perfil</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarAvatar'}"><router-link :to="{ name: 'userEditarAvatar'}">Cambiar avatar</router-link></li>
+  </ul>
+</div>
     <article class="media">
       <Avatar :subject="user.subject" class="media-left" size="128" />
       <div class="media-content" v-if="user != {}">

@@ -1,40 +1,53 @@
 <template>
-  <section>
-    <div class="has-text-centered">
-      <img src="/assets/img/ingenia-logo.svg" class="image is-centered" style="max-width: 250px;">
-    </div>
-    <br>
-    <b-message class="has-text-centered">
-      Ingresá aquí todos los datos requeridos sobre el proyecto. ¡Estos datos serán visibles para todos los que visiten el punto de encuentro del proyecto! Podes editarlo cuantas veces necesites, hasta que envies el proyecto.
-    </b-message>
-    <div class="notification is-link">
-      <h1 class="title is-1 is-700">
-        <i class="far fa-edit fa-fw"></i> Sobre el
-        <u>PROYECTO</u>
-      </h1>
-    </div>
-    <form-proyecto ref="formProyecto" :project.sync="project"></form-proyecto>
-    <br>
-    <div class="notification is-success" v-show="response.ok">
+  <div>
+      <div class="has-text-centered">
+        <img src="/assets/img/ingenia-logo.svg" class="image is-centered" style="max-width: 250px;">
+      </div>
+      <br>
+      <b-message class="has-text-centered">
+        Ingresá aquí todos los datos requeridos sobre el proyecto.
+        <br>¡Estos datos serán visibles para todos los que visiten el punto de encuentro del proyecto! Podes editarlo cuantas veces necesites, hasta el cierre de la convocatoria.
+      </b-message>
+    <section v-if="!editMode || (editMode && fetchResponse.replied && fetchResponse.ok)">
+      <div class="notification is-link">
+        <h1 class="title is-2 is-700">
+          <i class="far fa-edit fa-fw"></i> Sobre el
+          <u>PROYECTO</u>
+        </h1>
+      </div>
+      <form-proyecto ref="formProyecto" :project.sync="project"></form-proyecto>
+      <br>
+      <div class="notification is-success" v-show="response.ok">
         <i class="fas fa-check fa-fw"></i> Datos enviados y guardados con éxito
       </div>
       <button @click="submit" v-show="!response.ok" class="button is-large is-primary is-fullwidth" :class="{'is-loading': isLoading}">
         <i class="fas fa-save"></i>&nbsp;&nbsp;Guardar</button>
       <b-loading :active.sync="isLoading"></b-loading>
-  </section>
+    </section>
+    <section v-if="editMode && fetchResponse.replied && !fetchResponse.ok">
+      <div class="notification is-danger">
+        <i class="fas fa-times fa-fw"></i> Error al conseguir los datos del proyecto. Vuelva a cargar la página
+      </div>
+    </section>
+    <b-loading :active.sync="isLoading"></b-loading>
+  </div>
 </template>
 
 <script>
-import FormProyecto from '../../utils/FormProyecto'
+import FormProyecto from "../../utils/FormProyecto";
 
 export default {
-  props: ['saveProjectUrl','editProjectUrl'],
+  props: ["projectUrl", "saveProjectUrl", "editProjectUrl"],
   components: {
     FormProyecto
   },
   data() {
     return {
       isLoading: false,
+      fetchResponse: {
+        replied: false,
+        ok: false
+      },
       response: {
         replied: false,
         ok: false
@@ -51,13 +64,48 @@ export default {
         goals: [],
         schedule: [],
         budget: [],
-        organization: null,
+        organization: null
       },
-      user: {}
-    }
+      user: {},
+      editMode: false
+    };
   },
-  created: function(){
-    this.user = this.$store.state.user
+  created: function() {
+    this.user = this.$store.state.user;
+    if (this.user.groups[0].project !== null) {
+      this.editMode = true;
+      this.isLoading = true;
+      this.$http
+        .get(this.fetchProjectUrl)
+        .then(response => {
+          this.project.name = response.data.name;
+          this.project.abstract = response.data.abstract;
+          this.project.foundation = response.data.foundation;
+          this.project.category_id = response.data.category.id;
+          this.project.previous_work = response.data.previous_work;
+          this.project.locality_id = response.data.locality_id;
+          this.project.locality_other = response.data.locality_other;
+          this.project.neighbourhoods = response.data.neighbourhoods;
+          this.project.goals = response.data.goals;
+          this.project.schedule = response.data.schedule;
+          this.project.budget = response.data.budget;
+          this.project.organization = response.data.organization ? response.data.organization : false
+          this.fetchResponse.replied = true;
+          this.fetchResponse.ok = true;
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.fetchResponse.replied = true;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    }
   },
   methods: {
     isOptional: function(value) {
@@ -88,13 +136,16 @@ export default {
               .then(response => {
                 console.log(response);
                 this.$snackbar.open({
-                  message: "Datos guardados con éxito",
+                  message:
+                    "Proyecto " +
+                    (this.editMode ? "editado" : "creado") +
+                    " con éxito",
                   type: "is-success",
                   actionText: "OK"
                 });
                 this.isLoading = false;
                 this.response.ok = true;
-                this.$store.commit('updateUser')
+                this.forceUpdateState('userPanel')
               })
               .catch(error => {
                 console.error(error.message);
@@ -125,12 +176,18 @@ export default {
     }
   },
   computed: {
-    urlPost: function(){
-      if(this.user.groups[0].project !== null){
-        return this.editProjectUrl.replace(':pro',this.user.groups[0].project.id)
+    urlPost: function() {
+      if (this.editMode) {
+        return this.editProjectUrl.replace(
+          ":pro",
+          this.user.groups[0].project.id
+        );
       } else {
-        return this.saveProjectUrl
+        return this.saveProjectUrl;
       }
+    },
+    fetchProjectUrl: function() {
+      return this.projectUrl.replace(":pro", this.user.groups[0].project.id);
     },
     payload: function() {
       let load = {
@@ -144,15 +201,13 @@ export default {
         neighbourhoods: this.project.neighbourhoods,
         goals: this.project.goals,
         schedule: this.project.schedule,
-        budget: this.project.budget,
+        budget: this.project.budget
       };
       if (this.project.organization != null) {
         load.organization = {
           name: this.project.organization.name,
           topics: this.isOptional(this.project.organization.topics),
-          topic_other: this.isOptional(
-            this.project.organization.topic_other
-          ),
+          topic_other: this.isOptional(this.project.organization.topic_other),
           locality_id: this.project.organization.locality_id,
           locality_other: this.isOptional(
             this.project.organization.locality_other

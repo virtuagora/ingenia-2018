@@ -46,6 +46,8 @@
   },
   "dependencies": {
     "buefy": "^0.6.5",
+    "bulma-badge": "^1.0.1",
+    "bulma-steps-component": "^0.5.3",
     "chart.js": "^2.7.2",
     "emoji-awesome": "0.0.1",
     "facebook-sdk-promise": "^1.2.1",

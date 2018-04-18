@@ -6,7 +6,7 @@
       </div>
       <br>
       <b-message class="has-text-centered">
-        Acá podes editar los datos de tu equipo. Podes cambiarlos hasta que envies tu proyecto.
+        Acá podes editar los datos de tu equipo. Podes cambiar todos los datos hasta el cierre de la convocatoria.
       </b-message>
       <section v-if="fetchResponse.replied && fetchResponse.ok">
       <div class="notification is-link">

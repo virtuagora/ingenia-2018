@@ -72,11 +72,11 @@ class TwigExtension extends Twig_Extension
     public function avatarUrlFunction($type, $hash, $size) {
         switch ($type) {
             case 0:
-                return 'https://www.gravatar.com/avatar/'.$hash.'?d=identicon&s='.$size;
+                return 'https://www.gravatar.com/avatar/'.$hash.'?d=mm&s='.$size;
             case 1:
                 return 'https://graph.facebook.com/'.$hash.'/picture?width='.$size;
             default:
-                return 'https://www.gravatar.com/avatar/'.$hash.'?d=identicon&s='.$size;
+                return 'https://www.gravatar.com/avatar/'.$hash.'?d=mm&s='.$size;
                 // return Slim\Slim::getInstance()->request()->getRootUri().'/img/usuario/'.$hash.'/'.$size.'.png';
         }
     }

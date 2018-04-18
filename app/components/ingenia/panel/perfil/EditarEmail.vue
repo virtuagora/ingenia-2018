@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 class="subtitle is-3">Actualizar mi email</h1>
+    <h1 class="subtitle is-3">Verificar mi email</h1>
     <b-message>Uno de los requerimientos para ser integrante de un equipo INGENIA o presentar un proyecto INGENIA es el de tener una dirección de email verificada. A continuación escribí tu dirección de email. Un email te llegará para que puedas validar tu email.</b-message>
     <section v-if="this.user.pending_tasks.includes('email')">
     <b-field horizontal custom-class="is-medium" label="Nuevo email">

@@ -1,11 +1,16 @@
 <template>
-  <article class="content">
+  <article>
     <img src="/assets/img/ingenia-logo.svg" class="image" style="max-width: 150px;">
+    <br>
     <h1 class="title is-2">¡Hola {{user.names}}!</h1>
     <p>¡Bienvenidx a tu panel de control! Aquí tendrás control de toda tu información
       <i class="em em-wink"></i>
     </p>
-    <div class="notification is-light is-clearfix">
+    <br>
+    <status></status>
+    <br>
+    <br>
+    <div class="notification is-light is-clearfix is-hidden">
       <router-link :to="{ name: 'userEditarPerfil'}" class="button is-dark is-dark is-pulled-right">Editar perfil</router-link>
       <span class="is-600 is-size-5">
         <i class="fas fa-angle-double-right fa-lg fa-fw"></i> ¡Mantené tu perfíl actualizado!</span>
@@ -122,11 +127,11 @@
 </template>
 
 <script>
-import GetGrupo from "../utils/GetGrupo";
+import Status from "../utils/Status";
 
 export default {
   components: {
-    GetGrupo
+    Status
   },
   props: ["id"],
   data() {

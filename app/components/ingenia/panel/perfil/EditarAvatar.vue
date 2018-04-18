@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class="tabs">
+  <ul>
+    <li :class="{'is-active': $route.name == 'userVerPerfil'}"><router-link :to="{ name: 'userVerPerfil'}">Ver perfil</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarPerfil'}"><router-link :to="{ name: 'userEditarPerfil'}">Editar perfil</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarAvatar'}"><router-link :to="{ name: 'userEditarAvatar'}">Cambiar avatar</router-link></li>
+  </ul>
+</div>
     <h1 class="subtitle is-3">Cambiar avatar</h1>
     <p>Virtuagora no gestiona las imagenes de perfil. Integramos el uso de otros servicios para los avatares, en el caso de que estes participando de multiples instancias de Virtuágora.</p>
     <br>

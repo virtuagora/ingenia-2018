@@ -16,7 +16,7 @@ export default {
           return (
             "https://www.gravatar.com/avatar/" +
             this.subject.img_hash +
-            "?d=identicon&s=" +
+            "?d=mm&s=" +
             this.size
           );
         case 1:
@@ -30,7 +30,7 @@ export default {
           return (
             "https://www.gravatar.com/avatar/" +
             this.subject.img_hash +
-            "?d=identicon&s=" +
+            "?d=mm&s=" +
             this.size
           );
       }

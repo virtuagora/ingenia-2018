@@ -13,6 +13,7 @@
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.abstract')}">
         <i class="fas fa-angle-double-right"></i> Resumen del proyecto *</label>
       <p>Breve descripción de tu proyecto. Máximo 1000 caracteres</p>
+      <br>
       <div class="control">
         <b-input v-model="project.abstract" data-vv-name="project.abstract" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:1000'" type="textarea" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
         </b-input>
@@ -23,6 +24,7 @@
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.foundation')}">
         <i class="fas fa-angle-double-right"></i> Fundamentación *</label>
       <p>¿Por qué vale la pena realizar el proyecto? Máximo 1500 caracteres</p>
+      <br>
       <div class="control">
         <b-input v-model="project.foundation" data-vv-name="project.foundation" data-vv-as="'Fundamentación'" v-validate="'required|min:10|max:1500'" type="textarea" minlength="10" maxlength="1500" rows="3" placeholder="Requerido *">
         </b-input>
@@ -79,7 +81,13 @@
     <label class="label is-size-4">
       <i class="fas fa-angle-double-right"></i> ¿Donde se implementa o implementará territorialmente el proyecto? *
     </label>
-        <Localidad ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
+        <Localidad v-if="showLocalityField" ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
+        <div v-else>
+            <button @click="cleanLocalidad" class="button is-light is-pulled-right">Cambiar ubicación</button>
+            <show-localidad :locality-id="project.locality_id" :locality-other="project.locality_other"></show-localidad>
+            <br>
+            <br>
+        </div>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.neighbourhoods')}">
         <i class="fas fa-angle-double-right"></i>¿En que barrio/s se llevará adelante? *</label>
@@ -158,7 +166,7 @@
       <br>
       <div class="field is-grouped">
         <div class="control">
-          <b-datepicker placeholder="Hace clic!" v-model="dateActividad" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date()" :max-date="new Date('12/31/2018')" icon="calendar-alt">
+          <b-datepicker placeholder="Hace clic!" v-model="dateActividad" :mobile-native="false" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date()" :max-date="new Date('12/31/2018')" icon="calendar-alt">
           </b-datepicker>
         </div>
         <p class="control is-expanded">
@@ -309,15 +317,20 @@
 
 <script>
 import Localidad from './FieldLocalidad'
+import ShowLocalidad from "./GetLocalidad";
+
 import FormOrganizacion from "./FormOrganizacion";
 export default {
   props: ['project'],
   components: {
     Localidad,
+    ShowLocalidad,
     FormOrganizacion
   },
   data() {
     return {
+      isInitialized: false,
+      showLocalityField: false,
       conOrganizacion: null,
       enEjecucion: null,
       radioEstado: null,
@@ -331,12 +344,25 @@ export default {
       categorias: []
     };
   },
+  created: function() {
+    if (this.project.organization) {
+      this.conOrganizacion = true;
+      this.isInitialized = true;
+    } else if(this.project.organization === false){
+      this.conOrganizacion = false;
+    }
+    if(this.project.previous_work){
+      this.enEjecucion = true
+    } else if(this.project.previous_work === false){
+      this.enEjecucion = false      
+    }
+    this.showLocalityField = this.project.locality_id === null ? true : false;
+  },
   mounted: function() {
     this.categoriasLoading = true;
     this.$http
       .get("/category")
       .then(response => {
-        console.log(response);
         this.categorias = response.data;
         this.categoriasLoading = false;
       })
@@ -437,8 +463,13 @@ export default {
         return true;
       }
     },
-    validateLocalidad: function(){
-        return this.$refs.localidadForm.validateForm();
+    validateLocalidad: function() {
+      return (this.showLocalityField ? this.$refs.localidadForm.validateForm() : true);
+    },
+    cleanLocalidad: function() {
+      this.project.locality_id = null;
+      this.project.locality_other = null;
+      this.showLocalityField = true;
     }
   },
   computed: {
@@ -470,18 +501,22 @@ export default {
   },
   watch: {
     conOrganizacion: function(newVal, oldVal) {
-      if (newVal) {
-        this.project.organization = {
-          name: null,
-          topics: [],
-          topic_other: null,
-          locality_id: null,
-          locality_other: null,
-          web: null,
-          facebook: null,
-          telephone: null,
-          email: null
-        };
+     if (newVal) {
+        if (this.isInitialized) {
+          this.isInitialized = false;
+        } else {
+          this.project.organization = {
+            name: null,
+            topics: [],
+            topic_other: null,
+            locality_id: null,
+            locality_other: null,
+            web: null,
+            facebook: null,
+            telephone: null,
+            email: null
+          };
+        }
       } else {
         this.project.organization = null;
       }

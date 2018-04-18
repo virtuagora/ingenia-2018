@@ -1,6 +1,5 @@
   <template>
   <section>
-
   <div class="columns">
     <div class="column is-3">
       <aside class="menu">
@@ -14,12 +13,6 @@
           <li>
             <router-link :to="{ name: 'userVerPerfil'}" exact-active-class="is-active">Mi perfil público</router-link>
           </li>
-          <li>
-            <router-link :to="{ name: 'userEditarPerfil'}" exact-active-class="is-active">Editar perfil público</router-link>
-          </li>
-          <li>
-            <router-link :to="{ name: 'userEditarAvatar'}" exact-active-class="is-active">Cambiar avatar</router-link>
-          </li>
         </ul>
         <hr>
         <p class="menu-label">
@@ -27,24 +20,24 @@
         </p>
         <ul class="menu-list">
           <li v-if="user.groups[0] === undefined">
-            <router-link :to="{ name: 'userVerInvitaciones'}" exact-active-class="is-active"> <i class="far fa-envelope fa-fw"></i> Mis invitaciones y solicitudes ({{this.user.invitations.length}})</router-link>
+            <router-link :to="{ name: 'userVerInvitaciones'}" exact-active-class="is-active">Mis invitaciones y solicitudes <span class="badge is-badge-danger is-badge-small" :class="{'is-hidden': this.user.invitations.length == 0}" data-badge=""><i class="fas fa-envelope fa-fw"></i></span></router-link>
           </li>
           <li>
-            <a><i class="fas fa-angle-down "></i> Mis datos personales</a>
+            <a>Mis datos personales</a>
           </li>
           <li>
             <ul>
               <li>
                 <router-link :to="{ name: 'userEditarMisDatosPersonales'}" exact-active-class="is-active">
-                  <i class="fas fa-fw" :class="{'fa-check': !this.user.pending_tasks.includes('profile'), 'fa-exclamation': this.user.pending_tasks.includes('profile') }"></i>&nbsp;Actualizar datos personales</router-link>
+                  <i class="fas fa-fw" :class="{'fa-check has-text-success': !this.user.pending_tasks.includes('profile'), 'fa-exclamation has-text-danger': this.user.pending_tasks.includes('profile') }" :style="$route.name == 'userEditarMisDatosPersonales' ? 'color: white !important;' : ''"></i>&nbsp;Actualizar datos personales</router-link>
               </li>
               <li>
                 <router-link :to="{ name: 'userEditarEmail'}" exact-active-class="is-active">
-                  <i class="fas fa-fw" :class="{'fa-check': !this.user.pending_tasks.includes('email'), 'fa-exclamation': this.user.pending_tasks.includes('email') }"></i>&nbsp;Actualizar mi email</router-link>
+                  <i class="fas fa-fw" :class="{'fa-check has-text-success': !this.user.pending_tasks.includes('email'), 'fa-exclamation has-text-danger': this.user.pending_tasks.includes('email') }" :style="$route.name == 'userEditarEmail' ? 'color: white !important;' : ''"></i>&nbsp;Verificar mi email</router-link>
               </li>
               <li>
                 <router-link :to="{ name: 'userSubirDNI'}" exact-active-class="is-active">
-                  <i class="fas fa-fw" :class="{'fa-check': !this.user.pending_tasks.includes('dni'), 'fa-exclamation': this.user.pending_tasks.includes('dni') }"></i>&nbsp;Subir mi DNI</router-link>
+                  <i class="fas fa-fw" :class="{'fa-check has-text-success': !this.user.pending_tasks.includes('dni'), 'fa-exclamation has-text-danger': this.user.pending_tasks.includes('dni') }" :style="$route.name == 'userSubirDNI' ? 'color: white !important;' : ''"></i>&nbsp;Subir mi DNI</router-link>
               </li>
             </ul>
           </li>
