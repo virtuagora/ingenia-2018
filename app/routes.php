@@ -174,6 +174,20 @@ $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 $app->post('/pending-user', 'userAction:postPendingUser')->setName('runNewPendingUser');
 $app->post('/user', 'userAction:post')->setName('runNewUser');
 
+$app->post('/project/{pro}/picture', 'projectAction:postPicture')->setName('runUpdProPic');
+$app->get('/project/{pro}/picture', function ($request, $response, $args) {
+    $path = 'project/'.$this->helper->getSanitizedId('pro', $args).'.jpg';
+    if (!$this->filesystem->has($path)) {
+        throw new AppException(
+            'El documento no se encuentra almacenado',
+            404
+        );
+    }
+    return $response
+        ->withBody(new \Slim\Http\Stream($this->filesystem->readStream($path)))
+        ->withHeader('Content-Type', $this->filesystem->getMimetype($path));
+})->setName('getProPic');
+
 // guille
 
 $app->get('/testing', function ($req, $res, $arg) {

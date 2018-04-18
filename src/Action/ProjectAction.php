@@ -65,7 +65,7 @@ class ProjectAction
         ]);
     }
     
-    public function postPicture($req, $res, $arg)
+    public function postPicture($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
         $project = $this->helper->getEntityFromId(

@@ -281,4 +281,38 @@ class ProjectResource extends Resource
         }
         return $project;
     }
+
+    public function updatePicture($subject, $project, $imgFile)
+    {
+        if ($imgFile->getError() == UPLOAD_ERR_NO_FILE) {
+            throw new AppException('No se envió archivo');
+        } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
+            throw new AppException(
+                'Hubo un error con el archivo recibido ('.$imgFile->getError().')'
+            );
+        }
+        $fileMime = $imgFile->getClientMediaType();
+        $allowedMimes = [
+            'image/jpeg' => 'jpg',
+            'image/pjpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
+        ];
+        if (!isset($allowedMimes[$fileMime])) {
+            throw new AppException('Tipo de archivo inválido');
+        }
+        $imgStrm = $this->image->make($imgFile->getStream()->detach())
+            ->fit(800, 565, function ($constraint) {
+                $constraint->upsize();
+            })
+            ->encode('jpg', 75);
+        $this->filesystem->put('project/'.$project->id.'.jpg', $imgStrm);
+        if (is_resource($imgStrm)) {
+            fclose($imgStrm);
+        }
+        if (!$project->has_image) {
+            $project->has_image = true;
+            $project->save();
+        }
+    }
 }

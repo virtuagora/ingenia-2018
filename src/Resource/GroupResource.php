@@ -435,12 +435,13 @@ class GroupResource extends Resource
         }
         $fileMime = $file->getClientMediaType();
         $allowedMimes = [
-        'application/pdf' => 'pdf',
-        'invalid/pdf' => 'pdf',
-        'application/msword' => 'doc',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
-        'image/jpeg' => 'jpg',
-        'image/pjpeg' => 'jpg',
+            'application/pdf' => 'pdf',
+            'invalid/pdf' => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+            'image/jpeg' => 'jpg',
+            'image/pjpeg' => 'jpg',
+            'image/png' => 'png',
         ];
         if (!isset($allowedMimes[$fileMime])) {
             throw new AppException('Tipo de documento inválido');
@@ -464,12 +465,13 @@ class GroupResource extends Resource
         }
         $fileMime = $file->getClientMediaType();
         $allowedMimes = [
-        'application/pdf' => 'pdf',
-        'invalid/pdf' => 'pdf',
-        'application/msword' => 'doc',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
-        'image/jpeg' => 'jpg',
-        'image/pjpeg' => 'jpg',
+            'application/pdf' => 'pdf',
+            'invalid/pdf' => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+            'image/jpeg' => 'jpg',
+            'image/pjpeg' => 'jpg',
+            'image/png' => 'png',
         ];
         if (!isset($allowedMimes[$fileMime])) {
             throw new AppException('Tipo de documento inválido');
