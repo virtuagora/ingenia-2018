@@ -293,7 +293,7 @@ class GroupResource extends Resource
         $group = $this->db->query('App:Group')
             ->withCount('users')
             ->find($invitation->group_id);
-        if ($group->users_count > 5) {
+        if ($group->users_count >= 5) {
             $group->full_team = true;
             $group->save();
         }
@@ -419,7 +419,7 @@ class GroupResource extends Resource
         $group = $this->db->query('App:Group')
             ->withCount('users')
             ->find($invitation->group_id);
-        if ($group->users_count > 5) {
+        if ($group->users_count >= 5) {
             $group->full_team = true;
             $group->save();
         }

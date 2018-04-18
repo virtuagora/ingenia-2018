@@ -106,19 +106,31 @@ $app->get('/test', function ($req, $res, $arg) {
 // views
 
 $app->get('/login', function ($request, $response, $args) {
+    if ($request->getAttribute('subject')->getType() != 'Annonymous') {
+        return $response->withRedirect('/');
+    }
     return $this->view->render($response, 'base/login.twig', [
-    'facebookKey' => $this->get('settings')['facebook']['app_id'],
-    'googleKey' => $this->get('settings')['recaptcha']['public_key'],
+        'facebookKey' => $this->get('settings')['facebook']['app_id'],
+        'googleKey' => $this->get('settings')['recaptcha']['public_key'],
     ]);
 })->setName('showLogin');
 
 $app->get('/sign-up', function ($request, $response, $args) {
+    if ($request->getAttribute('subject')->getType() != 'Annonymous') {
+        return $response->withRedirect('/');
+    }
     return $this->view->render($response, 'base/signUp.twig');
 })->setName('showSignUp');
 
 $app->get('/complete-sign-up', function ($request, $response, $args) {
+    $pending = $this->db->query('App:PendingUser')
+        ->where('token', $token)
+        ->first();
+    if (isset($pending)) {
+        return $response->withRedirect('/');
+    }
     return $this->view->render($response, 'base/completar-registro.twig', [
-    'activation_key' => $request->getQueryParam('token'),
+        'activation_key' => $request->getQueryParam('token'),
     ]);
 })->setName('showCompleteSignUp');
 
@@ -215,7 +227,7 @@ $app->group('/account', function () {
 $app->group('/proyecto', function () {
     $this->get('/{pro}', function($request, $response, $params){
         $proyecto = $this->helper->getEntityFromId(
-        'App:Project', 'pro', $params
+            'App:Project', 'pro', $params, ['category']
         );
         $proyecto->addVisible(['goals', 'schedule', 'budget','category_id']);
         // return $response->withJSON($proyecto->toArray());
