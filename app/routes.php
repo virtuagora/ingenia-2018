@@ -255,7 +255,7 @@ $app->group('/proyecto', function () {
         $proyecto = $this->helper->getEntityFromId(
             'App:Project', 'pro', $params, ['category']
         );
-        $proyecto->addVisible(['goals', 'schedule', 'budget','category_id']);
+        $proyecto->addVisible(['category_id']);
         // return $response->withJSON($proyecto->toArray());
         return $this->view->render($response, 'ingenia/project/showProject.twig', [
         'project' => $proyecto,

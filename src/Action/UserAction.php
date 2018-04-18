@@ -30,7 +30,7 @@ class UserAction
     {
         $subject = $request->getAttribute('subject');
         $usuario = $this->helper->getEntityFromId(
-            'App:User', 'usr', $params, ['groups.project', 'invitations']
+            'App:User', 'usr', $params, ['groups.project.category', 'invitations']
         );
         if ($this->authorization->checkPermission($subject, 'retUsrFull', $usuario)) {
             $visible = [

@@ -27,9 +27,6 @@ class ProjectAction
         $proyecto = $this->helper->getEntityFromId(
             'App:Project', 'pro', $params, ['category']
         );
-        if ($this->authorization->checkPermission($subject, 'retProFull', $proyecto)) {
-            $proyecto->addVisible(['goals', 'schedule', 'budget']);
-        }
         return $response->withJSON($proyecto->toArray());
     }
     

@@ -12,6 +12,7 @@ class Project extends Model
     protected $visible = [
         'id', 'name', 'abstract', 'foundation', 'previous_work',
         'neighbourhoods', 'organization', 'locality_id', 'locality_other',
+        'goals', 'schedule', 'budget',
         'has_image', 'likes', 'group', 'category',
     ];
     protected $with = [];
