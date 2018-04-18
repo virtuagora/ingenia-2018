@@ -123,14 +123,15 @@ $app->get('/sign-up', function ($request, $response, $args) {
 })->setName('showSignUp');
 
 $app->get('/complete-sign-up', function ($request, $response, $args) {
+    $token = $request->getQueryParam('token');
     $pending = $this->db->query('App:PendingUser')
         ->where('token', $token)
         ->first();
-    if (isset($pending)) {
+    if (is_null($pending)) {
         return $response->withRedirect('/');
     }
     return $this->view->render($response, 'base/completar-registro.twig', [
-        'activation_key' => $request->getQueryParam('token'),
+        'activation_key' => $token,
     ]);
 })->setName('showCompleteSignUp');
 
