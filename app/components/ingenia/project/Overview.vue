@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <div class="columns">
-        <div class="column">
+        <div class="column" :class="{'is-offset-3 is-6': user === null || user.groups[0] !== undefined}">
           <h3 class="is-size-3">
             <b>Descripción del proyecto</b>
           </h3>
@@ -13,8 +13,8 @@
           </h3>
           <p class="nl2br">{{project.foundation}}</p>
         </div>
-        <div class="column">
-          <div class="notification is-dark has-text-centered" v-if="user.groups[0] === undefined">
+        <div class="column" v-if="user && user.groups[0] === undefined">
+          <div class="notification is-dark has-text-centered">
             <h3 class="is-size-4 is-500">
               <span v-if="user !== null">¡{{user.names}}!</span> ¿Queres colaborar con el equipo?</h3>
             <p>¡Enviales una solicitud para ser parte!</p>
@@ -64,7 +64,7 @@ export default {
   props: ["project", 'sendRequestJoin'],
   data() {
     return {
-      user: null,
+      user: {},
       wannaColaborate: false,
       message: null,
       isLoading: false,
