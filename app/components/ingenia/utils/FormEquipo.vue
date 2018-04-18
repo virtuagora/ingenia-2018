@@ -164,9 +164,10 @@ export default {
     for (let i = 2011; i <= 2017; i++) {
       this.listPreviousEditions.push(i);
     }
-    for (let i = 1900; i <= 2018; i++) {
+    for (let i = 1990; i <= 2018; i++) {
       this.listYearFoundation.push(i);
     }
+      this.listYearFoundation.reverse()
   },
   methods: {
     updateLocalidad: function(id) {

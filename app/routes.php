@@ -243,7 +243,7 @@ $app->group('/usuario', function () {
         $usuario = $this->helper->getEntityFromId(
             'App:User', 'usr', $params, ['groups.project']
         );
-        $proyecto->addVisible(['groups']);
+        $usuario->addVisible(['groups']);
         return $this->view->render($response, 'ingenia/user/showUser.twig', [
             'user' => $usuario,
         ]);

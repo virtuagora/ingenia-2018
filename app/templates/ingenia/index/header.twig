@@ -1,10 +1,10 @@
-<div class="hero is-primary" id="main-hero" style="background-image: url('assets/img/trama-multicolor.svg')">
+<div class="hero is-primary" id="main-hero" style="background-image: url('assets/img/header-bg-01.jpg')">
   <img src="{{asset('img/santafelogo.svg')}}" class="image logo-sf-float is-48x48 is-hidden-touch" alt="">
   <div class="hero-body">
     <div class="container">
       <div class="columns">
         <div class="column is-5">
-          <img src="./assets/img/ingenia-logo5.svg" class="logo-header image">
+          <img src="./assets/img/ingenia-logo-white.svg" class="logo-header image">
         </div>
         <div class="column">
           <div class="columns is-mobile is-multiline" style="justify-content: flex-end">
@@ -67,8 +67,8 @@
             </div>
             {% if subject.id %}
               <div class="column is-narrow has-text-centered">
-              <Avatar :subject="{{subject.extra|json_encode}}" size="96"/>
-                
+                <avatar :subject="{{subject.extra|json_encode}}" :to-panel="true" size="96"/>
+
                 <br>
                 <a href="#" class="has-text-white is-hidden">
                   <b-tooltip label="¡32 bancan mi proyecto!" type="is-dark" position="is-bottom">
@@ -86,18 +86,26 @@
     </div>
   </div>
   <div class="hero-foot">
-<nav class="tabs is-boxed">
+    <nav class="tabs is-boxed">
       <div class="container">
         <ul>
-          <li class="is-active">
-            <a>Catálogo</a>
+          <li>
+            <a>¿Que es ingenia?</a>
           </li>
           <li>
-            <a>Ultimos 10</a>
+            <a>¿Como participar?</a>
+          </li>
+          <li>
+            <a>Proyectos</a>
           </li>
           <li>
             <a>Reglamento</a>
           </li>
+          {% if subject.id %}
+            <li>
+              <a>Mi perfil</a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </nav>

@@ -8,7 +8,7 @@
   </ul>
 </div>
     <article class="media">
-      <Avatar :subject="user.subject" class="media-left" size="128" />
+      <Avatar :user="user" class="media-left" size="128" />
       <div class="media-content" v-if="user != {}">
         <h1 class="title is-1">{{user.subject.display_name}}</h1>
         <h1 class="subtitle is-4" v-show="user.groups[0] !== undefined">

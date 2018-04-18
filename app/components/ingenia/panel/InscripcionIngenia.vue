@@ -80,10 +80,10 @@
           <i class="fas fa-arrow-right fa-fw fa-lg"></i> Invitá a otros miembros a tu equipo enviandoles invitaciones por email. ¡Recordales que completen sus datos para poder aceptar la invitación!</p>
         <p>
           <i class="fas fa-arrow-right fa-fw fa-lg"></i> ¿Tu proyecto se hace en conjunto con alguna institución u organización? Descargá la
-          <a href="#">carta de aval</a> que debe ir firmada para subirla más tarde.</p>
+          <a href="/assets/pdf/ingenia-cartas.pdf">carta de aval</a> que debe ir firmada para subirla más tarde.</p>
         <p>
           <i class="fas fa-arrow-right fa-fw fa-lg"></i> Asegurate de imprimir y hacer firmar la
-          <a href="#">carta de conformidad del equipo</a> que debe ir firmada por todos para subirla más tarde.</p>
+          <a href="/assets/pdf/ingenia-cartas.pdf">carta de conformidad del equipo</a> que debe ir firmada por todos para subirla más tarde.</p>
         <p>
           <i class="fas fa-arrow-right fa-fw fa-lg"></i> Completá tu perfil público para que todos sepan quien sos (Ayudas a que la gente quiera ayudarte)</p>
       </div>

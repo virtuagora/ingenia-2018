@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class="tabs">
+  <ul>
+    <li :class="{'is-active': $route.name == 'userVerEquipo'}"><router-link :to="{ name: 'userVerEquipo'}">Ver equipo</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarEquipo'}"  v-if="user.groups[0].pivot.relation == 'responsable'"><router-link :to="{ name: 'userEditarEquipo'}">Editar datos</router-link></li>
+    <li :class="{'is-active': $route.name == 'userVerIntegrantes'}"  v-if="user.groups[0].pivot.relation == 'responsable'"><router-link :to="{ name: 'userVerIntegrantes'}">Ver los integrantes</router-link></li>
+  </ul>
+</div>
     <h1 class="subtitle is-3">Mi equipo de INGENIA</h1>
     <h1 class="title is-1">{{group.name}}</h1>
     <hr>

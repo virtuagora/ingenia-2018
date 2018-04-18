@@ -53,16 +53,11 @@
             <router-link :to="{ name: 'userVerEquipo'}" exact-active-class="is-active">Ver mi equipo</router-link>
           </li>
           <li v-if="user.groups[0].pivot.relation == 'responsable'">
-            <router-link :to="{ name: 'userEditarEquipo'}" exact-active-class="is-active">Editar datos del equipo</router-link>
+            <router-link :to="{ name: 'userEnviarInvitaciones'}" exact-active-class="is-active">Sumar a mi equipo</router-link>
           </li>
           <li v-if="user.groups[0].pivot.relation == 'responsable'">
-            <router-link :to="{ name: 'userVerIntegrantes'}" exact-active-class="is-active">Integrantes del equipo</router-link>
-          </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable'">
-            <router-link :to="{ name: 'userEnviarInvitaciones'}" exact-active-class="is-active">Enviar invitaciones</router-link>
-          </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable'">
-            <router-link :to="{ name: 'userSubirConformidad'}" exact-active-class="is-active">Subir carta de conformidad </router-link>
+            <router-link :to="{ name: 'userSubirConformidad'}" exact-active-class="is-active">
+              <i class="fas fa-fw" :class="{'fa-check has-text-success': user.groups[0].uploaded_agreement, 'fa-exclamation has-text-danger': !user.groups[0].uploaded_agreement }" :style="$route.name == 'userSubirConformidad' ? 'color: white !important;' : ''"></i>&nbsp;Subir carta de conformidad </router-link>
           </li>
         </ul>
         <p class="menu-label" v-if="user.groups[0] !== undefined">
@@ -75,17 +70,9 @@
           <li v-if="user.groups[0].project !== null">
             <router-link :to="{ name: 'userVerProyecto'}" exact-active-class="is-active">Ver mi proyecto</router-link>
           </li>
-          <li v-if="user.groups[0].project === null && user.groups[0].pivot.relation != 'responsable'">
-            <i class="fas fa-info-circle fa-fw"></i> El responsable aún no ha cargado los datos del proyecto
-          </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
-            <router-link :to="{ name: 'userEditarProyecto'}" exact-active-class="is-active">Editar datos del proyecto</router-link>
-          </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
-            <router-link :to="{ name: 'userSubirImagen'}" exact-active-class="is-active">Subir imagen del proyecto</router-link>
-          </li>
-          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
-            <router-link :to="{ name: 'userSubirAvalOrganizacion'}" exact-active-class="is-active">Subir carta de aval</router-link>
+          <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null && user.groups[0].project.organization !== null">
+            <router-link :to="{ name: 'userSubirAvalOrganizacion'}" exact-active-class="is-active">
+              <i class="fas fa-fw" :class="{'fa-check has-text-success': user.groups[0].project.organization !== null && user.groups[0].uploaded_letter, 'fa-exclamation has-text-danger': user.groups[0].project.organization !== null && !user.groups[0].uploaded_letter }" :style="$route.name == 'userSubirAvalOrganizacion' ? 'color: white !important;' : ''"></i>&nbsp;Subir carta de aval</router-link>
           </li>
         </ul>
       </aside>

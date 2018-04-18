@@ -1,5 +1,12 @@
 <template>
   <div>
+     <div class="tabs">
+  <ul>
+    <li :class="{'is-active': $route.name == 'userVerEquipo'}"><router-link :to="{ name: 'userVerEquipo'}">Ver equipo</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarEquipo'}"  v-if="user.groups[0].pivot.relation == 'responsable'"><router-link :to="{ name: 'userEditarEquipo'}">Editar datos</router-link></li>
+    <li :class="{'is-active': $route.name == 'userVerIntegrantes'}"  v-if="user.groups[0].pivot.relation == 'responsable'"><router-link :to="{ name: 'userVerIntegrantes'}">Ver los integrantes</router-link></li>
+  </ul>
+</div>
     <h1 class="subtitle is-3">Integrantes del equipo</h1>
     <table class="table is-fullwidth text-middle">
       <thead>
@@ -11,7 +18,7 @@
       <tbody>
         <tr v-for="(member,index) in members" :key="index">
           <td>
-            <Avatar :subject="member.subject" class="inline-image" size="24" /> {{member.subject.display_name}}
+            <Avatar :user="member" class="inline-image" size="24" /> {{member.subject.display_name}}
             <span class="tag is-warning is-pulled-right" v-if="member.pivot.relation === 'responsable'"><i class="fas fa-star"></i>&nbsp;Responsable</span>
             <div class="tags has-addons is-pulled-right" v-if="member.pivot.relation === 'co-responsable'">
               <span class="tag is-link"><i class="fas fa-shield-alt"></i>&nbsp;Co-responsable</span>

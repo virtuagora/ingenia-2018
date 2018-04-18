@@ -1,5 +1,12 @@
 <template>
   <div>
+        <div class="tabs">
+  <ul>
+    <li :class="{'is-active': $route.name == 'userVerProyecto'}" v-if="user.groups[0].project !== null"><router-link :to="{ name: 'userVerProyecto'}">Ver proyecto</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarProyecto'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null"><router-link :to="{ name: 'userEditarProyecto'}">Editar proyecto</router-link></li>
+    <li :class="{'is-active': $route.name == 'userSubirImagen'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null"><router-link :to="{ name: 'userSubirImagen'}">Subir imagen del proyecto</router-link></li>
+  </ul>
+</div>
     <h1 class="subtitle is-3">Mi proyecto de INGENIA</h1>
     <h1 class="title is-1">{{project.name}}</h1>
     <hr>
@@ -13,8 +20,9 @@
       </h5>
       <p>{{project.foundation}}</p>
       <h5>
-        <b>Categoria</b>
+        <b>Categoría</b>
       </h5>
+        <p class="tag is-primary is-medium">{{project.category.name}}</p>
       <h5>
         <b>Trabajo previo</b>
       </h5>
@@ -38,7 +46,7 @@
       </div>
 
     </div>
-    <!-- <div class="content">
+    <div class="content">
       <h5>
         <b>Objetivos</b>
       </h5>
@@ -116,7 +124,7 @@
           </tr>
         </tbody>
       </table>
-    </div> -->
+    </div>
     <div v-if="project.organization">
       <h1 class="subtitle is-5">El proyecto se trabajará en conjunto con una organización</h1>
       <h1 class="title is-3">{{project.organization.name}}</h1>

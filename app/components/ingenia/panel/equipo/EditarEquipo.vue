@@ -1,6 +1,13 @@
 <template>
   <div>
     <section>
+      <div class="tabs">
+  <ul>
+    <li :class="{'is-active': $route.name == 'userVerEquipo'}"><router-link :to="{ name: 'userVerEquipo'}">Ver equipo</router-link></li>
+    <li :class="{'is-active': $route.name == 'userEditarEquipo'}"  v-if="user.groups[0].pivot.relation == 'responsable'"><router-link :to="{ name: 'userEditarEquipo'}">Editar datos</router-link></li>
+    <li :class="{'is-active': $route.name == 'userVerIntegrantes'}"  v-if="user.groups[0].pivot.relation == 'responsable'"><router-link :to="{ name: 'userVerIntegrantes'}">Ver los integrantes</router-link></li>
+  </ul>
+</div>
       <div class="has-text-centered">
         <img src="/assets/img/ingenia-logo.svg" class="image is-centered" style="max-width: 250px;">
       </div>
