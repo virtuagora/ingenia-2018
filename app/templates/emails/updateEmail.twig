@@ -1,0 +1,8 @@
+{% extends 'emails/master.twig' %}
+
+{% block body %}
+  {% include 'emails/utils/paragraph.twig' with {'text':'Solicitaste cambiar tu dirección de email. Para hacer efectivo el cambio, por favor accede al siguiente link:'}%}
+  {% include 'emails/utils/button.twig' with {'url': url ,'label': 'Actualizar mi email'}%}
+  {% include 'emails/utils/paragraph.twig' with {'text':'Si no solicitaste este cambio, simplemente ignora este mensaje.'}%}
+  {% include 'emails/utils/paragraph.twig' with {'text':'El equipo de Ingenia y Virtuágora'}%}
+{% endblock %}

@@ -175,10 +175,10 @@ $app->post('/pending-user', 'userAction:postPendingUser')->setName('runNewPendin
 $app->post('/user', 'userAction:post')->setName('runNewUser');
 
 $app->post('/project/{pro}/picture', 'projectAction:postPicture')->setName('runUpdProPic');
-$app->get('/project/{pro}/picture', function ($request, $response, $args) {
-    $path = 'project/'.$this->helper->getSanitizedId('pro', $args).'.jpg';
+$app->get('/project/{pro}/picture', function ($request, $response, $params) {
+    $path = 'project/'.$this->helper->getSanitizedId('pro', $params).'.jpg';
     if (!$this->filesystem->has($path)) {
-        throw new AppException(
+        throw new \App\Util\Exception\AppException(
             'El documento no se encuentra almacenado',
             404
         );
@@ -234,6 +234,18 @@ $app->group('/account', function () {
     });
     $this->get('/[{path:.*}]', function ($req, $res, $arg) {
         return $this->view->render($res, 'base/accountSettings.twig', [
+        ]);
+    });
+});
+
+$app->group('/usuario', function () {
+    $this->get('/{usr}', function($request, $response, $params){
+        $usuario = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params, ['groups.project']
+        );
+        $proyecto->addVisible(['groups']);
+        return $this->view->render($response, 'ingenia/user/showUser.twig', [
+            'user' => $usuario,
         ]);
     });
 });

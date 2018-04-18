@@ -217,14 +217,15 @@ class UserResource extends Resource
         $user->token = 'email:'.bin2hex(random_bytes(10));
         $user->token_expiration = Carbon::tomorrow();
         $user->save();
+        $mailSub = 'Cambio de email en Ingenia';
         $link = $this->helper->pathFor('runUpdUserEma', true, [
             'usr' => $user->id,
             'tkn' => $user->token,
         ]);
-        $mailMsg = 'Link de cambio ' . $link;
-        $mailSub = 'Registro Virtuágora';
-        $this->logger->info($mailMsg);
-        $this->mailer->sendMail($mailSub, $data['email'], $mailMsg);
+        $mailMsg = $this->view->fetch('emails/updateEmail.twig', [
+            'url' => $link,
+        ]);
+        $this->mailer->sendMail($mailSub, $data['email'], $mailMsg, 'text/html');
     }
 
     public function updateEmail($user, $data)
