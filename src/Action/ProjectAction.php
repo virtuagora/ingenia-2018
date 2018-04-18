@@ -57,7 +57,7 @@ class ProjectAction
             throw new UnauthorizedException();
         }
         $atributos = $request->getParsedBody();
-        $project = $this->groupResource->updateOne($subject, $project, $atributos);
+        $project = $this->projectResource->updateOne($subject, $project, $atributos);
         return $this->representation->returnMessage($request, $response, [
             'message' => 'Información del proyecto actualizada exitosamente',
             'status' => 200,
@@ -67,44 +67,19 @@ class ProjectAction
     
     public function postPicture($req, $res, $arg)
     {
-        if (!$this->session->has('user')) {
-            throw new \App\Util\AppException('Necesitás identificarte para realizar esta acción.', 403);
-        }
-        $project = $this->db->query('App:Project')->findOrFail($arg['pro']);
-        $user = $project->user;
-        if ($user->id != $this->session->get('user.id')) {
-            throw new \App\Util\AppException('Acceso denegado.', 405);
-        }
-        $files = $req->getUploadedFiles();
-        if (empty($files['imagen'])) {
-            throw new \App\Util\AppException('No se envió ninguna imagen.', 400);
-        }
-        $imgFile = $files['imagen'];
-        if ($imgFile->getError() == UPLOAD_ERR_NO_FILE) {
-            return $res->withRedirect(
-            $this->helper->completePathFor('proViewGet', ['pro' => $project->id])
-            );
-        } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
-            throw new \App\Util\AppException(
-            'Hubo un error con la imagen recibida ('.$imgFile->getError().')',
-            400
-            );
-        }
-        $imgStrm = $this->image->make($imgFile->getStream()->detach())
-        ->fit(800, 565, function ($constraint) {
-            $constraint->upsize();
-        })->encode('jpg', 75);
-        $this->filesystem->put('project/'.$project->id.'.jpg', $imgStrm);
-        if (is_resource($imgStrm)) {
-            fclose($imgStrm);
-        }
-        if (!$project->has_image) {
-            $project->has_image = true;
-            $project->save();
-        }
-        return $res->withRedirect(
-        $this->helper->completePathFor('proViewGet', ['pro' => $project->id])
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params
         );
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        if (empty($request->getUploadedFiles()['archivo'])) {
+            throw new AppException('No se envió un archivo');
+        }
+        $archivo = $request->getUploadedFiles()['archivo'];
+        $this->projectResource->updatePicture($subject, $project, $archivo);
+        return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
     }
     
     public function postVote($req, $res, $arg)
