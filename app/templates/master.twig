@@ -43,8 +43,8 @@ id: {{subject.extra.user_id is defined ? subject.extra.user_id : 'null' }}
         }
       }
     </script>
-    <script type="text/javascript" src="{{asset('js/virtuagora.js')}}"></script>
     {% block scriptshead %}{% endblock %}
+    
   </head>
   <body {% if body_class is defined %} class='{{ body_class }}' {% endif %}>
     <div id="vue" class="content-master">
@@ -56,6 +56,7 @@ id: {{subject.extra.user_id is defined ? subject.extra.user_id : 'null' }}
     {% if show_footer == true %}
       {% include 'ingenia/index/footer.twig'%}
     {% endif %}
+    <script type="text/javascript" src="{{asset('js/virtuagora.js')}}"></script>
     {% block javascripts %}{% endblock %}
   </body>
 </html>
