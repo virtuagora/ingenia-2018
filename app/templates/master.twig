@@ -30,7 +30,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block stylesheets %}{% endblock %}
-    <script type="text/javascript" src="{{asset('js/virtuagora.js')}}"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('css/virtuagora.css') }}">
     <!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
     <script>
@@ -44,8 +43,8 @@ id: {{subject.extra.user_id is defined ? subject.extra.user_id : 'null' }}
         }
       }
     </script>
+    <script type="text/javascript" src="{{asset('js/virtuagora.js')}}"></script>
     {% block scriptshead %}{% endblock %}
-    
   </head>
   <body {% if body_class is defined %} class='{{ body_class }}' {% endif %}>
     <div id="vue" class="content-master">
