@@ -264,6 +264,121 @@ class UserResource extends Resource
         $user->save();
     }
 
+    public function resetPassword($data)
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'email' => [
+                    'type' => 'string',
+                    'format' => 'email',
+                ],
+            ],
+            'required' => ['email'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        $user = $this->db->query('App:User')
+            ->where('email', $data['email'])
+            ->firstOrFail();
+        $user->token = 'password:'.bin2hex(random_bytes(10));
+        $user->token_expiration = Carbon::tomorrow();
+        $user->save();
+        $mailSub = 'Cambio de clave en Ingenia';
+        $link = $this->helper->pathFor('runPassReset', true, [
+            'usr' => $user->id,
+            'tkn' => $user->token,
+        ]);
+        $mailMsg = $this->view->fetch('emails/resetPassword.twig', [
+            'url' => $link,
+        ]);
+        $this->mailer->sendMail($mailSub, $data['email'], $mailMsg, 'text/html');
+    }
+
+    public function restorePassword($user, $data)
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'token' => [
+                    'type' => 'string',
+                    'pattern' => '^password:[A-z0-9]+$',
+                    'minLength' => 1,
+                    'maxLength' => 50,
+                ],
+                'password' => [
+                    'type' => 'string',
+                    'minLength' => 3,
+                    'maxLength' => 250,
+                ],
+                'repeat' => [
+                    'type' => 'string',
+                    'minLength' => 3,
+                    'maxLength' => 250,
+                ],
+            ],
+            'required' => ['token', 'password', 'repeat'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        if ($user->token != $data['token']) {
+            throw new AppException('Token inválido');
+        }
+        if ($user->token_expiration->lt(Carbon::now())) {
+            throw new AppException('Token expirado');
+        }
+        if ($data['password'] !== $data['repeat']) {
+            throw new AppException(
+                'Clave nueva no coincide con su campo de control'
+            );
+        }
+        $user->password = $data['password'];
+        $user->token = null;
+        $user->token_expiration = null;
+        $user->save();
+    }
+
+    public function updatePassword($user, $data)
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'current' => [
+                    'type' => 'string',
+                    'minLength' => 3,
+                    'maxLength' => 250,
+                ],
+                'new' => [
+                    'type' => 'string',
+                    'minLength' => 3,
+                    'maxLength' => 250,
+                ],
+                'repeat' => [
+                    'type' => 'string',
+                    'minLength' => 3,
+                    'maxLength' => 250,
+                ],
+            ],
+            'required' => ['current', 'new', 'repear'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        if ($data['new'] !== $data['repeat']) {
+            throw new AppException(
+                'Clave nueva no coincide con su campo de control'
+            );
+        } elseif (!password_verify($data['current'], $user->password)) {
+            throw new AppException(
+                'Clave incorrecta'
+            );
+        }
+        $user->password = $data['new'];
+        $user->save();
+    }
+
     public function updateDni($subject, $user, $data, $file)
     {
         $schema = [

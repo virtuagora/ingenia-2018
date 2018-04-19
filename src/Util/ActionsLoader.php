@@ -20,6 +20,7 @@ class ActionsLoader
             //['id' => 'retUsrInvit', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
             
             ['id' => 'retUsrFull', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
+            ['id' => 'updUsrPas', 'group' => 'user', 'allowed_roles' => '[]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
             ['id' => 'updUsrProfile', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
             ['id' => 'updUsrDni', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
             ['id' => 'retGroFull', 'group' => 'project', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["miembro","co-responsable","responsable"]', 'allowed_proxies' => '[]'],

@@ -122,6 +122,43 @@ class UserAction
         ]);
     }
 
+    public function postPasswordReset($request, $response, $params)
+    {
+        $this->userResource->resetPassword($request->getParsedBody());
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Se envió un correo con los pasos para recuperar clave',
+            'status' => 200,
+        ]);
+    }
+
+    public function postPasswordRestore($request, $response, $params)
+    {
+        $user = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params
+        );
+        $this->userResource->restorePassword($user, $request->getParsedBody());
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Clave reiniciada',
+            'status' => 200,
+        ]);
+    }
+
+    public function putClave($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $user = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updUsrPas', $user)) {
+            throw new UnauthorizedException();
+        }
+        $this->userResource->updateEmail($user, $request->getParsedBody());
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Clave actualizada',
+            'status' => 200,
+        ]);
+    }
+
     public function postProfile($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
