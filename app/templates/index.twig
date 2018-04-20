@@ -6,12 +6,144 @@
 
 {% block body %}
   {% include "ingenia/index/header.twig" %}
-  <div class="container">
     <section class="section">
-{% if subject.id %}
-<status></status>
-    {% endif %}
-      <catalogo></catalogo>
-    </section>
+  <div class="container">
+      <div class="columns">
+        <div class="column is-8">
+          {% if subject.id is null %}
+                <div class="columns">
+                  <div class="column is-8 has-text-centered">
+                    <h1 class="title is-4 is-600">¡Las inscripciones están abiertas!</h1>
+                    <a href="{{path_for('showLogin')}}" class="button is-medium is-primary">
+                      <i class="em em-smile"></i>&nbsp; Creá tu equipo
+                    </a>&nbsp;&nbsp;
+                    <a href="{{path_for('showLogin')}}" class="button is-medium is-primary is-outlined">
+                      <i class="em em-muscle"></i>&nbsp; Bancá proyectos
+                    </a>
+                    <br>
+                    <br>
+                    <div class="strike">
+                      <span>Hagas lo que hagas</span>
+                    </div>
+                    <br>
+                    <div class="buttons is-centered">
+                      <a href="{{path_for('showLogin')}}" class="button is-medium is-primary is-inverted">
+                        <i class="fas fa-sign-in-alt fa-lg fa-fw"></i>&nbsp; Iniciá sesión
+                      </a>
+                    </div>
+                  </div>
+                  <div class="column is-4">
+                  <br>
+                    <img src="{{asset('img/slogan1-dark.svg')}}" class="image" style=" width:250px; margin: 0 auto;">
+                  </div>
+                </div>
+            <hr>
+            <br>
+          {% endif %}
+          {% if subject.id %}
+            <h1 class="title is-3">
+              ¡Hola
+              {{subject.name}}!
+            </h1>
+            <br>
+            <status></status>
+            <br>
+            <a href="{{path_for('showPanel')}}" class="button is-inverted is-large is-primary is-fullwidth">
+              <i class="fas fa-hand-point-right"></i>&nbsp;¡Ingresá a tu panel de control!</a>
+          {% else %}
+            <h1 class="is-size-1 is-900 has-text-black has-text-centered">
+              ¡Bienvenido!
+            </h1>
+          {% endif %}
+          <br>
+          <h1 class="subtitle is-3 has-text-centered">
+            Las inscripciones estan abiertas&nbsp;<i class="em em-raised_hands"></i>
+          </h1>
+          <br>
+          <div class="columns">
+            <div class="column {{ subject.id != null ? 'is-hidden'}}">
+              <a href="{{path_for('showLogin')}}">
+                <div class="has-text-centered is-size-4 is-300">
+                  <i class="fas fa-sign-in-alt fa-fw fa-2x"></i><br>
+                  Entrá en Ingenia
+                </div>
+              </a>
+            </div>
+            <div class="column">
+              <a href="{{path_for('showPanel')}}">
+                <div class="has-text-centered is-size-4 is-300">
+                  <i class="fas fa-compass fa-fw fa-2x"></i><br>
+                  Accedé a tu panel
+                </div>
+              </a>
+            </div>
+            <div class="column">
+              <a href="{{path_for('showPanel')}}">
+                <div class="has-text-centered is-size-4 is-300">
+                  <i class="fas fa-users fa-fw fa-2x"></i><br>
+                  Comenza a armar tú equipo
+                </div>
+              </a>
+            </div>
+            <div class="column">
+              <a href="{{path_for('showReglamento')}}">
+                <div class="has-text-centered is-size-4 is-300">
+                  <i class="fas fa-file-powerpoint  fa-fw fa-2x"></i><br>
+                  ¡Publicá tu proyecto!
+                </div>
+              </a>
+            </div>
+          </div>
+          <br>
+          <div class="notification is-black has-text-centered">
+            <h1 class="title is-4">
+              ¡Pronto habilitaremos el listado de proyectos para explorar grandes ideas y equipos!
+            </h1>
+          </div>
+          <h1 class="subtitle is-5 has-text-centered has-text-black">
+            <i class="fa fa-check fa-lg has-text-success"></i>
+            Aun así, ¡Ya podes ir cargando tu equipo y proyecto ingenia!
+          </h1>
+        </div>
+        <div class="column is-3 is-offset-1">
+          <h1 class="title is-3">
+            Seguinos en
+            <a href="https://twitter.com/gabinetejoven/">
+              <i class="fab fa-twitter fa-fw"></i>
+            </a>&nbsp;<a href="https://www.facebook.com/GabineteJoven/">
+              <i class="fab fa-facebook fa-fw"></i>
+            </a>
+          </h1>
+          <a class="twitter-timeline" data-height="600" data-theme="light" data-link-color="#9266CC" href="https://twitter.com/gabinetejoven?ref_src=twsrc%5Etfw">Tweets de gabinetejoven</a>
+        </div>
+      </div>
+
+      {# <catalogo></catalogo> #}
   </div>
+    </section>
+    <section class="section">
+    <div class="container has-text-centered">
+    <br>
+    <br>
+    <br>
+<img src="{{asset('img/slogan3-dark.svg')}}" class="image is-hidden-touch" style="height: 100px; margin: 0 auto;">
+<img src="{{asset('img/slogan4-dark.svg')}}" class="image is-hidden-desktop" style="width: 250px; margin: 0 auto;">
+<br>
+{% if subject.id is null %}
+  <h3 class="title is-3 has-text-centered has-text-black">
+    ¡No esperes más!
+    <i class="em em-smiley"></i>
+  </h3>
+  <a href="{{path_for('showLogin')}}" class="button is-medium is-black is-800">
+    <i class="em em-muscle"></i>&nbsp;&nbsp;¡Participá hoy inscribiendote en INGENIA!</a>
+{% endif %}
+<br>
+<br>
+<br>
+    </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+  <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 {% endblock %}

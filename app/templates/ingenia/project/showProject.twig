@@ -1,7 +1,29 @@
 {% set show_footer = true %}
 {% set show_navbar = false %}
 {% extends 'master.twig' %}
-{% block title %}Vote{% endblock %}
+{% block title %}{{project.name}}{% endblock %}
+{% block opengraph %}
+  <!-- Social Media Metatags! -->
+  <meta name="description" content="">
+  <meta property="og:title" content="{{project.name}} - ¡Bancalo en INGENIA!">
+<meta property="og:description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
+{% if project.has_image %}
+<meta property="og:image" content="{{path_for('getProPic',{'pro': project.id})}}">
+<meta property="og:image:width" content="1000">
+<meta property="og:image:height" content="777">
+{% else %}
+  <meta property="og:image" content="/assets/img/img-bancar-sharer-01.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="565">
+{% endif %}
+  <meta property="og:url" content="https://ingenia.virtuagora.org/proyecto/{{project.id}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{project.name}} - ¡Bancalo en INGENIA!">
+  <meta name="twitter:site" content="@virtuagora">
+  <meta name="twitter:creator" content="@virtuagora">
+  <meta name="twitter:description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
+  <meta name="twitter:image" content="https://ingenia.virtuagora.org/assets/img/img-bancar-sharer-01.png">
+{% endblock %}
 {% block body %}
   <img src="{{asset('img/santafelogo.svg')}}" class="image logo-sf-float is-48x48 is-hidden-touch is-hidden-desktop-only" alt="">
   <div class="hero is-dark {{project.has_image ? 'has-image-background'}}" style="background-image: url({{project.has_image ? path_for('getProPic',{'pro': project.id}) : '/assets/img/header-bg-01.jpg'}})">

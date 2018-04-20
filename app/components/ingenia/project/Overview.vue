@@ -1,67 +1,121 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns">
-        <div class="column" :class="{'is-offset-3 is-6': user === null || user.groups[0] !== undefined}">
-          <h3 class="is-size-3">
-            <b>Descripción del proyecto</b>
-          </h3>
-          <p class="nl2br">{{project.abstract}}</p>
-          <hr>
-          <h3 class="is-size-3">
-            <b>Fundamentación del proyecto</b>
-          </h3>
-          <p class="nl2br">{{project.foundation}}</p>
+  <section>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8" :class="{'is-offset-2': !project.has_image}">
+            <h3 class="is-size-3">
+              <b>Descripción del proyecto</b>
+            </h3>
+            <p class="nl2br">{{project.abstract}}</p>
+          </div>
+          <div class="column is-4" v-if="project.has_image">
+            <img :src="'/project/' + project.id + '/picture'" class="image" style="width:85%; margin: 0 auto;" alt="">
+          </div>
         </div>
-        <div class="column" v-if="user && user.groups[0] === undefined">
-          <div class="notification is-dark has-text-centered">
-            <h3 class="is-size-4 is-500">
-              <span v-if="user !== null">¡{{user.names}}!</span> ¿Queres colaborar con el equipo?</h3>
-            <p>¡Enviales una solicitud para ser parte!</p>
-            <br>
-            <div v-if="user !== null && user.pending_tasks.length > 0">
-              <div class="notification is-warning">
-                <p>
-                  <i class="fa fa-exclamation-circle fa-fw"></i>
-                  <b>IMPORTANTE:</b> Antes debes completar todos tus datos personales para ser parte de un equipo INGENIA. Seguí los pasos indicados en tu panel de usuario.</p>
-                <br>
-                <a href="/panel" class="button is-dark is-outlined is-medium">Ir al panel</a>
-              </div>
-            </div>
-            <button v-if="user !== null && user.pending_tasks.length == 0" @click="wannaColaborate = true" v-show="!wannaColaborate" class="button is-warning is-outlined is-medium">¡Si! ¡Quiero colaborar!</button>
-            <div v-if="wannaColaborate">
-              <div class="notification is-white has-text-left" v-if="!response.ok">
-                <div class="field">
-                  <label class="label">
-                    <i class="fas fa-angle-double-right"></i> Escribí un mensaje al responsable del equipo</label>
-                  <div class="control">
-                    <b-input maxlength="200" v-model="message" type="textarea" rows="2"></b-input>
-                  </div>
-                </div>
-                <div class="field">
-                  <div class="control">
-                    <button @click="submitInvitacion" class="button is-primary is-fullwidth" :class="{'is-loading': isLoading}">
-                      <i class="fa fa-paper-plane fa-fw"></i>&nbsp;Enviar</button>
-                  </div>
+        <div class="columns">
+          <div class="column is-4" v-if="(user && user.groups[0] === undefined) || user == null">
+            <div class="notification is-dark has-text-centered">
+              <h3 class="is-size-4 is-500">
+                <span v-if="user !== null">¡{{user.names}}!</span> ¿Queres colaborar con el equipo?</h3>
+              <p>¡Enviales una solicitud para ser parte!</p>
+              <br>
+              <div v-if="user !== null && user.pending_tasks.length > 0">
+                <div class="notification is-warning">
+                  <p>
+                    <i class="fa fa-exclamation-circle fa-fw"></i>
+                    <b>IMPORTANTE:</b> Antes debes completar todos tus datos personales para ser parte de un equipo INGENIA. Seguí los pasos indicados en tu panel de usuario.</p>
+                  <br>
+                  <a href="/panel" class="button is-dark is-outlined is-medium">Ir al panel</a>
                 </div>
               </div>
-              <div class="notification is-success" v-show="response.ok">
-                <i class="fas fa-check fa-fw"></i> ¡Tu solicitud ha sido enviada, gracias!
+              <button v-if="user !== null && user.pending_tasks.length == 0" @click="wannaColaborate = true" v-show="!wannaColaborate" class="button is-warning is-outlined is-medium">¡Si! ¡Quiero colaborar!</button>
+              <div v-if="wannaColaborate">
+                <div class="notification is-white has-text-left" v-if="!response.ok">
+                  <div class="field">
+                    <label class="label">
+                      <i class="fas fa-angle-double-right"></i> Escribí un mensaje al responsable del equipo</label>
+                    <div class="control">
+                      <b-input maxlength="200" v-model="message" type="textarea" rows="2"></b-input>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <button @click="submitInvitacion" class="button is-primary is-fullwidth" :class="{'is-loading': isLoading}">
+                        <i class="fa fa-paper-plane fa-fw"></i>&nbsp;Enviar</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="notification is-success" v-show="response.ok">
+                  <i class="fas fa-check fa-fw"></i> ¡Tu solicitud ha sido enviada, gracias!
+                </div>
+              </div>
+              <a v-if="user === null" href="/login" class="button is-warning is-outlined is-medium">
+                <i class="fas fa-sign-in-alt fa-fw"></i>&nbsp;Inicia sesión para solicitar</a>
+              <b-loading :active.sync="isLoading"></b-loading>
+            </div>
+          </div>
+          <div class="column">
+            <h3 class="is-size-3">
+              <b>Fundamentación del proyecto</b>
+            </h3>
+            <p class="nl2br">{{project.foundation}}</p>
+            <br>       
+            <div class="columns">
+              <div class="column">
+                <h5 class="is-size-4">
+                  <b>Donde se implementará</b>
+                </h5>
+                <Localidad :locality-id="project.locality_id" :locality-other="project.locality_other"></Localidad>
+              </div>
+              <div class="column">
+                <h5 class="is-size-4">
+                  <b>Barrios en que se implementara</b>
+                </h5>
+                <p>{{project.neighbourhoods.join(', ')}}</p>
               </div>
             </div>
-            <a v-if="user === null" href="/login" class="button is-warning is-outlined is-medium">
-              <i class="fas fa-sign-in-alt fa-fw"></i>&nbsp;Inicia sesión para solicitar</a>
-            <b-loading :active.sync="isLoading"></b-loading>
+             <h5 class="is-size-4">
+              <b>Trabajo previo</b>
+            </h5>
+            <p v-if="project.previous_work">{{project.previous_work}}</p>
+            <p v-else>
+              <i>No presenta trabajo previo</i>
+            </p>    
           </div>
         </div>
       </div>
+    </section>
+    <div class="hero is-dark is-medium has-image-background" v-if="project.has_image" :style="'background-image: url(/project/' + project.id + '/picture); background-position: center center; background-size: cover'">
+      <!-- <img :src="'/project/'+project.id+'/picture'" class="image"  v-if="project.has_image"  style="width:200px; margin:0 auto;" alt=""> -->
+      <div class="hero-body">
+      </div>
     </div>
+    <section class="section">
+      <div class="container">
+
+      <div class="notification is-link has-text-centered">
+            <h1 class="title is-4">
+              ¡Pronto habilitaremos para que puedan hacer comentarios!
+            </h1>
+          </div>
+          <h1 class="subtitle is-5 has-text-centered has-text-black">
+            <i class="em em-muscle"></i>
+            ¡Vayan armando su campaña para promocionar y que los banquen!
+          </h1>
+      </div>
+    </section>
   </section>
 </template>
 
 <script>
+import Localidad from "../utils/GetLocalidad";
 export default {
-  props: ["project", 'sendRequestJoin'],
+  props: ["project", "sendRequestJoin"],
+  components: {
+    Localidad
+  },
   data() {
     return {
       user: {},
@@ -88,7 +142,10 @@ export default {
     submitInvitacion: function() {
       this.isLoading = true;
       this.$http
-        .post(this.sendRequestJoin.replace(":gro", this.project.group.id), this.payload)
+        .post(
+          this.sendRequestJoin.replace(":gro", this.project.group.id),
+          this.payload
+        )
         .then(response => {
           this.$snackbar.open({
             message: "¡La solicitud ha sido enviada!",
@@ -111,10 +168,10 @@ export default {
     }
   },
   computed: {
-    payload: function(){
+    payload: function() {
       return {
         comment: this.isOptional(this.message)
-      }
+      };
     }
   }
 };

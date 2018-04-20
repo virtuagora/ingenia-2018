@@ -310,24 +310,24 @@ $app->group('/proyecto', function () {
 //     ]);
 // })->setName('shwPro');
 
-$app->get('/testemail1', function ($req, $res, $arg) {
-    return $this->view->render($res, 'emails/completeRegister.twig', [
-    'url' => 'https://virtuagora.org'
-    ]);
-});
+// $app->get('/testemail1', function ($req, $res, $arg) {
+//     return $this->view->render($res, 'emails/completeRegister.twig', [
+//     'url' => 'https://virtuagora.org'
+//     ]);
+// });
 
-$app->get('/testemail2', function ($req, $res, $arg) {
-    return $this->view->render($res, 'emails/sendInvitation.twig', [
-    'url' => 'https://virtuagora.org',
-    'team' => 'Nombre de un equipo genial',
-    'comment' => 'Hola! Me gustaria que seas parte de mi equipo ingenia! Besos!'
-    ]);
-});
+// $app->get('/testemail2', function ($req, $res, $arg) {
+//     return $this->view->render($res, 'emails/sendInvitation.twig', [
+//     'url' => 'https://virtuagora.org',
+//     'team' => 'Nombre de un equipo genial',
+//     'comment' => 'Hola! Me gustaria que seas parte de mi equipo ingenia! Besos!'
+//     ]);
+// });
 
-$app->get('/testing3', function ($req, $res, $arg) {
-    return $this->view->render($res, 'test3.twig', [
-    ]);
-});
+// $app->get('/testing3', function ($req, $res, $arg) {
+//     return $this->view->render($res, 'test3.twig', [
+//     ]);
+// });
 
 
-$app->post('/testing/comment', 'testingAction:commentNodeAction')->setName('commentNode');
+// $app->post('/testing/comment', 'testingAction:commentNodeAction')->setName('commentNode');
