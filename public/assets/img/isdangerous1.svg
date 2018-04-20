@@ -31,9 +31,9 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1059"
-     inkscape:window-x="1366"
+     inkscape:window-width="1600"
+     inkscape:window-height="879"
+     inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
      fit-margin-top="0"
@@ -48,7 +48,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -57,22 +57,133 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(125.46594,-68.790756)">
-    <text
-       xml:space="preserve"
+    <g
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="346.76062"
-       y="103.79076"
-       id="text3336"
-       sodipodi:linespacing="89.999998%"><tspan
-         sodipodi:role="line"
-         id="tspan3338"
-         x="346.76062"
-         y="103.79076"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle">¡Es peligroso andar solo!</tspan><tspan
-         sodipodi:role="line"
-         x="346.76062"
-         y="166.79076"
-         id="tspan3340"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle">Toma esto:</tspan></text>
+       id="text3336">
+      <path
+         d="m -125.46594,103.79076 14,0 0,-24.500004 -14,0 0,24.500004 z m 0,-28.000004 14,0 0,-7 -14,0 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3575" />
+      <path
+         d="m -104.46594,103.79076 34.999998,0 0,-7.000004 -24.5,0 0,-7 10.5,0 0,-7 -10.5,0 0,-7 24.5,0 0,-7 -34.999998,0 0,3.5 -3.5,0 0,28.000004 3.5,0 0,3.5 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3577" />
+      <path
+         d="m -65.993286,103.79076 35,0 0,-3.5 3.5,0 0,-14.000004 -3.5,0 0,-3.5 -10.5,0 -10.5,0 0,-7 24.5,0 0,-7 -35,0 0,3.5 -3.5,0 0,14 3.5,0 0,3.5 21,0 0,7 -24.5,0 0,7.000004 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3579" />
+      <path
+         d="m 14.452026,89.790756 21,0 0,-3.5 3.5,0 0,-14 -3.5,0 0,-3.5 -10.5,0 -10.5,0 -13.99999963,0 0,35.000004 13.99999963,0 0,-14.000004 z m 0,-14 10.5,0 0,7 -10.5,0 0,-7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3581" />
+      <path
+         d="m 45.924683,103.79076 35,0 0,-7.000004 -24.5,0 0,-7 10.5,0 0,-7 -10.5,0 0,-7 24.5,0 0,-7 -35,0 0,3.5 -3.5,0 0,28.000004 3.5,0 0,3.5 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3583" />
+      <path
+         d="m 84.397339,103.79076 38.500001,0 0,-7.000004 -24.500001,0 0,-28 -14,0 0,35.000004 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3585" />
+      <path
+         d="m 126.37,75.790756 10.5,0 0,21 -10.5,0 0,7.000004 35,0 0,-7.000004 -10.5,0 0,-21 10.5,0 0,-7 -35,0 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3587" />
+      <path
+         d="m 199.92468,100.29076 3.5,0 0,-14.000004 -3.5,0 0,-3.5 -17.5,0 0,7 7,0 0,7 -10.5,0 0,-21 24.5,0 0,-7 -35,0 0,3.5 -3.5,0 0,28.000004 3.5,0 0,3.5 31.5,0 0,-3.5 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3589" />
+      <path
+         d="m 220.89734,89.790756 10.5,0 0,14.000004 14,0 0,-14.000004 -3.5,0 0,-7 3.5,0 0,-10.5 -3.5,0 0,-3.5 -10.5,0 -10.5,0 -14,0 0,35.000004 14,0 0,-14.000004 z m 0,-14 10.5,0 0,7 -10.5,0 0,-7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3591" />
+      <path
+         d="m 283.87,100.29076 3.5,0 0,-28.000004 -3.5,0 0,-3.5 -31.5,0 0,3.5 -3.5,0 0,28.000004 3.5,0 0,3.5 31.5,0 0,-3.5 z m -10.5,-10.500004 0,7 -10.5,0 0,-21 10.5,0 0,7 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3593" />
+      <path
+         d="m 290.84265,103.79076 35,0 0,-3.5 3.5,0 0,-14.000004 -3.5,0 0,-3.5 -10.5,0 -10.5,0 0,-7 24.5,0 0,-7 -35,0 0,3.5 -3.5,0 0,14 3.5,0 0,3.5 21,0 0,7 -24.5,0 0,7.000004 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3595" />
+      <path
+         d="m 367.81531,100.29076 3.5,0 0,-28.000004 -3.5,0 0,-3.5 -31.5,0 0,3.5 -3.5,0 0,28.000004 3.5,0 0,3.5 31.5,0 0,-3.5 z m -10.5,-10.500004 0,7 -10.5,0 0,-21 10.5,0 0,7 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3597" />
+      <path
+         d="m 413.26062,89.790756 10.5,0 0,14.000004 14,0 0,-31.500004 -3.5,0 0,-3.5 -10.5,0 -21,0 0,3.5 -3.5,0 0,31.500004 14,0 0,-14.000004 z m 0,-14 10.5,0 0,7 -10.5,0 0,-7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3599" />
+      <path
+         d="m 455.23328,86.290756 3.5,0 0,3.5 3.5,0 0,3.5 3.5,0 0,10.500004 14,0 0,-35.000004 -14,0 0,10.5 -3.5,0 0,-3.5 -3.5,0 0,-3.5 -3.5,0 0,-3.5 -14,0 0,35.000004 14,0 0,-17.500004 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3601" />
+      <path
+         d="m 514.70593,100.29076 3.5,0 0,-3.500004 3.5,0 0,-21 -3.5,0 0,-3.5 -3.5,0 0,-3.5 -7,0 -3.5,0 -21,0 0,35.000004 31.5,0 0,-3.5 z m -10.5,-21.000004 3.5,0 0,14 -3.5,0 0,3.5 -7,0 0,-21 7,0 0,3.5 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3603" />
+      <path
+         d="m 539.17859,89.790756 10.5,0 0,14.000004 14,0 0,-31.500004 -3.5,0 0,-3.5 -10.5,0 -21,0 0,3.5 -3.5,0 0,31.500004 14,0 0,-14.000004 z m 0,-14 10.5,0 0,7 -10.5,0 0,-7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3605" />
+      <path
+         d="m 581.15125,89.790756 10.5,0 0,14.000004 14,0 0,-14.000004 -3.5,0 0,-7 3.5,0 0,-10.5 -3.5,0 0,-3.5 -10.5,0 -10.5,0 -14,0 0,35.000004 14,0 0,-14.000004 z m 0,-14 10.5,0 0,7 -10.5,0 0,-7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3607" />
+      <path
+         d="m 633.59656,103.79076 35,0 0,-3.5 3.5,0 0,-14.000004 -3.5,0 0,-3.5 -10.5,0 -10.5,0 0,-7 24.5,0 0,-7 -35,0 0,3.5 -3.5,0 0,14 3.5,0 0,3.5 21,0 0,7 -24.5,0 0,7.000004 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3609" />
+      <path
+         d="m 710.56921,100.29076 3.5,0 0,-28.000004 -3.5,0 0,-3.5 -31.5,0 0,3.5 -3.5,0 0,28.000004 3.5,0 0,3.5 31.5,0 0,-3.5 z m -10.5,-10.500004 0,7 -10.5,0 0,-21 10.5,0 0,7 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3611" />
+      <path
+         d="m 717.54187,103.79076 38.5,0 0,-7.000004 -24.5,0 0,-28 -14,0 0,35.000004 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3613" />
+      <path
+         d="m 794.51453,100.29076 3.5,0 0,-28.000004 -3.5,0 0,-3.5 -31.5,0 0,3.5 -3.5,0 0,28.000004 3.5,0 0,3.5 31.5,0 0,-3.5 z m -10.5,-10.500004 0,7 -10.5,0 0,-21 10.5,0 0,7 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3615" />
+      <path
+         d="m 801.48718,93.290756 14,0 0,-24.5 -14,0 0,24.5 z m 0,10.500004 14,0 0,-7.000004 -14,0 0,7.000004 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3617" />
+      <path
+         d="m 184.09265,138.79075 10.5,0 0,-7 -35,0 0,7 10.5,0 0,28 14,0 0,-28 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3619" />
+      <path
+         d="m 233.14734,163.29075 3.5,0 0,-28 -3.5,0 0,-3.5 -31.5,0 0,3.5 -3.5,0 0,28 3.5,0 0,3.5 31.5,0 0,-3.5 z m -10.5,-10.5 0,7 -10.5,0 0,-21 10.5,0 0,7 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3621" />
+      <path
+         d="m 254.12,149.29075 3.5,0 0,3.5 3.5,0 0,3.5 3.5,0 0,-3.5 3.5,0 0,-3.5 3.5,0 0,17.5 14,0 0,-35 -14,0 0,3.5 -3.5,0 0,3.5 -3.5,0 0,3.5 -3.5,0 0,-3.5 -3.5,0 0,-3.5 -3.5,0 0,-3.5 -14,0 0,35 14,0 0,-17.5 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3623" />
+      <path
+         d="m 303.06531,152.79075 10.5,0 0,14 14,0 0,-31.5 -3.5,0 0,-3.5 -10.5,0 -21,0 0,3.5 -3.5,0 0,31.5 14,0 0,-14 z m 0,-14 10.5,0 0,7 -10.5,0 0,-7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3625" />
+      <path
+         d="m 359.01062,166.79075 35,0 0,-7 -24.5,0 0,-7 10.5,0 0,-7 -10.5,0 0,-7 24.5,0 0,-7 -35,0 0,3.5 -3.5,0 0,28 3.5,0 0,3.5 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3627" />
+      <path
+         d="m 397.48328,166.79075 35,0 0,-3.5 3.5,0 0,-14 -3.5,0 0,-3.5 -10.5,0 -10.5,0 0,-7 24.5,0 0,-7 -35,0 0,3.5 -3.5,0 0,14 3.5,0 0,3.5 21,0 0,7 -24.5,0 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3629" />
+      <path
+         d="m 463.95593,138.79075 10.5,0 0,-7 -35,0 0,7 10.5,0 0,28 14,0 0,-28 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3631" />
+      <path
+         d="m 513.01062,163.29075 3.5,0 0,-28 -3.5,0 0,-3.5 -31.5,0 0,3.5 -3.5,0 0,28 3.5,0 0,3.5 31.5,0 0,-3.5 z m -10.5,-10.5 0,7 -10.5,0 0,-21 10.5,0 0,7 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3633" />
+      <path
+         d="m 519.98328,166.79075 10.5,0 0,-7 -10.5,0 0,7 z m 0,-28 10.5,0 0,-7 -10.5,0 0,7 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:70px;line-height:89.99999762%;font-family:'Upheaval TT (BRK)';-inkscape-font-specification:'Upheaval TT (BRK)';text-align:center;text-anchor:middle"
+         id="path3635" />
+    </g>
   </g>
 </svg>
