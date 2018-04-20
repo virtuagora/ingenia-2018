@@ -89,7 +89,7 @@ export default {
           this.project.abstract = response.data.abstract;
           this.project.foundation = response.data.foundation;
           this.project.category_id = response.data.category.id;
-          this.project.previous_work = response.data.previous_work;
+          this.project.previous_work = response.data.previous_work ? response.data.previous_work : false;
           this.project.locality_id = response.data.locality_id;
           this.project.locality_other = response.data.locality_other;
           this.project.neighbourhoods = response.data.neighbourhoods;

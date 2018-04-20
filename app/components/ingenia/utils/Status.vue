@@ -61,7 +61,7 @@
             </span>
           </span>
           <span class="steps-content">
-            <p class="heading">¡OK!</p>
+            <p class="heading" v-show="user.groups[0].uploaded_agreement && user.groups[0].second_in_charge && user.groups[0].uploaded_agreement">¡OK!</p>
           </span>
         </li>
       </ul>
@@ -125,7 +125,7 @@
             </span>
           </span>
           <span class="steps-content">
-            <p class="heading">¡OK!</p>
+            <p class="heading" v-show="user.groups[0].project && (user.groups[0].project.organization === null || (user.groups[0].project.organization !== null && user.groups[0].uploaded_letter))">¡OK!</p>
           </span>
         </li>
       </ul>
@@ -194,7 +194,7 @@
             </span>
           </span>
           <span class="steps-content">
-            <p class="heading">¡OK!</p>
+            <p class="heading" v-show="!user.pending_tasks.includes('email') && !user.pending_tasks.includes('profile') && !user.pending_tasks.includes('dni')">¡OK!</p>
             <p class="is-size-7"></p>
           </span>
         </li>

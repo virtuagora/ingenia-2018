@@ -154,6 +154,25 @@ p.nl2br {
 
 @media screen and (max-width: 768px) {
     .steps:not(.is-horizontal) .steps-content {
-        display:block;
+        display: block;
+    }
+}
+
+nav.navbar {
+    box-shadow: none;
+}
+
+.hero.has-image-background {
+    background-position: center center;
+    background-size: cover;
+    &>div {
+        background: -moz-linear-gradient(45deg, rgba(0, 23, 69, 0.9) 0%, rgba(74, 156, 214, 0.7) 39%, rgba(49, 0, 98, 0.5) 86%, rgba(48, 0, 96, 0.82) 100%);
+        /* FF3.6-15 */
+        background: -webkit-linear-gradient(45deg, rgba(0, 23, 69, 0.9) 0%, rgba(74, 156, 214, 0.7) 39%, rgba(49, 0, 98, 0.5) 86%, rgba(48, 0, 96, 0.82) 100%);
+        /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(45deg, rgba(0, 23, 69, 0.9) 0%, rgba(74, 156, 214, 0.7) 39%, rgba(49, 0, 98, 0.5) 86%, rgba(48, 0, 96, 0.82) 100%);
+        /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d60c3c9b', endColorstr='#7d4f1489', GradientType=1);
+        /* IE6-9 fallback on horizontal gradient */
     }
 }

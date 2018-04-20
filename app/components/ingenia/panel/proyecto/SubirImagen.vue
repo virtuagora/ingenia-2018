@@ -13,7 +13,7 @@
         Subí una imagen relacionada al proyecto para decorar el punto de encuentro de tu proyecto.
         <br>Tamaño del archivo: 3MB. Se aceptan .JPG, .JPEG, PNG
       </b-message>
-      <form action="" ref="formAval" method="post" enctype="multipart/form-data">
+      <form :action="formUrl" ref="formProImg" method="post" enctype="multipart/form-data">
         <b-field class="file is-medium">
           <b-upload v-model="files" name="archivo" v-validate="'required|size:3072|mimes:image/jpeg,image/pjpeg,image/png'">
             <a class="button is-link is-medium">
@@ -33,6 +33,8 @@
           </div>
         </div>
       </form>
+      <hr>
+      <img :src="formUrl" alt="">
     </div>
     <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
   </div>
@@ -40,7 +42,7 @@
 
 <script>
 export default {
-  props: ['saveLetterUrl'],
+  props: ['saveImageUrl'],
   data() {
     return {
       pendiente: false,
@@ -68,7 +70,7 @@ export default {
             return false;
           }
           this.isLoading = true;
-          this.$refs.formAval.submit();
+          this.$refs.formProImg.submit();
         })
         .catch(error => {
           this.$snackbar.open({
@@ -78,6 +80,11 @@ export default {
           });
           return false;
         });
+    }
+  },
+  computed:{
+    formUrl: function(){
+      return this.saveImageUrl.replace(':pro',this.user.groups[0].project.id)
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -95,3 +102,4 @@ export default {
   }
 };
 </script>
+saveImageUrl

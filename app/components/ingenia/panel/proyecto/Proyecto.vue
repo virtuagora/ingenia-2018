@@ -15,6 +15,7 @@
 :project-url="projectUrl"
 :save-project-url="saveProjectUrl"
 :edit-project-url="editProjectUrl"
+:save-image-url="saveImageUrl"
 :save-letter-url="saveLetterUrl"
 :get-group-members="getGroupMembers"
 :accept-group-invitation="acceptGroupInvitation"
@@ -44,6 +45,7 @@ export default {
 	"projectUrl",
 	"saveProjectUrl",
   "editProjectUrl",
+  "saveImageUrl",
 	"saveLetterUrl",
   "getGroupMembers",
   "acceptGroupInvitation",

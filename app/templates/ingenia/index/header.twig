@@ -1,10 +1,12 @@
-<div class="hero is-primary" id="main-hero" style="background-image: url('assets/img/header-bg-01.jpg')">
+<div class="hero is-primary" id="main-hero" style="background-image: url('/assets/img/header-bg-01.jpg')">
   <img src="{{asset('img/santafelogo.svg')}}" class="image logo-sf-float is-48x48 is-hidden-touch" alt="">
   <div class="hero-body">
     <div class="container">
       <div class="columns">
         <div class="column is-5">
-          <img src="./assets/img/ingenia-logo-white.svg" class="logo-header image">
+        <a href="{{path_for('showHome')}}">
+          <img src="./assets/img/ingenia2018.svg" class="logo-header image">
+        </a>
         </div>
         <div class="column">
           <div class="columns is-mobile is-multiline" style="justify-content: flex-end">
@@ -29,10 +31,10 @@
             </div>
             {% if subject.id %}
               <div class="column is-narrow">
-                <b-tooltip label="Panel de control" type="is-dark" position="is-bottom">
-                  <a href="/panel" class="">
+                <b-tooltip label="Mi panel" type="is-warning" position="is-bottom">
+                  <a href="{{path_for('showPanel')}}" class="">
                     <span class="icon is-large has-text-white">
-                      <i class="fas fa-cog fa-3x "></i>
+                      <i class="fas fa-compass fa-3x "></i>
                     </span>&nbsp;&nbsp;
                   </a>
                 </b-tooltip>
@@ -89,17 +91,24 @@
     <nav class="tabs is-boxed">
       <div class="container">
         <ul>
-          <li>
-            <a>¿Que es ingenia?</a>
+          <li class="{{ headerActive == 'showHome' ? 'is-active' }}">
+            <a href="{{path_for('showHome')}}">
+              <span class="icon">
+                <i class="fas fa-home fa-lg"></i>
+              </span>
+            </a>
           </li>
-          <li>
-            <a>¿Como participar?</a>
+          <li class="{{ headerActive == 'showAcerca' ? 'is-active' }}">
+            <a href="{{path_for('showAcerca')}}">¿Que es ingenia?</a>
           </li>
-          <li>
-            <a>Proyectos</a>
+          <li class="{{ headerActive == 'showComoParticipar' ? 'is-active' }}">
+            <a href="{{path_for('showComoParticipar')}}">¿Como participar?</a>
           </li>
-          <li>
-            <a>Reglamento</a>
+          <li class="{{ headerActive == 'showCatalogo' ? 'is-active' }}">
+            <a href="{{path_for('showCatalogo')}}">Proyectos</a>
+          </li>
+          <li class="{{ headerActive == 'showReglamento' ? 'is-active' }}">
+            <a href="{{path_for('showReglamento')}}">Reglamento</a>
           </li>
           {% if subject.id %}
             <li>

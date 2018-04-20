@@ -37,7 +37,6 @@
         </div>
       </div>
       <br>
-      <br>
       <div class="strike">
         <span>Otras opciones de login</span>
       </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="has-text-centered">
-    <div class="list-of-avatars">
+    <!-- <div class="list-of-avatars">
       <b-tooltip label="Guillermo Croppi">
       <figure class="image is-32x32 is-rounded">
         <a href="#">
@@ -30,25 +30,37 @@
         </a>
       </figure>
       </b-tooltip>
-    </div>
-    <p class="title is-3 is-marginless has-text-warning">
+    </div> -->
+    <!-- <p class="title is-3 is-marginless has-text-warning">
       <img src="/img/muscle-color.svg" style="height:50px;vertical-align:bottom" alt=""> {{vote ? 87 : 86}} personas</p>
     <p>bancan este proyecto
-      <b>{{ vote ? '¡Vos tambien!' : '¿Y vos?' }}</b>&nbsp;&nbsp;<i class="em" :class="{'em-open_mouth': !vote, 'em-smile': vote}"></i>
+      <b>{{ vote ? '¡Vos tambien!' : '¿Y vos?' }}</b>&nbsp;&nbsp;
+      <i class="em" :class="{'em-open_mouth': !vote, 'em-smile': vote}"></i>
+    </p> -->
+    <br>
+    <br>
+    
+    <p class="title is-3 is-marginless has-text-warning">¡Muy pronto vas a poder comenzar a sumar apoyo a tu proyecto!</p>
+    <br>
+    <p>¡<b>Anda anticipandoté</b> para cuando habilitemos la posibilidad de bancar el proyecto y las redes sociales!
     </p>
-    <br>
-    <button class="button is-medium is-fullwidth" :class="{'is-outlined is-warning': !vote, 'is-info is-800': vote}" @click="vote = !vote">
-      <i class="em em-muscle"></i>&nbsp;{{ vote ? '¡Guillermo banca este proyecto!' : '¡Yo lo banco!'}}</button>
-    <br>
-    <div class="columns is-marginless">
+    <!-- <br> -->
+    <!-- <button class="button is-medium is-fullwidth" :class="{'is-outlined is-warning': !vote, 'is-info is-800': vote}" @click="vote = !vote">
+      <i class="em em-muscle"></i>&nbsp;{{ vote ? '¡Guillermo banca este proyecto!' : '¡Yo lo banco!'}}</button> -->
+    <!-- <br> -->
+    <div class="columns is-marginless is-hidden">
       <div class="column is-8">
-    <p>¡Tambien podes bancar compartiendo en las redes!</p>
+        <p>¡Tambien podes bancar compartiendo en las redes!</p>
       </div>
       <div class="column">
-    <p>
-      <a href="#"><i class="fab fa-facebook fa-2x fa-fw"></i></a>
-      <a href="#"><i class="fab fa-twitter fa-2x fa-fw"></i></a>
-    </p>
+        <p>
+          <a href="#">
+            <i class="fab fa-facebook fa-2x fa-fw"></i>
+          </a>
+          <a href="#">
+            <i class="fab fa-twitter fa-2x fa-fw"></i>
+          </a>
+        </p>
       </div>
     </div>
   </div>
@@ -56,10 +68,10 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
       vote: false
-    }
+    };
   }
 };
 </script>

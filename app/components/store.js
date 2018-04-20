@@ -11,6 +11,8 @@ const store = new Vuex.Store({
   state: {
     user: null,
     expires: null,
+    members: [],
+    group: null
   },
   mutations: {
     checkUser: function(state,session){

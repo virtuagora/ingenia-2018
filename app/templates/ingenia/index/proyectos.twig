@@ -1,0 +1,46 @@
+{# set show_footer = true #}
+{% set show_navbar = false %}
+{# set body_class = '' #}
+
+{% extends 'master.twig' %}
+
+{% block body %}
+  {% include "ingenia/index/header.twig" %}
+  <div class="container">
+    <section class="section">
+<br>
+<br>
+<div class="has-text-centered">
+<h1 class="title is-1 has-text-black">
+<i class="fa fa-clock fa-lg"></i> Proximamente
+</h1>
+
+</div>
+<br>
+    <br>
+<div class="notification is-black has-text-centered">
+<h1 class="title is-1">
+  ¡Pronto habilitaremos el listado de proyectos para explorar grandes ideas y equipos!
+</h1>
+</div>
+<h1 class="subtitle is-3 has-text-centered has-text-black">
+  <i class="fa fa-check fa-lg has-text-success"></i> Aun así, ¡Ya podes ir cargando tu equipo y proyecto ingenia!
+</h1>
+<br>
+<br>
+<br>
+<img src="{{asset('img/slogan3-dark.svg')}}" class="image is-hidden-touch" style="height: 100px; margin: 0 auto;">
+<img src="{{asset('img/slogan4-dark.svg')}}" class="image is-hidden-desktop" style="width: 250px; margin: 0 auto;">
+{% if subject.id is null %}
+  <h3 class="title is-3 has-text-centered has-text-black">
+    ¡No esperes más!
+    <i class="em em-smiley"></i>
+  </h3>
+  <a href="{{path_for('showLogin')}}" class="button is-medium is-black is-fullwidth is-800">
+    <i class="em em-muscle"></i>&nbsp;&nbsp;¡Participá hoy inscribiendote en INGENIA!</a>
+{% endif %}
+<br>
+<br>
+    </section>
+  </div>
+{% endblock %}

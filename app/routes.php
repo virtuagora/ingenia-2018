@@ -69,13 +69,37 @@ $app->get('/logout', function ($request, $response, $args) {
 ///
 
 $app->get('/', function ($request, $response, $args) {
-    $this->logger->info('Hello!');
-    
+    // $this->logger->info('Hello!');
     return $this->view->render($response, 'index.twig', [
     'name' => 'hello!',
-    'sub' => $request->getAttribute('subject'),
+    // 'sub' => $request->getAttribute('subject'),
+    'headerActive' => 'showHome'
     ]);
 })->setName('showHome');
+
+$app->get('/reglamento', function ($request, $response, $args) {
+    return $this->view->render($response, 'ingenia/index/reglamento.twig', [
+    'headerActive' => 'showReglamento'
+    ]);
+})->setName('showReglamento');
+
+$app->get('/acerca', function ($request, $response, $args) {
+    return $this->view->render($response, 'ingenia/index/acerca.twig', [
+    'headerActive' => 'showAcerca'
+    ]);
+})->setName('showAcerca');
+
+$app->get('/proyectos', function ($request, $response, $args) {
+    return $this->view->render($response, 'ingenia/index/proyectos.twig', [
+    'headerActive' => 'showCatalogo'
+    ]);
+})->setName('showCatalogo');
+
+$app->get('/como-participar', function ($request, $response, $args) {
+    return $this->view->render($response, 'ingenia/index/comoParticipar.twig', [
+    'headerActive' => 'showComoParticipar'
+    ]);
+})->setName('showComoParticipar');
 
 $app->get('/install[/{extra}]', function ($request, $response, $args) {
     $actions = new \App\Util\ActionsLoader($this->db);
@@ -110,8 +134,8 @@ $app->get('/login', function ($request, $response, $args) {
         return $response->withRedirect('/');
     }
     return $this->view->render($response, 'base/login.twig', [
-        'facebookKey' => $this->get('settings')['facebook']['app_id'],
-        'googleKey' => $this->get('settings')['recaptcha']['public_key'],
+    'facebookKey' => $this->get('settings')['facebook']['app_id'],
+    'googleKey' => $this->get('settings')['recaptcha']['public_key'],
     ]);
 })->setName('showLogin');
 
@@ -125,13 +149,13 @@ $app->get('/sign-up', function ($request, $response, $args) {
 $app->get('/complete-sign-up', function ($request, $response, $args) {
     $token = $request->getQueryParam('token');
     $pending = $this->db->query('App:PendingUser')
-        ->where('token', $token)
-        ->first();
+    ->where('token', $token)
+    ->first();
     if (is_null($pending)) {
         return $response->withRedirect('/');
     }
     return $this->view->render($response, 'base/completar-registro.twig', [
-        'activation_key' => $token,
+    'activation_key' => $token,
     ]);
 })->setName('showCompleteSignUp');
 
@@ -181,13 +205,13 @@ $app->get('/project/{pro}/picture', function ($request, $response, $params) {
     $path = 'project/'.$this->helper->getSanitizedId('pro', $params).'.jpg';
     if (!$this->filesystem->has($path)) {
         throw new \App\Util\Exception\AppException(
-            'El documento no se encuentra almacenado',
-            404
+        'El documento no se encuentra almacenado',
+        404
         );
     }
     return $response
-        ->withBody(new \Slim\Http\Stream($this->filesystem->readStream($path)))
-        ->withHeader('Content-Type', $this->filesystem->getMimetype($path));
+    ->withBody(new \Slim\Http\Stream($this->filesystem->readStream($path)))
+    ->withHeader('Content-Type', $this->filesystem->getMimetype($path));
 })->setName('getProPic');
 
 // guille
@@ -222,7 +246,7 @@ $app->group('/settings', function () {
 $app->group('/panel', function () {
     $this->get('', function ($req, $res, $arg) {
         return $this->view->render($res, 'ingenia/panel/userPanel.twig', []);
-    });
+    })->setName('showPanel');
     $this->get('/[{path:.*}]', function ($req, $res, $arg) {
         return $this->view->render($res, 'ingenia/panel/userPanel.twig', [
         ]);
@@ -243,26 +267,26 @@ $app->group('/account', function () {
 $app->group('/usuario', function () {
     $this->get('/{usr}', function($request, $response, $params){
         $usuario = $this->helper->getEntityFromId(
-            'App:User', 'usr', $params, ['groups.project']
+        'App:User', 'usr', $params, ['groups.project']
         );
         $usuario->addVisible(['groups']);
         return $this->view->render($response, 'ingenia/user/showUser.twig', [
-            'user' => $usuario,
+        'user' => $usuario,
         ]);
-    });
+    })->setName('showProfile');
 });
 
 $app->group('/proyecto', function () {
     $this->get('/{pro}', function($request, $response, $params){
         $proyecto = $this->helper->getEntityFromId(
-            'App:Project', 'pro', $params, ['category']
+        'App:Project', 'pro', $params, ['category']
         );
         $proyecto->addVisible(['category_id']);
         // return $response->withJSON($proyecto->toArray());
         return $this->view->render($response, 'ingenia/project/showProject.twig', [
         'project' => $proyecto,
         ]);
-    });
+    })->setName('showProject');
     $this->get('/{pro}/[{path:.*}]', function($request, $response, $params){
         $proyecto = $this->helper->getEntityFromId(
         'App:Project', 'pro', $params

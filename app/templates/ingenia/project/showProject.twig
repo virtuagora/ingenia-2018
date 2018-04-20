@@ -1,16 +1,19 @@
 {% set show_footer = true %}
-{% set show_navbar = true %}
+{% set show_navbar = false %}
 {% extends 'master.twig' %}
 {% block title %}Vote{% endblock %}
 {% block body %}
-<div class="hero is-dark" style="background-image: url('/assets/img/patternbg.svg')">
-    <div class="container">
-      <div class="hero-body" style="padding-bottom:0;">
+  <img src="{{asset('img/santafelogo.svg')}}" class="image logo-sf-float is-48x48 is-hidden-touch is-hidden-desktop-only" alt="">
+  <div class="hero is-dark {{project.has_image ? 'has-image-background'}}" style="background-image: url({{project.has_image ? path_for('getProPic',{'pro': project.id}) : '/assets/img/header-bg-01.jpg'}})">
+    <div>
+    {% include 'ingenia/project/heroNavbar.twig' %}
+    <div class="hero-body">
+      <div class="container">
         <div class="columns">
           <div class="column is-8">
             <div class="tags">
               <span class="tag is-white is-large">
-                Categoria
+                {{project.category.name}}
               </span>
             </div>
             <h1 class="title is-1">{{project.name}}</h1>
@@ -18,13 +21,35 @@
             <get-localidad locality-id="{{ project.group.locality_id }}" locality-other="{{ project.group.locality_other }}"></get-localidad>
           </div>
           <div class="column">
-            <vote-project></vote-project>
+            <vote-project>
+              <div class="has-text-centered" style="padding: 3rem 0rem;">
+                <span class="is-size-4">
+                  <i class="fa fa-cog fa-fw fa-spin"></i>
+                  Cargando...
+                </span>
+              </div>
+            </vote-project>
           </div>
         </div>
       </div>
-      <navbar-project></navbar-project>
+    </div>
+    <navbar-project>
+      <div class="hero-foot">
+        <nav class="tabs is-boxed">
+          <div class="container">
+            <ul>
+              <li>
+                <a>
+                  <i class="fa fa-cog fa-fw fa-spin"></i>
+                  Cargando...</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </navbar-project>
     </div>
   </div>
-  <router-view :project="{{project}}" send-request-join="{{path_for('runCreGroReq',{'gro': ':gro'})}}"></router-view>
+<router-view :project="{{project}}" get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}" team-url="{{path_for('getGroup',{'gro': ':gro'})}}"  send-request-join="{{path_for('runCreGroReq',{'gro': ':gro'})}}"></router-view>
 {% endblock %}
 {% block javascripts %}{% endblock %}

@@ -500,6 +500,11 @@ export default {
     }
   },
   watch: {
+    enEjecucion: function(newVal, oldVal){
+      if(newVal === false){
+        this.project.previous_work = null
+      }
+    },
     conOrganizacion: function(newVal, oldVal) {
      if (newVal) {
         if (this.isInitialized) {
