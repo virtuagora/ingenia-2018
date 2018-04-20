@@ -211,6 +211,8 @@ class Installer
 
             $table->timestamps();
             $table->softDeletes();
+
+            $table->index('name');
         });
         $this->db->schema()->create('comments', function($table) {
             $table->engine = 'InnoDB';
@@ -378,9 +380,6 @@ class Installer
             ], [
                 'name' => 'Salud y Discapacidad',
                 'description' => 'Iniciativas que promueven una vida saludable en las juventudes. Reflexionar sobre las problemáticas vinculadas a la salud y el acceso a la misma sin olvidar que ésta no sólo depende de la biología o de la conducta del individuo, sino también de factores sociales, políticos y culturales sobre los que son necesarios actuar para producir cambios.',
-            ], [
-                'name' => 'Otra',
-                'description' => 'Otra temática.',
             ]
         ]);
     }

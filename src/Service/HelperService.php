@@ -58,4 +58,26 @@ class HelperService
         // TODO hacer validacion de verdad
         return $params[$attr]?? null;
     }
+
+    public function getDuplicatedFields($model, $instance, $fields)
+    {
+        $dupFields = [];
+        $qry = $this->db->query($model);
+        if ($instance->exists) {
+            $qry = $qry->where('id', '!=', $instance->id);
+        }
+        $queryFields = array_intersect_key($instance->toArray(), array_flip($fields));
+        $qry = $qry->where(function ($q) use ($queryFields) {
+            $q->where($queryFields, null, null, 'or');
+        });
+        $dupli = $qry->first();
+        if (isset($dupli)) {
+            foreach($fields as $field) {
+                if ($instance->getAttribute($field) == $dupli->getAttribute($field)) {
+                    $dupFields[] = $field;
+                }
+            };
+        }
+        return $dupFields;
+    }
 }

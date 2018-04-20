@@ -261,6 +261,13 @@ class ProjectResource extends Resource
         $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
         $categoria = $this->db->query('App:Category')->findOrFail($data['category_id']);
 
+        $duplicados = $this->helper->getDuplicatedFields(
+            'App:Project', $project, ['name']
+        );
+        if (!empty($duplicados)) {
+            throw new AppException('usedName');
+        }
+
         $totalBudget = 0;
         foreach ($data['budget'] as $item) {
             $totalBudget += $item['amount'];
@@ -278,9 +285,7 @@ class ProjectResource extends Resource
         $project->organization = $data['organization'];
         $project->category_id = $data['category_id'];
         $project->locality_id = $data['locality_id'];
-        if ($localidad->custom && isset($data['locality_other'])) {
-            $project->locality_other = $data['locality_other'];
-        }
+        $project->locality_other = $localidad->custom ? $data['locality_other'] : null;
         $project->group_id = $group->id;
         $project->save();
         if (is_null($project->organization)) {
@@ -310,7 +315,7 @@ class ProjectResource extends Resource
             throw new AppException('Tipo de archivo inválido');
         }
         $imgStrm = $this->image->make($imgFile->getStream()->detach())
-            ->fit(800, 565, function ($constraint) {
+            ->fit(1000, 777, function ($constraint) {
                 $constraint->upsize();
             })
             ->encode('jpg', 75);

@@ -228,9 +228,7 @@ class GroupResource extends Resource
         $group->telephone = $data['telephone'];
         $group->email = $data['email'];
         $group->locality_id = $data['locality_id'];
-        if ($localidad->custom && isset($data['locality_other'])) {
-            $project->locality_other = $data['locality_other'];
-        }
+        $group->locality_other = $localidad->custom ? $data['locality_other'] : null;
         $group->subject()->associate($subGr);
         $group->save();
         
@@ -264,9 +262,7 @@ class GroupResource extends Resource
         $group->telephone = $data['telephone'];
         $group->email = $data['email'];
         $group->locality_id = $data['locality_id'];
-        if ($localidad->custom && isset($data['locality_other'])) {
-            $project->locality_other = $data['locality_other'];
-        }
+        $group->locality_other = $localidad->custom ? $data['locality_other'] : null;
         $group->save();
         return $group;
     }

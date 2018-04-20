@@ -158,9 +158,7 @@ class UserResource extends Resource
         $user->referer = $data['referer'];
         $user->referer_other = $data['referer_other'];
         $user->locality_id = $data['locality_id'];
-        if ($localidad->custom && isset($data['locality_other'])) {
-            $user->locality_other = $data['locality_other'];
-        }
+        $user->locality_other = $localidad->custom ? $data['locality_other'] : null;
         $user->save();
         return $user;
     }
