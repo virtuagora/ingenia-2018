@@ -4,7 +4,7 @@
 {% block title %}{{project.name}}{% endblock %}
 {% block opengraph %}
   <!-- Social Media Metatags! -->
-  <meta name="description" content="">
+  <meta name="description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
   <meta property="og:title" content="{{project.name}} - ¡Bancalo en INGENIA!">
 <meta property="og:description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
 {% if project.has_image %}
