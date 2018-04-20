@@ -11,13 +11,16 @@ class ProjectAction
     protected $representation;
     protected $helper;
     protected $authorization;
+    protected $pagination;
     
-    public function __construct($projectResource, $representation, $helper, $authorization)
-    {
+    public function __construct(
+        $projectResource, $representation, $helper, $authorization, $pagination
+    ) {
         $this->projectResource = $projectResource;
         $this->representation = $representation;
         $this->helper = $helper;
         $this->authorization = $authorization;
+        $this->pagination = $pagination;
     }
     
     // GET /proyecto/{pro}
@@ -28,6 +31,15 @@ class ProjectAction
             'App:Project', 'pro', $params, ['category']
         );
         return $response->withJSON($proyecto->toArray());
+    }
+
+    public function get($request, $response, $params)
+    {
+        $pagParams = $this->pagination->getParams($request);
+        $resultados = $this->projectResource->retrieve($pagParams);
+        $resultados->setUri($request->getUri());
+        return $this->pagination->renderResponse($response, $resultados);
+        //return $response->withJSON($orgList->toArray());
     }
     
     public function post($request, $response, $params)

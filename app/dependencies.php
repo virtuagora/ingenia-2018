@@ -83,6 +83,9 @@ $container['options'] = function ($c) {
 $container['image'] = function ($c) {
     return new Intervention\Image\ImageManager(['driver' => 'imagick']);
 };
+$container['pagination'] = function ($c) {
+    return new App\Service\PaginationService($c->get('validation'));
+};
 
 $container['miscAction'] = function ($c) {
     return new App\Action\MiscAction(
@@ -102,7 +105,7 @@ $container['userAction'] = function ($c) {
 $container['projectAction'] = function ($c) {
     $resource = new App\Resource\ProjectResource($c);
     return new App\Action\ProjectAction(
-        $resource, $c['representation'], $c['helper'], $c['authorization']
+        $resource, $c['representation'], $c['helper'], $c['authorization'], $c['pagination']
     );
 };
 $container['groupAction'] = function ($c) {

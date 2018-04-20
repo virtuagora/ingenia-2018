@@ -166,6 +166,7 @@ $app->delete('/group/{gro}/second/{usr}', 'groupAction:deleteSecond')->setName('
 $app->post('/group/accept-inv/{inv}', 'groupAction:postUserFromInvitation')->setName('runCreGroUsrInv');
 $app->post('/group/accept-req/{inv}', 'groupAction:postUserFromRequest')->setName('runCreGroUsrReq');
 
+$app->get('/project', 'projectAction:get')->setName('lisPro');
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
 $app->post('/project/{pro}', 'projectAction:patch')->setName('runUpdPro');

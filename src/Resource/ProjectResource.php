@@ -2,6 +2,7 @@
 
 namespace App\Resource;
 
+use App\Util\Paginator;
 use App\Util\Exception\AppException;
 
 class ProjectResource extends Resource
@@ -222,6 +223,13 @@ class ProjectResource extends Resource
             'additionalProperties' => false,
         ];
         return $schema;
+    }
+
+    public function retrieve($options)
+    {
+        $query = $this->db->query('App:Project');
+        $results = new Paginator($query, $options);
+        return $results;
     }
 
     public function createOne($subject, $data)
