@@ -6,10 +6,12 @@ import router from './router'
 import store from './store'
 import es from 'vee-validate/dist/locale/es';
 import VeeValidate, { Validator } from 'vee-validate';
+import { VueMasonryPlugin } from 'vue-masonry';
 
 Validator.localize('es', es);
 
 Vue.use(VeeValidate);
+Vue.use(VueMasonryPlugin);
 
 // VIRTUAGORA 2.0 COMPONENTS
 // Register every component that you will be using in any twig template.
