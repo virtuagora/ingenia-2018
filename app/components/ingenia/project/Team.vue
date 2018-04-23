@@ -10,15 +10,15 @@
             <Avatar :user="member" class="media-left" size="96"></Avatar>
             <div class="media-content">
               <h1 class="is-size-3 is-600">{{member.subject.display_name}}
-                <i class="fas fa-star has-text-warning"></i>
+                <i class="fas fa-star has-text-warning" v-if="member.pivot.relation === 'responsable'"></i>
               </h1>
-              <p class="nl2br">{{member.bio}}</p>
+              <p class="nl2br" v-if="member.bio">{{member.bio}}</p>
+              <p v-else><i>- Sin información -</i></p>
             </div>
           </article>
         </div>
         <div class="column">
           <div v-if="group != null">
-
             <div class="content">
               <h5>
                 <b>Acerca del equipo</b>
@@ -108,7 +108,7 @@
       <div class="notification is-light">
         <br>
         <br>
-              <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
+        <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
         <br>
         <br>
       </div>
@@ -142,6 +142,16 @@ export default {
       }, 2000);
     } else {
       this.isLoading = false;
+    }
+  },
+  computed: {
+     arrayTopics: function() {
+      if (this.group.parent_organization) {
+        let arr = this.group.parent_organization.topics.slice();
+        return this.group.parent_organization.topic_other ? arr.push(this.group.parent_organization.topic_other) : arr ;
+      } else {
+        return [];
+      }
     }
   }
 };

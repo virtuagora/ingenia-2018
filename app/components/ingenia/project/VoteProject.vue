@@ -40,9 +40,9 @@
     <br>
     <br>
     
-    <p class="title is-3 is-marginless has-text-warning">¡Muy pronto vas a poder comenzar a sumar apoyo a tu proyecto!</p>
+    <p class="title is-3 is-marginless has-text-warning">¡Muy pronto van a poder bancar tu proyecto!</p>
     <br>
-    <p>¡<b>Anda anticipandoté</b> para cuando habilitemos la posibilidad de bancar el proyecto y las redes sociales!
+    <p>¡<b>Anda preparandoté</b> para cuando habilitemos la posibilidad de que te apoyen bancando el proyecto!
     </p>
     <!-- <br> -->
     <!-- <button class="button is-medium is-fullwidth" :class="{'is-outlined is-warning': !vote, 'is-info is-800': vote}" @click="vote = !vote">

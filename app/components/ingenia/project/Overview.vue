@@ -4,21 +4,77 @@
     <section class="section">
       <div class="container">
         <div class="columns">
-          <div class="column is-8" :class="{'is-offset-2': !project.has_image}">
+          <div class="column is-8">
             <h3 class="is-size-3">
               <b>Descripción del proyecto</b>
             </h3>
             <p class="nl2br">{{project.abstract}}</p>
+            <br>
+            <h3 class="is-size-3">
+              <b>Fundamentación del proyecto</b>
+            </h3>
+            <p class="nl2br">{{project.foundation}}</p>
+            <br>
+            <div class="columns">
+              <div class="column">
+                <h5 class="is-size-4">
+                  <b>Donde se implementará</b>
+                </h5>
+                <Localidad :locality-id="project.locality_id" :locality-other="project.locality_other"></Localidad>
+              </div>
+              <div class="column">
+                <h5 class="is-size-4">
+                  <b>Barrios en que se implementara</b>
+                </h5>
+                <p>{{project.neighbourhoods.join(', ')}}</p>
+              </div>
+            </div>
+            <h5 class="is-size-4">
+              <b>Trabajo previo</b>
+            </h5>
+            <p v-if="project.previous_work">{{project.previous_work}}</p>
+            <p v-else>
+              <i>No presenta trabajo previo</i>
+            </p>
           </div>
-          <div class="column is-4" v-if="project.has_image">
-            <img :src="'/project/' + project.id + '/picture'" class="image" style="width:85%; margin: 0 auto;" alt="">
+          <div class="column is-4 has-text-centered">
+            <div class="box is-paddingless">
+              <img :src="imageUrl" class="image" style="margin: 0 auto; border-radius:5px;" alt="">
+            </div>
+            <br>
+            <h5 class="is-size-4">
+              <b>Presupuesto solicitado</b>
+            </h5>
+            <h5 class="is-size-2 has-text-info is-800">
+              ${{montoTotal}}
+            </h5>
+            <br>
+            <h5 class="is-size-4">
+              <b>
+                <i class="fas fa-flag-checkered fa-fw"></i>&nbsp;Declaran {{project.goals.length}} objetivo{{project.goals.length > 1 ?'s':null}}</b>
+            </h5>
+            <br>
+            <h5 class="is-size-4">
+              <b>
+                <i class="far fa-calendar-check fa-fw"></i>&nbsp;Con {{project.schedule.length}} actividad{{project.schedule.length > 1 ?'es':null}}</b>
+            </h5>
+            <br>
+            <router-link :to="{ name: 'projectImplementation'}" class="button is-black is-outlined is-medium is-fullwidth">Conocé la implementacion</router-link>
+            <br>
+            <router-link :to="{ name: 'projectImplementation'}" class="button is-black is-outlined is-medium is-fullwidth">Conocé al equipo</router-link>
+
           </div>
         </div>
+      </div>
+    </section>
+    <div class="hero is-dark  has-image-background" v-if="(user !== null && user.groups[0] == undefined) || user === null " :style="imageUrlHeroInvite()">
+      <!-- <img :src="'/project/'+project.id+'/picture'" class="image"  v-if="project.has_image"  style="width:200px; margin:0 auto;" alt=""> -->
+      <div class="hero-body has-text-centered">
         <div class="columns">
-          <div class="column is-4" v-if="(user && user.groups[0] === undefined) || user == null">
-            <div class="notification is-dark has-text-centered">
-              <h3 class="is-size-4 is-500">
-                <span v-if="user !== null">¡{{user.names}}!</span> ¿Queres colaborar con el equipo?</h3>
+          <div class="column is-6 is-offset-3" v-if="user !== null && user.groups[0] == undefined">
+            <div class="has-text-centered">
+              <h3 class="is-size-3 is-600">
+                <span v-if="user !== null">¡{{user.names}}!</span> ¿Querés colaborar con el equipo?</h3>
               <p>¡Enviales una solicitud para ser parte!</p>
               <br>
               <div v-if="user !== null && user.pending_tasks.length > 0">
@@ -30,9 +86,9 @@
                   <a href="/panel" class="button is-dark is-outlined is-medium">Ir al panel</a>
                 </div>
               </div>
-              <button v-if="user !== null && user.pending_tasks.length == 0" @click="wannaColaborate = true" v-show="!wannaColaborate" class="button is-warning is-outlined is-medium">¡Si! ¡Quiero colaborar!</button>
+              <button v-if="user !== null && user.pending_tasks.length == 0" @click="wannaColaborate = true" v-show="!wannaColaborate" class="button is-warning is-medium">¡Si! ¡Quiero colaborar!</button>
               <div v-if="wannaColaborate">
-                <div class="notification is-white has-text-left" v-if="!response.ok">
+                <div class="box has-text-left" v-if="!response.ok">
                   <div class="field">
                     <label class="label">
                       <i class="fas fa-angle-double-right"></i> Escribí un mensaje al responsable del equipo</label>
@@ -56,54 +112,34 @@
               <b-loading :active.sync="isLoading"></b-loading>
             </div>
           </div>
-          <div class="column">
-            <h3 class="is-size-3">
-              <b>Fundamentación del proyecto</b>
-            </h3>
-            <p class="nl2br">{{project.foundation}}</p>
-            <br>       
-            <div class="columns">
-              <div class="column">
-                <h5 class="is-size-4">
-                  <b>Donde se implementará</b>
-                </h5>
-                <Localidad :locality-id="project.locality_id" :locality-other="project.locality_other"></Localidad>
-              </div>
-              <div class="column">
-                <h5 class="is-size-4">
-                  <b>Barrios en que se implementara</b>
-                </h5>
-                <p>{{project.neighbourhoods.join(', ')}}</p>
-              </div>
+          <div class="column is-6 is-offset-3" v-if="user === null">
+            <div class="has-text-centered">
+              <h3 class="is-size-3 is-600">
+                Entrá en Ingenia+Virtuágora para poder participar</h3>
+              <p>Vas a poder bancar los proyectos y dejar comentarios, hasta podrias llegar a ser parte de un equipo!</p>
+              <br>
+              <a href="/panel" class="button is-warning is-medium"><i class="fas fa-sign-in-alt fa-fw"></i>&nbsp;Iniciar sesión</a>
             </div>
-             <h5 class="is-size-4">
-              <b>Trabajo previo</b>
-            </h5>
-            <p v-if="project.previous_work">{{project.previous_work}}</p>
-            <p v-else>
-              <i>No presenta trabajo previo</i>
-            </p>    
           </div>
         </div>
-      </div>
-    </section>
-    <div class="hero is-dark is-medium has-image-background" v-if="project.has_image" :style="'background-image: url(/project/' + project.id + '/picture); background-position: center center; background-size: cover'">
-      <!-- <img :src="'/project/'+project.id+'/picture'" class="image"  v-if="project.has_image"  style="width:200px; margin:0 auto;" alt=""> -->
-      <div class="hero-body">
       </div>
     </div>
     <section class="section">
       <div class="container">
+        <div class="columns">
+          <div class="column is-8 is-offset-2">
 
-      <div class="notification is-link has-text-centered">
-            <h1 class="title is-4">
-              ¡Pronto habilitaremos para que puedan hacer comentarios!
+            <div class="notification is-link has-text-centered">
+              <h1 class="title is-4">
+                ¡Pronto habilitaremos para que puedan hacer comentarios!
+              </h1>
+            </div>
+            <h1 class="subtitle is-5 has-text-centered has-text-black">
+              <i class="em em-muscle"></i>
+              ¡Vayan armando su campaña para promocionar y que los banquen!
             </h1>
           </div>
-          <h1 class="subtitle is-5 has-text-centered has-text-black">
-            <i class="em em-muscle"></i>
-            ¡Vayan armando su campaña para promocionar y que los banquen!
-          </h1>
+        </div>
       </div>
     </section>
   </section>
@@ -167,11 +203,30 @@ export default {
         });
     }
   },
+  methods:{
+imageUrlHeroInvite: function() {
+      if (this.project.has_image) {
+        return 'background-image: url(/project/' + this.project.id + '/picture); background-position: center center; background-size: cover';
+      }
+      return "";
+    }
+  },
   computed: {
     payload: function() {
       return {
         comment: this.isOptional(this.message)
       };
+    },
+    montoTotal: function() {
+      const reducer = (accumulator, item) =>
+        accumulator + parseFloat(item.amount);
+      return this.project.budget.reduce(reducer, 0);
+    },
+    imageUrl: function() {
+      if (this.project.has_image) {
+        return "/project/" + this.project.id + "/picture";
+      }
+      return "/assets/img/neuronas-ingenia-noimg.jpg";
     }
   }
 };

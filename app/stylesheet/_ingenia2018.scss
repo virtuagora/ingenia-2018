@@ -176,3 +176,46 @@ nav.navbar {
         /* IE6-9 fallback on horizontal gradient */
     }
 }
+
+.item-mosaic {
+    @include mobile {
+        width: 98%;
+        margin: 0 0.5% 5px;
+    }
+    @include tablet {
+        width: 48%;
+        margin: 0 0.5% 5px;
+    }
+    @include desktop {
+        width: 19%;
+        margin: 0 0.5% 5px;
+    } // .gradient {
+    //     background: -moz-linear-gradient(45deg, rgba(0, 23, 69, 0.9) 0%, rgba(74, 156, 214, 0.7) 39%, rgba(49, 0, 98, 0.5) 86%, rgba(48, 0, 96, 0.82) 100%);
+    //     /* FF3.6-15 */
+    //     background: -webkit-linear-gradient(45deg, rgba(0, 23, 69, 0.9) 0%, rgba(74, 156, 214, 0.7) 39%, rgba(49, 0, 98, 0.5) 86%, rgba(48, 0, 96, 0.82) 100%);
+    //     /* Chrome10-25,Safari5.1-6 */
+    //     background: linear-gradient(45deg, rgba(0, 23, 69, 0.9) 0%, rgba(74, 156, 214, 0.7) 39%, rgba(49, 0, 98, 0.5) 86%, rgba(48, 0, 96, 0.82) 100%);
+    //     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    //     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d60c3c9b', endColorstr='#7d4f1489', GradientType=1);
+    //     /* IE6-9 fallback on horizontal gradient */
+    // }
+    // .card-image figure.image {
+    //     background-size: cover;
+    //     background-position: center center;
+    // }
+    .notification {
+        &.with-image {
+            @include mobile {
+                padding-top: 30%;
+            }
+            @include tablet {
+                padding-top: 40%;
+            }
+            @include desktop {
+                padding-top: 50%;
+            }
+            background-size: cover;
+            background-position: center center
+        }
+    }
+}
