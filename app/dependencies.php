@@ -33,7 +33,8 @@ $container['view'] = function ($c) {
     $view = new Slim\Views\Twig($settings['path'], $settings['options']);
     $view->addExtension(new App\Util\TwigExtension(
         $c['router'],
-        $c['request']
+        $c['request'],
+        $c['options']
         //$c['request']->getUri()
     ));
     $view->addExtension(new Twig_Extension_Debug());

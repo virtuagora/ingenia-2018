@@ -10,17 +10,20 @@ class TwigExtension extends Twig_Extension
     private $router;
     private $request;
     private $uri;
+    private $options;
 
-    public function __construct($router, $request, $uri = null)
+    public function __construct($router, $request, $options, $uri = null)
     {
         $this->router = $router;
         $this->request = $request;
+        $this->options = $options;
         $this->uri = $uri;
     }
 
     public function getFunctions()
     {
         return [
+            new Twig_SimpleFunction('options', [$this, 'options']),
             new Twig_SimpleFunction('asset', [$this, 'asset']),
             new Twig_SimpleFunction('path_for', [$this, 'pathFor']),
             new Twig_SimpleFunction('base_url', [$this, 'baseUrl']),
@@ -35,6 +38,11 @@ class TwigExtension extends Twig_Extension
             'subject' => $this->request->getAttribute('subject')->toArray(),
         ];
     }*/
+
+    public function options()
+    {
+        return $this->options->getAutoloaded();
+    }
 
     public function asset($name)
     {

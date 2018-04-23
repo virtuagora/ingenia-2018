@@ -59,6 +59,11 @@ class HelperService
         return $params[$attr]?? null;
     }
 
+    public function generateTrace($str)
+    {
+        return preg_replace('/[^[:alnum:]]/ui', '', $str);
+    }
+
     public function getDuplicatedFields($model, $instance, $fields)
     {
         $dupFields = [];
