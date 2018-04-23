@@ -20,7 +20,7 @@ class ProjectResource extends Resource
                 'abstract' => [
                     'type' => 'string',
                     'minLength' => 1,
-                    'maxLength' => 1000,
+                    'maxLength' => 2000,
                 ],
                 'foundation' => [
                     'type' => 'string',
@@ -228,6 +228,21 @@ class ProjectResource extends Resource
     public function retrieve($options)
     {
         $query = $this->db->query('App:Project');
+        if (isset($options['loc'])) {
+            $query->where('locality_id', $options['loc']);
+        } elseif (isset($options['dep'])) {
+            $query->whereHas('locality', function ($q) use ($options) {
+                $q->where('department_id', $options['dep']);
+            });
+        } elseif (isset($options['reg'])) {
+            $query->whereHas('locality.department', function ($q) use ($options) {
+                $q->where('region_id', $options['reg']);
+            });
+        }
+        if (isset($options['s'])) {
+            $filter = $this->helper->generateTrace($options['s']);
+            $query->where('trace', 'LIKE', "%$filter%");
+        }
         $results = new Paginator($query, $options);
         return $results;
     }
@@ -274,6 +289,7 @@ class ProjectResource extends Resource
         }
 
         $project->name = $data['name'];
+        $project->trace = $this->helper->generateTrace($data['name']);
         $project->abstract = $data['abstract'];
         $project->foundation = $data['foundation'];
         $project->previous_work = $data['previous_work'];
@@ -327,5 +343,12 @@ class ProjectResource extends Resource
             $project->has_image = true;
             $project->save();
         }
+    }
+
+    public function delete($subject, $project)
+    {
+        $group = $project->group;
+        $project->delete();
+        $group->delete();
     }
 }

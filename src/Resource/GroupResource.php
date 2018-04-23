@@ -171,13 +171,26 @@ class GroupResource extends Resource
                     ],
                 ],
                 'telephone' => [
-                    'type' => 'string',
-                    'minLength' => 1,
-                    'maxLength' => 20,
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 20,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                    
                 ],
                 'email' => [
-                    'type' => 'string',
-                    'format' => 'email',
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'format' => 'email',
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
                 ],
             ],
             'required' => [
@@ -219,6 +232,7 @@ class GroupResource extends Resource
         
         $group = $this->db->new('App:Group');
         $group->name = $data['name'];
+        $group->trace = $this->helper->generateTrace($data['name']);
         $group->description = $data['description'];
         $group->year = $data['year'];
         $group->previous_editions = $data['previous_editions'];
@@ -253,6 +267,7 @@ class GroupResource extends Resource
             throw new AppException('Application period is over');
         }
         $group->name = $data['name'];
+        $group->trace = $this->helper->generateTrace($data['name']);
         $group->description = $data['description'];
         $group->year = $data['year'];
         $group->previous_editions = $data['previous_editions'];

@@ -194,6 +194,7 @@ $app->get('/project', 'projectAction:get')->setName('lisPro');
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
 $app->post('/project/{pro}', 'projectAction:patch')->setName('runUpdPro');
+$app->delete('/project/{pro}', 'projectAction:delete')->setName('delPro');
 
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 

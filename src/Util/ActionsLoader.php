@@ -37,6 +37,7 @@ class ActionsLoader
             ['id' => 'creGroUsrReq', 'group' => 'invitation', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["receiver"]', 'allowed_proxies' => '[]'],
             ['id' => 'updGro', 'group' => 'project', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["responsable"]', 'allowed_proxies' => '[]'],
             ['id' => 'updPro', 'group' => 'project', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["responsable"]', 'allowed_proxies' => '[]'],
+            ['id' => 'delPro', 'group' => 'project', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["responsable"]', 'allowed_proxies' => '[]'],
         ]);
     }
 }
