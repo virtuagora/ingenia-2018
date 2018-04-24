@@ -89,6 +89,12 @@ $app->get('/acerca', function ($request, $response, $args) {
     ]);
 })->setName('showAcerca');
 
+$app->get('/privacidad', function ($request, $response, $args) {
+    return $this->view->render($response, 'ingenia/index/privacidad.twig', [
+    'headerActive' => 'showPrivacidad'
+    ]);
+})->setName('showPrivacidad');
+
 $app->get('/proyectos', function ($request, $response, $args) {
     return $this->view->render($response, 'ingenia/index/proyectos.twig', [
     'headerActive' => 'showCatalogo'
