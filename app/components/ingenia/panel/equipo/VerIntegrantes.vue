@@ -49,8 +49,8 @@
       </tbody>
     </table>
     <hr>
-    <h1 class="title is-5">Invitaciones</h1>
-    <table class="table is-fullwidth text-middle">
+    <h1 class="title is-5">Invitaciones pendientes</h1>
+    <table class="table is-bordered is-fullwidth text-middle">
       <thead>
         <tr>
           <th>Email</th>
@@ -78,9 +78,8 @@
         </tr>
       </tbody>
     </table>
-    <hr>
-    <h1 class="title is-5">Solicitudes</h1>
-    <table class="table is-fullwidth text-middle">
+    <h1 class="title is-5">Solicitudes pendientes</h1>
+    <table class="table is-bordered is-fullwidth text-middle">
       <thead>
         <tr>
           <th>Email</th>
@@ -109,7 +108,7 @@
       </tbody>
       <tbody v-else>
         <tr>
-          <td colspan="2">No hay solicitudes para listar</td>
+          <td colspan="3">No hay solicitudes para listar</td>
         </tr>
       </tbody>
     </table>

@@ -39,6 +39,7 @@
                   </a>
                 </b-tooltip>
               </div>
+            <ver-proyecto-button-hero-index></ver-proyecto-button-hero-index>
             {% endif %}
             <div class="column is-narrow is-hidden">
               <b-tooltip label="Mi proyecto" type="is-dark" position="is-bottom">
@@ -98,23 +99,24 @@
               </span>
             </a>
           </li>
+          <li class="{{ headerActive == 'showCatalogo' ? 'is-active' }}">
+            <a href="{{path_for('showCatalogo')}}">Proyectos</a>
+          </li>
+          {% if subject.id %}
+            <li>
+              <a href="/panel"><i class="fas fa-compass fa-fw"></i>&nbsp;Mi panel</a>
+            </li>
+            <ver-proyecto-tab-index></ver-proyecto-tab-index>
+          {% endif %}
           <li class="{{ headerActive == 'showAcerca' ? 'is-active' }}">
-            <a href="{{path_for('showAcerca')}}">¿Que es ingenia?</a>
+            <a href="{{path_for('showAcerca')}}">¿Que es INGENIA?</a>
           </li>
           <li class="{{ headerActive == 'showComoParticipar' ? 'is-active' }}">
             <a href="{{path_for('showComoParticipar')}}">¿Como participar?</a>
           </li>
-          <li class="{{ headerActive == 'showCatalogo' ? 'is-active' }}">
-            <a href="{{path_for('showCatalogo')}}">Proyectos</a>
-          </li>
           <li class="{{ headerActive == 'showReglamento' ? 'is-active' }}">
             <a href="{{path_for('showReglamento')}}">Reglamento</a>
           </li>
-          {% if subject.id %}
-            <li>
-              <a href="/panel">Mi perfil</a>
-            </li>
-          {% endif %}
         </ul>
       </div>
     </nav>

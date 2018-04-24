@@ -10,7 +10,12 @@
     <h1 class="subtitle is-3">Mi proyecto de INGENIA</h1>
     <h1 class="title is-1">{{project.name}}</h1>
     <hr>
-    <div class="content">
+    <a :href="'/proyecto/'+project.id" class="button is-info is-outlined is-fullwidth">Ir a la página del proyecto</a>
+    <br>
+    <div class="content is-clearfix">
+     <div class="box is-paddingless is-pulled-right" style="max-width:350px; margin:10px">
+              <img :src="imageUrl" class="image" style="margin: 0 auto; border-radius:5px;" alt="">
+            </div>
       <h5>
         <b>Acerca del proyecto</b>
       </h5>
@@ -202,6 +207,12 @@ export default {
       } else {
         [""];
       }
+    },
+    imageUrl: function() {
+      if (this.project.has_image) {
+        return "/project/" + this.project.id + "/picture";
+      }
+      return "/assets/img/neuronas-ingenia-noimg.jpg";
     }
   }
 };

@@ -12,10 +12,10 @@
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.abstract')}">
         <i class="fas fa-angle-double-right"></i> Resumen del proyecto *</label>
-      <p>Breve descripción de tu proyecto. Máximo 1000 caracteres</p>
+      <p>Breve descripción de tu proyecto. Máximo 2000 caracteres</p>
       <br>
       <div class="control">
-        <b-input v-model="project.abstract" data-vv-name="project.abstract" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:1000'" type="textarea" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
+        <b-input v-model="project.abstract" data-vv-name="project.abstract" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:2000'" type="textarea" minlength="10" maxlength="2000" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
         </b-input>
         <span v-show="errors.has('project.abstract')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.abstract')}}</span>
       </div>
@@ -102,7 +102,7 @@
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.goals')}">
         <i class="fas fa-angle-double-right"></i> Objetivos *</label>
-      <p>¿Qué se quiere lograr? Tratar de ser muy breves, concretos y precisos</p>
+      <p>¿Qué se quiere lograr? ¡Anda agregando objetivos de a uno! Tratar de ser muy breves, concretos y precisos</p>
       <div class="control">
         <br>
         <div class="field is-grouped">
@@ -166,11 +166,11 @@
       <br>
       <div class="field is-grouped">
         <div class="control">
-          <b-datepicker placeholder="Hace clic!" v-model="dateActividad" :mobile-native="false" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date()" :max-date="new Date('12/31/2018')" icon="calendar-alt">
+          <b-datepicker placeholder="Hace clic!" v-model="dateActividad" :mobile-native="false" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date()" :max-date="new Date('04/30/2019')" icon="calendar-alt">
           </b-datepicker>
         </div>
         <p class="control is-expanded">
-          <b-input size="is-medium" v-model="inputActividad" maxlength="300" placeholder="Escribí un objetivo"></b-input>
+          <b-input size="is-medium" v-model="inputActividad" maxlength="300" placeholder="Escribí la actividad  "></b-input>
         </p>
         <p class="control">
           <b-tooltip :label="disableAddActividad ? 'Falta información' : 'Agregar!'"
