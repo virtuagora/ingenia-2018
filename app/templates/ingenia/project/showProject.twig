@@ -4,6 +4,8 @@
 {% block title %}{{project.name}}{% endblock %}
 {% block opengraph %}
   <!-- Social Media Metatags! -->
+<meta property="fb:app_id" content="360875627728979"/>
+<meta property="og:type" content="article"/>
   <meta name="description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
   <meta property="og:title" content="{{project.name}} - ¡Bancalo en INGENIA!">
 <meta property="og:description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
@@ -13,16 +15,15 @@
 <meta property="og:image:height" content="777">
 {% else %}
   <meta property="og:image" content="/assets/img/img-bancar-sharer-01.png">
-<meta property="og:image:width" content="800">
+<meta property="og:image:width" content="1100">
 <meta property="og:image:height" content="565">
 {% endif %}
-  <meta property="og:url" content="https://ingenia.virtuagora.org/proyecto/{{project.id}}">
+  <meta property="og:url" content="https://ingenia.virtuagora.org/proyecto/{{project.id}}?sharer=fb">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{project.name}} - ¡Bancalo en INGENIA!">
   <meta name="twitter:site" content="@virtuagora">
   <meta name="twitter:creator" content="@virtuagora">
   <meta name="twitter:description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
-  <meta name="twitter:image" content="https://ingenia.virtuagora.org/assets/img/img-bancar-sharer-01.png">
 {% endblock %}
 {% block body %}
   <img src="{{asset('img/santafelogo.svg')}}" class="image logo-sf-float is-48x48 is-hidden-touch is-hidden-desktop-only" alt="">
