@@ -12,6 +12,7 @@
       <b-message>
         Subí una imagen relacionada al proyecto para decorar el punto de encuentro de tu proyecto.
         <br>Tamaño del archivo: 3MB. Se aceptan .JPG, .JPEG, PNG
+        <br><b>NOTA: Se recomiendan que las dimensiones sean 1000x777 (De no se así se ajustaran las dimensionaes)</b>
       </b-message>
       <form :action="formUrl" ref="formProImg" method="post" enctype="multipart/form-data">
         <b-field class="file is-medium">

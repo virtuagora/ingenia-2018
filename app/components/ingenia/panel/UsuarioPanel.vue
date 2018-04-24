@@ -53,7 +53,10 @@
             <router-link :to="{ name: 'userVerEquipo'}" exact-active-class="is-active">Ver mi equipo</router-link>
           </li>
           <li v-if="user.groups[0].pivot.relation == 'responsable'">
-            <router-link :to="{ name: 'userEnviarInvitaciones'}" exact-active-class="is-active">Sumar a mi equipo</router-link>
+            <router-link :to="{ name: 'userVerIntegrantes'}" exact-active-class="is-active">Ver integrantes y pendientes</router-link>
+          </li>
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
+            <router-link :to="{ name: 'userEnviarInvitaciones'}" exact-active-class="is-active">Invitar a alguien al equipo</router-link>
           </li>
           <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userSubirConformidad'}" exact-active-class="is-active">

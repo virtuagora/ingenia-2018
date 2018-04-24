@@ -71,10 +71,20 @@ $app->get('/logout', function ($request, $response, $args) {
 $app->get('/', function ($request, $response, $args) {
     // $this->logger->info('Hello!');
     return $this->view->render($response, 'index.twig', [
-    'name' => 'hello!',
+    // 'name' => 'hello!',
     // 'sub' => $request->getAttribute('subject'),
     'headerActive' => 'showHome'
     ]);
+    // if ($request->getAttribute('subject')->getType() != 'Annonymous') {
+    //     return $this->view->render($response, 'index.twig', [
+    //     // 'name' => 'hello!',
+    //     // 'sub' => $request->getAttribute('subject'),
+    //     'headerActive' => 'showHome'
+    //     ]);
+    // }
+    // return $this->view->render($response, 'ingenia/index/proyectos.twig', [
+    // 'headerActive' => 'showCatalogo'
+    // ]);
 })->setName('showHome');
 
 $app->get('/reglamento', function ($request, $response, $args) {

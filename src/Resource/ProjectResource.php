@@ -334,7 +334,7 @@ class ProjectResource extends Resource
             ->fit(1000, 777, function ($constraint) {
                 $constraint->upsize();
             })
-            ->encode('jpg', 75);
+            ->encode('jpg', 90);
         $this->filesystem->put('project/'.$project->id.'.jpg', $imgStrm);
         if (is_resource($imgStrm)) {
             fclose($imgStrm);

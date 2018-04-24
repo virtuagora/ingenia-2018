@@ -43,6 +43,8 @@ import Avatar from './ingenia/utils/Avatar'
 import VoteProject from './ingenia/project/VoteProject'
 import NavbarProject from './ingenia/project/NavbarProject'
 import Status from "./ingenia/utils/Status";
+import VerProyectoButtonHeroIndex from "./ingenia/utils/VerProyectoButtonHeroIndex";
+import VerProyectoTabIndex from "./ingenia/utils/VerProyectoTabIndex";
 
 // vue-textarea-autosize
 // autosizer for textareas
@@ -148,6 +150,8 @@ window.vm = new Vue({ // eslint-disable-line no-new
     Avatar,
     Status,
     'fb-register': FBRegister,
+    VerProyectoButtonHeroIndex,
+    VerProyectoTabIndex
   },
   beforeCreate: function () {
     store.dispatch('prepareData', window.getUserId()).then(response => {

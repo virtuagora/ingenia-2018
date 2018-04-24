@@ -131,6 +131,9 @@ export default {
   },
   created: function() {
     this.user = this.$store.state.user;
+    this.team.email = this.user.email
+    this.team.telephone = this.user.telephone
+
   },
   methods: {
     isOptional: function(value) {
