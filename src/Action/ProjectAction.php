@@ -35,7 +35,27 @@ class ProjectAction
 
     public function get($request, $response, $params)
     {
-        $pagParams = $this->pagination->getParams($request);
+        $pagParams = $this->pagination->getParams($request, [
+            'loc' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'dep' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'reg' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'cat' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            's' => [
+                'type' => 'string',
+            ],
+        ]);
         $resultados = $this->projectResource->retrieve($pagParams);
         $resultados->setUri($request->getUri());
         return $this->pagination->renderResponse($response, $resultados);
@@ -71,6 +91,22 @@ class ProjectAction
             'message' => 'Información del proyecto actualizada exitosamente',
             'status' => 200,
             'project' => $project->toArray(),
+        ]);
+    }
+
+    public function delete($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'delPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        $this->projectResource->delete($subject, $project);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Proyecto y equipo eliminados exitosamente',
+            'status' => 200,
         ]);
     }
     
