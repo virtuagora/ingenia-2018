@@ -39,6 +39,11 @@ class Project extends Model
         return $this->belongsTo('App\Model\Locality');
     }
 
+    public function voters()
+    {
+        return $this->belongsToMany('App\Model\User', 'project_user', 'project_id', 'user_id');
+    }
+
     public function getRelationsWith($subject)
     {
         $user = $this->group->users()->where('subject_id', $subject->getId())->first();

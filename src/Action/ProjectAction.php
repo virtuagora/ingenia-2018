@@ -127,25 +127,20 @@ class ProjectAction
         return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
     }
     
-    public function postVote($req, $res, $arg)
+    public function postVote($request, $response, $params)
     {
-        if (!$this->session->has('user')) {
-            throw new \App\Util\AppException('Necesitás identificarte para realizar esta acción.', 403);
+        $subject = $request->getAttribute('subject');
+        if ($subject->getType() == 'Annonymous') {
+            throw new UnauthorizedException();
         }
-        $userID = $this->session->get('user.id');
-        $project = $this->db->query('App:Project')->findOrFail($arg['pro']);
-        $result = $project->voters()->toggle($userID);
-        $project->likes = $project->voters()->count();
-        $project->save();
-        $vote = empty($result['detached']);
-        if ($vote) {
-            $this->db->table('options')->where('key', 'votos')->increment('value');
-        } else {
-            $this->db->table('options')->where('key', 'votos')->decrement('value');
-        }
-        return $res->withJSON([
-        'mensaje' => $vote? '¡Proyecto bancado!': 'Proyecto ya no bancado.',
-        'vote' => $vote,
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params
+        );
+        $vote = $this->projectResource->vote($subject, $project);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => $vote? '¡Proyecto bancado!': 'Proyecto ya no bancado.',
+            'vote' => $vote,
+            'status' => 200,
         ]);
     }
     

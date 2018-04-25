@@ -351,4 +351,20 @@ class ProjectResource extends Resource
         $project->delete();
         $group->delete();
     }
+
+    public function vote($subject, $project)
+    {
+        $user = $this->helper->getUserFromSubject($subject);
+
+        $result = $project->voters()->toggle($user->id);
+        $project->likes = $project->voters()->count();
+        $project->save();
+        $vote = empty($result['detached']);
+        if ($vote) {
+            $this->options->incrementOption('votos', 1);
+        } else {
+            $this->options->incrementOption('votos', -1);
+        }
+        return $vote;
+    }
 }
