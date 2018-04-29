@@ -396,8 +396,10 @@ class UserResource extends Resource
         if ($user->verified_dni) {
             throw new AppException('No puede actualizar su DNI una vez verificado');
         }
-        if ($file->getError() !== UPLOAD_ERR_OK) {
-            throw new AppException('Hubo un error con el archivo recibido');
+        if ($file->getError() === UPLOAD_ERR_INI_SIZE || $file->getError() === UPLOAD_ERR_FORM_SIZE) {
+            throw new AppException('El archivo excede el límite de tamaño permitido');
+        } elseif ($file->getError() !== UPLOAD_ERR_OK) {
+            throw new AppException('Hubo un error con el archivo recibido. Código '.$file->getError());
         }
         $fileMime = $file->getClientMediaType();
         $allowedMimes = [
@@ -407,6 +409,7 @@ class UserResource extends Resource
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
             'image/jpeg' => 'jpg',
             'image/pjpeg' => 'jpg',
+            'image/png' => 'png',
         ];
         if (!isset($allowedMimes[$fileMime])) {
             throw new AppException('Tipo de documento inválido');
