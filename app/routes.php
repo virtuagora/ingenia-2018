@@ -195,6 +195,9 @@ $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
 $app->post('/project/{pro}', 'projectAction:patch')->setName('runUpdPro');
 $app->delete('/project/{pro}', 'projectAction:delete')->setName('delPro');
+$app->post('/project/{pro}/vote', 'projectAction:postVote')->setName('runCreProVot');
+$app->post('/project/{pro}/comment', 'projectAction:postComment')->setName('runCreProCom');
+$app->post('/comment/{com}/reply', 'projectAction:postReply')->setName('runCreProRep');
 
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 

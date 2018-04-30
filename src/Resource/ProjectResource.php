@@ -361,10 +361,65 @@ class ProjectResource extends Resource
         $project->save();
         $vote = empty($result['detached']);
         if ($vote) {
-            $this->options->incrementOption('votos', 1);
+            $this->options->incrementOption('stat-votes', 1);
         } else {
-            $this->options->incrementOption('votos', -1);
+            $this->options->incrementOption('stat-votes', -1);
         }
         return $vote;
+    }
+
+    public function createComment($subject, $project, $data)
+    {
+        $user = $this->helper->getUserFromSubject($subject);
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'content' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 500,
+                ],
+            ],
+            'required' => ['content'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        $comment = $this->db->new('App:Comment');
+        $comment->author_id = $user->id;
+        $comment->project_id = $project->id;
+        $comment->content = $data['content']; // TODO escapar emojies
+        $comment->save();
+        $this->options->incrementOption('stat-comments', 1);
+        return $comment;
+    }
+
+    public function createReply($subject, $comment, $data)
+    {
+        $user = $this->helper->getUserFromSubject($subject);
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'content' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 500,
+                ],
+            ],
+            'required' => ['content'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        if ($comment->parent != null) {
+            $comment = $comment->parent;
+        }
+        $reply = $this->db->new('App:Comment');
+        $reply->author_id = $user->id;
+        $reply->parent_id = $comment->id;
+        $reply->content = $data['content']; // TODO escapar emojies
+        $reply->save();
+        $this->options->incrementOption('stat-comments', 1);
+        return $reply;
     }
 }
