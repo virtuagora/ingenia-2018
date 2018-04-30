@@ -229,7 +229,7 @@ class Installer
             $table->text('content');
             $table->integer('votes')->default(0);
             $table->text('meta')->nullable();
-            $table->integer('project_id')->unsigned();
+            $table->integer('project_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
@@ -364,6 +364,12 @@ class Installer
                 'autoload' => true,
             ], [
                 'key' => 'stat-votes',
+                'value' => '0',
+                'type' => 'integer',
+                'group' => 'estadisticas',
+                'autoload' => true,
+            ], [
+                'key' => 'stat-comments',
                 'value' => '0',
                 'type' => 'integer',
                 'group' => 'estadisticas',
