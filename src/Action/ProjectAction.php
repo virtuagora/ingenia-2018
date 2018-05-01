@@ -127,98 +127,77 @@ class ProjectAction
         return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
     }
     
-    public function postVote($req, $res, $arg)
+    public function postVote($request, $response, $params)
     {
-        if (!$this->session->has('user')) {
-            throw new \App\Util\AppException('Necesitás identificarte para realizar esta acción.', 403);
+        $subject = $request->getAttribute('subject');
+        if ($subject->getType() == 'Annonymous') {
+            throw new UnauthorizedException();
         }
-        $userID = $this->session->get('user.id');
-        $project = $this->db->query('App:Project')->findOrFail($arg['pro']);
-        $result = $project->voters()->toggle($userID);
-        $project->likes = $project->voters()->count();
-        $project->save();
-        $vote = empty($result['detached']);
-        if ($vote) {
-            $this->db->table('options')->where('key', 'votos')->increment('value');
-        } else {
-            $this->db->table('options')->where('key', 'votos')->decrement('value');
-        }
-        return $res->withJSON([
-        'mensaje' => $vote? '¡Proyecto bancado!': 'Proyecto ya no bancado.',
-        'vote' => $vote,
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params
+        );
+        $vote = $this->projectResource->vote($subject, $project);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => $vote? '¡Proyecto bancado!': 'Proyecto ya no bancado.',
+            'vote' => $vote,
+            'status' => 200,
         ]);
     }
     
-    public function postComment($req, $res, $arg)
+    public function postComment($request, $response, $params)
     {
-        if (!$this->session->has('user')) {
-            throw new \App\Util\AppException('Necesitás identificarte para realizar esta acción.', 403);
+        $subject = $request->getAttribute('subject');
+        if ($subject->getType() != 'User') {
+            throw new UnauthorizedException();
         }
-        $userID = $this->session->get('user.id');
-        $project = $this->db->query('App:Project')->findOrFail($arg['pro']);
-        $params = $req->getParsedBody();
-        if (!$this->validator['comment']->validate($params)) {
-            throw new \App\Util\AppException('Parametros invalidos', 400);
-        }
-        $comment = new \App\Model\Comment();
-        $comment->user_id = $userID;
-        $comment->project_id = $project->id;
-        $comment->content = $this->emojione->toShort($params['content']);
-        $comment->save();
-        $this->db->table('options')->where('key', 'comentarios')->increment('value');
-        return $res->withJSON([
-        'mensaje' => 'Comentario realizado.',
-        'id' => $comment->id,
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params
+        );
+        $comment = $this->projectResource->createComment(
+            $subject, $project, $request->getParsedBody()
+        );
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Comentario realizado',
+            'comment' => $comment,
+            'status' => 200,
         ]);
     }
     
-    public function postReply($req, $res, $arg)
+    public function postReply($request, $response, $params)
     {
-        if (!$this->session->has('user')) {
-            throw new \App\Util\AppException('Necesitás identificarte para realizar esta acción.', 403);
+        $subject = $request->getAttribute('subject');
+        if ($subject->getType() != 'User') {
+            throw new UnauthorizedException();
         }
-        $userID = $this->session->get('user.id');
-        $parent = $this->db->query('App:Comment')->findOrFail($arg['com']);
-        if ($parent->parent != null) {
-            $parent = $parent->parent;
-        }
-        $params = $req->getParsedBody();
-        if (!$this->validator['comment']->validate($params)) {
-            throw new \App\Util\AppException('Parametros invalidos', 400);
-        }
-        $comment = new \App\Model\Comment();
-        $comment->user_id = $userID;
-        $comment->parent_id = $parent->id;
-        $comment->content = $this->emojione->toShort($params['content']);
-        $comment->save();
-        $this->db->table('options')->where('key', 'comentarios')->increment('value');
-        return $res->withJSON([
-        'mensaje' => 'Comentario respondido.',
-        'id' => $comment->id,
+        $comment = $this->helper->getEntityFromId(
+            'App:Comment', 'com', $params
+        );
+        $reply = $this->projectResource->createReply(
+            $subject, $comment, $request->getParsedBody()
+        );
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Respuesta realizada',
+            'reply' => $reply,
+            'status' => 200,
         ]);
     }
     
-    public function postCommentVote($req, $res, $arg)
+    public function postCommentVote($request, $response, $params)
     {
-        if (!$this->session->has('user')) {
-            throw new \App\Util\AppException('Necesitás identificarte para realizar esta acción.', 403);
+        $subject = $request->getAttribute('subject');
+        if ($subject->getType() != 'User') {
+            throw new UnauthorizedException();
         }
-        $userID = $this->session->get('user.id');
-        $comment = $this->db->query('App:Comment')->findOrFail($arg['com']);
-        $params = $req->getParsedBody();
-        if (!$this->validator['rate']->validate($params)) {
-            throw new \App\Util\AppException('Tu comentario es muy largo o muy corto.', 400);
-        }
-        if ($comment->raters()->where('user_id', $userID)->exists()) {
-            $comment->raters()->updateExistingPivot($userID, ['value' => $params['value']]);
-        } else {
-            $comment->raters()->attach($userID, ['value' => $params['value']]);
-        }
-        $comment->votes = $comment->raters->sum('pivot.value');
-        $comment->save();
-        return $res->withJSON([
-        'mensaje' => 'Comentario votado.',
-        'likes' => $comment->votes,
+        $comment = $this->helper->getEntityFromId(
+            'App:Comment', 'com', $params
+        );
+        $votes = $this->projectResource->voteComment(
+            $subject, $comment, $request->getParsedBody()
+        );
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Comentario votado',
+            'status' => 200,
+            'votes' => $votes,
         ]);
     }
     

@@ -214,13 +214,22 @@ class Installer
 
             $table->index('name');
         });
+        $this->db->schema()->create('project_user', function($table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('project_id')->unsigned();
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->timestamps();
+        });
         $this->db->schema()->create('comments', function($table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->text('content');
             $table->integer('votes')->default(0);
             $table->text('meta')->nullable();
-            $table->integer('project_id')->unsigned();
+            $table->integer('project_id')->unsigned()->nullable();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->integer('author_id')->unsigned();
             $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
@@ -296,6 +305,7 @@ class Installer
         $this->db->schema()->dropIfExists('actions');
         $this->db->schema()->dropIfExists('comment_votes');
         $this->db->schema()->dropIfExists('comments');
+        $this->db->schema()->dropIfExists('project_user');
         $this->db->schema()->dropIfExists('projects');
         $this->db->schema()->dropIfExists('invitations');
         $this->db->schema()->dropIfExists('user_group');
@@ -351,6 +361,18 @@ class Installer
                 'value' => '2018-6-8 23:59:59',
                 'type' => 'date',
                 'group' => 'varios',
+                'autoload' => true,
+            ], [
+                'key' => 'stat-votes',
+                'value' => '0',
+                'type' => 'integer',
+                'group' => 'estadisticas',
+                'autoload' => true,
+            ], [
+                'key' => 'stat-comments',
+                'value' => '0',
+                'type' => 'integer',
+                'group' => 'estadisticas',
                 'autoload' => true,
             ],
         ]);

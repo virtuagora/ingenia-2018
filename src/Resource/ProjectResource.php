@@ -239,6 +239,9 @@ class ProjectResource extends Resource
                 $q->where('region_id', $options['reg']);
             });
         }
+        if (isset($options['cat'])) {
+            $query->where('category_id', $options['cat']);
+        }
         if (isset($options['s'])) {
             $filter = $this->helper->generateTrace($options['s']);
             $query->where('trace', 'LIKE', "%$filter%");
@@ -350,5 +353,102 @@ class ProjectResource extends Resource
         $group = $project->group;
         $project->delete();
         $group->delete();
+    }
+
+    public function vote($subject, $project)
+    {
+        $user = $this->helper->getUserFromSubject($subject);
+
+        $result = $project->voters()->toggle($user->id);
+        $project->likes = $project->voters()->count();
+        $project->save();
+        $vote = empty($result['detached']);
+        if ($vote) {
+            $this->options->incrementOption('stat-votes', 1);
+        } else {
+            $this->options->incrementOption('stat-votes', -1);
+        }
+        return $vote;
+    }
+
+    public function createComment($subject, $project, $data)
+    {
+        $user = $this->helper->getUserFromSubject($subject);
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'content' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 500,
+                ],
+            ],
+            'required' => ['content'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        $comment = $this->db->new('App:Comment');
+        $comment->author_id = $user->id;
+        $comment->project_id = $project->id;
+        $comment->content = $data['content']; // TODO escapar emojies
+        $comment->save();
+        $this->options->incrementOption('stat-comments', 1);
+        return $comment;
+    }
+
+    public function createReply($subject, $comment, $data)
+    {
+        $user = $this->helper->getUserFromSubject($subject);
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'content' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 500,
+                ],
+            ],
+            'required' => ['content'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        if ($comment->parent != null) {
+            $comment = $comment->parent;
+        }
+        $reply = $this->db->new('App:Comment');
+        $reply->author_id = $user->id;
+        $reply->parent_id = $comment->id;
+        $reply->content = $data['content']; // TODO escapar emojies
+        $reply->save();
+        $this->options->incrementOption('stat-comments', 1);
+        return $reply;
+    }
+
+    public function voteComment($subject, $comment, $data)
+    {
+        $user = $this->helper->getUserFromSubject($subject);
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'value' => [
+                    'type' => 'integer',
+                    'enum' => [-1, 1],
+                ],
+            ],
+            'required' => ['value'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        if ($comment->raters()->where('user_id', $user->id)->exists()) {
+            $comment->raters()->updateExistingPivot($user->id, ['value' => $data['value']]);
+        } else {
+            $comment->raters()->attach($user->id, ['value' => $data['value']]);
+        }
+        $comment->votes = $comment->raters->sum('pivot.value');
+        $comment->save();
+        return $comment->votes;
     }
 }

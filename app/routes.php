@@ -133,12 +133,10 @@ $app->get('/como-participar', function ($request, $response, $args) {
 //     return $response->withJSON(['message' => 'instalación exitosa']);
 // });
 
-$app->get('/test', function ($req, $res, $arg) {
-    throw new \App\Util\Exception\AppException('CAPTCHA no recibido', 501);
-    $options = $this->options->getAutoloaded();
-    return $res->withJSON([
-    'sub' => $options->toArray(),
-    'raw' => $options->toArray(),
+$app->get('/test', function ($request, $response, $args) {
+    $options = $this->db->query('App:Option')->get()->toArray();
+    return $this->view->render($response, 'test/simple.twig', [
+        'text' => $options,
     ]);
     //return $res->withJSON($this->session->get('user'));
 });
@@ -211,6 +209,10 @@ $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
 $app->post('/project/{pro}', 'projectAction:patch')->setName('runUpdPro');
 $app->delete('/project/{pro}', 'projectAction:delete')->setName('delPro');
+$app->post('/project/{pro}/vote', 'projectAction:postVote')->setName('runCreProVot');
+$app->post('/project/{pro}/comment', 'projectAction:postComment')->setName('runCreProCom');
+$app->post('/comment/{com}/reply', 'projectAction:postReply')->setName('runCreProRep');
+$app->post('/comment/{com}/vote', 'projectAction:postCommentVote')->setName('runCreComVot');
 
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 
@@ -294,14 +296,25 @@ $app->group('/usuario', function () {
 });
 
 $app->group('/proyecto', function () {
-    $this->get('/{pro}', function($request, $response, $params){
+    $this->get('/{pro}', function($request, $response, $params) {
+        $subject = $request->getAttribute('subject');
         $proyecto = $this->helper->getEntityFromId(
-        'App:Project', 'pro', $params, ['category']
+            'App:Project', 'pro', $params, ['category']
         );
+        if ($subject->getType() == 'User') {
+            $voted = !is_null(
+                $proyecto->voters()
+                ->where('user_id', $subject->getExtra()['user_id'])
+                ->first()
+            );
+        } else {
+            $voted = false;
+        }
         $proyecto->addVisible(['category_id']);
         // return $response->withJSON($proyecto->toArray());
         return $this->view->render($response, 'ingenia/project/showProject.twig', [
-        'project' => $proyecto,
+            'project' => $proyecto,
+            'voted' => $voted,
         ]);
     })->setName('showProject');
     $this->get('/{pro}/[{path:.*}]', function($request, $response, $params){
