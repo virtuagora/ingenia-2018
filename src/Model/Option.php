@@ -12,10 +12,23 @@ class Option extends Model
 
     public function getValueAttribute($value)
     {
-        if ($this->type == 'array') {
-            return json_decode($value, true);
-        } else {
-            return $value;
+        // return $this->castAttribute($this->type, $value);
+        switch ($this->type) {
+            case 'integer':
+                return (int) $value;
+            case 'float':
+                return (float) $value;
+            case 'string':
+                return (string) $value;
+            case 'boolean':
+                return (bool) $value;
+            case 'object':
+            case 'array':
+                return json_decode($value, true);
+            case 'date':
+                return $this->asDate($value);
+            default:
+                return $value;
         }
     }
 }

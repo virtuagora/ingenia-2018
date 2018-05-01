@@ -134,54 +134,9 @@ $app->get('/como-participar', function ($request, $response, $args) {
 // });
 
 $app->get('/test', function ($request, $response, $args) {
-    $schema = [
-        'type' => 'object',
-        'properties' => [
-            'page' => [
-                'type' => 'integer',
-                'minimum' => 1,
-                'maximum' => 999,
-                'default' => 1,
-            ],
-            'size' => [
-                'type' => 'integer',
-                'minimum' => 1,
-                'maximum' => 100,
-                'default' => 20,
-            ],
-            'loc' => [
-                'type' => 'integer',
-                'minimum' => 1,
-            ],
-            'dep' => [
-                'type' => 'integer',
-                'minimum' => 1,
-            ],
-            'reg' => [
-                'type' => 'integer',
-                'minimum' => 1,
-            ],
-            'cat' => [
-                'type' => 'integer',
-                'minimum' => 1,
-                'default' => 0,
-            ],
-            's' => [
-                'type' => 'string',
-            ],
-        ],
-    ];
-    $data = [
-        'page' => 2,
-        'loc' => '3',
-        's' => 'holis',
-        'dep' => null,
-        'cat' => null,
-    ];
-    return $response->withJSON([
-        'data' => $data,
-        'fixed' => $this->helper->castFromJson($schema, $data),
-        'noNull' => $this->helper->castFromJson($schema, $data, true),
+    $options = $this->db->query('App:Option')->get()->toArray();
+    return $this->view->render($response, 'test/simple.twig', [
+        'text' => $options,
     ]);
     //return $res->withJSON($this->session->get('user'));
 });
