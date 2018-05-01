@@ -296,14 +296,25 @@ $app->group('/usuario', function () {
 });
 
 $app->group('/proyecto', function () {
-    $this->get('/{pro}', function($request, $response, $params){
+    $this->get('/{pro}', function($request, $response, $params) {
+        $subject = $request->getAttribute('subject');
         $proyecto = $this->helper->getEntityFromId(
-        'App:Project', 'pro', $params, ['category']
+            'App:Project', 'pro', $params, ['category']
         );
+        if ($subject->getType() == 'User') {
+            $voted = !is_null(
+                $proyecto->voters()
+                ->where('user_id', $subject->getExtra()['user_id'])
+                ->first()
+            );
+        } else {
+            $voted = false;
+        }
         $proyecto->addVisible(['category_id']);
         // return $response->withJSON($proyecto->toArray());
         return $this->view->render($response, 'ingenia/project/showProject.twig', [
-        'project' => $proyecto,
+            'project' => $proyecto,
+            'voted' => $voted,
         ]);
     })->setName('showProject');
     $this->get('/{pro}/[{path:.*}]', function($request, $response, $params){
