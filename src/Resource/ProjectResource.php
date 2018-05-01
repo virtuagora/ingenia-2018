@@ -425,4 +425,30 @@ class ProjectResource extends Resource
         $this->options->incrementOption('stat-comments', 1);
         return $reply;
     }
+
+    public function voteComment($subject, $comment, $data)
+    {
+        $user = $this->helper->getUserFromSubject($subject);
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'value' => [
+                    'type' => 'integer',
+                    'enum' => [-1, 1],
+                ],
+            ],
+            'required' => ['value'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        if ($comment->raters()->where('user_id', $user->id)->exists()) {
+            $comment->raters()->updateExistingPivot($user->id, ['value' => $data['value']]);
+        } else {
+            $comment->raters()->attach($user->id, ['value' => $data['value']]);
+        }
+        $comment->votes = $comment->raters->sum('pivot.value');
+        $comment->save();
+        return $comment->votes;
+    }
 }
