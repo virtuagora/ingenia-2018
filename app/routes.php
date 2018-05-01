@@ -117,12 +117,55 @@ $app->get('/install[/{extra}]', function ($request, $response, $args) {
     return $response->withJSON(['message' => 'instalación exitosa']);
 });
 
-$app->get('/test', function ($req, $res, $arg) {
-    throw new \App\Util\Exception\AppException('CAPTCHA no recibido', 501);
-    $options = $this->options->getAutoloaded();
-    return $res->withJSON([
-    'sub' => $options->toArray(),
-    'raw' => $options->toArray(),
+$app->get('/test', function ($request, $response, $args) {
+    $schema = [
+        'type' => 'object',
+        'properties' => [
+            'page' => [
+                'type' => 'integer',
+                'minimum' => 1,
+                'maximum' => 999,
+                'default' => 1,
+            ],
+            'size' => [
+                'type' => 'integer',
+                'minimum' => 1,
+                'maximum' => 100,
+                'default' => 20,
+            ],
+            'loc' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'dep' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'reg' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'cat' => [
+                'type' => 'integer',
+                'minimum' => 1,
+                'default' => 0,
+            ],
+            's' => [
+                'type' => 'string',
+            ],
+        ],
+    ];
+    $data = [
+        'page' => 2,
+        'loc' => '3',
+        's' => 'holis',
+        'dep' => null,
+        'cat' => null,
+    ];
+    return $response->withJSON([
+        'data' => $data,
+        'fixed' => $this->helper->castFromJson($schema, $data),
+        'noNull' => $this->helper->castFromJson($schema, $data, true),
     ]);
     //return $res->withJSON($this->session->get('user'));
 });

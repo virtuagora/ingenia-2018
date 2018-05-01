@@ -239,6 +239,9 @@ class ProjectResource extends Resource
                 $q->where('region_id', $options['reg']);
             });
         }
+        if (isset($options['cat'])) {
+            $query->where('category_id', $options['cat']);
+        }
         if (isset($options['s'])) {
             $filter = $this->helper->generateTrace($options['s']);
             $query->where('trace', 'LIKE', "%$filter%");
