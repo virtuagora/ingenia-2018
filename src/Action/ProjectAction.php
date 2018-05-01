@@ -169,11 +169,11 @@ class ProjectAction
         if ($subject->getType() != 'User') {
             throw new UnauthorizedException();
         }
-        $project = $this->helper->getEntityFromId(
+        $comment = $this->helper->getEntityFromId(
             'App:Comment', 'com', $params
         );
         $reply = $this->projectResource->createReply(
-            $subject, $project, $request->getParsedBody()
+            $subject, $comment, $request->getParsedBody()
         );
         return $this->representation->returnMessage($request, $response, [
             'message' => 'Respuesta realizada',
@@ -184,25 +184,20 @@ class ProjectAction
     
     public function postCommentVote($request, $response, $params)
     {
-        if (!$this->session->has('user')) {
-            throw new \App\Util\AppException('Necesitás identificarte para realizar esta acción.', 403);
+        $subject = $request->getAttribute('subject');
+        if ($subject->getType() != 'User') {
+            throw new UnauthorizedException();
         }
-        $userID = $this->session->get('user.id');
-        $comment = $this->db->query('App:Comment')->findOrFail($arg['com']);
-        $params = $req->getParsedBody();
-        if (!$this->validator['rate']->validate($params)) {
-            throw new \App\Util\AppException('Tu comentario es muy largo o muy corto.', 400);
-        }
-        if ($comment->raters()->where('user_id', $userID)->exists()) {
-            $comment->raters()->updateExistingPivot($userID, ['value' => $params['value']]);
-        } else {
-            $comment->raters()->attach($userID, ['value' => $params['value']]);
-        }
-        $comment->votes = $comment->raters->sum('pivot.value');
-        $comment->save();
-        return $res->withJSON([
-        'mensaje' => 'Comentario votado.',
-        'likes' => $comment->votes,
+        $comment = $this->helper->getEntityFromId(
+            'App:Comment', 'com', $params
+        );
+        $votes = $this->projectResource->voteComment(
+            $subject, $comment, $request->getParsedBody()
+        );
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Comentario votado',
+            'status' => 200,
+            'votes' => $votes,
         ]);
     }
     
