@@ -61,6 +61,20 @@ class ProjectAction
         return $this->pagination->renderResponse($response, $resultados);
         //return $response->withJSON($orgList->toArray());
     }
+
+    public function getComments($request, $response, $params)
+    {
+        $proId = $this->helper->getSanitizedId('pro', $params);
+        $pagParams = $this->pagination->getParams($request, [
+            'usr' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+        ]);
+        $resultados = $this->projectResource->retrieveComments($proId, $pagParams);
+        $resultados->setUri($request->getUri());
+        return $this->pagination->renderResponse($response, $resultados);
+    }
     
     public function post($request, $response, $params)
     {
