@@ -250,6 +250,16 @@ class ProjectResource extends Resource
         return $results;
     }
 
+    public function retrieveComments($proId, $options)
+    {
+        $query = $this->db->query('App:Comment')->where('project_id', $proId);
+        if (isset($options['usr'])) {
+            $query->where('author_id', $options['usr']);
+        }
+        $results = new Paginator($query, $options);
+        return $results;
+    }
+
     public function createOne($subject, $data)
     {
         $user = $this->helper->getUserFromSubject($subject);

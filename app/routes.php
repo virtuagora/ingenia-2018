@@ -197,6 +197,7 @@ $app->post('/project/{pro}/vote', 'projectAction:postVote')->setName('runCreProV
 $app->post('/project/{pro}/comment', 'projectAction:postComment')->setName('runCreProCom');
 $app->post('/comment/{com}/reply', 'projectAction:postReply')->setName('runCreProRep');
 $app->post('/comment/{com}/vote', 'projectAction:postCommentVote')->setName('runCreComVot');
+$app->get('/project/{pro}/comment', 'projectAction:getComments')->setName('getProCom');
 
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 
