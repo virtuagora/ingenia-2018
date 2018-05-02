@@ -441,8 +441,10 @@ class GroupResource extends Resource
         if (is_null($group->project->organization)) {
             throw new AppException('El proyecto no se realiza con una organización');
         }
-        if ($file->getError() !== UPLOAD_ERR_OK) {
-            throw new AppException('Hubo un error con el archivo recibido');
+        if ($file->getError() === UPLOAD_ERR_INI_SIZE || $file->getError() === UPLOAD_ERR_FORM_SIZE) {
+            throw new AppException('El archivo excede el límite de tamaño permitido');
+        } elseif ($file->getError() !== UPLOAD_ERR_OK) {
+            throw new AppException('Hubo un error con el archivo recibido. Código '.$file->getError());
         }
         $fileMime = $file->getClientMediaType();
         $allowedMimes = [
@@ -471,8 +473,10 @@ class GroupResource extends Resource
     
     public function updateAgreement($subject, $group, $file)
     {
-        if ($file->getError() !== UPLOAD_ERR_OK) {
-            throw new AppException('Hubo un error con el archivo recibido');
+        if ($file->getError() === UPLOAD_ERR_INI_SIZE || $file->getError() === UPLOAD_ERR_FORM_SIZE) {
+            throw new AppException('El archivo excede el límite de tamaño permitido');
+        } elseif ($file->getError() !== UPLOAD_ERR_OK) {
+            throw new AppException('Hubo un error con el archivo recibido. Código '.$file->getError());
         }
         $fileMime = $file->getClientMediaType();
         $allowedMimes = [
