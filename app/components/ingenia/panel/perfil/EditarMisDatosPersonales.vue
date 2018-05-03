@@ -44,7 +44,7 @@
           <label class="label is-size-5" :class="{'has-text-danger': errors.has('inputBirthday')}">
             <i class="fas fa-angle-double-right"></i> Fecha de nacimiento *</label>
           <div class="control">
-            <b-datepicker placeholder="Hace clic para seleccionar la fecha" v-model="inputBirthday" :mobile-native="false" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date('01/01/1989')" :max-date="new Date('12/31/2003')" icon="calendar-alt">
+            <b-datepicker placeholder="Hace clic para seleccionar la fecha" v-model="inputBirthday" :mobile-native="false" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date('09/01/1988')" :max-date="new Date('12/31/2003')" icon="calendar-alt">
             </b-datepicker>
             <span v-show="errors.has('inputBirthday')" class="help is-danger">
               <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('inputBirthday')}}</span>
