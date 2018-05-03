@@ -22,49 +22,20 @@ Install the npm dependencies
 ```bash
 npm install
 ```
-After installation, go to `app/settings.php` and check the settings to conect with the MySQL DB.
-You need to create a MySQL database called `virtuagora_next`, and add to the `app/settings.php` the `username` and `password` to your localhost instance.
-```php
-return [
-    'settings' => [
-		(...)
-        'eloquent' => [
-            (...)
-            'database' => 'virtuagora_next',
-            'username' => 'my-username',
-            'password' => 'my-secret-password',
-            (...)
-        ],
-      (...)
-];
-```
-Awesome, now start a php server
-```bash
-raccoon@trashcan: path/to/virtuagora-core$ cd public/
-raccoon@trashcan: path/to/virtuagora-core/public$ php -S 0.0.0.0:8000
-```
-Open a browser and go to 
-```
-http://localhost:8000/install
-```
-If everything was set correctly, you should be ready to go!
 
----
+#### Changelog
 
-### Development environment
-To start running the backend, you just have to start a php server
-```bash
-raccoon@trashcan: path/to/virtuagora-core$ cd public/
-raccoon@trashcan: path/to/virtuagora-core/public$ php -S 0.0.0.0:8000
-```
-If you're going to **create o modify new Vue.js components**, then run the webpack watch script by running this npm command
-```bash
-raccoon@trashcan: path/to/virtuagora-core$ npm run watch
-```
-If you want to build for production (with minification and more) then you have to build this components
-```bash
-raccoon@trashcan: path/to/virtuagora-core$ npm run build
-```
-[1]: https://twitter.com/virtuagora
-[2]: https://www.twitter.com/augusthur
-[3]: https://www.twitter.com/guillermocroppi
+##### v1.1
+- ¡Ahora pueden bancar proyectos! En cada HUB del proyecto podrán encontrar el boton de bancar.
+- Agregados los botones de compartir en Facebook, Twitter y Whatsapp (Solo funciona en móviles)
+- Se agregó la posibildad de dejar comentarios a los proyectos. Se pueden responder a cada comentario.
+- Agregamos tambien la posibilidad de que puedan darle "Me gusta" a los comentarios y respuestas.
+
+ARREGLOS y MEJORAS: 
+
+- Agregada la sección de "Ayuda" donde podrán saber como contactarnos para mandar sugerencias o reportar un error con la plataforma.
+- Arreglado un problema al subir fotos de DNI. Los que hayan tenido problemas, ¡Vuelvan a intentar!
+- Ahora se ve correctamente en el HUB del proyecto, en el apartado del equipo, quien es el Responsable y el Co-responsable
+- Por alguna razon "Verificar email" no estaba apareciendo correctamente para aquellos que se registraban con Facebook, (y su cuenta de Facebook no estaba vinculada con un email. Si asi fue tu caso, te pedimos por favor que intentes verificar tu Email! 
+- Arreglado otros bugs y mejoras visuales.
+

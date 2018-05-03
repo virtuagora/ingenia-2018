@@ -7,6 +7,7 @@ import http from '../../http'
 import UsuarioPanel from './UsuarioPanel'
 import Overview from './Overview'
 import InscripcionIngenia from './InscripcionIngenia'
+import OtrasOpciones from './OtrasOpciones'
 
 import Perfil from './perfil/Perfil'
 import VerPerfil from './perfil/VerPerfil'
@@ -50,6 +51,12 @@ const routes = [
         path: 'inscripcion',
         component: InscripcionIngenia,
         name: 'userInscripcionIngenia',
+        props: true
+      },
+      {
+        path: 'otras-opciones',
+        component: OtrasOpciones,
+        name: 'userOtrasOpciones',
         props: true
       },
       {

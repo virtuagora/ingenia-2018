@@ -8,9 +8,14 @@
         <div class="column">
           <article class="media" v-for="member in members" :key="member.id">
             <Avatar :user="member" class="media-left" size="96"></Avatar>
-            <div class="media-content">
+            <div class="media-content" style="overflow: inherit">
               <h1 class="is-size-3 is-600">{{member.subject.display_name}}
-                <i class="fas fa-star has-text-warning" v-if="member.pivot.relation === 'responsable'"></i>
+                <b-tooltip label="Responsable" type="is-warning" position="is-bottom" v-if="member.pivot.relation === 'responsable'">
+                <i class="fas fa-star has-text-warning"></i>
+                </b-tooltip>
+                <b-tooltip label="Co-responsable" type="is-info" position="is-bottom" v-if="member.pivot.relation === 'co-responsable'">
+                <i class="fas fa-shield-alt has-text-info"></i>
+                </b-tooltip>
               </h1>
               <p class="nl2br" v-if="member.bio">{{member.bio}}</p>
               <p v-else><i>- Sin información -</i></p>

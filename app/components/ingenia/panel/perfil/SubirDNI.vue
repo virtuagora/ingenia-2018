@@ -28,7 +28,7 @@
           <br>Maximo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
         </b-message>
         <b-field class="file is-medium">
-          <b-upload v-model="files" name="archivo" accept="image/jpeg" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
+          <b-upload v-model="files" name="archivo" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
             <a class="button is-link is-medium">
               <b-icon icon="upload"></b-icon>
               <span>Click para cargar</span>

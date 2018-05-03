@@ -227,7 +227,8 @@ class ProjectResource extends Resource
 
     public function retrieve($options)
     {
-        $query = $this->db->query('App:Project');
+        $query = $this->db->query('App:Project', ['group']);
+        
         if (isset($options['loc'])) {
             $query->where('locality_id', $options['loc']);
         } elseif (isset($options['dep'])) {

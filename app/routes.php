@@ -236,10 +236,10 @@ $app->get('/project/{pro}/picture', function ($request, $response, $params) {
 
 // guille
 
-$app->get('/testing', function ($req, $res, $arg) {
-    return $this->view->render($res, 'node/vote/showVote.twig', [
-    ]);
-});
+// $app->get('/testing', function ($req, $res, $arg) {
+//     return $this->view->render($res, 'node/vote/showVote.twig', [
+//     ]);
+// });
 
 $app->group('/settings', function () {
     $this->get('', function ($req, $res, $arg) {

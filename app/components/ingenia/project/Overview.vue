@@ -15,6 +15,28 @@
             </h3>
             <p class="nl2br">{{project.foundation}}</p>
             <br>
+            <div class="notification is-primary">
+              <div class="columns">
+                <div class="column is-hidden-mobile">
+                  <h3 class="is-size-3">
+                    <b>¡Compartilo!</b>
+                  </h3>
+                </div>
+                <div class="column is-narrow has-text-centered-mobile">
+                  <p class="">
+                    <a href="javascript:shareOnFacebook()">
+                      <i class="fab fa-facebook fa-3x fa-fw"></i>
+                    </a>
+                    <a :href="'https://twitter.com/intent/tweet?text=¡Estamos participando de INGENIA y podes ayudarnos! ¡Entra en nuestro proyecto, registrate y bancanos con tú voto!&url=' + getLocation + '&hashtags=INGENIA,hayEquipo!'">
+                      <i class="fab fa-twitter fa-3x fa-fw"></i>
+                    </a>
+                    <a :href="'whatsapp://send?text=¡Estamos participando de INGENIA! ¡Y podes ayudarnos! ¡Entrá en nuestro proyecto, registrate y bancanos con tú voto! Ingresá entrando a ' + getLocation">
+                      <i class="fab fa-whatsapp fa-3x fa-fw"></i>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
             <div class="columns">
               <div class="column">
                 <h5 class="is-size-4">
@@ -41,6 +63,13 @@
             <div class="box is-paddingless">
               <img :src="imageUrl" class="image" style="margin: 0 auto; border-radius:5px;" alt="">
             </div>
+            <h5 class="is-size-4">
+              <b>Categoría</b>
+            </h5>
+            <span class="tag is-primary is-large">
+              {{project.category.name}}
+            </span>
+            <br>
             <br>
             <h5 class="is-size-4">
               <b>Presupuesto solicitado</b>
@@ -59,7 +88,7 @@
                 <i class="far fa-calendar-check fa-fw"></i>&nbsp;Con {{project.schedule.length}} actividad{{project.schedule.length > 1 ?'es':null}}</b>
             </h5>
             <br>
-            <router-link :to="{ name: 'projectImplementation'}" class="button is-black is-outlined is-medium is-fullwidth">Conocé la implementacion</router-link>
+            <router-link :to="{ name: 'projectImplementation'}" class="button is-black is-outlined is-medium is-fullwidth">Conocé la implementación</router-link>
             <br>
             <router-link :to="{ name: 'projectImplementation'}" class="button is-black is-outlined is-medium is-fullwidth">Conocé al equipo</router-link>
 
@@ -118,30 +147,13 @@
                 Entrá en Ingenia+Virtuágora para poder participar</h3>
               <p>Vas a poder bancar los proyectos y dejar comentarios, hasta podrias llegar a ser parte de un equipo!</p>
               <br>
-              <a href="/panel" class="button is-warning is-medium"><i class="fas fa-sign-in-alt fa-fw"></i>&nbsp;Iniciar sesión</a>
+              <a href="/panel" class="button is-warning is-medium">
+                <i class="fas fa-sign-in-alt fa-fw"></i>&nbsp;Iniciar sesión</a>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <section class="section">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-8 is-offset-2">
-
-            <div class="notification is-link has-text-centered">
-              <h1 class="title is-4">
-                ¡Pronto habilitaremos para que puedan hacer comentarios!
-              </h1>
-            </div>
-            <h1 class="subtitle is-5 has-text-centered has-text-black">
-              <i class="em em-muscle"></i>
-              ¡Vayan armando su campaña para promocionar y que los banquen!
-            </h1>
-          </div>
-        </div>
-      </div>
-    </section>
   </section>
 </template>
 
@@ -203,10 +215,14 @@ export default {
         });
     }
   },
-  methods:{
-imageUrlHeroInvite: function() {
+  methods: {
+    imageUrlHeroInvite: function() {
       if (this.project.has_image) {
-        return 'background-image: url(/project/' + this.project.id + '/picture); background-position: center center; background-size: cover';
+        return (
+          "background-image: url(/project/" +
+          this.project.id +
+          "/picture); background-position: center center; background-size: cover"
+        );
       }
       return "";
     }
@@ -227,6 +243,9 @@ imageUrlHeroInvite: function() {
         return "/project/" + this.project.id + "/picture";
       }
       return "/assets/img/neuronas-ingenia-noimg.jpg";
+    },
+    getLocation: function() {
+      return window.location.href;
     }
   }
 };
