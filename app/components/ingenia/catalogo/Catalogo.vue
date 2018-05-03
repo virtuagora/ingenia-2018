@@ -71,8 +71,10 @@
       <div v-masonry-tile class="item-mosaic" v-for="project in projects" :key="project.id">
         <!-- block item markup -->
         <div class="notification is-primary" :class="{'with-image': project.has_image}" :style="project.has_image ? styleWithImage(project.id) : styleWithoutImage()">
+          <div class="bancar-count-container"><img src="/assets/img/ribbon-bancar.svg" style="height:50px; vertical-align:middle" alt=""> <span class="is-size-3 is-700">{{zeroPad(project.likes,3)}}</span></div>
           <a :href="'/proyecto/'+project.id" style="text-decoration:none;">
             <h1 class="title is-4">{{project.name}}</h1>
+            <h1 class="subtitle is-5"><i class="fas fa-users"></i>&nbsp;{{project.group.name}}</h1>
           </a>
           <!-- <p class="is-size-5 is-300">Hay Futuro</p> -->
         </div>
@@ -181,6 +183,10 @@ export default {
     search: function() {
       this.resetEverything();
     },
+    zeroPad: function(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+},
     styleWithImage: function(id) {
       return (
         "background: linear-gradient(35deg, rgba(0, 23, 69, 0.9) 0%, rgba(74, 156, 214, 0.7) 39%, rgba(49, 0, 98, 0.2) 75%, rgba(48, 0, 96, 0.0) 100%), url(/project/" +

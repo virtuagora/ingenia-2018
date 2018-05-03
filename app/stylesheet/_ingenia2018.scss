@@ -204,6 +204,15 @@ nav.navbar {
     //     background-position: center center;
     // }
     .notification {
+        @include mobile {
+            padding-top: 80px;
+        }
+        @include tablet {
+            padding-top: 80px;
+        }
+        @include desktop {
+            padding-top: 80px;
+        }
         &.with-image {
             @include mobile {
                 padding-top: 30%;
@@ -212,7 +221,7 @@ nav.navbar {
                 padding-top: 40%;
             }
             @include desktop {
-                padding-top: 50%;
+                padding-top: 75%;
             }
             background-size: cover;
             background-position: center center
@@ -220,13 +229,19 @@ nav.navbar {
     }
 }
 
-.ribbon-bancar{
+.ribbon-bancar {
     max-height: 100px;
 }
 
-nav.projects-filter{
-    input.input{
-    border-radius: 0;
-    border-left: 0;
+nav.projects-filter {
+    input.input {
+        border-radius: 0;
+        border-left: 0;
     }
+}
+
+.bancar-count-container {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }

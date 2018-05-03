@@ -6,37 +6,37 @@
 
 {% block body %}
   {% include "ingenia/index/header.twig" %}
-    <section class="section">
-  <div class="container">
+  <section class="section">
+    <div class="container">
       <div class="columns">
         <div class="column is-8">
           {% if subject.id is null %}
-                <div class="columns">
-                  <div class="column is-8 has-text-centered">
-                    <h1 class="title is-4 is-600">¡Las inscripciones están abiertas!</h1>
-                    <a href="{{path_for('showLogin')}}" class="button is-medium is-primary">
-                      <i class="em em-smile"></i>&nbsp; Creá tu equipo
-                    </a>&nbsp;&nbsp;
-                    <a href="{{path_for('showLogin')}}" class="button is-medium is-primary is-outlined">
-                      <i class="em em-muscle"></i>&nbsp; Bancá proyectos
-                    </a>
-                    <br>
-                    <br>
-                    <div class="strike">
-                      <span>Hagas lo que hagas</span>
-                    </div>
-                    <br>
-                    <div class="buttons is-centered">
-                      <a href="{{path_for('showLogin')}}" class="button is-medium is-primary is-inverted">
-                        <i class="fas fa-sign-in-alt fa-lg fa-fw"></i>&nbsp; Iniciá sesión
-                      </a>
-                    </div>
-                  </div>
-                  <div class="column is-4">
-                  <br>
-                    <img src="{{asset('img/slogan1-dark.svg')}}" class="image" style=" width:250px; margin: 0 auto;">
-                  </div>
+            <div class="columns">
+              <div class="column is-8 has-text-centered">
+                <h1 class="title is-4 is-600">¡Las inscripciones están abiertas!</h1>
+                <a href="{{path_for('showLogin')}}" class="button is-medium is-primary">
+                  <i class="em em-smile"></i>&nbsp; Creá tu equipo
+                </a>&nbsp;&nbsp;
+                <a href="{{path_for('showLogin')}}" class="button is-medium is-primary is-outlined">
+                  <i class="em em-muscle"></i>&nbsp; Bancá proyectos
+                </a>
+                <br>
+                <br>
+                <div class="strike">
+                  <span>Hagas lo que hagas</span>
                 </div>
+                <br>
+                <div class="buttons is-centered">
+                  <a href="{{path_for('showLogin')}}" class="button is-medium is-primary is-inverted">
+                    <i class="fas fa-sign-in-alt fa-lg fa-fw"></i>&nbsp; Iniciá sesión
+                  </a>
+                </div>
+              </div>
+              <div class="column is-4">
+                <br>
+                <img src="{{asset('img/slogan1-dark.svg')}}" class="image" style=" width:250px; margin: 0 auto;">
+              </div>
+            </div>
             <hr>
             <br>
           {% endif %}
@@ -95,15 +95,11 @@
             </div>
           </div>
           <br>
-          <div class="notification is-black has-text-centered">
-            <h1 class="title is-4">
-              ¡Pronto habilitaremos el listado de proyectos para explorar grandes ideas y equipos!
-            </h1>
+          <div class="notification is-primary">
+          <div class="content is-small">
+          {% include 'v1-1.twig' %}
           </div>
-          <h1 class="subtitle is-5 has-text-centered has-text-black">
-            <i class="fa fa-check fa-lg has-text-success"></i>
-            Aun así, ¡Ya podes ir cargando tu equipo y proyecto ingenia!
-          </h1>
+          </div>
         </div>
         <div class="column is-3 is-offset-1">
           <h1 class="title is-3">
@@ -119,29 +115,29 @@
       </div>
 
       {# <catalogo></catalogo> #}
-  </div>
-    </section>
-    <section class="section">
-    <div class="container has-text-centered">
-    <br>
-    <br>
-    <br>
-<img src="{{asset('img/slogan3-dark.svg')}}" class="image is-hidden-touch" style="height: 100px; margin: 0 auto;">
-<img src="{{asset('img/slogan4-dark.svg')}}" class="image is-hidden-desktop" style="width: 250px; margin: 0 auto;">
-<br>
-{% if subject.id is null %}
-  <h3 class="title is-3 has-text-centered has-text-black">
-    ¡No esperes más!
-    <i class="em em-smiley"></i>
-  </h3>
-  <a href="{{path_for('showLogin')}}" class="button is-medium is-black is-800">
-    <i class="em em-muscle"></i>&nbsp;&nbsp;¡Participá hoy inscribiendote en INGENIA!</a>
-{% endif %}
-<br>
-<br>
-<br>
     </div>
-    </section>
+  </section>
+  <section class="section">
+    <div class="container has-text-centered">
+      <br>
+      <br>
+      <br>
+      <img src="{{asset('img/slogan3-dark.svg')}}" class="image is-hidden-touch" style="height: 100px; margin: 0 auto;">
+      <img src="{{asset('img/slogan4-dark.svg')}}" class="image is-hidden-desktop" style="width: 250px; margin: 0 auto;">
+      <br>
+      {% if subject.id is null %}
+        <h3 class="title is-3 has-text-centered has-text-black">
+          ¡No esperes más!
+          <i class="em em-smiley"></i>
+        </h3>
+        <a href="{{path_for('showLogin')}}" class="button is-medium is-black is-800">
+          <i class="em em-muscle"></i>&nbsp;&nbsp;¡Participá hoy inscribiendote en INGENIA!</a>
+      {% endif %}
+      <br>
+      <br>
+      <br>
+    </div>
+  </section>
 {% endblock %}
 
 {% block javascripts %}
