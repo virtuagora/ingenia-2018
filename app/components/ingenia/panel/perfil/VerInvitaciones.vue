@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1 class="subtitle is-3">Mis invitaciones y solicitudes</h1>
+    <h1 class="subtitle is-3 is-marginless">Mis invitaciones y solicitudes</h1>
+    <p><b>Nota:</b> Algunos datos tardan unos minutos en actualizarse.</p>
+    <br>
     <h1 class="title is-4">Invitaciones de equipos recibidas</h1>
     <div class="notification is-warning" v-show="user.pending_tasks.length > 0">
       <i class="fas fa-exclamation-circle"></i> Aun debe completar todos sus datos personales para poder aceptar invitaciones.

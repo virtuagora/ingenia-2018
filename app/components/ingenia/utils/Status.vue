@@ -212,7 +212,6 @@
       <br>
         <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
       <br>
-        
     </div>
   </section>
 </template>
@@ -227,15 +226,21 @@ export default {
   },
   created: function() {
       this.user = this.$store.state.user;
-    if(this.user == null){
       this.isLoading = true
-    setTimeout(() =>{
-      this.user = this.$store.state.user;
-      this.isLoading = false      
-    }, 3000)
-    }
+
+      let intervalId = setInterval(
+      function() {
+        if (this.user == null) {
+        console.log("Getting user!");
+          this.user = this.$store.state.user;
+        } else {
+        console.log("Got the user!");          
+          clearInterval( intervalId );
+        }
+      }.bind(this),
+      2000
+    );
   },
-  methods: {},
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (
