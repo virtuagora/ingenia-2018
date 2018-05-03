@@ -278,4 +278,20 @@ class GroupAction
             'status' => 200,
         ]);
     }
+
+    public function delete($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params, ['project']
+        );
+        if (!$this->authorization->checkPermission($subject, 'delPro', $group)) {
+            throw new UnauthorizedException();
+        }
+        $this->groupResource->delete($subject, $group);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Proyecto y equipo eliminados exitosamente',
+            'status' => 200,
+        ]);
+    }
 }

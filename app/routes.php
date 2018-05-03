@@ -206,6 +206,7 @@ $app->post('/group/{gro}/agreement', 'groupAction:postAgreement')->setName('runU
 $app->put('/group/{gro}/second/{usr}', 'groupAction:putSecond')->setName('runCreGroSec');
 $app->delete('/group/{gro}/user/{usr}', 'groupAction:deleteUser')->setName('runDelGroUsr');
 $app->delete('/group/{gro}/second/{usr}', 'groupAction:deleteSecond')->setName('runDelGroSec');
+$app->delete('/group/{gro}', 'groupAction:delete')->setName('delGro');
 
 $app->post('/group/accept-inv/{inv}', 'groupAction:postUserFromInvitation')->setName('runCreGroUsrInv');
 $app->post('/group/accept-req/{inv}', 'groupAction:postUserFromRequest')->setName('runCreGroUsrReq');
@@ -214,7 +215,7 @@ $app->get('/project', 'projectAction:get')->setName('lisPro');
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
 $app->post('/project/{pro}', 'projectAction:patch')->setName('runUpdPro');
-$app->delete('/project/{pro}', 'projectAction:delete')->setName('delPro');
+// $app->delete('/project/{pro}', 'projectAction:delete')->setName('delPro');
 $app->post('/project/{pro}/vote', 'projectAction:postVote')->setName('runCreProVot');
 $app->post('/project/{pro}/comment', 'projectAction:postComment')->setName('runCreProCom');
 $app->post('/comment/{com}/reply', 'projectAction:postReply')->setName('runCreProRep');
