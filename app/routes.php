@@ -111,6 +111,12 @@ $app->get('/proyectos', function ($request, $response, $args) {
     ]);
 })->setName('showCatalogo');
 
+$app->get('/ayuda', function ($request, $response, $args) {
+    return $this->view->render($response, 'ingenia/index/ayuda.twig', [
+    'headerActive' => 'showAyuda'
+    ]);
+})->setName('showAyuda');
+
 $app->get('/como-participar', function ($request, $response, $args) {
     return $this->view->render($response, 'ingenia/index/comoParticipar.twig', [
     'headerActive' => 'showComoParticipar'
@@ -136,7 +142,7 @@ $app->get('/como-participar', function ($request, $response, $args) {
 $app->get('/test', function ($request, $response, $args) {
     $options = $this->db->query('App:Option')->get()->toArray();
     return $this->view->render($response, 'test/simple.twig', [
-        'text' => $options,
+    'text' => $options,
     ]);
     //return $res->withJSON($this->session->get('user'));
 });
@@ -300,13 +306,13 @@ $app->group('/proyecto', function () {
     $this->get('/{pro}', function($request, $response, $params) {
         $subject = $request->getAttribute('subject');
         $proyecto = $this->helper->getEntityFromId(
-            'App:Project', 'pro', $params, ['category']
+        'App:Project', 'pro', $params, ['category']
         );
         if ($subject->getType() == 'User') {
             $voted = !is_null(
-                $proyecto->voters()
-                ->where('user_id', $subject->getExtra()['user_id'])
-                ->first()
+            $proyecto->voters()
+            ->where('user_id', $subject->getExtra()['user_id'])
+            ->first()
             );
         } else {
             $voted = false;
@@ -314,8 +320,8 @@ $app->group('/proyecto', function () {
         $proyecto->addVisible(['category_id']);
         // return $response->withJSON($proyecto->toArray());
         return $this->view->render($response, 'ingenia/project/showProject.twig', [
-            'project' => $proyecto,
-            'voted' => $voted,
+        'project' => $proyecto,
+        'voted' => $voted,
         ]);
     })->setName('showProject');
     $this->get('/{pro}/[{path:.*}]', function($request, $response, $params){
