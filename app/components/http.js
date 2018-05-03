@@ -3,7 +3,7 @@ import axios from 'axios'
 // Settings for axios 
   // axios.defaults.timeout = 5000;
 axios.defaults.baseURL = '/';
-
+axios.defaults.headers.common['Accept'] = 'application/json';
 // axios.interceptors.request.use(
 //     config => {
 //         if (store.state.session) {

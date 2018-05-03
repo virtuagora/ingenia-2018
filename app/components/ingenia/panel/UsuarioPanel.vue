@@ -46,7 +46,7 @@
           </li>
         </ul>
         <p class="menu-label" v-if="user.groups[0] !== undefined">
-          Mi equipo Ingenia 2018
+          Mi equipo Ingenia
         </p>
         <ul class="menu-list" v-if="user.groups[0] !== undefined">
           <li>
@@ -64,7 +64,7 @@
           </li>
         </ul>
         <p class="menu-label" v-if="user.groups[0] !== undefined">
-          Mi proyecto Ingenia 2018
+          Mi proyecto Ingenia
         </p>
         <ul class="menu-list" v-if="user.groups[0] !== undefined ">
           <li v-if="user.groups[0].project === null && user.groups[0].pivot.relation == 'responsable'">
@@ -78,6 +78,14 @@
               <i class="fas fa-fw" :class="{'fa-check has-text-success': user.groups[0].project.organization !== null && user.groups[0].uploaded_letter, 'fa-exclamation has-text-danger': user.groups[0].project.organization !== null && !user.groups[0].uploaded_letter }" :style="$route.name == 'userSubirAvalOrganizacion' ? 'color: white !important;' : ''"></i>&nbsp;Subir carta de aval</router-link>
           </li>
         </ul>
+        <p class="menu-label" v-if="user.groups[0] !== undefined">
+          Avanzado
+        </p>
+        <ul class="menu-list" v-if="user.groups[0] !== undefined ">
+          <li v-if="user.groups[0].pivot.relation == 'responsable'">
+            <router-link :to="{ name: 'userOtrasOpciones'}" exact-active-class="is-active">Otras opciones</router-link>
+          </li>
+        </ul>
       </aside>
     </div>
     <div class="column is-7 is-offset-1">
@@ -86,6 +94,7 @@
 :user-url="userUrl"
 :save-user-profile-url="saveUserProfileUrl"
 :save-user-dni-url="saveUserDniUrl" 
+:save-pending-email="savePendingEmail"
 :save-user-public-profile-url="saveUserPublicProfileUrl"
 :team-url="teamUrl"
 :save-team-url="saveTeamUrl"
@@ -119,6 +128,7 @@ export default {
 	"userUrl",
 	"saveUserProfileUrl",
 	"saveUserDniUrl",
+  "savePendingEmail",
 	"saveUserPublicProfileUrl",
 	"teamUrl",
 	"saveTeamUrl",

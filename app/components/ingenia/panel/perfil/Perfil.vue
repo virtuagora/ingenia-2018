@@ -3,7 +3,8 @@
 :id="id" 
 :user-url="userUrl"
 :save-user-profile-url="saveUserProfileUrl"
-:save-user-dni-url="saveUserDniUrl" 
+:save-user-dni-url="saveUserDniUrl"
+:save-pending-email="savePendingEmail" 
 :save-user-public-profile-url="saveUserPublicProfileUrl"
 :team-url="teamUrl"
 :save-team-url="saveTeamUrl"
@@ -33,6 +34,7 @@ export default {
 	"userUrl",
 	"saveUserProfileUrl",
 	"saveUserDniUrl",
+  "savePendingEmail",
 	"saveUserPublicProfileUrl",
 	"teamUrl",
 	"saveTeamUrl",

@@ -1,78 +1,122 @@
 {% set show_footer = true %}
 {% set show_navbar = false %}
 {% extends 'master.twig' %}
-{% block title %}{{project.name}}{% endblock %}
+{% block title %}{{project.name}}
+{% endblock %}
 {% block opengraph %}
   <!-- Social Media Metatags! -->
-<meta property="fb:app_id" content="360875627728979"/>
-<meta property="og:type" content="article"/>
+  <meta property="fb:app_id" content="360875627728979"/>
+  <meta property="og:type" content="article"/>
   <meta name="description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
   <meta property="og:title" content="{{project.name}} - ¡Bancalo en INGENIA!">
-<meta property="og:description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
-{% if project.has_image %}
-<meta property="og:image" content="{{path_for('getProPic',{'pro': project.id})}}">
-<meta property="og:image:width" content="1000">
-<meta property="og:image:height" content="777">
-{% else %}
-  <meta property="og:image" content="/assets/img/img-bancar-sharer-01.png">
-<meta property="og:image:width" content="1100">
-<meta property="og:image:height" content="565">
-{% endif %}
-  <meta property="og:url" content="https://ingenia.virtuagora.org/proyecto/{{project.id}}?sharer=fb">
+  <meta property="og:description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
+  {% if project.has_image %}
+    <meta property="og:image" content="{{path_for('getProPic',{'pro': project.id})}}">
+    <meta property="og:image:width" content="1000">
+    <meta property="og:image:height" content="777">
+  {% else %}
+    <meta property="og:image" content="/assets/img/img-bancar-sharer-01.png">
+    <meta property="og:image:width" content="1100">
+    <meta property="og:image:height" content="565">
+  {% endif %}
+  <meta property="og:url" content="https://ingenia.virtuagora.org/proyecto/{{project.id}}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{project.name}} - ¡Bancalo en INGENIA!">
   <meta name="twitter:site" content="@virtuagora">
   <meta name="twitter:creator" content="@virtuagora">
   <meta name="twitter:description" content="{{project.abstract|length > 300 ? project.abstract|slice(0, 300) ~ '...' : project.abstract}}">
 {% endblock %}
+{% block scriptshead %}
+  <script>
+    var shareOnFacebook = function() {
+      FB.ui({
+        method: 'share',
+        mobile_iframe: true,
+        display: 'popup',
+      }, function (response) {});
+    }
+
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '191906834751311', cookie: true, // This is important, it's not enabled by default
+        version: 'v2.2'
+      });
+    };
+
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+{% endblock %}
 {% block body %}
   <img src="{{asset('img/santafelogo.svg')}}" class="image logo-sf-float is-48x48 is-hidden-touch is-hidden-desktop-only" alt="">
   <div class="hero is-dark {{project.has_image ? 'has-image-background'}}" style="background-image: url({{project.has_image ? path_for('getProPic',{'pro': project.id}) : '/assets/img/header-bg-01.jpg'}})">
     <div>
-    {% include 'ingenia/project/heroNavbar.twig' %}
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-8">
-            <div class="tags">
-              <span class="tag is-white is-large">
-                {{project.category.name}}
-              </span>
-            </div>
-            <h1 class="title is-1">{{project.name}}</h1>
-            <h3 class="title is-3 is-marginless">{{project.group.name}}</h3>
-            <get-localidad locality-id="{{ project.group.locality_id }}" locality-other="{{ project.group.locality_other }}"></get-localidad>
+      {% include 'ingenia/project/heroNavbar.twig' %}
+      <div class="hero-body">
+        <div class="container">
+          <div class="tags">
+            <span class="tag is-white is-large">
+              {{project.category.name}}
+            </span>
           </div>
-          <div class="column">
-            <vote-project>
-              <div class="has-text-centered" style="padding: 3rem 0rem;">
-                <span class="is-size-4">
-                  <i class="fa fa-cog fa-fw fa-spin"></i>
-                  Cargando...
-                </span>
-              </div>
-            </vote-project>
+          <div class="columns">
+            <div class="column is-7-tablet is-8-desktop is-9-fullhd">
+              <h1 class="title is-size-1-desktop is-size-2-touch">{{project.name}}</h1>
+              <h3 class="title is-size-4-touch is-size-2-desktop is-marginless">{{project.group.name}}</h3>
+              <get-localidad locality-id="{{ project.group.locality_id }}" locality-other="{{ project.group.locality_other }}"></get-localidad>
+            </div>
+            <div class="column">
+              <vote-project voted="{{voted}}" vote-url="{{path_for('runCreProVot',{'pro': project.id})}}">
+                <div class="has-text-centered" style="padding: 3rem 0rem;">
+                  <span class="is-size-4">
+                    <i class="fa fa-cog fa-fw fa-spin"></i>
+                    Cargando...
+                  </span>
+                </div>
+              </vote-project>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <navbar-project>
-      <div class="hero-foot">
-        <nav class="tabs is-boxed">
-          <div class="container">
-            <ul>
-              <li>
-                <a>
-                  <i class="fa fa-cog fa-fw fa-spin"></i>
-                  Cargando...</a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </navbar-project>
+      <navbar-project>
+        <div class="hero-foot">
+          <nav class="tabs is-boxed">
+            <div class="container">
+              <ul>
+                <li>
+                  <a>
+                    <i class="fa fa-cog fa-fw fa-spin"></i>
+                    Cargando...</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </navbar-project>
     </div>
   </div>
-<router-view :project="{{project}}" get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}" team-url="{{path_for('getGroup',{'gro': ':gro'})}}"  send-request-join="{{path_for('runCreGroReq',{'gro': ':gro'})}}"></router-view>
+  <router-view :project="{{project}}" get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}" 
+  team-url="{{path_for('getGroup',{'gro': ':gro'})}}" 
+  send-request-join="{{path_for('runCreGroReq',{'gro': ':gro'})}}"
+comments-url="{{path_for('getProCom', {'pro': project.id})}}"
+comment-url="{{path_for('runCreProCom',{'pro': project.id})}}"
+reply-url="{{path_for('runCreProRep',{'com': ':com'})}}"
+like-url="{{path_for('runCreComVot',{'com': ':com'})}}">
+    <div class="has-text-centered" style="padding: 3rem 0rem;">
+      <span class="is-size-4">
+        <i class="fa fa-cog fa-fw fa-spin"></i>
+        Cargando...
+      </span>
+    </div>
+  </router-view>
 {% endblock %}
 {% block javascripts %}{% endblock %}

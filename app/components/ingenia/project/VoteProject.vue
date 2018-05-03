@@ -1,77 +1,184 @@
 <template>
-  <div class="has-text-centered">
-    <!-- <div class="list-of-avatars">
-      <b-tooltip label="Guillermo Croppi">
-      <figure class="image is-32x32 is-rounded">
-        <a href="#">
-          <img alt="Placeholder image" src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg">
-        </a>
-      </figure>
-      </b-tooltip>
-      <b-tooltip label="Guillermo Croppi">      
-      <figure class="image is-32x32 is-rounded">
-        <a href="#">
-          <img alt="Placeholder image" src="https://pbs.twimg.com/profile_images/908111377495199745/NSSDkikD_400x400.jpg">
-        </a>
-      </figure>
-      </b-tooltip>
-
-      <b-tooltip label="Guillermo Croppi">
-      <figure class="image is-32x32 is-rounded">
-        <a href="#">
-          <img alt="Placeholder image" src="https://pbs.twimg.com/profile_images/802586078620385280/A41MfrN4_400x400.jpg">
-        </a>
-      </figure>
-      </b-tooltip>
-      <b-tooltip label="Guillermo Croppi">
-      <figure class="image is-32x32 is-rounded">
-        <a href="#">
-          <img alt="Placeholder image" src="https://pbs.twimg.com/profile_images/932316632369778688/XspSB7QY_400x400.jpg">
-        </a>
-      </figure>
-      </b-tooltip>
-    </div> -->
-    <!-- <p class="title is-3 is-marginless has-text-warning">
-      <img src="/img/muscle-color.svg" style="height:50px;vertical-align:bottom" alt=""> {{vote ? 87 : 86}} personas</p>
-    <p>bancan este proyecto
-      <b>{{ vote ? '¡Vos tambien!' : '¿Y vos?' }}</b>&nbsp;&nbsp;
-      <i class="em" :class="{'em-open_mouth': !vote, 'em-smile': vote}"></i>
-    </p> -->
-    <br>
-    <br>
-    
-    <p class="title is-3 is-marginless has-text-warning">¡Muy pronto van a poder bancar tu proyecto!</p>
-    <br>
-    <p>¡<b>Anda preparandoté</b> para cuando habilitemos la posibilidad de que te apoyen bancando el proyecto!
-    </p>
-    <!-- <br> -->
-    <!-- <button class="button is-medium is-fullwidth" :class="{'is-outlined is-warning': !vote, 'is-info is-800': vote}" @click="vote = !vote">
-      <i class="em em-muscle"></i>&nbsp;{{ vote ? '¡Guillermo banca este proyecto!' : '¡Yo lo banco!'}}</button> -->
-    <!-- <br> -->
-    <div class="columns is-marginless is-hidden">
-      <div class="column is-8">
-        <p>¡Tambien podes bancar compartiendo en las redes!</p>
+  <div class="has-text-centered-desktop-only ">
+    <div class="columns is-mobile">
+      <div class="column is-narrow">
+        <b-tooltip label="Clic para dejar de bancar..." v-show="vote" position="is-left" type="is-white">
+          <a @click="deleteVote()">
+            <img src="/assets/img/ribbon-bancando.svg" class="ribbon-bancar" />
+          </a>
+        </b-tooltip>
+        <b-tooltip label="¡Clic para bancar!" v-show="!vote" position="is-left" type="is-white">
+          <a @click="sendVote()" @mouseover="isHovering = true" @mouseout="isHovering = false">
+            <img src="/assets/img/ribbon-bancar.svg" class="ribbon-bancar" :class="{'animated rubberBand': isHovering}" style="opacity: 0.4" />
+          </a>
+        </b-tooltip>
       </div>
       <div class="column">
-        <p>
-          <a href="#">
-            <i class="fab fa-facebook fa-2x fa-fw"></i>
-          </a>
-          <a href="#">
-            <i class="fab fa-twitter fa-2x fa-fw"></i>
-          </a>
+        <!-- <div class="list-of-avatars">
+          <b-tooltip label="Guillermo Croppi">
+            <figure class="image is-32x32 is-rounded">
+              <a href="#">
+                <img alt="Placeholder image" src="https://pbs.twimg.com/profile_images/908495954524983297/nSinJTho_400x400.jpg">
+              </a>
+            </figure>
+          </b-tooltip>
+          <b-tooltip label="Guillermo Croppi">
+            <figure class="image is-32x32 is-rounded">
+              <a href="#">
+                <img alt="Placeholder image" src="https://pbs.twimg.com/profile_images/908111377495199745/NSSDkikD_400x400.jpg">
+              </a>
+            </figure>
+          </b-tooltip>
+          <b-tooltip label="Guillermo Croppi">
+            <figure class="image is-32x32 is-rounded">
+              <a href="#">
+                <img alt="Placeholder image" src="https://pbs.twimg.com/profile_images/802586078620385280/A41MfrN4_400x400.jpg">
+              </a>
+            </figure>
+          </b-tooltip>
+          <b-tooltip label="Guillermo Croppi">
+            <figure class="image is-32x32 is-rounded">
+              <a href="#">
+                <img alt="Placeholder image" src="https://pbs.twimg.com/profile_images/932316632369778688/XspSB7QY_400x400.jpg">
+              </a>
+            </figure>
+          </b-tooltip>
+        </div> -->
+        <p class="title is-600 is-size-4-touch is-size-3-fullhd is-marginless has-text-warning"> 86 Personas</p>
+        <p>bancan este proyecto
+          <span v-show="!vote">
+            <br>
+            <b>¿Y vos?</b>
+            <i class="em em-open_mouth"></i>
+          </span>
+        </p>
+        <p class="has-text-warning" v-show="vote">
+          <b>¡Vos tambien!</b>
+          <i class="em em-smiley"></i>
         </p>
       </div>
     </div>
+    <b-modal :active.sync="showThanks" :width="640" scroll="keep">
+      <div class="box has-text-centered">
+        <img src="/assets/img/muscle-color.svg" class="ribbon-bancar animated jackInTheBox" />
+        <h2 class="title is-600 is-size-4-touch is-size-3-fullhd is-marginless has-text-link">¡Gracias por bancarnos!
+          <i class="em em-smiley"></i>
+          <i class="em em-heart"></i>
+        </h2>
+        <p>¡También podes bancar nuestro proyecto compartiendo en las redes sociales!</p>
+        <br>
+        <p class="has-text-link">
+          <a href="javascript:shareOnFacebook()">
+            <i class="fab fa-facebook fa-3x fa-fw"></i>
+          </a>
+          <a :href="'https://twitter.com/intent/tweet?text=¡Estamos participando de INGENIA y podes ayudarnos! ¡Entra en nuestro proyecto, registrate y bancanos con tú voto!&url=' + getLocation + '&hashtags=INGENIA,hayEquipo!'">
+            <i class="fab fa-twitter fa-3x fa-fw"></i>
+          </a>
+          <a :href="'whatsapp://send?text=¡Estamos participando de INGENIA! ¡Y podes ayudarnos! ¡Entrá en nuestro proyecto, registrate y bancanos con tú voto! Ingresá entrando a ' + getLocation">
+            <i class="fab fa-whatsapp fa-3x fa-fw"></i>
+          </a>
+        </p>
+        <br>
+      </div>
+    </b-modal>
+    <b-modal :active.sync="showLogin" :width="640" scroll="keep">
+      <div class="box has-text-centered">
+        <i class="fas fa-heart fa-5x has-text-danger animated tada"></i>
+        <h2 class="title is-600 is-size-4 has-text-dark">Entrá en Ingenia+Virtuágora para poder participar
+        </h2>
+        <p>Vas a poder bancar los proyectos y dejar comentarios, ¡hasta podrias llegar a ser parte de un equipo!</p>
+        <br>
+        <a href="/login" class="button is-warning is-medium">
+          <i class="fas fa-sign-in-alt fa-fw"></i>&nbsp;Iniciar sesión</a>
+      </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
 export default {
+  props: ["voted", "voteUrl"],
   data() {
     return {
-      vote: false
+      vote: false,
+      lockVoting: false,
+      showThanks: false,
+      showLogin: false,
+      isHovering: false
     };
+  },
+  created: function() {
+    this.vote = this.voted ? true : false;
+  },
+  methods: {
+    sendVote: function() {
+      if (this.$store.state.user === null) {
+        this.showLogin = true;
+        return;
+      }
+      if (this.lockVoting) {
+        this.cooldown();
+        return;
+      }
+      this.vote = true;
+      this.showThanks = true;
+      this.lockVoting = true;
+      this.$http
+        .post(this.voteUrl)
+        .then(response => {})
+        .catch(error => {
+          this.$snackbar.open({
+            message: "Error inesperado. ¡No se pudo enviar el voto!",
+            type: "is-danger",
+            actionText: "Reintentar"
+          });
+          this.vote = false;
+          this.lockVoting = false;
+        });
+    },
+    deleteVote: function() {
+      if (this.$store.state.user === null) {
+        this.showLogin = true;
+        return;
+      }
+      if (this.lockVoting) {
+        this.cooldown();
+        return;
+      }
+      this.vote = false;
+      this.lockVoting = true;
+      this.$http
+        .post(this.voteUrl)
+        .then(response => {
+          this.$snackbar.open({
+            message: "Ya no bancas este proyecto",
+            type: "is-success",
+            actionText: "OK"
+          });
+        })
+        .catch(error => {
+          this.$snackbar.open({
+            message: "Error inesperado. ¡No se pudo enviar el voto!",
+            type: "is-danger",
+            actionText: "Reintentar"
+          });
+          this.vote = true;
+          this.lockVoting = false;
+        });
+    },
+    cooldown: function() {
+      this.$snackbar.open({
+        message:
+          "Recien enviaste tu voto. Vas a poder volver a votar recargando la página.",
+        type: "is-warning",
+        actionText: "Ok"
+      });
+    }
+  },
+  computed: {
+    getLocation: function() {
+      return window.location.href;
+    }
   }
 };
 </script>
