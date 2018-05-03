@@ -37,7 +37,7 @@
     </div>
     <div v-else>
       <comment v-for="comment in comments" :comment="comment" :key="comment.id" :reply-url="replyUrl.replace(':com', comment.id)" :like-url="likeUrl" @updateComments="updateComments"></comment>
-      <infinite-loading @infinite="infiniteHandler">
+      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler">
         <div class="box has-text-centered" v-if="comments.length == 0" style="margin-top:15px;" slot="no-results">
           :(
           <h1 class="subtitle is-5 is-marginless">
@@ -125,7 +125,6 @@ export default {
     },
     infiniteHandler: function($state) {
       if (this.paginator.current_page == null) {
-        console.log('Totally New')
         this.$http
           .get(this.commentsUrl)
           .then(response => {
@@ -138,14 +137,13 @@ export default {
           .catch(error => {
             console.error(error.message);
             this.$snackbar.open({
-              message: "Error al obtener la lista de proyectos",
+              message: "Error al obtener los comentarios",
               type: "is-danger",
               actionText: "Cerrar"
             });
             $state.complete();
           });
       } else if (this.paginator.next_page_url) {
-        console.log('Next page!')        
         this.$http
           .get(this.paginator.next_page_url)
           .then(response => {
@@ -169,7 +167,7 @@ export default {
       }
     },
     updateComments: function() {
-      this.getComments();
+      this.resetEverything();
     },
     submitComment: function() {
       this.$validator

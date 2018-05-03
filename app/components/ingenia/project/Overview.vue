@@ -168,7 +168,7 @@ export default {
     return {
       user: {},
       wannaColaborate: false,
-      message: null,
+      message: '',
       isLoading: false,
       response: {
         ok: false
@@ -213,9 +213,7 @@ export default {
           });
           return false;
         });
-    }
-  },
-  methods: {
+    },
     imageUrlHeroInvite: function() {
       if (this.project.has_image) {
         return (

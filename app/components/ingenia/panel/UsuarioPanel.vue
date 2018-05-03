@@ -53,7 +53,7 @@
             <router-link :to="{ name: 'userVerEquipo'}" exact-active-class="is-active">Ver mi equipo</router-link>
           </li>
           <li v-if="user.groups[0].pivot.relation == 'responsable'">
-            <router-link :to="{ name: 'userVerIntegrantes'}" exact-active-class="is-active">Ver integrantes y pendientes</router-link>
+            <router-link :to="{ name: 'userVerIntegrantes'}" exact-active-class="is-active">Ver integrantes y pendientes  <span class="badge is-badge-danger is-badge-small" :class="{'is-hidden': cantSolicitudes == 0}" data-badge=""><i class="fas fa-envelope fa-fw"></i></span></router-link>
           </li>
           <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userEnviarInvitaciones'}" exact-active-class="is-active">Invitar a alguien al equipo</router-link>
@@ -78,10 +78,10 @@
               <i class="fas fa-fw" :class="{'fa-check has-text-success': user.groups[0].project.organization !== null && user.groups[0].uploaded_letter, 'fa-exclamation has-text-danger': user.groups[0].project.organization !== null && !user.groups[0].uploaded_letter }" :style="$route.name == 'userSubirAvalOrganizacion' ? 'color: white !important;' : ''"></i>&nbsp;Subir carta de aval</router-link>
           </li>
         </ul>
-        <p class="menu-label" v-if="user.groups[0] !== undefined">
+        <p class="menu-label" v-if="user.groups[0] !== undefined && user.groups[0].project !== null && user.groups[0].pivot.relation == 'responsable'">
           Avanzado
         </p>
-        <ul class="menu-list" v-if="user.groups[0] !== undefined ">
+        <ul class="menu-list" v-if="user.groups[0] !== undefined && user.groups[0].project !== null && user.groups[0].pivot.relation == 'responsable'">
           <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userOtrasOpciones'}" exact-active-class="is-active">Otras opciones</router-link>
           </li>
@@ -106,6 +106,7 @@
 :project-url="projectUrl"
 :save-project-url="saveProjectUrl"
 :edit-project-url="editProjectUrl"
+:delete-project-url="deleteProjectUrl"
 :save-image-url="saveImageUrl"
 :save-letter-url="saveLetterUrl"
 :get-group-members="getGroupMembers"
@@ -140,6 +141,7 @@ export default {
 	"projectUrl",
 	"saveProjectUrl",
   "editProjectUrl",
+  "deleteProjectUrl",
   "saveImageUrl",
 	"saveLetterUrl",
   "getGroupMembers",
@@ -152,13 +154,19 @@ export default {
   ],
   data() {
     return {
-      user: {}
+      user: {},
+      group :{
+        invitations: []
+      }
     };
   },
   created: function() {
     this.user = this.$store.state.user;
     if(this.user === null){
       window.location.href = '/login'
+    }
+    if( this.user.groups[0] !== undefined && this.user.groups[0].pivot.relation == 'responsable'){
+      this.checkInvitations()
     }
   },  
   mounted: function() {
@@ -167,7 +175,26 @@ export default {
   methods: {
     updateUserState: function() {
       this.user = this.$store.state.user;
+    },
+    checkInvitations: function(){
+        this.$http.get(this.fetchTeamUrl)
+        .then(response => {
+          this.group = response.data;
+        })
+        .catch(error => {
+          console.error(error.message);  
+        });
     }
   },
+  computed: {
+    fetchTeamUrl: function() {
+      return this.teamUrl.replace(":gro", this.user.groups[0].id);
+    },
+cantSolicitudes: function() {
+      return this.group.invitations.filter(x => {
+        return x.state == "requested";
+      }).length;
+    }
+  }
 };
 </script>
