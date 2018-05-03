@@ -5,8 +5,8 @@
       <!-- Left side -->
       <div class="level-left">
         <div class="level-item">
-          <div class="field has-addons">
-            <p class="control has-icons-left">
+          <div class="field has-addons" style="flex-grow: 1">
+            <p class="control is-expanded has-icons-left">
               <input v-model="nameToSearch" class="input is-medium" type="text" placeholder="Nombre del proyecto">
               <span class="icon is-medium is-left">
                 <i class="fas fa-chevron-right fa-lg"></i>
@@ -21,30 +21,38 @@
         </div>
       </div>
       <!-- Right side -->
-      <div class="level-right">
+      <div class="level-right" v-if="!filters">
         <div class="level-item">
-            <b-field expanded>
+           <a @click="showFilters()" class="button is-medium is-white">
+                <i class="fas fa-filter fa-fw"></i>&nbsp;Otros filtros
+              </a>
+        </div>
+      </div>
+      <div class="level-right" v-else>
+        <div class="level-item">
+            <b-field expanded  style="flex-grow: 1">
               <b-select v-model="categoriaSelected" size="is-medium" v-validate="'required'" :disabled="categorias.length == 0" :loading="categoriasLoading" placeholder="Categoria" expanded>
+                <option :value="null">Todas</option>
                 <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.name}}</option>
               </b-select>
             </b-field>
         </div>            
         <div class="level-item">
-            <b-field expanded>
+            <b-field expanded style="flex-grow: 1">
               <b-select v-model="regionSelected" size="is-medium" data-vv-name="regionSelected" data-vv-as="'Región'" v-validate="'required'" placeholder="Región" :disabled="regiones.length == 0" :loading="regionLoading" expanded>
                 <option v-for="region in regiones" :key="region.id" :value="region">{{region.name}}</option>
               </b-select>
             </b-field>
           </div>            
-        <div class="level-item">
-            <b-field expanded>
+        <div class="level-item" v-if="regionSelected !== null">
+            <b-field expanded style="flex-grow: 1">
               <b-select v-model="departamentoSelected" size="is-medium" placeholder="Departamento" data-vv-name="departamentoSelected" data-vv-as="'Departamento'" v-validate="'required'" :disabled="departamentos.length == 0" :loading="departamentoLoading" expanded>
                 <option v-for="departamento in departamentos" :key="departamento.id" :value="departamento">{{departamento.name}}</option>
               </b-select>
             </b-field>
             </div>            
-        <div class="level-item">
-            <b-field expanded>
+        <div class="level-item" v-if="departamentoSelected !== null">
+            <b-field expanded style="flex-grow: 1">
               <b-select v-model="localidadSelected" size="is-medium" placeholder="Localidad" data-vv-name="localidadSelected" data-vv-as="'Localidad'" v-validate="'required'" :disabled="localidades.length == 0" :loading="localidadLoading" expanded>
                 <option v-for="localidad in localidades" :key="localidad.id" :value="localidad">{{localidad.name}}</option>
               </b-select>
@@ -53,14 +61,14 @@
         <div class="level-item">
             <b-field>
               <a @click="search()" class="button is-medium is-white">
-                <i class="fas fa-search"></i>
+                <i class="fas fa-search fa-fw"></i><span class="is-hidden-desktop">&nbsp;Buscar</span>
               </a>
             </b-field>
             </div>            
         <div class="level-item">
             <b-field>
               <a @click="cleanFilters()" class="button is-medium is-white">
-                <i class="fas fa-eraser"></i>
+                <i class="fas fa-eraser fa-fw"></i>&nbsp;Borrar<span class="is-hidden-desktop">&nbsp;filtros</span>
               </a>
             </b-field>
         </div>
@@ -76,7 +84,6 @@
             <h1 class="title is-4">{{project.name}}</h1>
             <h1 class="subtitle is-5"><i class="fas fa-users"></i>&nbsp;{{project.group.name}}</h1>
           </a>
-          <!-- <p class="is-size-5 is-300">Hay Futuro</p> -->
         </div>
       </div>
     </div>
@@ -126,7 +133,8 @@ export default {
       regiones: [],
       departamentos: [],
       localidades: [],
-      nameToSearch: ""
+      nameToSearch: "",
+      filters: false,
     };
   },
   mounted: function() {
@@ -151,7 +159,11 @@ export default {
       });
   },
   methods: {
+    showFilters(){
+      this.filters = true;
+    },
     cleanFilters: function() {
+      this.filters = false;
       this.regionSelected = null;
       this.departamentoSelected = null;
       this.localidadSelected = null;
@@ -316,10 +328,10 @@ export default {
         query.push("reg=" + this.regionSelected.id);
       }
       if (this.departamentoSelected !== null) {
-        query.push("dep=", this.departamentoSelected.id);
+        query.push("dep=" + this.departamentoSelected.id);
       }
       if (this.localidadSelected !== null) {
-        query.push("loc=", this.localidadSelected.id);
+        query.push("loc=" + this.localidadSelected.id);
       }
       return this.getProjectsUrl.concat(
         query.length > 0 ? "?" : "",
