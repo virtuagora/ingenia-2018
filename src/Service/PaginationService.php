@@ -13,9 +13,6 @@ class PaginationService
 
     public function getParams($request, array $extras = [])
     {
-        $params = array_intersect_key($request->getQueryParams(), $extras);
-        // $params['page'] = (int) $request->getQueryParam('page', 1);
-        // $params['size'] = (int) $request->getQueryParam('size', 20);
         $extras['page'] = [
             'type' => 'integer',
             'minimum' => 1,
@@ -26,8 +23,9 @@ class PaginationService
             'type' => 'integer',
             'minimum' => 1,
             'maximum' => 100,
-            'default' => 20,
+            'default' => 2,
         ];
+        $params = array_intersect_key($request->getQueryParams(), $extras);
         $schema = [
             'type' => 'object',
             'properties' => $extras,
