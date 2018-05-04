@@ -79,8 +79,9 @@
       <div v-masonry-tile class="item-mosaic" v-for="project in projects" :key="project.id">
         <!-- block item markup -->
         <div class="notification is-primary" :class="{'with-image': project.has_image}" :style="project.has_image ? styleWithImage(project.id) : styleWithoutImage()">
-          <div class="bancar-count-container"><img src="/assets/img/ribbon-bancar.svg" style="height:50px; vertical-align:middle" alt=""> <span class="is-size-3 is-700">{{zeroPad(project.likes,3)}}</span></div>
+          <div class="bancar-count-container"><img src="/assets/img/ribbon-bancar.svg" style="height:50px; vertical-align:middle" alt=""> <span class="counter-likes is-size-3 is-700">{{zeroPad(project.likes,3)}}</span></div>
           <a :href="'/proyecto/'+project.id" style="text-decoration:none;">
+            <span class="tag is-black">{{getCategory(project.category_id)}}</span>
             <h1 class="title is-4">{{project.name}}</h1>
             <h1 class="subtitle is-5"><i class="fas fa-users"></i>&nbsp;{{project.group.name}}</h1>
           </a>
@@ -159,6 +160,12 @@ export default {
       });
   },
   methods: {
+    getCategory(id){
+      let caty = this.categorias.find(x => {
+        return x.id === id
+      })
+      return caty ? caty.name : '';
+    },
     showFilters(){
       this.filters = true;
     },
