@@ -226,6 +226,11 @@ nav.navbar {
             background-size: cover;
             background-position: center center
         }
+        .title,
+        .subtitle,
+        .counter-likes {
+            text-shadow: -1px 1px 4px rgba(0, 0, 0, 1);
+        }
     }
 }
 

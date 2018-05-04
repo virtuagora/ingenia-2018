@@ -27,10 +27,10 @@
                     <a href="javascript:shareOnFacebook()">
                       <i class="fab fa-facebook fa-3x fa-fw"></i>
                     </a>
-                    <a :href="'https://twitter.com/intent/tweet?text=¡Estamos participando de INGENIA y podes ayudarnos! ¡Entra en nuestro proyecto, registrate y bancanos con tú voto!&url=' + getLocation + '&hashtags=INGENIA,hayEquipo!'">
+                    <a :href="'https://twitter.com/intent/tweet?text=¡Este gran proyecto está participando de INGENIA y necesita tú apoyo! ¡Ingresá y bancalo con tú voto!&url=' + getLocation + '&hashtags=INGENIA,hayEquipo!'">
                       <i class="fab fa-twitter fa-3x fa-fw"></i>
                     </a>
-                    <a :href="'whatsapp://send?text=¡Estamos participando de INGENIA! ¡Y podes ayudarnos! ¡Entrá en nuestro proyecto, registrate y bancanos con tú voto! Ingresá entrando a ' + getLocation">
+                    <a :href="'whatsapp://send?text=¡Este gran proyecto está participando de INGENIA y necesita tú apoyo! ¡Ingresá y bancalo con tú voto! Visitalo entrando a ' + getLocation">
                       <i class="fab fa-whatsapp fa-3x fa-fw"></i>
                     </a>
                   </p>
