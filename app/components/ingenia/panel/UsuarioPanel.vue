@@ -111,7 +111,7 @@
 :project-url="projectUrl"
 :save-project-url="saveProjectUrl"
 :edit-project-url="editProjectUrl"
-:delete-project-url="deleteProjectUrl"
+:delete-group-url="deleteGroupUrl"
 :save-image-url="saveImageUrl"
 :save-letter-url="saveLetterUrl"
 :get-group-members="getGroupMembers"
@@ -146,7 +146,7 @@ export default {
 	"projectUrl",
 	"saveProjectUrl",
   "editProjectUrl",
-  "deleteProjectUrl",
+  "deleteGroupUrl",
   "saveImageUrl",
 	"saveLetterUrl",
   "getGroupMembers",
