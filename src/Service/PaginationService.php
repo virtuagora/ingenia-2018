@@ -23,7 +23,7 @@ class PaginationService
             'type' => 'integer',
             'minimum' => 1,
             'maximum' => 100,
-            'default' => 2,
+            'default' => 10,
         ];
         $params = array_intersect_key($request->getQueryParams(), $extras);
         $schema = [
