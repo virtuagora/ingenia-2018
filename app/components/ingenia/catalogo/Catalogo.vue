@@ -208,7 +208,7 @@ export default {
 },
     styleWithImage: function(id) {
       return (
-        "background: linear-gradient(35deg, rgba(0, 23, 69, 0.9) 0%, rgba(74, 156, 214, 0.7) 39%, rgba(49, 0, 98, 0.2) 75%, rgba(48, 0, 96, 0.0) 100%), url(/project/" +
+        "background: linear-gradient(15deg, rgba(28, 4, 83, 0.9) 0%, rgba(74, 156, 214, 0.4) 39%, rgba(49, 0, 98, 0.2) 55%, rgba(48, 0, 96, 0.0) 75%), url(/project/" +
         id +
         "/picture) center center / cover"
       );
