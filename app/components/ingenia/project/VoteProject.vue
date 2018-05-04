@@ -44,7 +44,7 @@
             </figure>
           </b-tooltip>
         </div> -->
-        <p class="title is-600 is-size-4-touch is-size-3-fullhd is-marginless has-text-warning"> 86 Personas</p>
+        <p class="title is-600 is-size-4-touch is-size-3-fullhd is-marginless has-text-warning"> {{counter}} personas</p>
         <p>bancan este proyecto
           <span v-show="!vote">
             <br>
@@ -97,14 +97,15 @@
 
 <script>
 export default {
-  props: ["voted", "voteUrl"],
+  props: ["voted", "voteUrl", "likes"],
   data() {
     return {
       vote: false,
       lockVoting: false,
       showThanks: false,
       showLogin: false,
-      isHovering: false
+      isHovering: false,
+      counter: this.likes
     };
   },
   created: function() {
@@ -125,7 +126,9 @@ export default {
       this.lockVoting = true;
       this.$http
         .post(this.voteUrl)
-        .then(response => {})
+        .then(response => {
+          this.counter = this.counter + 1
+        })
         .catch(error => {
           this.$snackbar.open({
             message: "Error inesperado. ¡No se pudo enviar el voto!",
@@ -150,6 +153,7 @@ export default {
       this.$http
         .post(this.voteUrl)
         .then(response => {
+          this.counter = this.counter - 1
           this.$snackbar.open({
             message: "Ya no bancas este proyecto",
             type: "is-success",
