@@ -94,14 +94,16 @@
               </a>
             </div>
           </div>
+{% if subject.id %}
           <br>
           <div class="notification is-primary">
           <div class="content is-small">
           {% include 'v1-1.twig' %}
           </div>
           </div>
-           <div class="notification is-primary">
-<h1 class="is-3">Si tenes algun problema, o algo no esta funcionando, contactanos en
+          {% endif %}
+           <div class="notification is-primary has-text-centered">
+<h1 class="is-3">Si tenes algun problema, o algo no esta funcionando, ¡Contactanos!<br>Podes hacer en
   <a href="https://twitter.com/virtuagora">
     <i class="fab fa-twitter fa-fw"></i>@Virtuagora</a>
   o
