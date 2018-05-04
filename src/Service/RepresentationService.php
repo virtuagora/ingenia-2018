@@ -31,6 +31,9 @@ class RepresentationService
     public function returnMessage(Request $request, $response, $options)
     {
         $repr = $this->getRepresentation($request, $response);
+        if (isset($options['status'])) {
+            $response = $response->withStatus($options['status']);
+        }
         return $repr->returnMessage($response, $options);
     }
 

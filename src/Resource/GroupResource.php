@@ -523,4 +523,15 @@ class GroupResource extends Resource
         $group->public = true;
         $group->save();
     }
+
+    public function delete($subject, $group)
+    {
+        $project = $group->project;
+        if (isset($project)) {
+            $project->delete();
+        }
+        $group->invitations()->delete();
+        $group->users()->detach();
+        $group->delete();
+    }
 }
