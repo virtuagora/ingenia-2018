@@ -8,27 +8,27 @@
         </p>
       </div>
       <div class="field">
-        <label class="label">Nombres *</label>
+        <label class="label">Nombre *</label>
         <div class="control">
-          <input type="text" v-model="user.names" name="names" v-validate="'required|alpha_spaces'" class="input has-text-centered is-medium" style="padding-left:0" placeholder="Ingresá nombres aquí">
+          <input type="text" v-model="user.names" name="names" v-validate="'required|alpha_spaces|min:2|max:25'" class="input has-text-centered is-medium" style="padding-left:0" placeholder="Ingresá nombres aquí">
           <span class="help is-danger" v-show="errors.has('names')">
-            <i class="fas fa-times-circle fa-fw"></i> Error. Campo requerido</span>
+            <i class="fas fa-times-circle fa-fw"></i> Error. Campo requerido y hasta 25 caracteres</span>
         </div>
       </div>
       <div class="field">
-        <label class="label">Apellidos *</label>
+        <label class="label">Apellido *</label>
         <div class="control">
-          <input type="text" v-model="user.surnames" name="surnames" v-validate="'required|alpha_spaces'" class="input has-text-centered is-medium" style="padding-left:0" placeholder="Ingresá apellidos aquí">
+          <input type="text" v-model="user.surnames" name="surnames" v-validate="'required|alpha_spaces|min:2|max:25'" class="input has-text-centered is-medium" style="padding-left:0" placeholder="Ingresá apellidos aquí">
           <span class="help is-danger" v-show="errors.has('surnames')">
-            <i class="fas fa-times-circle fa-fw"></i> Error. La contraseña no puede ser vacia</span>
+            <i class="fas fa-times-circle fa-fw"></i> Error. Campo requerido y hasta 25 caracteres</span>
         </div>
       </div>
       <div class="field">
         <label class="label">Contraseña *</label>
         <div class="control">
-          <input type="password" v-model="user.password" name="password" v-validate="'required'" class="input has-text-centered is-medium" style="padding-left:0" placeholder="Ingresá tu contraseña">
+          <input type="password" v-model="user.password" name="password" v-validate="'required|min:6'" class="input has-text-centered is-medium" style="padding-left:0" placeholder="Ingresá tu contraseña">
           <span class="help is-danger" v-show="errors.has('password')">
-            <i class="fas fa-times-circle fa-fw"></i> Error. La contraseña no puede ser vacia</span>
+            <i class="fas fa-times-circle fa-fw"></i> Error. La contraseña no puede ser vacia, (Mínimo 6 caracteres)</span>
 
         </div>
       </div>

@@ -4,7 +4,7 @@
             <label class="label is-size-4" :class="{'has-text-danger': errors.has('team.name')}">
                 <i class="fas fa-angle-double-right"></i> Nombre del equipo</label>
             <div class="control">
-                <input v-model="team.name" data-vv-name="team.name" data-vv-as="'Nombre del equipo'" type="text" v-validate="'required'" class="input is-large" placeholder="(Requerido)">
+                <input v-model="team.name" data-vv-name="team.name" data-vv-as="'Nombre del equipo'" type="text" v-validate="'required|min:1|max:100'" class="input is-large" placeholder="(Requerido)">
                 <span v-show="errors.has('team.name')" class="help is-danger">
                     <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('team.name')}}</span>
             </div>
@@ -77,7 +77,7 @@
                     </a>
                 </div>
                 <p class="control is-expanded">
-                    <input v-model="team.telephone" data-vv-name="team.telephone" data-vv-as="'Teléfono de contacto'" v-validate="'required'" class="input is-medium" type="text" placeholder="(Requerido) Ej: 0342 - 4123456">
+                    <input v-model="team.telephone" data-vv-name="team.telephone" data-vv-as="'Teléfono de contacto'" v-validate="'required|max:20'" class="input is-medium" type="text" placeholder="(Requerido) Ej: 0342 - 4123456">
                     <span v-show="errors.has('team.telephone')" class="help is-danger">
                         <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('team.telephone')}}</span>
                 </p>
@@ -91,7 +91,7 @@
                     </a>
                 </div>
                 <p class="control is-expanded">
-                    <input v-model="team.web" data-vv-name="team.web" data-vv-as="'Web del equipo'" v-validate="'url'" class="input is-medium" type="text" placeholder="(Opcional) URL página web (Ej: http://www.miequipo.org)">
+                    <input v-model="team.web" data-vv-name="team.web" data-vv-as="'Web del equipo'" v-validate="'url|max:100'" class="input is-medium" type="text" placeholder="(Opcional) URL página web (Ej: http://www.miequipo.org)">
                     <span v-show="errors.has('team.web')" class="help is-danger">
                         <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('team.web')}}</span>
                 </p>
@@ -105,7 +105,9 @@
                     </a>
                 </div>
                 <p class="control is-expanded">
-                    <input v-model="team.facebook" class="input is-medium" type="text" placeholder="(Opcional) https://www.facebook.com/GabineteJoven">
+                    <input v-model="team.facebook" data-vv-name="team.facebook" data-vv-as="'Facebook del equipo'" v-validate="'max:100'"  class="input is-medium" type="text" placeholder="(Opcional) https://www.facebook.com/GabineteJoven">
+                    <span v-show="errors.has('team.facebook')" class="help is-danger">
+                        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('team.facebook')}}</span>
                 </p>
             </div>
         </div>

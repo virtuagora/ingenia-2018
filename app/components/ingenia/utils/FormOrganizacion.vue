@@ -83,7 +83,9 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input v-model="dummyOrganization.telephone" class="input is-medium" type="text" placeholder="(Opcional) Ej: 0342 - 4123456">
+            <input v-model="dummyOrganization.telephone" data-vv-name="dummyOrganization.telephone" data-vv-as="'Teléfono de contacto'" v-validate="'required|max:20'" class="input is-medium" type="text" placeholder="(Opcional) Ej: 0342 - 4123456">
+<span v-show="errors.has('dummyOrganization.telephone')" class="help is-danger">
+                        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('dummyOrganization.telephone')}}</span>
           </p>
         </div>
         <div class="field is-grouped">
@@ -95,7 +97,7 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input v-model="dummyOrganization.web" data-vv-name="dummyOrganization.web" data-vv-as="'Web de la organización'" v-validate="'url'" class="input is-medium" type="text" placeholder="(Opcional) URL página web">
+            <input v-model="dummyOrganization.web" data-vv-name="dummyOrganization.web" data-vv-as="'Web de la organización'" v-validate="'url|max:100'" class="input is-medium" type="text" placeholder="(Opcional) URL página web">
             <span v-show="errors.has('dummyOrganization.web')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('dummyOrganization.web')}}</span>
           </p>
         </div>
@@ -108,7 +110,9 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input v-model="dummyOrganization.facebook" class="input is-medium" type="text" placeholder="(Opcional) https://www.facebook.com/GabineteJoven">
+            <input v-model="dummyOrganization.facebook" data-vv-name="dummyOrganization.facebook" data-vv-as="'Facebook de la organización'"  v-validate="'max:100'" class="input is-medium" type="text" placeholder="(Opcional) https://www.facebook.com/GabineteJoven">
+            <span v-show="errors.has('dummyOrganization.facebook')" class="help is-danger">
+                        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('dummyOrganization.facebook')}}</span>
           </p>
         </div>
       </div>
