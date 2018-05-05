@@ -43,7 +43,8 @@
               <b-checkbox v-model="dummyOrganization.topics" native-value="Ciudadanía y Participación">Ciudadanía y Participación</b-checkbox>
             </div>
             <div class="field">
-              <input type="text" v-model="dummyOrganization.topic_other" class="input" placeholder="Otro tema">
+              <input type="text" v-model="dummyOrganization.topic_other" data-vv-name="dummyOrganization.topic_other" data-vv-as="'Otra temática'" v-validate="'max:250'" class="input" placeholder="Otro tema">
+              <span v-show="errors.has('dummyOrganization.topic_other')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('dummyOrganization.topic_other')}}</span>
             </div>
           </div>
         </div>
