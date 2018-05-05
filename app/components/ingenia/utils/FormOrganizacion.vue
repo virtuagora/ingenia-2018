@@ -83,7 +83,7 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <input v-model="dummyOrganization.telephone" data-vv-name="dummyOrganization.telephone" data-vv-as="'Teléfono de contacto'" v-validate="'required|max:20'" class="input is-medium" type="text" placeholder="(Opcional) Ej: 0342 - 4123456">
+            <input v-model="dummyOrganization.telephone" data-vv-name="dummyOrganization.telephone" data-vv-as="'Teléfono de contacto'" v-validate="'max:20'" class="input is-medium" type="text" placeholder="(Opcional) Ej: 0342 - 4123456">
 <span v-show="errors.has('dummyOrganization.telephone')" class="help is-danger">
                         <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('dummyOrganization.telephone')}}</span>
           </p>
