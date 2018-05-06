@@ -25,6 +25,11 @@ npm install
 
 #### Changelog
 
+##### v1.1.1
+
+- Se agregó un countdown para que sepan como vienen con las fechas ;)
+- Se arreglo un problema con ver la información de un equipo asociado a una organización.
+
 ##### v1.1
 - ¡Ahora pueden bancar proyectos! En cada HUB del proyecto podrán encontrar el botón de bancar.
 - Agregados los botones de compartir en Facebook, Twitter y Whatsapp (Solo funciona en móviles)

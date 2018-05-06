@@ -13,6 +13,7 @@
     <br>
     <status></status>
     <br>
+    <countdown :date="deadline"></countdown>
     <div class="notification is-info" v-if="user.groups[0] !== undefined && user.groups[0].project !== null">
         <i class="fas fa-eye fa-fw"></i> Tu proyecto está publico en la web, podes ingresar haciendo <b><a :href="'/proyecto/' + user.groups[0].project.id">clic aqui</a></b>
       </div>
@@ -29,12 +30,14 @@
 
 <script>
 import Status from "../utils/Status";
+import Countdown from "../utils/Countdown";
 
 export default {
   components: {
-    Status
+    Status,
+    Countdown
   },
-  props: ["id"],
+  props: ["id","deadline"],
   data() {
     return {
       user: {}

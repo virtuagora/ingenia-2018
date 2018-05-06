@@ -54,7 +54,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2018-05-01T13:34:27+00:00"
+            "time": "2018-05-01 13:34:27"
         },
         {
             "name": "bryanjhv/slim-session",

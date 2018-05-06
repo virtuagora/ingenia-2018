@@ -95,7 +95,8 @@
     </div>
     <div class="column is-7 is-offset-1">
 <router-view 
-:id="id" 
+:id="id"
+:deadline="deadline"
 :user-url="userUrl"
 :save-user-profile-url="saveUserProfileUrl"
 :save-user-dni-url="saveUserDniUrl" 
@@ -131,6 +132,7 @@
 export default {
   props: [
     "id",
+    "deadline",
 	"userUrl",
 	"saveUserProfileUrl",
 	"saveUserDniUrl",

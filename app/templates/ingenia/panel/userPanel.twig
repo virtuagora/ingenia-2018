@@ -18,6 +18,7 @@
 <router-view 
 ref="userPanel" 
 id="{{subject.extra.user_id}}"
+deadline="{{options()['deadline']}}"
 user-url="{{path_for('getUser',{'usr': ':usr'})}}"
 save-user-profile-url="{{path_for('runUpdUserPro',{'usr': ':usr'})}}"
 save-pending-email="{{path_for('runUpdUserPem', {'usr': ':usr'})}}"

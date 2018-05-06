@@ -153,7 +153,10 @@ export default {
      arrayTopics: function() {
       if (this.group.parent_organization) {
         let arr = this.group.parent_organization.topics.slice();
-        return this.group.parent_organization.topic_other ? arr.push(this.group.parent_organization.topic_other) : arr ;
+        if(this.group.parent_organization.topic_other){
+          arr.push(this.group.parent_organization.topic_other)
+        }
+        return arr ;
       } else {
         return [];
       }

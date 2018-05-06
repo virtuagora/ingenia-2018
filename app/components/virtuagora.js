@@ -43,6 +43,8 @@ import Avatar from './ingenia/utils/Avatar'
 import VoteProject from './ingenia/project/VoteProject'
 import NavbarProject from './ingenia/project/NavbarProject'
 import Status from "./ingenia/utils/Status";
+import Countdown from "./ingenia/utils/Countdown";
+
 import VerProyectoButtonHeroIndex from "./ingenia/utils/VerProyectoButtonHeroIndex";
 import VerProyectoTabIndex from "./ingenia/utils/VerProyectoTabIndex";
 
@@ -149,6 +151,7 @@ window.vm = new Vue({ // eslint-disable-line no-new
     NavbarProject,
     Avatar,
     Status,
+    Countdown,
     'fb-register': FBRegister,
     VerProyectoButtonHeroIndex,
     VerProyectoTabIndex
