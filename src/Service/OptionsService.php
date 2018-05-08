@@ -26,6 +26,11 @@ class OptionsService
         return $this->db->query('App:Option')->where('key', $option)->first();
     }
 
+    public function getOptions($filters = null)
+    {
+        return $this->db->query('App:Option')->get();
+    }
+
     public function incrementOption($option, $amount)
     {
         return $this->db->table('options')->where('key', $option)->increment('value', $amount);

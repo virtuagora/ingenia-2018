@@ -8,7 +8,7 @@ class User extends Model
     use SoftDeletes;
 
     protected $table = 'users';
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'token_expiration'];
     protected $visible = [
         'id', 'names', 'surnames', 'warning', 'ban_exp', 'created_at', 'subject',
         'locality_id', 'locality_other', 'pending_tasks', 'bio', 'pivot'
@@ -61,9 +61,9 @@ class User extends Model
     public function getPendingTasksAttribute()
     {
         $tasks = [];
-        if (!isset($this->attributes['email'])) {
-            $tasks[] = 'email';
-        }
+        // if (!isset($this->attributes['email'])) {
+        //     $tasks[] = 'email';
+        // }
         if (!isset($this->attributes['dni'])) {
             $tasks[] = 'dni';
         }
