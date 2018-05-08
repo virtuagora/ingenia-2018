@@ -4,7 +4,7 @@
       <div class="field">
         <label class="label is-size-4" :class="{'has-text-danger': errors.has('dummyOrganization.name')}">
           <i class="fas fa-angle-double-right"></i> Nombre de la organización *</label>
-        <input type="text" v-model="dummyOrganization.name" data-vv-name="dummyOrganization.name" data-vv-as="'Nombre organización'" v-validate="'required'" class="input is-medium" placeholder="Requerido *">
+        <input type="text" v-model="dummyOrganization.name" data-vv-name="dummyOrganization.name" data-vv-as="'Nombre organización'" v-validate="'required|max:50'" class="input is-medium" placeholder="Requerido *">
         <span v-show="errors.has('dummyOrganization.name')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('dummyOrganization.name')}}</span>
       </div>
       <br>
