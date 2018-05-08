@@ -93,6 +93,12 @@ $container['miscAction'] = function ($c) {
         $c['db'], $c['representation'], $c['helper']
     );
 };
+$container['adminAction'] = function ($c) {
+    return new App\Action\AdminAction(
+        $c['options'], $c['representation'], $c['helper'],
+        $c['authorization'], $c['db'], $c['filsystem']
+    );
+};
 $container['sessionAction'] = function ($c) {
     return new App\Action\SessionAction($c['session'], $c['identity'], $c['view'], $c['db']);
 };

@@ -35,7 +35,8 @@
         "guzzlehttp/guzzle": "^6.2",
         "intervention/image": "^2.3",
         "augusthur/json-respector": "dev-master",
-        "google/recaptcha": "~1.1"
+        "google/recaptcha": "~1.1",
+        "box/spout": "^2.7"
     },
     "scripts": {
 
