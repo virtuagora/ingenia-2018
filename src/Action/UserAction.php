@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Util\Exception\AppException;
 use App\Util\Exception\UnauthorizedException;
+use Slim\Http\Stream;
 
 class UserAction
 {
@@ -196,5 +197,19 @@ class UserAction
         //     'message' => 'DNI loaded succefully',
         //     'status' => 200,
         // ]);
+    }
+
+    public function getDniFile($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $usuario = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'retUsrFull', $usuario)) {
+            throw new UnauthorizedException();
+        }
+        $fileData = $this->userResource->getDniFile($usuario);
+        return $response->withBody(new Stream($fileData['strm']))
+            ->withHeader('Content-Type', $fileData['mime']);
     }
 }

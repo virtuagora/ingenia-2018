@@ -14,8 +14,9 @@ class AdminAction
     protected $db;
     protected $filesystem;
 
-    public function __construct($options, $representation, $helper, $authorization, $db, $filesystem)
-    {
+    public function __construct(
+        $options, $representation, $helper, $authorization, $db, $filesystem, $pagination
+    ) {
         $this->options = $options;
         $this->representation = $representation;
         $this->helper = $helper;
@@ -32,6 +33,53 @@ class AdminAction
         }
         $options = $this->options->getOptions();
         return $response->withJSON($options->toArray());
+    }
+
+    public function getOption($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        if (!$this->authorization->checkPermission($subject, 'retOpt')) {
+            throw new UnauthorizedException();
+        }
+        $opt = $this->helper->getSanitizedStr('opt', $params);
+        $option = $this->options->getOption($opt);
+        return $response->withJSON($option->toArray());
+    }
+
+    public function getDniList($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        if (!$this->authorization->checkPermission($subject, 'retDni')) {
+            throw new UnauthorizedException();
+        }
+        $options = $this->pagination->getParams($request, [
+            's' => [
+                'type' => 'string',
+            ],
+        ]);
+        $query = $this->db->query('App:User')->where('verified_dni', false);
+        if (isset($options['s'])) {
+            $filter = $this->helper->generateTrace($options['s']);
+            $query->where('trace', 'LIKE', "%$filter%");
+        }
+        $results = new Paginator($query, $options);
+        $results->setUri($request->getUri());
+        return $this->pagination->renderResponse($response, $results);
+    }
+
+    public function postVerifiedDni($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $user = $this->helper->getEntityFromId('App:User', 'usr', $params);
+        if (!$this->authorization->checkPermission($subject, 'retDni')) {
+            throw new UnauthorizedException();
+        }
+        $user->verified_dni = true;
+        $user->save();
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'DNI verificado',
+            'status' => 200,
+        ]);
     }
 
     public function getMatriz($request, $response, $params)
