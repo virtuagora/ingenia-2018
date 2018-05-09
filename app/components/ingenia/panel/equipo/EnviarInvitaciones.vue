@@ -16,7 +16,7 @@
         </a>
       </div>
       <div class="control is-expanded">
-        <input type="email" v-model.lazy="email" name="email" v-validate="'email'" class="input is-large" :class="{'is-danger': errors.has('email')}">
+        <input type="email" v-model.lazy="email" name="email" v-validate="'required|email'" class="input is-large" :class="{'is-danger': errors.has('email')}">
         <span class="help is-danger" v-show="errors.has('email')">
           <i class="fas fa-times-circle fa-fw"></i>&nbsp;ERROR. Debe ser un email bien formado</span>
       </div>
