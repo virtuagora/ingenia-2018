@@ -148,7 +148,7 @@
             <p class="is-size-7">¡Bienvenido! Completá tu perfil de usuario (Opcional)</p>
           </span>
         </li>
-        <li class="steps-segment" :class="{'is-active': user.pending_tasks.includes('email')}">
+        <!-- <li class="steps-segment" :class="{'is-active': user.pending_tasks.includes('email')}">
           <router-link :to="{ name: 'userEditarEmail'}">
             <span class="steps-marker" :class="{'is-primary': !user.pending_tasks.includes('email')}">
               <span class="icon">
@@ -160,7 +160,7 @@
             <p class="heading">Verificar email</p>
             <p class="is-size-7">Solo responsables del proyecto deben verificar su cuenta de email</p>
           </span>
-        </li>
+        </li> -->
         <li class="steps-segment" :class="{'is-active': user.pending_tasks.includes('profile')}">
           <router-link :to="{ name: 'userEditarMisDatosPersonales'}">
             <span class="steps-marker" :class="{'is-primary': !user.pending_tasks.includes('profile')}">

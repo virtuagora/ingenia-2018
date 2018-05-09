@@ -31,10 +31,10 @@
                 <router-link :to="{ name: 'userEditarMisDatosPersonales'}" exact-active-class="is-active">
                   <i class="fas fa-fw" :class="{'fa-check has-text-success': !this.user.pending_tasks.includes('profile'), 'fa-exclamation has-text-danger': this.user.pending_tasks.includes('profile') }" :style="$route.name == 'userEditarMisDatosPersonales' ? 'color: white !important;' : ''"></i>&nbsp;Actualizar datos personales</router-link>
               </li>
-              <li>
+              <!-- <li>
                 <router-link :to="{ name: 'userEditarEmail'}" exact-active-class="is-active">
                   <i class="fas fa-fw" :class="{'fa-check has-text-success': !this.user.pending_tasks.includes('email'), 'fa-exclamation has-text-danger': this.user.pending_tasks.includes('email') }" :style="$route.name == 'userEditarEmail' ? 'color: white !important;' : ''"></i>&nbsp;Verificar mi email</router-link>
-              </li>
+              </li> -->
               <li>
                 <router-link :to="{ name: 'userSubirDNI'}" exact-active-class="is-active">
                   <i class="fas fa-fw" :class="{'fa-check has-text-success': !this.user.pending_tasks.includes('dni'), 'fa-exclamation has-text-danger': this.user.pending_tasks.includes('dni') }" :style="$route.name == 'userSubirDNI' ? 'color: white !important;' : ''"></i>&nbsp;Subir mi DNI</router-link>

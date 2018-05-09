@@ -90,7 +90,7 @@
             <br>
             <router-link :to="{ name: 'projectImplementation'}" class="button is-black is-outlined is-medium is-fullwidth">Conocé la implementación</router-link>
             <br>
-            <router-link :to="{ name: 'projectImplementation'}" class="button is-black is-outlined is-medium is-fullwidth">Conocé al equipo</router-link>
+            <router-link :to="{ name: 'projectTeam'}" class="button is-black is-outlined is-medium is-fullwidth">Conocé al equipo</router-link>
 
           </div>
         </div>

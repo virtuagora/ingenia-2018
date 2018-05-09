@@ -5,6 +5,12 @@
       Uno de los requerimientos para ser integrante de un equipo INGENIA o presentar un proyecto INGENIA es el de completar tus datos personales. Completá los mismos en el siguiente formulario.
     </b-message>
     <label class="label is-size-5">
+      <i class="fas fa-angle-double-right"></i> Registro en la plataforma *
+    </label>
+    <p v-if="user.subject.img_type === 0"><i class="fas fa-check has-text-success fa-fw fa-lg"></i><i class="fas fa-envelope fa-fw fa-lg"></i>&nbsp;Mediante correo electrónico: <b>{{user.email}}</b></p>
+    <p v-if="user.subject.img_type === 1"><i class="fas fa-check has-text-success fa-fw fa-lg"></i><i class="fab fa-facebook has-text-link fa-fw fa-lg"></i>&nbsp;Utilizando mi perfil de Facebook: <a :href="'https://facebook.com/' + user.subject.img_hash">{{user.email}}</a></p>
+    <br>
+    <label class="label is-size-5">
       <i class="fas fa-angle-double-right"></i> ¿De donde sos? *
     </label>
     <Localidad v-if="showLocalityField" ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
@@ -44,7 +50,7 @@
           <label class="label is-size-5" :class="{'has-text-danger': errors.has('inputBirthday')}">
             <i class="fas fa-angle-double-right"></i> Fecha de nacimiento *</label>
           <div class="control">
-            <b-datepicker placeholder="Hace clic para seleccionar la fecha" v-model="inputBirthday" :mobile-native="false" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date('09/01/1988')" :max-date="new Date('12/31/2003')" icon="calendar-alt">
+            <b-datepicker placeholder="Hace clic para seleccionar la fecha" v-model="inputBirthday" :mobile-native="false" size="is-medium" :date-formatter="(date) => date.toLocaleDateString('es-AR')" :min-date="new Date('03/01/1988')" :max-date="new Date('12/31/2003')" icon="calendar-alt">
             </b-datepicker>
             <span v-show="errors.has('inputBirthday')" class="help is-danger">
               <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('inputBirthday')}}</span>

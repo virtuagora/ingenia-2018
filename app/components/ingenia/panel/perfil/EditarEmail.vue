@@ -1,7 +1,7 @@
 <template>
   <section>
-    <h1 class="subtitle is-3">Verificar mi email</h1>
-    <b-message>Uno de los requerimientos para participar de INGENIA es el de tener una dirección de email. A continuación ingresá tu dirección de email. Un email te llegará para que puedas validar tu email.</b-message>
+    <h1 class="subtitle is-3">Verificar mi identidad</h1>
+    <b-message>Uno de los requerimientos para participar de INGENIA es el de verificar tu identidad. Si te registraste con tu email o con tu Facebook</b-message>
     <section v-if="this.user.pending_tasks.includes('email')">
       <div class="field is-grouped">
         <div class="control">
@@ -26,7 +26,9 @@
       </div>
     </section>
     <div class="notification is-success" v-else>
-      <i class="fas fa-check fa-fw"></i> Tu mail ha sido ingresado y verificado correctamente
+      <i class="fas fa-check fa-fw"></i> Hemos verificado tu identidad {{user.subject.img_type === 0 ? 'con tu email, ¡Perfecto!' : 'con tu Facebook, ¡Perfecto!'}}
+      <span :v-if="user.subject.img_type === 1"><br></span><a :href="'https://facebook.com/'+user.subject.img_hash" :v-if="user.subject.img_type === 1"><i class="fab fa-facebook fa-lg fa-fw"></i> {{user.name}}</a>
+      <span :v-if="user.subject.img_type === 0"><i class="fa fa-envelope fa-lg fa-fw"></i> <b>{{user.email}}</b></span>
     </div>
     <b-loading :active.sync="isLoading"></b-loading>
   </section>

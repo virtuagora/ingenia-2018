@@ -76,12 +76,12 @@ const routes = [
             name: 'userEditarPerfil',
             props: true
           },
-          {
-            path: 'cambiar-email',
-            component: EditarEmail,
-            name: 'userEditarEmail',
-            props: true
-          },
+          // {
+          //   path: 'cambiar-email',
+          //   component: EditarEmail,
+          //   name: 'userEditarEmail',
+          //   props: true
+          // },
           {
             path: 'cambiar-avatar',
             component: EditarAvatar,

@@ -16,7 +16,7 @@
     <p>Para cambiar tu imagen de perfil seguí las siguientes instrucciones:</p>
     <br>
     <div class="columns">
-      <div class="column">
+      <div class="column" v-if="user.subject.img_type == 0">
         <h1 class="subtitle is-4">Si te registraste con
           <i class="fas fa-envelope"></i>
         </h1>
@@ -36,7 +36,7 @@
           </li>
         </ul>
       </div>
-      <div class="column">
+      <div class="column" v-if="user.subject.img_type == 1"> 
         <h1 class="subtitle is-4">Si te registraste con
           <i class="fab fa-facebook"></i>
         </h1>

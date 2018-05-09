@@ -109,7 +109,7 @@ class ProjectResource extends Resource
                                 'name' => [
                                     'type' => 'string',
                                     'minLength' => 1,
-                                    'maxLength' => 50,
+                                    'maxLength' => 100,
                                 ],
                                 'topics' => [
                                     'type' => 'array',
