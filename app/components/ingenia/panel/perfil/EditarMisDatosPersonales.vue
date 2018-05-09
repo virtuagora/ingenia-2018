@@ -8,7 +8,7 @@
       <i class="fas fa-angle-double-right"></i> Registro en la plataforma *
     </label>
     <p v-if="user.subject.img_type === 0"><i class="fas fa-check has-text-success fa-fw fa-lg"></i><i class="fas fa-envelope fa-fw fa-lg"></i>&nbsp;Mediante correo electrónico: <b>{{user.email}}</b></p>
-    <p v-if="user.subject.img_type === 1"><i class="fas fa-check has-text-success fa-fw fa-lg"></i><i class="fab fa-facebook has-text-link fa-fw fa-lg"></i>&nbsp;Utilizando mi perfil de Facebook: <a :href="'https://facebook.com/' + user.subject.img_hash">{{user.email}}</a></p>
+    <p v-if="user.subject.img_type === 1"><i class="fas fa-check has-text-success fa-fw fa-lg"></i><i class="fab fa-facebook has-text-link fa-fw fa-lg"></i>&nbsp;Utilizando mi perfil de Facebook: <a :href="'https://facebook.com/' + user.subject.img_hash">{{user.name}}</a></p>
     <br>
     <label class="label is-size-5">
       <i class="fas fa-angle-double-right"></i> ¿De donde sos? *
