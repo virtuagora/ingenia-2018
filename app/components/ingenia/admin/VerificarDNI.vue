@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 class="subtitle is-3">Lista negra de DNIs</h1>
+    <h1 class="subtitle is-3">Validar DNIs</h1>
   </section>
 </template>
 

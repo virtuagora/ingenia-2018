@@ -280,15 +280,15 @@ $app->group('/panel', function () {
     });
 });
 
-// $app->group('/administracion', function () {
-//     $this->get('', function ($req, $res, $arg) {
-//         return $this->view->render($res, 'ingenia/admin/adminPanel.twig', []);
-//     })->setName('showAdminPanel');
-//     $this->get('/[{path:.*}]', function ($req, $res, $arg) {
-//         return $this->view->render($res, 'ingenia/admin/adminPanel.twig', [
-//         ]);
-//     });
-// });
+$app->group('/administracion', function () {
+    $this->get('', function ($req, $res, $arg) {
+        return $this->view->render($res, 'ingenia/admin/adminPanel.twig', []);
+    })->setName('showAdminPanel');
+    $this->get('/[{path:.*}]', function ($req, $res, $arg) {
+        return $this->view->render($res, 'ingenia/admin/adminPanel.twig', [
+        ]);
+    });
+});
 
 $app->group('/account', function () {
     $this->get('', function ($req, $res, $arg) {

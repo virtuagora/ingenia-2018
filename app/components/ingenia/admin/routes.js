@@ -8,6 +8,7 @@ import FechaCierre from './FechaCierre'
 import ListadoProyectos from './ListadoProyectos'
 import DescargarMatriz from './DescargarMatriz'
 import ListaNegraDNI from './ListaNegraDNI'
+import VerificarDNI from './VerificarDNI'
 
 
 const basePath = '/administracion'
@@ -37,9 +38,15 @@ const routes = [
         props: true
       },
       {
-        path: 'blacklist',
+        path: 'blacklist-dni',
         component: ListaNegraDNI,
         name: 'adminListaNegraDNI',
+        props: true
+      },
+      {
+        path: 'verificar-dni',
+        component: VerificarDNI,
+        name: 'adminVerificarDNI',
         props: true
       },
       {
