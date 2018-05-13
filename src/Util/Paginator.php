@@ -22,6 +22,11 @@ class Paginator
         $this->items = $query->forPage($params['page'], $params['size'])->get();
     }
 
+    public function makeVisible($attr)
+    {
+        $this->items->makeVisible($attr);
+    }
+
     public function setUri($uri)
     {
         $this->uri = $uri; //->withQuery(http_build_query($uri));

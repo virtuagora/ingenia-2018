@@ -43,6 +43,24 @@ class UserResource extends Resource
         return $schema;
     }
 
+    public function retrieve($options)
+    {
+        $query = $this->db->query('App:User');
+        if (isset($options['dni_state'])) {
+            if ($options['dni_state'] == 2) {
+                $query->whereNotNull('dni')->where('verified_dni', false);
+            } elseif ($options['dni_state'] == 3) {
+                $query->where('verified_dni', true);
+            }
+        }
+        if (isset($options['s'])) {
+            $filter = $this->helper->generateTrace($options['s']);
+            $query->where('trace', 'LIKE', "%$filter%");
+        }
+        $results = new Paginator($query, $options);
+        return $results;
+    }
+
     public function createOne($subject, $data)
     {
         $v = $this->validation->fromSchema($this->retrieveSchema());

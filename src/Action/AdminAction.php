@@ -46,26 +46,26 @@ class AdminAction
         return $response->withJSON($option->toArray());
     }
 
-    public function getDniList($request, $response, $params)
-    {
-        $subject = $request->getAttribute('subject');
-        if (!$this->authorization->checkPermission($subject, 'retDni')) {
-            throw new UnauthorizedException();
-        }
-        $options = $this->pagination->getParams($request, [
-            's' => [
-                'type' => 'string',
-            ],
-        ]);
-        $query = $this->db->query('App:User')->where('verified_dni', false);
-        if (isset($options['s'])) {
-            $filter = $this->helper->generateTrace($options['s']);
-            $query->where('trace', 'LIKE', "%$filter%");
-        }
-        $results = new Paginator($query, $options);
-        $results->setUri($request->getUri());
-        return $this->pagination->renderResponse($response, $results);
-    }
+    // public function getDniList($request, $response, $params)
+    // {
+    //     $subject = $request->getAttribute('subject');
+    //     if (!$this->authorization->checkPermission($subject, 'retDni')) {
+    //         throw new UnauthorizedException();
+    //     }
+    //     $options = $this->pagination->getParams($request, [
+    //         's' => [
+    //             'type' => 'string',
+    //         ],
+    //     ]);
+    //     $query = $this->db->query('App:User')->where('verified_dni', false);
+    //     if (isset($options['s'])) {
+    //         $filter = $this->helper->generateTrace($options['s']);
+    //         $query->where('trace', 'LIKE', "%$filter%");
+    //     }
+    //     $results = new Paginator($query, $options);
+    //     $results->setUri($request->getUri());
+    //     return $this->pagination->renderResponse($response, $results);
+    // }
 
     public function postVerifiedDni($request, $response, $params)
     {

@@ -26,6 +26,31 @@ class UserAction
         $this->router = $router;
     }
 
+    public function get($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $pagParams = $this->pagination->getParams($request, [
+            'dni_state' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'roles' => [
+                'type' => 'string',
+            ],
+            's' => [
+                'type' => 'string',
+            ],
+        ]);
+        $resultados = $this->userResource->retrieve($pagParams);
+        $resultados->setUri($request->getUri());
+        if ($this->authorization->checkPermission($subject, 'retDni')) {
+            $resultados->makeVisible([
+                'dni',
+            ]);
+        }
+        return $this->pagination->renderResponse($response, $resultados);
+    }
+
     // GET /user/{usr}
     public function getOne($request, $response, $params)
     {
