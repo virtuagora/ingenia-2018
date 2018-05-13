@@ -1,8 +1,6 @@
 import store from '../../store'
 import http from '../../http'
 
-
-
 // Panel
 import UsuarioPanel from './UsuarioPanel'
 import Overview from './Overview'

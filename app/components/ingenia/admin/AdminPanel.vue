@@ -1,0 +1,66 @@
+<template>
+  <section>
+    <div class="columns">
+      <div class="column is-3">
+        <aside class="menu">
+          <p class="menu-label">
+            Mi perfil
+          </p>
+          <ul class="menu-list">
+            <li>
+              <router-link :to="{ name: 'administracionOverview'}" exact-active-class="is-active" exact>Inicio</router-link>
+            </li>
+          </ul>
+          <hr>
+           <p class="menu-label">
+            Administrar
+          </p>
+          <ul class="menu-list">
+            <li>
+              <router-link :to="{ name: 'adminListadoProyectos'}" exact-active-class="is-active">Listado de proyectos</router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'adminDescargarMatriz'}" exact-active-class="is-active">Descargar matriz</router-link>
+            </li>
+            <li>
+              <router-link :to="{ name: 'adminListaNegraDNI'}" exact-active-class="is-active">Lista negra de DNIs</router-link>
+            </li>
+          </ul>
+          <p class="menu-label">
+            Configurar
+          </p>
+          <ul class="menu-list">
+            <li>
+              <router-link :to="{ name: 'adminFechaCierre'}" exact-active-class="is-active">Fecha de cierre</router-link>
+            </li>
+          </ul>
+        </aside>
+      </div>
+      <div class="column">
+        <router-view :settings="settings" :get-projects="getProjects"></router-view>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  props: ['settings','getProjects'],
+  data() {
+    return {
+      user: {}
+    };
+  },
+  created: function() {
+    this.user = this.$store.state.user;
+    if (this.user === null) {
+      window.location.href = "/login";
+    }
+  },
+  mounted: function() {
+    document.getElementById("loading").remove();
+  },
+  methods: {},
+  computed: {}
+};
+</script>

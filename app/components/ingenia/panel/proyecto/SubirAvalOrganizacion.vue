@@ -4,17 +4,17 @@
     <p>De acuerdo a los datos ingresados, el proyecto se realiza en coordinación con otra institución y/o organización, debera adjuntar la carta aval.</p>
     <p>Como requerimiento, debe subir la carta aval firmada por la institución u organización</p>
     <br>
-    <div class="notification is-warning" v-show="pendiente">
-      <b>¡Gracias por enviar tu DNI!</b> El mismo está pendiente de ser verificado por un administrador de INGENIA.
-    </div>
-    <div class="notification is-warning" v-show="pendiente">
-      <b>DNI Rechazado.</b> Vuelva a subir un formulario valido
-    </div>
     <div v-show="!pendiente">
       <b-message>
         En el siguiente campo subí un archivo donde se vea la carta de aval firmada por la organización.
         <br>Tamaño del archivo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
       </b-message>
+    <div class="notification" v-show="verifying">
+      <i class="fas fa-cog fa-spin"></i>&nbsp;Revisando si enviaste la carta de conformidad . . .
+    </div>
+    <div class="notification is-success" v-show="user.groups[0].uploaded_letter && !verifying">
+      <i class="fas fa-check fa-fw"></i>La carta de aval ha sido enviada y guardada correctamente
+    </div>
       <form :action="formUrl" ref="formAval" method="post" enctype="multipart/form-data">
         <b-field class="file is-medium">
           <b-upload v-model="files" name="archivo" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
@@ -50,11 +50,26 @@ export default {
       verificado: false,
       files: [],
       isLoading: false,
-      user: {}
+      user: {},
+      verifying: true,
     };
   },
   created: function() {
     this.user = this.$store.state.user;
+  },
+  mounted: function() {
+    this.forceUpdateState("userPanel")
+      .then(user => {
+        this.user = this.$store.state.user;
+        this.verifying = false;
+      })
+      .catch(e => {
+        this.$snackbar.open({
+          message: "Error al verificar la carta de aval.",
+          type: "is-danger",
+          actionText: "Cerrar"
+        });
+      });
   },
   methods: {
     submit: function() {

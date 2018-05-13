@@ -20,6 +20,7 @@ let routes = [].concat(
   // routeAccount,
   // routeCreateNode
   routeUserPanel,
+  routeAdminPanel,
   routeProject
 )
 

@@ -1,0 +1,21 @@
+{% set show_footer = true %}
+{% set show_navbar = true %}
+{# set body_class = '' #}
+{% extends 'master.twig' %}
+{% block title %}Panel de administración{% endblock %}
+{% block scriptshead %}{% endblock %}
+{% block body %}
+  <section class="section">
+    <div class="container">
+      <div id="loading" class="notification is-light has-text-centered">
+        <span class="icon">
+          <i class="fas fa-cog fa-spin"></i>
+        </span>
+        Cargando . . .
+      </div>
+      <br>
+<router-view ref="adminPanel" id="{{subject.extra.user_id}}" :settings="{{options()|json_encode}}" get-projects="{{path_for('lisPro')}}"></router-view>
+    </div>
+  </section>
+{% endblock %}
+{% block javascripts %}{% endblock %}
