@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Util\Exception\AppException;
 use App\Util\Exception\UnauthorizedException;
+use Slim\Http\Stream;
 
 class UserAction
 {
@@ -23,6 +24,31 @@ class UserAction
         $this->authorization = $authorization;
         $this->recaptcha = $recaptcha;
         $this->router = $router;
+    }
+
+    public function get($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $pagParams = $this->pagination->getParams($request, [
+            'dni_state' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'roles' => [
+                'type' => 'string',
+            ],
+            's' => [
+                'type' => 'string',
+            ],
+        ]);
+        $resultados = $this->userResource->retrieve($pagParams);
+        $resultados->setUri($request->getUri());
+        if ($this->authorization->checkPermission($subject, 'retDni')) {
+            $resultados->makeVisible([
+                'dni',
+            ]);
+        }
+        return $this->pagination->renderResponse($response, $resultados);
     }
 
     // GET /user/{usr}
@@ -196,5 +222,19 @@ class UserAction
         //     'message' => 'DNI loaded succefully',
         //     'status' => 200,
         // ]);
+    }
+
+    public function getDniFile($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $usuario = $this->helper->getEntityFromId(
+            'App:User', 'usr', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'retUsrFull', $usuario)) {
+            throw new UnauthorizedException();
+        }
+        $fileData = $this->userResource->getDniFile($usuario);
+        return $response->withBody(new Stream($fileData['strm']))
+            ->withHeader('Content-Type', $fileData['mime']);
     }
 }

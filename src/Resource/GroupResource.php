@@ -463,12 +463,38 @@ class GroupResource extends Resource
         $group->save();
         $fileStrm = $file->getStream()->detach();
         $this->filesystem->putStream(
-        'avales/'.$group->id.'.'.$allowedMimes[$fileMime],
-        $fileStrm
+            'avales/'.$group->id.'.'.$allowedMimes[$fileMime],
+            $fileStrm
         );
         if (is_resource($fileStrm)) {
             fclose($fileStrm);
         }
+    }
+
+    public function getLetterFile($group)
+    {
+        if (!$group->uploaded_letter) {
+            throw new AppException('No se cargó la carta aún', 404);
+        }
+        if ($this->filesystem->has('avales/'.$group->id.'.pdf')) {
+            $path = 'avales/'.$group->id.'.pdf';
+        } elseif ($this->filesystem->has('avales/'.$user->id.'.jpg')) {
+            $path = 'avales/'.$group->id.'.jpg';
+        } elseif ($this->filesystem->has('avales/'.$user->id.'.png')) {
+            $path = 'avales/'.$group->id.'.png';
+        } elseif ($this->filesystem->has('avales/'.$user->id.'.doc')) {
+            $path = 'avales/'.$group->id.'.doc';
+        } elseif ($this->filesystem->has('avales/'.$user->id.'.docx')) {
+            $path = 'avales/'.$group->id.'.docx';
+        } else {
+            throw new AppException('El documento no se encuentra almacenado', 404);
+        }
+        $mime = $this->filesystem->getMimetype($path);
+        $strm = $this->filesystem->readStream($path);
+        return [
+            'strm' => $strm,
+            'mime' => $mime,
+        ];
     }
     
     public function updateAgreement($subject, $group, $file)
@@ -495,12 +521,38 @@ class GroupResource extends Resource
         $group->save();
         $fileStrm = $file->getStream()->detach();
         $this->filesystem->putStream(
-        'acuerdos/'.$group->id.'.'.$allowedMimes[$fileMime],
-        $fileStrm
+            'acuerdos/'.$group->id.'.'.$allowedMimes[$fileMime],
+            $fileStrm
         );
         if (is_resource($fileStrm)) {
             fclose($fileStrm);
         }
+    }
+
+    public function getAgreementFile($group)
+    {
+        if (!$group->uploaded_agreement) {
+            throw new AppException('No se cargó la carta aún', 404);
+        }
+        if ($this->filesystem->has('acuerdos/'.$group->id.'.pdf')) {
+            $path = 'acuerdos/'.$group->id.'.pdf';
+        } elseif ($this->filesystem->has('acuerdos/'.$user->id.'.jpg')) {
+            $path = 'acuerdos/'.$group->id.'.jpg';
+        } elseif ($this->filesystem->has('acuerdos/'.$user->id.'.png')) {
+            $path = 'acuerdos/'.$group->id.'.png';
+        } elseif ($this->filesystem->has('acuerdos/'.$user->id.'.doc')) {
+            $path = 'acuerdos/'.$group->id.'.doc';
+        } elseif ($this->filesystem->has('acuerdos/'.$user->id.'.docx')) {
+            $path = 'acuerdos/'.$group->id.'.docx';
+        } else {
+            throw new AppException('El documento no se encuentra almacenado', 404);
+        }
+        $mime = $this->filesystem->getMimetype($path);
+        $strm = $this->filesystem->readStream($path);
+        return [
+            'strm' => $strm,
+            'mime' => $mime,
+        ];
     }
 
     public function postCompleted($subject, $group)

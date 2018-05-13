@@ -43,6 +43,24 @@ class UserResource extends Resource
         return $schema;
     }
 
+    public function retrieve($options)
+    {
+        $query = $this->db->query('App:User');
+        if (isset($options['dni_state'])) {
+            if ($options['dni_state'] == 2) {
+                $query->whereNotNull('dni')->where('verified_dni', false);
+            } elseif ($options['dni_state'] == 3) {
+                $query->where('verified_dni', true);
+            }
+        }
+        if (isset($options['s'])) {
+            $filter = $this->helper->generateTrace($options['s']);
+            $query->where('trace', 'LIKE', "%$filter%");
+        }
+        $results = new Paginator($query, $options);
+        return $results;
+    }
+
     public function createOne($subject, $data)
     {
         $v = $this->validation->fromSchema($this->retrieveSchema());
@@ -425,5 +443,31 @@ class UserResource extends Resource
         if (is_resource($fileStrm)) {
             fclose($fileStrm);
         }
+    }
+
+    public function getDniFile($user)
+    {
+        if ($this->filesystem->has('dni/'.$user->id.'.pdf')) {
+            $path = 'dni/'.$user->id.'.pdf';
+        } elseif ($this->filesystem->has('dni/'.$user->id.'.jpg')) {
+            $path = 'dni/'.$user->id.'.jpg';
+        } elseif ($this->filesystem->has('dni/'.$user->id.'.png')) {
+            $path = 'dni/'.$user->id.'.png';
+        } elseif ($this->filesystem->has('dni/'.$user->id.'.doc')) {
+            $path = 'dni/'.$user->id.'.doc';
+        } elseif ($this->filesystem->has('dni/'.$user->id.'.docx')) {
+            $path = 'dni/'.$user->id.'.docx';
+        } else {
+            throw new AppException(
+                'El documento no se encuentra almacenado',
+                404
+            );
+        }
+        $mime = $this->filesystem->getMimetype($path);
+        $strm = $this->filesystem->readStream($path);
+        return [
+            'strm' => $strm,
+            'mime' => $mime,
+        ];
     }
 }
