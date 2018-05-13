@@ -23,7 +23,7 @@ class OptionsService
 
     public function getOption($option)
     {
-        return $this->db->query('App:Option')->where('key', $option)->first();
+        return $this->db->query('App:Option')->where('key', $option)->firstOrFail();
     }
 
     public function getOptions($filters = null)

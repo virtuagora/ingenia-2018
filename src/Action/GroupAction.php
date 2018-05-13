@@ -245,6 +245,20 @@ class GroupAction
         return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
     }
 
+    public function getAgreementFile($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updGroAgreement', $group)) {
+            throw new UnauthorizedException();
+        }
+        $fileData = $this->groupResource->getAgreementFile($group);
+        return $response->withBody(new Stream($fileData['strm']))
+            ->withHeader('Content-Type', $fileData['mime']);
+    }
+
     public function postLetter($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -261,6 +275,20 @@ class GroupAction
         $archivo = $request->getUploadedFiles()['archivo'];
         $this->groupResource->updateLetter($subject, $group, $archivo);
         return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
+    }
+
+    public function getLetterFile($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'updGroLetter', $group)) {
+            throw new UnauthorizedException();
+        }
+        $fileData = $this->groupResource->getLetterFile($group);
+        return $response->withBody(new Stream($fileData['strm']))
+            ->withHeader('Content-Type', $fileData['mime']);
     }
 
     public function postCompleted($request, $response, $params)

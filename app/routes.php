@@ -193,6 +193,7 @@ $app->get('/user/{usr}', 'userAction:getOne')->setName('getUser');
 $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');
 $app->post('/user/{usr}/public-profile', 'userAction:postPublicProfile')->setName('runUpdUserPub');
 $app->post('/user/{usr}/dni', 'userAction:postDni')->setName('runUpdUserDni');
+$app->get('/user/{usr}/dni', 'userAction:getDniFile')->setName('getUsrDni');
 $app->post('/user/{usr}/pending-email', 'userAction:postPendingEmail')->setName('runUpdUserPem');
 
 $app->get('/group/{gro}', 'groupAction:getOne')->setName('getGroup');
@@ -203,6 +204,8 @@ $app->post('/group/{gro}/invitation', 'groupAction:postInvitation')->setName('ru
 $app->post('/group/{gro}/request', 'groupAction:postRequest')->setName('runCreGroReq');
 $app->post('/group/{gro}/letter', 'groupAction:postLetter')->setName('runUpdGroLet');
 $app->post('/group/{gro}/agreement', 'groupAction:postAgreement')->setName('runUpdGroAgr');
+$app->get('/group/{gro}/letter', 'groupAction:getLetterFile')->setName('getGroLet');
+$app->get('/group/{gro}/agreement', 'groupAction:getAgreementFile')->setName('getGroAgr');
 $app->put('/group/{gro}/second/{usr}', 'groupAction:putSecond')->setName('runCreGroSec');
 $app->delete('/group/{gro}/user/{usr}', 'groupAction:deleteUser')->setName('runDelGroUsr');
 $app->delete('/group/{gro}/second/{usr}', 'groupAction:deleteSecond')->setName('runDelGroSec');
