@@ -81,12 +81,12 @@
       <table class="table is-fullwidth">
         <thead>
           <tr>
-            <th>
+            <th class="has-text-centered">
               <i class="fa fa-hashtag"></i>
             </th>
             <th>Nombre</th>
             <th>Equipo</th>
-            <th>Contacto</th>
+            <th>Categoria</th>
             <th class="has-text-centered">
               <b-tooltip label="Cuantos bancan el proyecto?" type="is-dark" position="is-top">
               <i class="em em-muscle"></i>
@@ -113,15 +113,20 @@
               </b-tooltip>
             </th>
             <th class="has-text-centered">
-              <b-tooltip label="Otros" type="is-dark" position="is-top"> 
-              <i class="fas fa-arrow-down fa-lg fa-fw"></i>
+              <b-tooltip label="Imprimir" type="is-dark" position="is-top"> 
+              <i class="fas fa-print fa-lg fa-fw"></i>
               </b-tooltip>
             </th>
+            <!-- <th class="has-text-centered">
+              <b-tooltip label="Seleccionar" type="is-dark" position="is-top"> 
+              <i class="fas fa-arrow-down fa-lg fa-fw"></i>
+              </b-tooltip>
+            </th> -->
           </tr>
         </thead>
         <tbody>
           <tr v-for="project in projects" :key="project.id">
-            <td>{{project.id}}</td>
+            <td class="has-text-centered">{{project.id}}</td>
             <td>
               <a @click="cardProyecto(project)">{{project.name}}</a>
             </td>
@@ -129,7 +134,7 @@
               <a @click="cardEquipo(project.group)">{{project.group.name}}</a>
             </td>
             <td>
-              {{project.group.email}}
+              {{getCategory(project.category_id)}}
             </td>
             <td class="has-text-centered">{{project.likes}}</td>
             <td class="has-text-centered">
@@ -140,20 +145,27 @@
             </td>
             <td class="has-text-centered">
               <i class="fas fa-fw" :class="statusLetter(project)"></i>
+              <a :href="letterUrl(project.group)" class="has-text-link" target="_blank" v-if="(project.organization != null) && project.group.uploaded_letter"><i class="fas fa-download"></i></a>
             </td>
             <td class="has-text-centered">
               <i class="fas fa-fw" :class="statusAgreement(project)"></i>
+              <a :href="agreementUrl(project.group)" class="has-text-link" target="_blank" v-if="project.group.uploaded_agreement"><i class="fas fa-download"></i></a>
             </td>
             <td class="has-text-centered">
-              <a :href="'/project/'+project.id+'/print'" class="has-text-info">
+              <a :href="'/project/'+project.id+'/print'" class="has-text-link">
                 <i class="fas fa-print fa-fw"></i>
               </a>
             </td>
+            <!-- <td class="has-text-centered">
+              <a class="has-text-link">
+                <i class="fas fa-star fa-fw"></i>&nbsp;Validar
+              </a>
+            </td> -->
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="10">
+            <th colspan="11">
               <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
                 <span slot="no-results">
                   <i class="fas fa-info-circle"></i> Fin de los resultados
@@ -177,7 +189,7 @@ import ModalEquipo from "./ModalEquipo";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  props: ["getProjects", "getGroupMembers"],
+  props: ["getProjects", "getGroupMembers","getLetter","getAgreement"],
   components: {
     InfiniteLoading
   },
@@ -231,6 +243,12 @@ export default {
       });
   },
   methods: {
+    letterUrl: function(gro){
+      return this.getLetter.replace(':gro', gro.id)
+    },
+    agreementUrl: function(gro){
+      return this.getAgreement.replace(':gro', gro.id)
+    },
     getCategory(id) {
       let caty = this.categorias.find(x => {
         return x.id === id;
@@ -345,6 +363,7 @@ export default {
         "has-text-success":
           (pro.organization != null) & pro.group.uploaded_letter,
         "fa-check": (pro.organization != null) & pro.group.uploaded_letter,
+        "is-hidden": (pro.organization != null) & pro.group.uploaded_letter,
         "fa-times": (pro.organization != null) & !pro.group.uploaded_letter,
         "fa-minus": pro.organization == null
       };
@@ -353,6 +372,7 @@ export default {
       return {
         "has-text-success": pro.group.uploaded_agreement,
         "fa-check": pro.group.uploaded_agreement,
+        "is-hidden": pro.group.uploaded_agreement,
         "has-text-danger": !pro.group.uploaded_agreement,
         "fa-times": !pro.group.uploaded_agreement
       };

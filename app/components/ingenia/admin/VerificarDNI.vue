@@ -7,7 +7,7 @@
         <div class="level-item">
           <div class="field has-addons" style="flex-grow: 1">
             <p class="control is-expanded has-icons-left">
-              <input v-model="nameToSearch" class="input" type="text" placeholder="Nombre del proyecto">
+              <input v-model="nameToSearch" class="input" type="text" placeholder="Buscar por nombre">
               <span class="icon is-left">
                 <i class="fas fa-chevron-right fa-lg"></i>
               </span>
@@ -21,14 +21,7 @@
         </div>
       </div>
       <!-- Right side -->
-      <div class="level-right" v-if="!filters">
-        <div class="level-item">
-          <a @click="showFilters()" class="button is-white">
-            <i class="fas fa-filter fa-fw"></i>&nbsp;Otros filtros
-          </a>
-        </div>
-      </div>
-      <div class="level-right" v-else>
+      <div class="level-right">
         <!-- <div class="level-item">
           <b-field expanded style="flex-grow: 1">
             <b-select v-model="categoriaSelected" :loading="categoriasLoading" placeholder="Categoria" expanded>
@@ -58,11 +51,10 @@
             </b-select>
           </b-field>
         </div> -->
-        <!-- <div class="level-item">
+        <div class="level-item">
           <b-field>
-            <a @click="search()" class="button is-white">
-              <i class="fas fa-search fa-fw"></i>
-              <span class="is-hidden-desktop">&nbsp;Buscar</span>
+            <a @click="verifiedToggle = !verifiedToggle" class="button is-white" :class="{'is-success': verifiedToggle, 'is-dark': !verifiedToggle}">
+              {{verifiedToggle ? 'Verificados' : 'No verificados'}}
             </a>
           </b-field>
         </div>
@@ -73,17 +65,17 @@
               <span class="is-hidden-desktop">&nbsp;filtros</span>
             </a>
           </b-field>
-        </div> -->
+        </div>
       </div>
     </nav>
     <div class="content">
-      <table class="table is-narrow is-fullwidth">
+      <table class="table is-fullwidth">
         <thead>
           <tr>
             <!-- <th width="15" class="has-text-centered">
               <i class="fa fa-hashtag"></i>
             </th> -->
-            <th width="60">DNI</th>
+            <th width="90">DNI</th>
             <th>Nombre y apellido</th>
             <th width="90" class="has-text-centered"><i class="fas fa-download"></i></th>
             <th width="90" class="has-text-centered"><i class="fas fa-check"></i></th>
@@ -93,9 +85,9 @@
           <tr v-for="user in users" :key="user.id">
             <!-- <td class="has-text-centered">{{user.id}}</td> -->
             <td>{{user.dni}}</td>
-            <td><a href="">{{user.surnames}}, {{user.names}}</a><span class="icon"><i class="fa fa-times has-text-danger"></i></span></td>
-            <td class="has-text-centered"><a href="" class="button is-small"><i class="fas fa-eye"></i>&nbsp;Ver</a></td>
-            <td class="has-text-centered"><a href="" class="button is-small"><i class="fas fa-check"></i>&nbsp;Verificar</a></td>
+            <td><a :href="'/usuario/'+user.id">{{user.surnames}}, {{user.names}}</a>&nbsp;&nbsp;<span class="tag" :class="{'is-danger': !verified}"><i class="fas fa-exclamation-triangle"></i>&nbsp;En lista negra</span></td>
+            <td class="has-text-centered"><a :href="getUserDNIUrl(user)" target="_blank" class="button is-small"><i class="fas fa-eye"></i>&nbsp;Ver</a></td>
+            <td class="has-text-centered"><a href="#" disabled class="button is-success is-outlined is-small"><i class="fas fa-check"></i>&nbsp;Verificar</a></td>
           </tr>
         </tbody>
         <tfoot>
@@ -124,7 +116,7 @@ import InfiniteLoading from "vue-infinite-loading";
 import Localidad from "../utils/GetLocalidad";
 
 export default {
-  props: ["getUsers", "getGroupMembers"],
+  props: ["getUsers", "getGroupMembers","getUserDni"],
   components: {
     InfiniteLoading,
     Localidad
@@ -139,6 +131,7 @@ export default {
         next_page_url: null,
         prev_page_url: null
       },
+      verifiedToggle: false,
       // regionLoading: false,
       // regionSelected: null,
       // departamentoLoading: false,
@@ -179,6 +172,9 @@ export default {
     //   });
   },
   methods: {
+    getUserDNIUrl: function(usr){
+      return this.getUserDni.replace(':usr',usr.id)
+    },
     // getCategory(id) {
     //   let caty = this.categorias.find(x => {
     //     return x.id === id;
@@ -326,6 +322,9 @@ export default {
     }
   },
   watch: {
+    verifiedToggle: function(newVal){
+      this.resetEverything()
+    }
     // regionSelected: function(newVal, oldVal) {
     //   if (newVal != null) {
     //     this.departamentoSelected = null;
@@ -387,9 +386,11 @@ export default {
       if (this.nameToSearch !== "") {
         query.push("s=" + this.nameToSearch);
       }
-      // if (this.categoriaSelected !== null) {
-      //   query.push("cat=" + this.categoriaSelected);
-      // }
+      if (this.verifiedToggle) {
+        query.push("dni_state=3");
+      } else {
+        query.push("dni_state=2");        
+      }
       // if (this.regionSelected !== null) {
       //   query.push("reg=" + this.regionSelected.id);
       // }

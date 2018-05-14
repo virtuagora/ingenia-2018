@@ -39,26 +39,19 @@
                   </a>
                 </b-tooltip>
               </div>
+              {% if 'admin' in subject.roles %}
+            <div class="column is-narrow">
+              <b-tooltip label="Ajustes" type="is-dark" position="is-bottom">
+<a href="{{path_for('showAdminPanel')}}" class="">
+                  <span class="icon is-large has-text-white">
+                    <i class="fas fa-wrench fa-3x "></i>
+                  </span>&nbsp;&nbsp;
+                </a>
+              </b-tooltip>
+            </div>
+            {% endif %}
             <ver-proyecto-button-hero-index></ver-proyecto-button-hero-index>
             {% endif %}
-            <div class="column is-narrow is-hidden">
-              <b-tooltip label="Mi proyecto" type="is-dark" position="is-bottom">
-                <a href="/panel/proyecto" class="">
-                  <span class="icon is-large has-text-white">
-                    <i class="fas fa-folder-open fa-3x "></i>
-                  </span>&nbsp;&nbsp;
-                </a>
-              </b-tooltip>
-            </div>
-            <div class="column is-narrow is-hidden">
-              <b-tooltip label="Ajustes" type="is-dark" position="is-bottom">
-                <a href="/" class="">
-                  <span class="icon is-large has-text-white">
-                    <i class="fas fa-sliders-h fa-3x "></i>
-                  </span>&nbsp;&nbsp;
-                </a>
-              </b-tooltip>
-            </div>
             <div class="column is-narrow is-hidden">
               <b-tooltip label="Mi proyecto" type="is-dark" position="is-bottom">
                 <a href="/panel/equipo" class="">

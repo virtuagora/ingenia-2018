@@ -43,8 +43,10 @@
         </aside>
       </div>
       <div class="column">
-        <router-view :settings="settings" :get-projects="getProjects" :get-users="getUsers"  :get-group-members="getGroupMembers" 
-  :team-url="teamUrl" ></router-view>
+        <router-view :settings="settings" :get-projects="getProjects" :get-users="getUsers" 
+        :get-letter="getLetter" :get-agreement="getAgreement" :get-group-members="getGroupMembers"
+        :get-user-dni="getUserDni" 
+        :team-url="teamUrl" ></router-view>
       </div>
     </div>
   </section>
@@ -52,7 +54,7 @@
 
 <script>
 export default {
-  props: ['settings','getProjects','getGroupMembers','teamUrl','getUsers'],
+  props: ['settings','getProjects','getGroupMembers','teamUrl','getUsers','getLetter','getAgreement','getUserDni'],
   data() {
     return {
       user: {}
