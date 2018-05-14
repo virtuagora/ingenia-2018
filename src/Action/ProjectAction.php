@@ -30,6 +30,9 @@ class ProjectAction
         $proyecto = $this->helper->getEntityFromId(
             'App:Project', 'pro', $params, ['category']
         );
+        if ($this->authorization->checkPermission($subject, 'retProFull', $proyecto)) {
+            $proyecto->addVisible(['notes']);
+        }
         return $response->withJSON($proyecto->toArray());
     }
 
@@ -58,6 +61,11 @@ class ProjectAction
         ]);
         $resultados = $this->projectResource->retrieve($pagParams);
         $resultados->setUri($request->getUri());
+        if ($this->authorization->checkPermission($subject, 'retDni')) {
+            $resultados->makeVisible([
+                'notes',
+            ]);
+        }
         return $this->pagination->renderResponse($response, $resultados);
         //return $response->withJSON($orgList->toArray());
     }
