@@ -28,7 +28,7 @@ class GroupAction
             'App:Group', 'gro', $params, ['invitations']
         );
         if ($this->authorization->checkPermission($subject, 'retGroFull', $group)) {
-            $group->addVisible(['telephone', 'email', 'invitations']);
+            $group->addVisible(['telephone', 'email', 'invitations', 'notes']);
         }
         return $response->withJSON($group->toArray());
     }

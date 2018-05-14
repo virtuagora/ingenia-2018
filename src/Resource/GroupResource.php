@@ -478,13 +478,13 @@ class GroupResource extends Resource
         }
         if ($this->filesystem->has('avales/'.$group->id.'.pdf')) {
             $path = 'avales/'.$group->id.'.pdf';
-        } elseif ($this->filesystem->has('avales/'.$user->id.'.jpg')) {
+        } elseif ($this->filesystem->has('avales/'.$group->id.'.jpg')) {
             $path = 'avales/'.$group->id.'.jpg';
-        } elseif ($this->filesystem->has('avales/'.$user->id.'.png')) {
+        } elseif ($this->filesystem->has('avales/'.$group->id.'.png')) {
             $path = 'avales/'.$group->id.'.png';
-        } elseif ($this->filesystem->has('avales/'.$user->id.'.doc')) {
+        } elseif ($this->filesystem->has('avales/'.$group->id.'.doc')) {
             $path = 'avales/'.$group->id.'.doc';
-        } elseif ($this->filesystem->has('avales/'.$user->id.'.docx')) {
+        } elseif ($this->filesystem->has('avales/'.$group->id.'.docx')) {
             $path = 'avales/'.$group->id.'.docx';
         } else {
             throw new AppException('El documento no se encuentra almacenado', 404);
@@ -536,13 +536,13 @@ class GroupResource extends Resource
         }
         if ($this->filesystem->has('acuerdos/'.$group->id.'.pdf')) {
             $path = 'acuerdos/'.$group->id.'.pdf';
-        } elseif ($this->filesystem->has('acuerdos/'.$user->id.'.jpg')) {
+        } elseif ($this->filesystem->has('acuerdos/'.$group->id.'.jpg')) {
             $path = 'acuerdos/'.$group->id.'.jpg';
-        } elseif ($this->filesystem->has('acuerdos/'.$user->id.'.png')) {
+        } elseif ($this->filesystem->has('acuerdos/'.$group->id.'.png')) {
             $path = 'acuerdos/'.$group->id.'.png';
-        } elseif ($this->filesystem->has('acuerdos/'.$user->id.'.doc')) {
+        } elseif ($this->filesystem->has('acuerdos/'.$group->id.'.doc')) {
             $path = 'acuerdos/'.$group->id.'.doc';
-        } elseif ($this->filesystem->has('acuerdos/'.$user->id.'.docx')) {
+        } elseif ($this->filesystem->has('acuerdos/'.$group->id.'.docx')) {
             $path = 'acuerdos/'.$group->id.'.docx';
         } else {
             throw new AppException('El documento no se encuentra almacenado', 404);
