@@ -189,6 +189,10 @@ $app->get('/region/{reg}/department', 'miscAction:getDepartments');
 $app->get('/department/{dep}/locality', 'miscAction:getLocalities');
 $app->get('/locality/{loc}', 'miscAction:getLocality');
 
+$app->get('/option/{opt}', 'adminAction:getOption');
+$app->post('/option/{opt}', 'adminAction:postOption');
+$app->post('/user/{usr}/verified-dni', 'adminAction:postVerifiedDni')->setName('runUpdUserDniVer');
+
 $app->get('/user/{usr}', 'userAction:getOne')->setName('getUser');
 $app->get('/user', 'userAction:get')->setName('getUsrs');
 $app->post('/user/{usr}/profile', 'userAction:postProfile')->setName('runUpdUserPro');

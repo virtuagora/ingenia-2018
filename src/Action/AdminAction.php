@@ -46,6 +46,23 @@ class AdminAction
         return $response->withJSON($option->toArray());
     }
 
+    public function postOption($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        if (!$this->authorization->checkPermission($subject, 'retOpt')) {
+            throw new UnauthorizedException();
+        }
+        $opt = $this->helper->getSanitizedStr('opt', $params);
+        $val = $this->helper->getSanitizedStr('value', $request->getParsedBody());
+        $option = $this->options->getOption($opt);
+        $option->value = $val;
+        $option->save();
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Opción actualizada',
+            'status' => 200,
+        ]);
+    }
+
     // public function getDniList($request, $response, $params)
     // {
     //     $subject = $request->getAttribute('subject');
