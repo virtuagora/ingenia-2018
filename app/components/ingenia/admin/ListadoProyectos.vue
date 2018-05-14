@@ -84,6 +84,9 @@
             <th class="has-text-centered">
               <i class="fa fa-hashtag"></i>
             </th>
+             <th class="has-text-centered">
+              <i class="fa fa-sticky-note"></i>
+            </th>
             <th>Nombre</th>
             <th>Equipo</th>
             <th>Categoria</th>
@@ -127,6 +130,7 @@
         <tbody>
           <tr v-for="project in projects" :key="project.id">
             <td class="has-text-centered">{{project.id}}</td>
+            <td class="has-text-centered"><i class="fas fa-fw" :class="{'fa-sticky-note has-text-link': project.notes != null, 'fa-minus': project.notes == null}"></i></td>
             <td>
               <a @click="cardProyecto(project)">{{project.name}}</a>
             </td>

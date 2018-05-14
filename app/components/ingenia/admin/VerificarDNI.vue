@@ -48,17 +48,31 @@
             </th> -->
             <th width="90">DNI</th>
             <th>Nombre y apellido</th>
-            <th width="90" class="has-text-centered"><i class="fas fa-download"></i></th>
-            <th width="90" class="has-text-centered"><i class="fas fa-check"></i></th>
+            <th width="90" class="has-text-centered">
+              <i class="fas fa-download"></i>
+            </th>
+            <th width="90" class="has-text-centered">
+              <i class="fas fa-check"></i>
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="user in users" :key="user.id">
             <!-- <td class="has-text-centered">{{user.id}}</td> -->
             <td>{{user.dni}}</td>
-            <td><a :href="'/usuario/'+user.id">{{user.surnames}}, {{user.names}}</a>&nbsp;&nbsp;<span class="tag" :class="{'is-danger': false}"><i class="fas fa-exclamation-triangle"></i>&nbsp;En lista negra</span></td>
-            <td class="has-text-centered"><a :href="getUserDNIUrl(user)" target="_blank" class="button is-small"><i class="fas fa-eye"></i>&nbsp;Ver</a></td>
-            <td class="has-text-centered"><a @click="verificarUser(user)"  class="button is-success is-outlined is-small"><i class="fas fa-check"></i>&nbsp;Verificar</a></td>
+            <td>
+              <a :href="'/usuario/'+user.id">{{user.surnames}}, {{user.names}}</a>&nbsp;&nbsp;
+              <span class="tag is-danger" v-show="inBlacklist(user)">
+                <i class="fas fa-exclamation-triangle"></i>&nbsp;En lista negra</span>
+            </td>
+            <td class="has-text-centered">
+              <a :href="getUserDNIUrl(user)" target="_blank" class="button is-small">
+                <i class="fas fa-eye"></i>&nbsp;Ver</a>
+            </td>
+            <td class="has-text-centered">
+              <a @click="verificarUser(user)" class="button is-success is-outlined is-small">
+                <i class="fas fa-check"></i>&nbsp;Verificar</a>
+            </td>
           </tr>
         </tbody>
         <tfoot>
@@ -82,12 +96,11 @@
 </template>
 
 <script>
-
 import InfiniteLoading from "vue-infinite-loading";
 import Localidad from "../utils/GetLocalidad";
 
 export default {
-  props: ["getUsers", "getGroupMembers","getUserDni"],
+  props: ["getUsers", "getGroupMembers", "getUserDni"],
   components: {
     InfiniteLoading,
     Localidad
@@ -96,7 +109,7 @@ export default {
     return {
       isLoading: false,
       users: [],
-      
+
       paginator: {
         current_page: null,
         last_page: null,
@@ -117,60 +130,62 @@ export default {
       // departamentos: [],
       // localidades: [],
       nameToSearch: "",
+      blacklist: "",
       filters: false
     };
   },
   mounted: function() {
-    // this.isLoading = true;
-    // this.categoriasLoading = true;
-    // this.regionLoading = true;
-    // Promise.all([this.$http.get("/category"), this.$http.get("/region")])
-    //   .then(response => {
-    //     this.categorias = response[0].data;
-    //     this.categoriasLoading = false;
-    //     this.regiones = response[1].data;
-    //     this.regionLoading = false;
-    //     this.isLoading = false;
-    //   })
-    //   .catch(error => {
-    //     console.error(error.message);
-    //     this.$snackbar.open({
-    //       message: "Error inesperado",
-    //       type: "is-danger",
-    //       actionText: "Cerrar"
-    //     });
-    //     this.regionLoading = false;
-    //     this.categoriasLoading = false;
-    //   });
+    this.isLoading = true;
+    this.$http
+      .get("/option/dni-blacklist")
+      .then(res => {
+        this.blacklist = res.data.value;
+        this.isLoading = false;
+      })
+      .catch(e => {
+        console.error(e);
+        this.isLoading = false;
+        this.$snackbar.open({
+          message: "Error al obtener el listado de DNI",
+          type: "is-danger",
+          actionText: "Cerrar"
+        });
+      });
   },
   methods: {
-    getUserDNIUrl: function(usr){
-      return this.getUserDni.replace(':usr',usr.id)
+    getUserDNIUrl: function(usr) {
+      return this.getUserDni.replace(":usr", usr.id);
     },
-    verificarUser: function(usr){
-       this.$http
-              .post(this.saveTeamUrl, this.payload)
-              .then(response => {
-                this.$snackbar.open({
-                  message: "¡Inscripción realizada!",
-                  type: "is-success",
-                  actionText: "OK"
-                });
-                this.isLoading = false;
-                this.response.replied = true;
-                this.response.ok = true;
-                this.forceUpdateState('userPanel')
-              })
-              .catch(error => {
-                console.error(error.message);
-                this.isLoading = false;
-                this.$snackbar.open({
-                  message: "Error inesperado",
-                  type: "is-danger",
-                  actionText: "Cerrar"
-                });
-                return false;
-              });
+    inBlacklist: function(usr) {
+      let value = this.blacklist.find((element) => {
+        return element === usr.dni;
+      });
+      return value === undefined ? false : true;
+    },
+    verificarUser: function(usr) {
+      this.$http
+        .post(this.saveTeamUrl, this.payload)
+        .then(response => {
+          this.$snackbar.open({
+            message: "¡Inscripción realizada!",
+            type: "is-success",
+            actionText: "OK"
+          });
+          this.isLoading = false;
+          this.response.replied = true;
+          this.response.ok = true;
+          this.forceUpdateState("userPanel");
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
     },
     // getCategory(id) {
     //   let caty = this.categorias.find(x => {
@@ -319,8 +334,8 @@ export default {
     }
   },
   watch: {
-    verifiedToggle: function(newVal){
-      this.resetEverything()
+    verifiedToggle: function(newVal) {
+      this.resetEverything();
     }
     // regionSelected: function(newVal, oldVal) {
     //   if (newVal != null) {
@@ -386,7 +401,7 @@ export default {
       if (this.verifiedToggle) {
         query.push("dni_state=3");
       } else {
-        query.push("dni_state=2");        
+        query.push("dni_state=2");
       }
       // if (this.regionSelected !== null) {
       //   query.push("reg=" + this.regionSelected.id);
@@ -397,10 +412,7 @@ export default {
       // if (this.localidadSelected !== null) {
       //   query.push("loc=" + this.localidadSelected.id);
       // }
-      return this.getUsers.concat(
-        query.length > 0 ? "?" : "",
-        query.join("&")
-      );
+      return this.getUsers.concat(query.length > 0 ? "?" : "", query.join("&"));
     }
   }
 };
