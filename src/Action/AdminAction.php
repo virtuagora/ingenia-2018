@@ -13,6 +13,7 @@ class AdminAction
     protected $authorization;
     protected $db;
     protected $filesystem;
+    protected $pagination;
 
     public function __construct(
         $options, $representation, $helper, $authorization, $db, $filesystem, $pagination
@@ -23,6 +24,7 @@ class AdminAction
         $this->authorization = $authorization;
         $this->db = $db;
         $this->filesystem = $filesystem;
+        $this->pagination = $pagination;
     }
 
     public function getOptions($request, $response, $params)
