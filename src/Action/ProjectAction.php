@@ -38,6 +38,7 @@ class ProjectAction
 
     public function get($request, $response, $params)
     {
+        $subject = $request->getAttribute('subject');
         $pagParams = $this->pagination->getParams($request, [
             'loc' => [
                 'type' => 'integer',

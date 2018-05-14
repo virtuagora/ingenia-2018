@@ -96,7 +96,7 @@ $container['miscAction'] = function ($c) {
 $container['adminAction'] = function ($c) {
     return new App\Action\AdminAction(
         $c['options'], $c['representation'], $c['helper'],
-        $c['authorization'], $c['db'], $c['filsystem'],
+        $c['authorization'], $c['db'], $c['filesystem'],
         $c['pagination']
     );
 };
