@@ -49,7 +49,10 @@ class UserResource extends Resource
         $query = $this->db->query('App:User');
         if (isset($options['dni_state'])) {
             if ($options['dni_state'] == 2) {
-                $query->whereNotNull('dni')->whereNull('verified_dni');
+                $query->whereNotNull('dni')->where(function ($qry) {
+                    $qry->whereNull('verified_dni')
+                        ->orWhere('verified_dni', false);
+                });
             } elseif ($options['dni_state'] == 3) {
                 $query->where('verified_dni', true);
             }
