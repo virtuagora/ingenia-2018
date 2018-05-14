@@ -40,8 +40,10 @@ import CompletarRegistro from './ingenia/CompletarRegistro'
 import Catalogo from './ingenia/catalogo/Catalogo'
 import GetLocalidad from './ingenia/utils/GetLocalidad'
 import Avatar from './ingenia/utils/Avatar'
+import Localidad from './ingenia/utils/GetLocalidad'
 import VoteProject from './ingenia/project/VoteProject'
 import NavbarProject from './ingenia/project/NavbarProject'
+import PrintProject from './ingenia/project/PrintProject'
 import Status from "./ingenia/utils/Status";
 import Countdown from "./ingenia/utils/Countdown";
 
@@ -150,11 +152,13 @@ window.vm = new Vue({ // eslint-disable-line no-new
     VoteProject,
     NavbarProject,
     Avatar,
+    Localidad,
     Status,
     Countdown,
     'fb-register': FBRegister,
     VerProyectoButtonHeroIndex,
-    VerProyectoTabIndex
+    VerProyectoTabIndex,
+    PrintProject
   },
   beforeCreate: function () {
     store.dispatch('prepareData', window.getUserId()).then(response => {

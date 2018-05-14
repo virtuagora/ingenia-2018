@@ -23,10 +23,10 @@
               <router-link :to="{ name: 'adminDescargarMatriz'}" exact-active-class="is-active">Descargar matriz</router-link>
             </li>
             <li>
-              <router-link :to="{ name: 'adminListaNegraDNI'}" exact-active-class="is-active">Lista negra de DNIs</router-link>
+              <router-link :to="{ name: 'adminVerificarDNI'}" exact-active-class="is-active">Verificar DNIs</router-link>
             </li>
             <li>
-              <router-link :to="{ name: 'adminVerificarDNI'}" exact-active-class="is-active">Validar de DNIs</router-link>
+              <router-link :to="{ name: 'adminListaNegraDNI'}" exact-active-class="is-active">Lista negra de DNIs</router-link>
             </li>
           </ul>
           <p class="menu-label">
@@ -43,7 +43,8 @@
         </aside>
       </div>
       <div class="column">
-        <router-view :settings="settings" :get-projects="getProjects"></router-view>
+        <router-view :settings="settings" :get-projects="getProjects" :get-users="getUsers"  :get-group-members="getGroupMembers" 
+  :team-url="teamUrl" ></router-view>
       </div>
     </div>
   </section>
@@ -51,7 +52,7 @@
 
 <script>
 export default {
-  props: ['settings','getProjects'],
+  props: ['settings','getProjects','getGroupMembers','teamUrl','getUsers'],
   data() {
     return {
       user: {}

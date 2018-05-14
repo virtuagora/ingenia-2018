@@ -39,6 +39,11 @@ class Group extends Model
         return $this->hasOne('App\Model\Project');
     }
 
+    public function locality()
+    {
+        return $this->belongsTo('App\Model\Locality');
+    }
+
     public function users()
     {
         return $this->belongsToMany('App\Model\User', 'user_group')->withPivot('relation', 'title');

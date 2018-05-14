@@ -317,6 +317,23 @@ $app->group('/usuario', function () {
     })->setName('showProfile');
 });
 
+$app->get('/project/{pro}/print', function ($request, $response, $params) {
+    // MATU
+    // Esta ruta tendria que se accesible por Admin y Responsable
+    $proyecto = $this->helper->getEntityFromId(
+    'App:Project', 'pro', $params, ['group']
+    );
+    // var_dump($proyecto->organization['locality_id']);
+    // $orgLoc = null;
+    // if( $proyecto->organization != null ){
+    //     $orgLoc = $this->db->query('App:Locality')->where('id', $proyecto->organization['locality_id'])->first();
+    // }
+    return $this->view->render($response, 'ingenia/project/printProject.twig', [
+    'project' => $proyecto,
+    // 'orgLoc' => $orgLoc
+    ]);
+})->setName('printPro');
+
 $app->group('/proyecto', function () {
     $this->get('/{pro}', function($request, $response, $params) {
         $subject = $request->getAttribute('subject');
