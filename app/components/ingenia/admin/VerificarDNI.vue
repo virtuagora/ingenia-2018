@@ -22,35 +22,6 @@
       </div>
       <!-- Right side -->
       <div class="level-right">
-        <!-- <div class="level-item">
-          <b-field expanded style="flex-grow: 1">
-            <b-select v-model="categoriaSelected" :loading="categoriasLoading" placeholder="Categoria" expanded>
-              <option :value="null">Todas</option>
-              <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.name}}</option>
-            </b-select>
-          </b-field>
-        </div>
-        <div class="level-item">
-          <b-field expanded style="flex-grow: 1">
-            <b-select v-model="regionSelected" placeholder="Región" :disabled="regiones.length == 0" :loading="regionLoading" expanded>
-              <option v-for="region in regiones" :key="region.id" :value="region">{{region.name}}</option>
-            </b-select>
-          </b-field>
-        </div>
-        <div class="level-item" v-if="regionSelected !== null">
-          <b-field expanded style="flex-grow: 1">
-            <b-select v-model="departamentoSelected" placeholder="Departamento" :disabled="departamentos.length == 0" :loading="departamentoLoading" expanded>
-              <option v-for="departamento in departamentos" :key="departamento.id" :value="departamento">{{departamento.name}}</option>
-            </b-select>
-          </b-field>
-        </div>
-        <div class="level-item" v-if="departamentoSelected !== null">
-          <b-field expanded style="flex-grow: 1">
-            <b-select v-model="localidadSelected" placeholder="Localidad" :disabled="localidades.length == 0" :loading="localidadLoading" expanded>
-              <option v-for="localidad in localidades" :key="localidad.id" :value="localidad">{{localidad.name}}</option>
-            </b-select>
-          </b-field>
-        </div> -->
         <div class="level-item">
           <b-field>
             <a @click="verifiedToggle = !verifiedToggle" class="button is-white" :class="{'is-success': verifiedToggle, 'is-dark': !verifiedToggle}">
@@ -85,9 +56,9 @@
           <tr v-for="user in users" :key="user.id">
             <!-- <td class="has-text-centered">{{user.id}}</td> -->
             <td>{{user.dni}}</td>
-            <td><a :href="'/usuario/'+user.id">{{user.surnames}}, {{user.names}}</a>&nbsp;&nbsp;<span class="tag" :class="{'is-danger': !verified}"><i class="fas fa-exclamation-triangle"></i>&nbsp;En lista negra</span></td>
+            <td><a :href="'/usuario/'+user.id">{{user.surnames}}, {{user.names}}</a>&nbsp;&nbsp;<span class="tag" :class="{'is-danger': false}"><i class="fas fa-exclamation-triangle"></i>&nbsp;En lista negra</span></td>
             <td class="has-text-centered"><a :href="getUserDNIUrl(user)" target="_blank" class="button is-small"><i class="fas fa-eye"></i>&nbsp;Ver</a></td>
-            <td class="has-text-centered"><a href="#" disabled class="button is-success is-outlined is-small"><i class="fas fa-check"></i>&nbsp;Verificar</a></td>
+            <td class="has-text-centered"><a @click="verificarUser(user)"  class="button is-success is-outlined is-small"><i class="fas fa-check"></i>&nbsp;Verificar</a></td>
           </tr>
         </tbody>
         <tfoot>
@@ -125,6 +96,7 @@ export default {
     return {
       isLoading: false,
       users: [],
+      
       paginator: {
         current_page: null,
         last_page: null,
@@ -174,6 +146,31 @@ export default {
   methods: {
     getUserDNIUrl: function(usr){
       return this.getUserDni.replace(':usr',usr.id)
+    },
+    verificarUser: function(usr){
+       this.$http
+              .post(this.saveTeamUrl, this.payload)
+              .then(response => {
+                this.$snackbar.open({
+                  message: "¡Inscripción realizada!",
+                  type: "is-success",
+                  actionText: "OK"
+                });
+                this.isLoading = false;
+                this.response.replied = true;
+                this.response.ok = true;
+                this.forceUpdateState('userPanel')
+              })
+              .catch(error => {
+                console.error(error.message);
+                this.isLoading = false;
+                this.$snackbar.open({
+                  message: "Error inesperado",
+                  type: "is-danger",
+                  actionText: "Cerrar"
+                });
+                return false;
+              });
     },
     // getCategory(id) {
     //   let caty = this.categorias.find(x => {
