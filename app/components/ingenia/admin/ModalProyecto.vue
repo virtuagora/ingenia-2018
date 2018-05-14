@@ -4,6 +4,9 @@
       <p class="modal-card-title">{{project.name}}</p>
     </header>
     <section class="modal-card-body">
+      <b-message v-if="project.notes">
+        
+      </b-message>
       <div class="content is-small is-clearfix">
         <div class="box is-paddingless is-pulled-right" style="max-width:200px; margin:10px">
           <img :src="imageUrl" class="image" style="margin: 0 auto; border-radius:5px;" alt="">

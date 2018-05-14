@@ -1,18 +1,11 @@
 <template>
   <section>
     <h1 class="subtitle is-3">Lista negra de DNIs</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>DNI</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="dni in blacklist" :key="dni">
-          <td>{{dni}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="tags">
+    <span class="tag is-dark is-medium" v-for="dni in blacklist" :key="dni">
+          {{dni}}
+        </span>
+    </div>
   </section>
 </template>
 
@@ -26,7 +19,7 @@ export default {
  created: function(){
    this.$http.get('/option/dni-blacklist')
    .then(res => {
-     this.blacklist = res.data
+     this.blacklist = res.data.value
    })
    .catch(e => {
      console.error(e)
