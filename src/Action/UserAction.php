@@ -14,9 +14,11 @@ class UserAction
     protected $authorization;
     protected $recaptcha;
     protected $router;
+    protected $pagination;
 
     public function __construct(
-        $userResource, $representation, $helper, $authorization, $recaptcha, $router
+        $userResource, $representation, $helper, $authorization, $recaptcha,
+        $router, $pagination
     ) {
         $this->userResource = $userResource;
         $this->representation = $representation;
@@ -24,6 +26,7 @@ class UserAction
         $this->authorization = $authorization;
         $this->recaptcha = $recaptcha;
         $this->router = $router;
+        $this->pagination = $pagination;
     }
 
     public function get($request, $response, $params)

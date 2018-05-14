@@ -3,6 +3,7 @@
 namespace App\Resource;
 
 use Carbon\Carbon;
+use App\Util\Paginator;
 use App\Util\Exception\AppException;
 
 class UserResource extends Resource
@@ -48,10 +49,16 @@ class UserResource extends Resource
         $query = $this->db->query('App:User');
         if (isset($options['dni_state'])) {
             if ($options['dni_state'] == 2) {
-                $query->whereNotNull('dni')->where('verified_dni', false);
+                $query->whereNotNull('dni')->whereNull('verified_dni');
             } elseif ($options['dni_state'] == 3) {
                 $query->where('verified_dni', true);
             }
+        }
+        if (isset($options['roles'])) {
+            $roles = explode(',', $options['roles']);
+            $query->whereHas('subject.roles', function ($qry) use ($roles) {
+                $qry->whereIn('role_id', $roles);
+            });
         }
         if (isset($options['s'])) {
             $filter = $this->helper->generateTrace($options['s']);
