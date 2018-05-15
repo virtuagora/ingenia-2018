@@ -125,21 +125,21 @@ $app->get('/como-participar', function ($request, $response, $args) {
     ]);
 })->setName('showComoParticipar');
 
-$app->get('/install[/{extra}]', function ($request, $response, $args) {
-    $actions = new \App\Util\ActionsLoader($this->db);
-    if (!isset($args['extra'])) {
-        $installer = new \App\Util\Installer($this->db);
-        $installer->down();
-        $installer->up();
-        $installer->populate();
-        $loader = new \App\Util\LocalitiesLoader($this->db);
-        $loader->up();
-    } else {
-        $actions->down();
-    }
-    $actions->up();
-    return $response->withJSON(['message' => 'instalación exitosa']);
-});
+// $app->get('/install[/{extra}]', function ($request, $response, $args) {
+//     $actions = new \App\Util\ActionsLoader($this->db);
+//     if (!isset($args['extra'])) {
+//         $installer = new \App\Util\Installer($this->db);
+//         $installer->down();
+//         $installer->up();
+//         $installer->populate();
+//         $loader = new \App\Util\LocalitiesLoader($this->db);
+//         $loader->up();
+//     } else {
+//         $actions->down();
+//     }
+//     $actions->up();
+//     return $response->withJSON(['message' => 'instalación exitosa']);
+// });
 
 $app->get('/test', function ($request, $response, $args) {
     $options = $this->db->query('App:Option')->get()->toArray();
