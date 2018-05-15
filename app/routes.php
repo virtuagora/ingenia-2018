@@ -193,6 +193,7 @@ $app->get('/option/{opt}', 'adminAction:getOption');
 $app->post('/option/{opt}', 'adminAction:postOption');
 $app->post('/user/{usr}/verified-dni', 'adminAction:postVerifiedDni')->setName('runUpdUserDniVer');
 $app->put('/project/{pro}/notes', 'projectAction:putNotes')->setName('putProNot');
+$app->post('/user/role', 'userAction:postRole')->setName('runUpdUsrRol');
 
 $app->get('/user/{usr}', 'userAction:getOne')->setName('getUser');
 $app->get('/user', 'userAction:get')->setName('getUsrs');

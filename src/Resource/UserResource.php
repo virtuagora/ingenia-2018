@@ -220,6 +220,35 @@ class UserResource extends Resource
         return $user;
     }
 
+    public function updateRoles($subject, $data)
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'user_email' => [
+                    'type' => 'string',
+                    'format' => 'email',
+                ],
+                'role' => [
+                    'type' => 'string',
+                    'enum' => ['user', 'admin', 'coordin'],
+                ],
+            ],
+            'required' => [
+                'role', 'user_email',
+            ],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($this->validation->prepareData($schema['properties'], $data));
+        $user = $this->db->query('App:User')
+            ->where('email', $data['user_email'])
+            ->firstOrFail();
+        $roles = array_merge(['user'], [$data['role']]);
+        $user->subject->roles()->sync($roles);
+        return true;
+    }
+
     public function updatePendingEmail($subject, $user, $data)
     {
         $schema = [

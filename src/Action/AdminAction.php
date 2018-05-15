@@ -95,6 +95,13 @@ class AdminAction
         }
         $user->verified_dni = true;
         $user->save();
+        $group = $user->groups()->first();
+        $countMembers = $group->users()->count();
+        $countVerified = $group->users()->where('verified_dni', true)->count();
+        if ($countMembers >= 5 && $countMembers == $countVerified) {
+            $group->verified_team = true;
+            $group->save();
+        }
         return $this->representation->returnMessage($request, $response, [
             'message' => 'DNI verificado',
             'status' => 200,

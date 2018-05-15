@@ -240,4 +240,17 @@ class UserAction
         return $response->withBody(new Stream($fileData['strm']))
             ->withHeader('Content-Type', $fileData['mime']);
     }
+
+    public function postRole($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        if (!$this->authorization->checkPermission($subject, 'admin')) {
+            throw new UnauthorizedException();
+        }
+        $this->userResource->updateRoles($subject, $request->getParsedBody());
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Roles actualizados',
+            'status' => 200,
+        ]);
+    }
 }

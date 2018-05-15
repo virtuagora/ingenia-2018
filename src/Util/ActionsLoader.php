@@ -18,6 +18,7 @@ class ActionsLoader
     {
         $this->db->table('actions')->insert([
             //['id' => 'retUsrInvit', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
+            ['id' => 'admin', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'retOpt', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'retDni', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'retMat', 'group' => 'user', 'allowed_roles' => '["admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
