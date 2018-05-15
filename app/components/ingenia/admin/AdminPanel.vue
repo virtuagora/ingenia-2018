@@ -47,6 +47,7 @@
         :get-letter="getLetter" :get-agreement="getAgreement" :get-group-members="getGroupMembers"
         :get-user-dni="getUserDni" 
         :post-validate-dni="postValidateDni"
+        :post-role-user="postRoleUser"
         :team-url="teamUrl" ></router-view>
       </div>
     </div>
@@ -55,7 +56,7 @@
 
 <script>
 export default {
-  props: ['settings','getProjects','getGroupMembers','teamUrl','getUsers','getLetter','getAgreement','getUserDni','postValidateDni'],
+  props: ['settings','getProjects','getGroupMembers','teamUrl','getUsers','getLetter','getAgreement','getUserDni','postValidateDni','postRoleUser'],
   data() {
     return {
       user: {}

@@ -2,6 +2,8 @@
 
 // misc
 
+use App\Util\Exception\UnauthorizedException;
+
 // pantalla con botón login con facebook
 $app->get('/fb-login-js', function ($request, $response, $args) {
     return $this->view->render($response, 'test/fb-login-js.twig', [
@@ -324,7 +326,7 @@ $app->group('/usuario', function () {
 $app->get('/project/{pro}/print', function ($request, $response, $params) {
     $subject = $request->getAttribute('subject');
     $proyecto = $this->helper->getEntityFromId(
-        'App:Project', 'pro', $params, ['group']
+    'App:Project', 'pro', $params, ['group']
     );
     if (!$this->authorization->checkPermission($subject, 'updPro', $proyecto)) {
         throw new UnauthorizedException();

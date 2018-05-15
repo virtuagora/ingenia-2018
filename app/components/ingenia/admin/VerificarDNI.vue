@@ -51,7 +51,7 @@
             <th width="90" class="has-text-centered">
               <i class="fas fa-download"></i>
             </th>
-            <th width="90" class="has-text-centered">
+            <th v-if="!verifiedToggle" width="90" class="has-text-centered">
               <i class="fas fa-check"></i>
             </th>
           </tr>
@@ -69,7 +69,7 @@
               <a :href="getUserDNIUrl(user)" target="_blank" class="button is-small">
                 <i class="fas fa-eye"></i>&nbsp;Ver</a>
             </td>
-            <td class="has-text-centered">
+            <td class="has-text-centered" v-if="!verifiedToggle">
                  <span v-if="user.verificado === true" class="tag is-success is-outlined is-small">
                 <i class="fas fa-check"></i>&nbsp;Verificado!</span>
               <a @click="verificarUser(user)" v-else class="button is-success is-outlined is-small">

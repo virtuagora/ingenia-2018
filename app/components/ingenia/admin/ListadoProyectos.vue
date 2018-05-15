@@ -111,7 +111,7 @@
               </b-tooltip>
             </th>
             <th class="has-text-centered">
-              <b-tooltip label="Cupo aval" type="is-dark" position="is-top"> 
+              <b-tooltip label="Carta aval" type="is-dark" position="is-top"> 
               <i class="fas fa-file-pdf fa-lg fa-fw"></i>
               </b-tooltip>
             </th>
@@ -148,12 +148,12 @@
               <i class="fas fa-fw" :class="statusSecond(project)"></i>
             </td>
             <td class="has-text-centered">
-              <i class="fas fa-fw" :class="statusLetter(project)"></i>
-              <a :href="letterUrl(project.group)" class="has-text-link" target="_blank" v-if="(project.organization != null) && project.group.uploaded_letter"><i class="fas fa-download"></i></a>
-            </td>
-            <td class="has-text-centered">
               <i class="fas fa-fw" :class="statusAgreement(project)"></i>
               <a :href="agreementUrl(project.group)" class="has-text-link" target="_blank" v-if="project.group.uploaded_agreement"><i class="fas fa-download"></i></a>
+            </td>
+            <td class="has-text-centered">
+              <i class="fas fa-fw" :class="statusLetter(project)"></i>
+              <a :href="letterUrl(project.group)" class="has-text-link" target="_blank" v-if="(project.organization != null) && project.group.uploaded_letter"><i class="fas fa-download"></i></a>
             </td>
             <td class="has-text-centered">
               <a :href="'/project/'+project.id+'/print'" class="has-text-link">
