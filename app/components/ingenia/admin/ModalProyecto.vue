@@ -13,7 +13,7 @@
             <i>- No hay observaciones hechas del proyecto -</i>
           </p>
         </b-message>
-        <div class="field is-hidden">
+        <div class="field">
           <label class="label is-size-5" :class="{'has-text-danger': errors.has('noteInput')}">
             <i class="fas fa-angle-double-right"></i> Observaciones</label>
           <div class="control ">
@@ -24,12 +24,12 @@
           </div>
         </div>
       </div>
-      <div class="buttons is-hidden" v-if="sent == false">
+      <div class="buttons" v-if="sent == false">
         <button @click="saveObs()" class="button is-link is-600">Guardar</button>
         <button @click="deleteObs()" class="button">Borrar</button>
       </div>
       <div class="notification is-success" v-else>
-        <i class="fas fa-check fa-fw"></i>&nbsp;Observación guardada
+        <i class="fas fa-check fa-fw"></i>&nbsp;¡Observación guardada! (La misma va a aparecer cuando se recargue la página)
       </div>
       <div class="content is-small is-clearfix">
         <div class="box is-paddingless is-pulled-right" style="max-width:200px; margin:10px">
@@ -198,7 +198,7 @@
 <script>
 import Localidad from "../utils/GetLocalidad";
 export default {
-  props: ["project", "categorias"],
+  props: ["project", "categorias",'putnote'],
   components: {
     Localidad
   },
@@ -210,12 +210,12 @@ export default {
     };
   },
   methods: {
-    saveObs() {},
     deleteObs() {
       this.isLoading = true;
       this.$http
-        .post(this.saveTeamUrl, this.payload)
+        .put(this.putnote.replace(':pro',this.project.id), {notes: null})
         .then(response => {
+          this.project.notes = null
           this.$snackbar.open({
             message: "¡Observacion guardada!",
             type: "is-success",
@@ -224,6 +224,31 @@ export default {
           this.isLoading = false;
           this.sent = true;
           this.forceUpdateState("userPanel");
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    },
+    saveObs() {
+      this.isLoading = true;
+      this.$http
+        .put(this.putnote.replace(':pro',this.project.id), this.payload)
+        .then(response => {
+          this.project.notes = this.noteInput          
+          this.$snackbar.open({
+            message: "¡Observacion guardada!",
+            type: "is-success",
+            actionText: "OK"
+          });
+          this.isLoading = false;
+          this.sent = true;
         })
         .catch(error => {
           console.error(error.message);

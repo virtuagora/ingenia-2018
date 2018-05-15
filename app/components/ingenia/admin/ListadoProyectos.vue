@@ -201,7 +201,7 @@ import ModalEquipo from "./ModalEquipo";
 import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  props: ["getProjects", "getGroupMembers","getLetter","getAgreement"],
+  props: ["getProjects", "getGroupMembers","getLetter","getAgreement",'putProjectNote'],
   components: {
     InfiniteLoading
   },
@@ -402,7 +402,7 @@ export default {
         parent: this,
         component: ModalProyecto,
         hasModalCard: true,
-        props: { project: pro, categorias: this.categorias }
+        props: { project: pro, categorias: this.categorias, putnote: this.putProjectNote }
       });
     },
     cardEquipo: function(gro) {
