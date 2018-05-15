@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Util\Exception\AppException;
 use App\Util\Exception\UnauthorizedException;
+use Slim\Http\Stream;
 
 class GroupAction
 {
