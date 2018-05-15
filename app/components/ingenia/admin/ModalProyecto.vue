@@ -4,9 +4,33 @@
       <p class="modal-card-title">{{project.name}}</p>
     </header>
     <section class="modal-card-body">
-      <b-message v-if="project.notes">
-        
-      </b-message>
+      <div v-if="sent == false">
+        <b-message v-if="project.notes">
+          <p class="nl2br">{{project.notes}}</p>
+        </b-message>
+        <b-message v-else>
+          <p>
+            <i>- No hay observaciones hechas del proyecto -</i>
+          </p>
+        </b-message>
+        <div class="field">
+          <label class="label is-size-5" :class="{'has-text-danger': errors.has('noteInput')}">
+            <i class="fas fa-angle-double-right"></i> Observaciones</label>
+          <div class="control ">
+            <b-input v-model="noteInput" size="is-small" data-vv-name="noteInput" data-vv-as="'Observaciones'" v-validate="'max:1000'" type="textarea" maxlength="1000" rows="2" placeholder="Observaciones">
+            </b-input>
+            <span v-show="errors.has('noteInput')" class="help is-danger">
+              <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('noteInput')}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="buttons" v-if="sent == false">
+        <button @click="saveObs()" class="button is-link is-600">Guardar</button>
+        <button @click="deleteObs()" class="button">Borrar</button>
+      </div>
+      <div class="notification is-success" v-else>
+        <i class="fas fa-check fa-fw"></i>&nbsp;Observación guardada
+      </div>
       <div class="content is-small is-clearfix">
         <div class="box is-paddingless is-pulled-right" style="max-width:200px; margin:10px">
           <img :src="imageUrl" class="image" style="margin: 0 auto; border-radius:5px;" alt="">
@@ -160,7 +184,9 @@
         </div>
       </div>
       <div class="content is-small" v-else>
-        <h4><b>El proyecto no registra trabajo en conjunto con una organización</b></h4>
+        <h4>
+          <b>El proyecto no registra trabajo en conjunto con una organización</b>
+        </h4>
       </div>
     </section>
     <footer class="modal-card-foot">
@@ -177,9 +203,39 @@ export default {
     Localidad
   },
   data() {
-    return {};
+    return {
+      noteInput: "",
+      sent: false,
+      isLoading: false
+    };
   },
   methods: {
+    saveObs() {},
+    deleteObs() {
+      this.isLoading = true;
+      this.$http
+        .post(this.saveTeamUrl, this.payload)
+        .then(response => {
+          this.$snackbar.open({
+            message: "¡Observacion guardada!",
+            type: "is-success",
+            actionText: "OK"
+          });
+          this.isLoading = false;
+          this.sent = true;
+          this.forceUpdateState("userPanel");
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    },
     getCategory(id) {
       let caty = this.categorias.find(x => {
         return x.id === id;
@@ -188,6 +244,11 @@ export default {
     }
   },
   computed: {
+    payload: function() {
+      return {
+        notes: this.isOptional(this.noteInput)
+      };
+    },
     montoTotal: function() {
       const reducer = (accumulator, item) =>
         accumulator + parseFloat(item.amount);

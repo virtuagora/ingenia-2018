@@ -70,7 +70,9 @@
                 <i class="fas fa-eye"></i>&nbsp;Ver</a>
             </td>
             <td class="has-text-centered">
-              <a @click="verificarUser(user)" class="button is-success is-outlined is-small">
+                 <span v-if="user.verificado === true" class="tag is-success is-outlined is-small">
+                <i class="fas fa-check"></i>&nbsp;Verificado!</span>
+              <a @click="verificarUser(user)" v-else class="button is-success is-outlined is-small">
                 <i class="fas fa-check"></i>&nbsp;Verificar</a>
             </td>
           </tr>
@@ -100,7 +102,7 @@ import InfiniteLoading from "vue-infinite-loading";
 import Localidad from "../utils/GetLocalidad";
 
 export default {
-  props: ["getUsers", "getGroupMembers", "getUserDni"],
+  props: ["getUsers", "postValidateDni", "getUserDni"],
   components: {
     InfiniteLoading,
     Localidad
@@ -157,24 +159,23 @@ export default {
       return this.getUserDni.replace(":usr", usr.id);
     },
     inBlacklist: function(usr) {
-      let value = this.blacklist.find((element) => {
+      let value = this.blacklist.find(element => {
         return element === usr.dni;
       });
       return value === undefined ? false : true;
     },
     verificarUser: function(usr) {
+      this.isLoading = true;
       this.$http
-        .post(this.saveTeamUrl, this.payload)
+        .post(this.postValidateDni.replace(":usr", usr.id))
         .then(response => {
+          usr.verificado = true
           this.$snackbar.open({
-            message: "¡Inscripción realizada!",
+            message: usr.subject.display_name + " ha sido verificado",
             type: "is-success",
             actionText: "OK"
           });
           this.isLoading = false;
-          this.response.replied = true;
-          this.response.ok = true;
-          this.forceUpdateState("userPanel");
         })
         .catch(error => {
           console.error(error.message);

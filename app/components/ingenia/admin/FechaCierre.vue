@@ -25,6 +25,9 @@
         </div>
       </div>
     </div>
+    <div class="buttons">
+        <button @click="submit()" class="button is-link is-medium">Guardar</button>
+      </div>
   </section>
 </template>
 
@@ -43,12 +46,25 @@ export default {
   },
   methods: {
     submit: function(){
-      console.log(this.payload);
+      this.$http.post('/option/deadline',this.payload)
+      .then(response => {
+        window.location.href = '/logout'
+      })
+      .catch(x => {
+          this.$snackbar.open({
+            message: "Error inesperado",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
     }
   },
   computed: {
     payload: function(){
-      return this.theDate.toISOString().split('T')[0] + ' ' + this.theTime.toTimeString().split(' ')[0]
+      return {
+        value: this.theDate.toISOString().split('T')[0] + ' ' + this.theTime.toTimeString().split(' ')[0]
+      }
     }
 
   }

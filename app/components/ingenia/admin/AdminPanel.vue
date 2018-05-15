@@ -37,7 +37,7 @@
               <router-link :to="{ name: 'adminFechaCierre'}" exact-active-class="is-active">Fecha de cierre</router-link>
             </li>
             <li>
-              <router-link :to="{ name: 'adminFechaCierre'}" exact-active-class="is-active">Roles de Usuarios</router-link>
+              <router-link :to="{ name: 'adminRolesUsuario'}" exact-active-class="is-active">Roles de Usuarios</router-link>
             </li>
           </ul>
         </aside>
@@ -46,6 +46,7 @@
         <router-view :settings="settings" :get-projects="getProjects" :get-users="getUsers" 
         :get-letter="getLetter" :get-agreement="getAgreement" :get-group-members="getGroupMembers"
         :get-user-dni="getUserDni" 
+        :post-validate-dni="postValidateDni"
         :team-url="teamUrl" ></router-view>
       </div>
     </div>
@@ -54,7 +55,7 @@
 
 <script>
 export default {
-  props: ['settings','getProjects','getGroupMembers','teamUrl','getUsers','getLetter','getAgreement','getUserDni'],
+  props: ['settings','getProjects','getGroupMembers','teamUrl','getUsers','getLetter','getAgreement','getUserDni','postValidateDni'],
   data() {
     return {
       user: {}

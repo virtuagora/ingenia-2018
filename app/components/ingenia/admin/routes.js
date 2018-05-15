@@ -9,6 +9,7 @@ import ListadoProyectos from './ListadoProyectos'
 import DescargarMatriz from './DescargarMatriz'
 import ListaNegraDNI from './ListaNegraDNI'
 import VerificarDNI from './VerificarDNI'
+import RolesUsuario from './RolesUsuario'
 
 
 const basePath = '/administracion'
@@ -47,6 +48,12 @@ const routes = [
         path: 'verificar-dni',
         component: VerificarDNI,
         name: 'adminVerificarDNI',
+        props: true
+      },
+      {
+        path: 'roles',
+        component: RolesUsuario,
+        name: 'adminRolesUsuario',
         props: true
       },
       {
