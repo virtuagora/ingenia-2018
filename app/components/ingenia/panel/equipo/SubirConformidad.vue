@@ -8,8 +8,16 @@
       <div class="notification" v-show="verifying">
         <i class="fas fa-cog fa-spin"></i>&nbsp;Revisando si enviaste la carta de conformidad . . .
       </div>
-      <div class="notification is-success" v-show="user.groups[0].uploaded_agreement && !verifying">
+      <div class="notification is-success is-clearfix" v-show="user.groups[0].uploaded_agreement && !verifying">
         <i class="fas fa-check fa-fw"></i>La carta de conformidad ha sido enviada y guardada correctamente
+        <a :href="'/group/'+user.groups[0].id+'/agreement'" class="is-pulled-right button is-small is-white">
+          <i class="fas fa-download"></i>&nbsp;Descargar</a>
+      </div>
+      <div v-show="user.groups[0].uploaded_agreement && !verifying">
+        <p>
+          <i>Al subir de nuevo la carta, se sobreescribe el archivo anterior.</i>
+        </p>
+        <br>
       </div>
       <form :action="saveAgreementUrl.replace(':gro',this.user.groups[0].id)" ref="formConformidad" method="post" enctype="multipart/form-data">
         <b-field class="file is-medium">

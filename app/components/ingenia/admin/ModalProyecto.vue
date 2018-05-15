@@ -13,7 +13,7 @@
             <i>- No hay observaciones hechas del proyecto -</i>
           </p>
         </b-message>
-        <div class="field">
+        <div class="field is-hidden">
           <label class="label is-size-5" :class="{'has-text-danger': errors.has('noteInput')}">
             <i class="fas fa-angle-double-right"></i> Observaciones</label>
           <div class="control ">
@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div class="buttons" v-if="sent == false">
+      <div class="buttons is-hidden" v-if="sent == false">
         <button @click="saveObs()" class="button is-link is-600">Guardar</button>
         <button @click="deleteObs()" class="button">Borrar</button>
       </div>

@@ -35,6 +35,16 @@
           <span class="is-hidden-desktop">Mi panel</span>
         </a>
       </b-tooltip>
+      {% if 'admin' in subject.roles %}
+      <b-tooltip label="Administración" position="is-bottom" class="is-hidden-touch">
+        <a class="navbar-item" href="{{path_for('showAdminPanel')}}">
+          <span class="icon">
+            <i class="fas fa-wrench fa-lg"></i>
+          </span>
+          <span class="is-hidden-desktop">Administración</span>
+        </a>
+      </b-tooltip>
+      {% endif %}
       <b-tooltip label="Mi perfíl" position="is-bottom" class="is-hidden-touch">
         <a class="navbar-item" href="{{path_for('showProfile',{'usr': subject.extra.user_id})}}">
           <avatar :subject="{{subject.extra|json_encode}}" size="32"></avatar>

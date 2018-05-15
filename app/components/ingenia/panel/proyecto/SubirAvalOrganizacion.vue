@@ -9,12 +9,20 @@
         En el siguiente campo subí un archivo donde se vea la carta de aval firmada por la organización.
         <br>Tamaño del archivo: 3MB. Se aceptan .JPG, .JPEG, .PDF, .DOC o .DOCX
       </b-message>
-    <div class="notification" v-show="verifying">
-      <i class="fas fa-cog fa-spin"></i>&nbsp;Revisando si enviaste la carta de conformidad . . .
-    </div>
-    <div class="notification is-success" v-show="user.groups[0].uploaded_letter && !verifying">
-      <i class="fas fa-check fa-fw"></i>La carta de aval ha sido enviada y guardada correctamente
-    </div>
+      <div class="notification" v-show="verifying">
+        <i class="fas fa-cog fa-spin"></i>&nbsp;Revisando si enviaste la carta de conformidad . . .
+      </div>
+      <div class="notification is-success" v-show="user.groups[0].uploaded_letter && !verifying">
+        <i class="fas fa-check fa-fw"></i>La carta de aval ha sido enviada y guardada correctamente
+        <a :href="'/group/'+user.groups[0].id+'/letter'" class="is-pulled-right button is-small is-white">
+          <i class="fas fa-download"></i>&nbsp;Descargar</a>
+      </div>
+      <div v-show="user.groups[0].uploaded_letter && !verifying">
+        <p>
+          <i>Al subir de nuevo la carta, se sobreescribe el archivo anterior.</i>
+        </p>
+        <br>
+      </div>
       <form :action="formUrl" ref="formAval" method="post" enctype="multipart/form-data">
         <b-field class="file is-medium">
           <b-upload v-model="files" name="archivo" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
@@ -42,7 +50,7 @@
 
 <script>
 export default {
-  props: ['saveLetterUrl'],
+  props: ["saveLetterUrl"],
   data() {
     return {
       pendiente: false,
@@ -51,7 +59,7 @@ export default {
       files: [],
       isLoading: false,
       user: {},
-      verifying: true,
+      verifying: true
     };
   },
   created: function() {
@@ -97,9 +105,9 @@ export default {
         });
     }
   },
-  computed:{
-    formUrl: function(){
-      return this.saveLetterUrl.replace(':gro',this.user.groups[0].id)
+  computed: {
+    formUrl: function() {
+      return this.saveLetterUrl.replace(":gro", this.user.groups[0].id);
     }
   },
   beforeRouteEnter(to, from, next) {

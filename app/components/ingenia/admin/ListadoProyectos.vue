@@ -106,6 +106,11 @@
               </b-tooltip>
             </th>
             <th class="has-text-centered">
+              <b-tooltip label="DNIs del equipo verificado" type="is-dark" position="is-top">              
+              <i class="fas fa-check fa-fw"></i><i class="fas fa-address-card fa-lg"></i>
+              </b-tooltip>              
+            </th>
+            <th class="has-text-centered">
               <b-tooltip label="Carta conformidad" type="is-dark" position="is-top"> 
               <i class="far fa-address-book fa-lg fa-fw"></i>
               </b-tooltip>
@@ -138,7 +143,7 @@
               <a @click="cardEquipo(project.group)">{{project.group.name}}</a>
             </td>
             <td>
-              {{getCategory(project.category_id)}}
+              <span class="tag is-small is-dark">{{getCategory(project.category_id)}}</span>
             </td>
             <td class="has-text-centered">{{project.likes}}</td>
             <td class="has-text-centered">
@@ -146,6 +151,9 @@
             </td>
             <td class="has-text-centered">
               <i class="fas fa-fw" :class="statusSecond(project)"></i>
+            </td>
+            <td class="has-text-centered">
+              <i class="fas fa-fw" :class="statusVerifiedTeam(project)"></i>
             </td>
             <td class="has-text-centered">
               <i class="fas fa-fw" :class="statusAgreement(project)"></i>
@@ -156,7 +164,7 @@
               <a :href="letterUrl(project.group)" class="has-text-link" target="_blank" v-if="(project.organization != null) && project.group.uploaded_letter"><i class="fas fa-download"></i></a>
             </td>
             <td class="has-text-centered">
-              <a :href="'/project/'+project.id+'/print'" class="has-text-link">
+              <a :href="'/project/'+project.id+'/print'" target="_blank" class="has-text-link">
                 <i class="fas fa-print fa-fw"></i>
               </a>
             </td>
@@ -169,7 +177,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="11">
+            <th colspan="12">
               <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
                 <span slot="no-results">
                   <i class="fas fa-info-circle"></i> Fin de los resultados
@@ -360,6 +368,14 @@ export default {
         "fa-check": pro.group.second_in_charge,
         "has-text-danger": !pro.group.second_in_charge,
         "fa-times": !pro.group.second_in_charge
+      };
+    },
+    statusVerifiedTeam: function(pro) {
+      return {
+        "has-text-success": pro.group.verified_team,
+        "fa-check": pro.group.verified_team,
+        "has-text-danger": !pro.group.verified_team,
+        "fa-times": !pro.group.verified_team
       };
     },
     statusLetter: function(pro) {
