@@ -192,6 +192,7 @@ $app->get('/locality/{loc}', 'miscAction:getLocality');
 $app->get('/option/{opt}', 'adminAction:getOption');
 $app->post('/option/{opt}', 'adminAction:postOption');
 $app->post('/user/{usr}/verified-dni', 'adminAction:postVerifiedDni')->setName('runUpdUserDniVer');
+$app->put('/project/{pro}/notes', 'projectAction:putNotes')->setName('putProNot');
 
 $app->get('/user/{usr}', 'userAction:getOne')->setName('getUser');
 $app->get('/user', 'userAction:get')->setName('getUsrs');
@@ -288,15 +289,13 @@ $app->group('/panel', function () {
     });
 });
 
-$app->group('/administracion', function () {
-    $this->get('', function ($req, $res, $arg) {
-        return $this->view->render($res, 'ingenia/admin/adminPanel.twig', []);
-    })->setName('showAdminPanel');
-    $this->get('/[{path:.*}]', function ($req, $res, $arg) {
-        return $this->view->render($res, 'ingenia/admin/adminPanel.twig', [
-        ]);
-    });
-});
+$app->get('/administracion[/{path:.*}]', function ($req, $res, $arg) {
+    $subject = $req->getAttribute('subject');
+    if (!$this->authorization->checkPermission($subject, 'retOpt')) {
+        throw new UnauthorizedException();
+    }
+    return $this->view->render($res, 'ingenia/admin/adminPanel.twig', []);
+})->setName('showAdminPanel');
 
 $app->group('/account', function () {
     $this->get('', function ($req, $res, $arg) {
@@ -322,11 +321,13 @@ $app->group('/usuario', function () {
 });
 
 $app->get('/project/{pro}/print', function ($request, $response, $params) {
-    // MATU
-    // Esta ruta tendria que se accesible por Admin y Responsable
+    $subject = $request->getAttribute('subject');
     $proyecto = $this->helper->getEntityFromId(
-    'App:Project', 'pro', $params, ['group']
+        'App:Project', 'pro', $params, ['group']
     );
+    if (!$this->authorization->checkPermission($subject, 'updPro', $proyecto)) {
+        throw new UnauthorizedException();
+    }
     // var_dump($proyecto->organization['locality_id']);
     // $orgLoc = null;
     // if( $proyecto->organization != null ){

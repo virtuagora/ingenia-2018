@@ -117,6 +117,24 @@ class ProjectAction
         ]);
     }
 
+    public function putNotes($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params
+        );
+        if (!$this->authorization->checkPermission($subject, 'retOpt')) {
+            throw new UnauthorizedException();
+        }
+        $notes = $this->helper->getSanitizedStr('notes', $request->getParsedBody());
+        $project->notes = $notes;
+        $project->save();
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Notas del proyecto actualizada exitosamente',
+            'status' => 200,
+        ]);
+    }
+
     public function delete($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
