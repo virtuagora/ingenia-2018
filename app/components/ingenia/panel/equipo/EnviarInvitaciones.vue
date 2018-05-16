@@ -7,6 +7,7 @@
     <b-message>
       Ingresá el correo electrónico del integrante a invitar. Un email le llegará a su correo electrónico. Una vez que se registre, el participante quedará vinculado a tu proyecto.
     </b-message>
+    <h1 class="subtitle is-5 has-text-link">Quedan {{invitations.length ? 25 - invitations.length : '0' }} de invitaciones para enviar (por email) o solicitudes de participar.</h1>
     <div class="field is-grouped">
       <div class="control">
         <a @click.prevent class="button is-large is-static">
@@ -32,7 +33,7 @@
     </div>
     <div class="field">
       <div class="control is-clearfix">
-        <a @click="submit" type="submit" class="button is-primary is-medium is-pulled-right" :class="{'is-loading': isLoading}">
+        <a @click="submit" type="submit" :disabled="invitations.length == 0" class="button is-primary is-medium is-pulled-right" :class="{'is-loading': isLoading}">
           <i class="fa fa-paper-plane fa-fw"></i> Enviar</a>
       </div>
     </div>
@@ -45,7 +46,7 @@
 
 <script>
 export default {
-  props: ["sendInvitationUrl"],
+  props: ["sendInvitationUrl",'teamUrl'],
   data() {
     return {
       isLoading: false,
@@ -54,8 +55,16 @@ export default {
       comment: "¡Hola! Soy "+ this.$store.state.user.names + " y me gustaría que seas parte del equipo INGENIA: " + this.$store.state.user.groups[0].name,
       response: {
         ok: false
-      }
+      },
+      user: {},
+      invitations: []
     };
+  },
+  created: function() {
+    this.user = this.$store.state.user;
+  },
+  mounted: function(){
+    this.checkInvitations();
   },
   methods: {
     submit: function() {
@@ -114,9 +123,23 @@ export default {
           });
           return false;
         });
+    },
+    checkInvitations: function() {
+      this.$http
+        .get(this.fetchTeamUrl)
+        .then(response => {
+          this.invitations = response.data.invitations;
+          
+        })
+        .catch(error => {
+          console.error(error.message);
+        });
     }
   },
   computed: {
+    fetchTeamUrl: function() {
+      return this.teamUrl.replace(":gro", this.user.groups[0].id);
+    },
     payload: function() {
       return {
         email: this.email,
