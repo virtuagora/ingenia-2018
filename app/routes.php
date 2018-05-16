@@ -141,6 +141,13 @@ $app->get('/como-participar', function ($request, $response, $args) {
 //     return $response->withJSON(['message' => 'instalación exitosa']);
 // });
 
+$app->get('/ping', function ($request, $response, $args) {
+    if($request->getAttribute('subject')->getType() != 'Annonymous'){
+        return $response->withJSON(['message' => 'Pong!' ]);
+    }
+    return $response->withJSON(['message' => 'Login']);
+});
+
 $app->get('/test', function ($request, $response, $args) {
     $options = $this->db->query('App:Option')->get()->toArray();
     return $this->view->render($response, 'test/simple.twig', [

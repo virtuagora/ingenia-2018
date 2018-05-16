@@ -68,6 +68,120 @@ export default {
     if (this.user === null) {
       window.location.href = "/login";
     }
+    let intervalId = setInterval(
+      function() {
+        this.$http
+          .get("/ping")
+          .then(response => {
+            if (response.data.message == "Login") {
+              clearInterval(intervalId);
+              this.$snackbar.open({
+                message: "Error, se cerró la sesión. Haga clic en el boton de reingresar para volver a iniciar sesión (se abrirá una nueva ventana)",
+                type: "is-warning",
+                actionText: "Re-ingresar",
+                indefinite: true,
+                onAction: () => {
+                  window.open("/login");
+                  this.checkLogin();
+                }
+              });
+            }
+            console.log(response.data.message);
+          })
+          .catch(error => {
+            console.error(error);
+            clearInterval(intervalId);
+            this.$snackbar.open({
+              message: "Error, se cayó la conexión. Recargue la página. (Se perderán los datos, recomendamos guardarlos para volver a ingresarlos)",
+              type: "is-warning",
+              actionText: "Recargar",
+              indefinite: true,
+              onAction: () => {
+                location.reload();
+              }
+            });
+          });
+      }.bind(this),
+      120000
+    );
+  },
+  methods:{
+checkLogin() {
+      let intervalId = setInterval(
+        function() {
+          this.$http
+            .get("/ping")
+            .then(response => {
+              if (response.data.message == "Pong!") {
+                console.log(response.data.message);
+                clearInterval(intervalId);
+                this.$snackbar.open({
+                  message: "Tu sesión ha sido reestablecida!",
+                  type: "is-success",
+                  actionText: "OK",
+                  indefinite: true
+                });
+                this.restartPong();
+              }
+              else {
+                console.log("Debe reiniciar sesión");                
+              }
+            })
+            .catch(error => {
+              console.error(error);
+              clearInterval(intervalId);
+              this.$snackbar.open({
+                message: "Error, se cayó la conexión. Recargue la página. (Se perderán los datos, recomendamos guardarlos para volver a ingresarlos)",
+                type: "is-warning",
+                actionText: "Recargar",
+                indefinite: true,
+                onAction: () => {
+                  location.reload();
+                }
+              });
+            });
+        }.bind(this),
+        45000
+      );
+    },
+    restartPong() {
+      let intervalId = setInterval(
+        function() {
+          this.$http
+            .get("/ping")
+            .then(response => {
+              if (response.data.message == "Login") {
+                clearInterval(intervalId);
+                this.$snackbar.open({
+                  message: "Error, se cerró la sesión. Haga clic en el boton de reingresar para volver a iniciar sesión (se abrirá una nueva ventana)",
+                  type: "is-warning",
+                  actionText: "Re-ingresar",
+                  indefinite: true,
+                  onAction: () => {
+                    window.open("/login");
+                    this.checkLogin();
+                  }
+                });
+              }
+              console.log(response.data.message);
+            })
+            .catch(error => {
+              console.error(error);
+              clearInterval(intervalId);
+              this.$snackbar.open({
+                message: "Error, se cayó la conexión. Recargue la página. (Se perderán los datos, recomendamos guardarlos para volver a ingresarlos)",
+                type: "is-warning",
+                actionText: "Recargar",
+                indefinite: true,
+                onAction: () => {
+                  location.reload();
+                }
+              });
+            });
+        }.bind(this),
+        120000
+      );
+    },
   },
   mounted: function() {
     document.getElementById("loading").remove();
