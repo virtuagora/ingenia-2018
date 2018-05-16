@@ -33,11 +33,13 @@
         <div class="field">
             <label class="label is-size-4" :class="{'has-text-danger': errors.has('team.year')}">
                 <i class="fas fa-angle-double-right"></i> ¿En que año se conformó el equipo? *</label>
-            <b-field expanded>
-                <b-select size="is-medium" v-model="team.year" data-vv-name="team.year" data-vv-as="'Región/Nodo'" v-validate="'required'" placeholder="Elija el año" expanded>
+                <!-- <b-select size="is-medium" v-model="team.year" data-vv-name="team.year" data-vv-as="'Región/Nodo'" v-validate="'required'" placeholder="Elija el año" expanded>
                     <option v-for="number in listYearFoundation" :key="number" :value="number">{{number}}</option>
-                </b-select>
-            </b-field>
+                </b-select> -->
+                 <b-radio v-for="number in listYearFoundation" :key="number" v-model="team.year" data-vv-name="team.year" data-vv-as="'Año de conformación'"  v-validate="'required'" placeholder="Elija el año" expanded
+                :native-value="number">
+                Año {{number}}
+            </b-radio>
         </div>
         <div class="field">
             <label class="label is-size-4">
@@ -150,7 +152,7 @@ export default {
       deUnaOrganizacion: null,
       listPreviousEditions: [],
       filteredPreviousEditions: [],
-      listYearFoundation: []
+      listYearFoundation: [2018,2017,2016,2015,2014,2013,2012,2011,2010,2009,2008,2007,2006,2005,2004,2003,2002,2001,2000,1999,1998,1997,1996,1995,1994,1993,1992,1991,1990]
     };
   },
   created: function() {
@@ -161,15 +163,15 @@ export default {
       this.deUnaOrganizacion = false;
     }
     this.showLocalityField = this.team.locality_id === null ? true : false;
-  },
-  mounted: function() {
     for (let i = 2011; i <= 2017; i++) {
       this.listPreviousEditions.push(i);
     }
-    for (let i = 1990; i <= 2018; i++) {
-      this.listYearFoundation.push(i);
-    }
-      this.listYearFoundation.reverse()
+  },
+  mounted: function() {
+    // for (let i = 1990; i <= 2018; i++) {
+    //   this.listYearFoundation.push(i);
+    // }
+    //   this.listYearFoundation.reverse()
   },
   methods: {
     updateLocalidad: function(id) {
