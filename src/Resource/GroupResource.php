@@ -335,7 +335,7 @@ class GroupResource extends Resource
         $v->assert($data);
         $email = $data['email'];
         $countInvit = $group->invitations()->count();
-        if ($countInvit > 10) {
+        if ($countInvit > 25) {
             throw new AppException('Invitations limit reached');
         }
         $prevInvit = $this->db->query('App:Invitation')->where([
