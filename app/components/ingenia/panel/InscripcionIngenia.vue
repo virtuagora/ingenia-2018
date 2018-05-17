@@ -18,6 +18,7 @@
         <b>ingenia@santafe.gob.ar</b>
       </a>
     </b-message>
+    <div class="notification is-warning">IMPORTANTE! Si sos tutor o estas inscribiendo a otra persona que será el o la responsable, <b>NO LO HAGAS! LOS TUTORES U OTRAS PERSONAS QUE NO VAYAN A SER PARTE DEL EQUIPO NO DEBEN COMPLETAR EL FORMULARIO.</b> El mismo lo debe completar EL O LA RESPONSABLE que será al mismo tiempo MIEMBRO del equipo.</div>
     <section v-if="this.user.pending_tasks.length > 0">
       <p>Previo a presentar tu proyecto INGENIA, debes cumplir los siguientes requerimientos.</p>
       <br>

@@ -8,6 +8,7 @@
   </ul>
 </div>
     <h1 class="subtitle is-3">Integrantes del equipo</h1>
+    <p>Para asignar al co-responsable, hace clic sobre el boton con el escudo <i class="fas fa-shield-alt"></i>. No te preocupes. Podes cambiarlo cuando quieras.</p>
     <table class="table is-fullwidth text-middle">
       <thead>
         <tr>
