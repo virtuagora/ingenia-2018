@@ -369,11 +369,12 @@ export default {
       .catch(error => {
         console.error(error.message);
         this.$snackbar.open({
-          message: "Error inesperado",
+          message: "Error de conexion con el servidor. No pudimos rescatar las categorias. Sin esto no se va a poder completar el formulario. Por favor, volvé a intentarlo más tarde o reintentá volviendo a cargar la pagina.",
           type: "is-danger",
-          actionText: "Cerrar"
+          actionText: "Cerrar",
+          indefinite: true
         });
-        this.categoriasLoading = false;
+        this.categoriasLoading = true;
       });
   },
   methods: {
