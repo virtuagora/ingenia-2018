@@ -244,6 +244,22 @@ $app->get('/project/{pro}/comment', 'projectAction:getComments')->setName('getPr
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 
 $app->post('/pending-user', 'userAction:postPendingUser')->setName('runNewPendingUser');
+$app->post('/reset-password', 'userAction:postPasswordReset')->setName('runResetPassword');
+$app->get('/complete-restore/{usr}/{tkn}', function ($request, $response, $args) {
+    $usr = $args['usr'];
+    $tkn = $args['tkn'];
+    $pending = $this->db->query('App:User')
+    ->where('token', $tkn)
+    ->first();
+    if (is_null($pending)) {
+        return $response->withRedirect('/');
+    }
+    return $this->view->render($response, 'base/completar-password.twig', [
+    'activation_key' => $tkn,
+    'user' => $usr
+    ]);
+})->setName('runPassReset');
+$app->post('/restore-password/{usr}', 'userAction:postPasswordRestore')->setName('runRestorePassword');
 $app->post('/user', 'userAction:post')->setName('runNewUser');
 
 $app->post('/project/{pro}/picture', 'projectAction:postPicture')->setName('runUpdProPic');

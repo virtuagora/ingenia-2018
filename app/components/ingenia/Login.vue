@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!loginFacebook && !register">
+    <div v-if="!loginFacebook && !register && !reset">
       <form ref="formLocalLogin" :action="loginUrl" method="POST">
       <div class="field-is-marginless">
         <div class="control has-icons-left" >
@@ -36,6 +36,14 @@
           </button>
         </div>
       </div>
+       <div class="field">
+        <div class="control">
+          <button @click="reset = true" class="button is-white  is-fullwidth">
+            <i class="fas fa-question-circle fa-fw fa-lg"></i>
+            &nbsp;&nbsp;¡Olvidé mi contraseña!
+          </button>
+        </div>
+      </div>
       <br>
       <div class="strike">
         <span>Otras opciones de login</span>
@@ -47,6 +55,7 @@
       </button>
     </div>
     <registro-email :sign-up-url="signUpUrl" :google-key="googleKey" @abort="register = false" v-if="register"></registro-email>
+    <reset-password :reset-password="resetPassword" :google-key="googleKey" @abort="reset = false" v-if="reset"></reset-password>
     <facebook-login :fb-login-action="fbLoginAction" :facebook-key="facebookKey" v-if="loginFacebook"></facebook-login>
     <b-loading :active.sync="isLoading"></b-loading>    
   </div>
@@ -55,16 +64,19 @@
 <script>
 import FacebookLogin from "./FBLogin";
 import RegistroEmail from "./RegistroEmail";
+import ResetPassword from "./ResetPassword";
 export default {
-  props: ["message", "loginUrl", 'googleKey', 'facebookKey', "fbLoginAction", "signUpUrl", "homeUrl"],
+  props: ["message", "loginUrl", 'googleKey', 'facebookKey', "fbLoginAction", "signUpUrl", "homeUrl", "resetPassword"],
   components: {
     FacebookLogin,
-    RegistroEmail
+    RegistroEmail,
+    ResetPassword
   },
   data() {
     return {
       loginFacebook: false,
       register: false,
+      reset: false,
       loginEmail: "",
       loginPassword: "",
       isLoading: false

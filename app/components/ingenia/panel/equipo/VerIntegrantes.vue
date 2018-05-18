@@ -19,7 +19,7 @@
       <tbody>
         <tr v-for="(member,index) in members" :key="index">
           <td>
-            <Avatar :user="member" class="inline-image" size="24" /> {{member.subject.display_name}}
+            <Avatar :user="member" class="inline-image" size="24" /> {{member.names}} {{member.surnames}}
             <span class="tag is-warning is-pulled-right" v-if="member.pivot.relation === 'responsable'"><i class="fas fa-star"></i>&nbsp;Responsable</span>
             <div class="tags has-addons is-pulled-right" v-if="member.pivot.relation === 'co-responsable'">
               <span class="tag is-link"><i class="fas fa-shield-alt"></i>&nbsp;Co-responsable</span>
@@ -39,7 +39,7 @@
               </div>
               <div class="control is-expanded has-text-centered" v-if="member.pivot.relation !== 'responsable'">
                 <b-tooltip label="Quitar del equipo" type="is-dark">
-                  <button @click="openRemoveUser(member.id, member.subject.display_name)" class="button is-fullwidth is-outlined is-small is-danger">
+                  <button @click="openRemoveUser(member.id, member.names + ' ' + member.surnames)" class="button is-fullwidth is-outlined is-small is-danger">
                     <i class="far fa-trash-alt"></i>
                   </button>
                 </b-tooltip>

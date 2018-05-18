@@ -7,7 +7,11 @@
       <h1 class="subtitle is-4">Formulario de pre-inscripción</h1>
     </div>
     <br>
-    <div v-if="!showForm">
+    <div v-if="(new Date(deadline)) < (new Date())" class="notification is-primary has-text-centered">
+        <p class="subtitle is-4">
+      <i class="fas fa-info-circle"></i> ¡Convocatoria cerrada! ¡Gracias por participar!</p>
+      </div>
+    <div v-if="!showForm && (new Date(deadline)) > (new Date())">
     <b-message>
       Desde el Gabinete Joven y la Secretaría de Juventudes recomendamos tener a mano
       <a href="mailto:ingenia@santafe.gob.ar">
@@ -48,7 +52,7 @@
       <div class="notification is-success">
         <i class="fas fa-check fa-fw"></i> ¡Ya te encontras en condiciones para crear tu proyecto INGENIA!
       </div>
-      <button @click="showForm = true" v-if="!showForm" class="button is-primary is-fullwidth is-large is-800">
+      <button @click="showForm = true" v-if="!showForm && (new Date(deadline)) > (new Date())" class="button is-primary is-fullwidth is-large is-800">
         <i class="fas fa-rocket fa-fw"></i> ¡Comenzar con el formulario!</button>
     </div>
     </div>
@@ -101,7 +105,7 @@ import FormEquipo from "../utils/FormEquipo";
 import FormProyecto from "../utils/FormProyecto";
 
 export default {
-  props: ["saveTeamUrl"],
+  props: ["saveTeamUrl",'deadline'],
   components: {
     FormProyecto,
     FormEquipo

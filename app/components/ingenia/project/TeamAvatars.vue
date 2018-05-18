@@ -4,7 +4,7 @@
       <div class="container has-text-centered">
         <div class="list-of-avatars">
           <figure v-show="members.length === 0" class="image is-64x64"></figure>
-          <b-tooltip v-for="member in members" :key="member.id" :label="member.subject.display_name" type="is-dark" position="is-bottom">
+          <b-tooltip v-for="member in members" :key="member.id" :label="member.names + ' ' + member.surnames" type="is-dark" position="is-bottom">
             <Avatar :user="member" class="inline-image" size="64"></Avatar>&nbsp;&nbsp;
           </b-tooltip>
         </div>

@@ -9,7 +9,7 @@
           <article class="media" v-for="member in members" :key="member.id">
             <Avatar :user="member" class="media-left" size="96"></Avatar>
             <div class="media-content" style="overflow: inherit">
-              <h1 class="is-size-3 is-600">{{member.subject.display_name}}
+              <h1 class="is-size-3 is-600">{{member.names}} {{member.surnames}}
                 <b-tooltip label="Responsable" type="is-warning" position="is-bottom" v-if="member.pivot.relation === 'responsable'">
                 <i class="fas fa-star has-text-warning"></i>
                 </b-tooltip>

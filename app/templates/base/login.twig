@@ -29,7 +29,7 @@
               </span>
               Cargando . . .
             </div>
-<login message="{{subject.type}}" login-url="{{ path_for('runLogin') }}" google-key="{{googleKey}}" fb-login-action="{{path_for('fbCallbackGet')}}" facebook-key="{{facebookKey}}" sign-up-url="{{ path_for('runNewPendingUser') }}" home-url="{{path_for('showHome')}}"></login>
+<login message="{{subject.type}}" login-url="{{ path_for('runLogin') }}" google-key="{{googleKey}}" fb-login-action="{{path_for('fbCallbackGet')}}" facebook-key="{{facebookKey}}" sign-up-url="{{ path_for('runNewPendingUser') }}" reset-password="{{path_for('runResetPassword')}}" home-url="{{path_for('showHome')}}"></login>
             <br>
             <a href="{{base_url()}}" class="button is-white is-medium is-fullwidth is-300">
               <i class="fas fa-home fa-fw"></i>&nbsp;Volver al inicio</a>
