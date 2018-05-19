@@ -40,7 +40,7 @@
       <p>Defina en que categoría se enmarca el proyecto</p>
       <br>
       <b-field>
-        <div class="select is-large is-expanded" :class="{'is-loading': categoriasLoading}">
+        <div class="select is-large is-fullwidth" :class="{'is-loading': categoriasLoading}">
           <select data-vv-name="project.category_id" data-vv-as="'Categoría'" v-validate="'required'" v-model="project.category_id" placeholder="Seleccione la temática">
             <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.name}}</option>
           </select>
