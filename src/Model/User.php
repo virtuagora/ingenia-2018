@@ -21,6 +21,11 @@ class User extends Model
         return $this->belongsTo('App\Model\Subject');
     }
 
+    public function locality()
+    {
+        return $this->belongsTo('App\Model\Locality');
+    }
+
     public function groups()
     {
         return $this->belongsToMany('App\Model\Group', 'user_group')->withPivot('relation', 'title');

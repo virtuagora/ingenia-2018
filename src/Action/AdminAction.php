@@ -4,6 +4,8 @@ namespace App\Action;
 
 use App\Util\Exception\AppException;
 use App\Util\Exception\UnauthorizedException;
+use Carbon\Carbon;
+use Slim\Http\Stream;
 
 class AdminAction
 {
@@ -110,22 +112,121 @@ class AdminAction
 
     public function getMatriz($request, $response, $params)
     {
-        $proyectos = $this->db->query('App:Project', ['group'])->get();
+        $subject = $request->getAttribute('subject');
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
+            throw new UnauthorizedException();
+        }
+        $opt = $this->helper->getSanitizedStr('opt', $params);
+        if (!in_array($opt, ['proyectos', 'equipos'])) {
+            throw new AppException('No existe el dataset solicitado', 404);
+        }
         $writer = \Box\Spout\Writer\WriterFactory::create(\Box\Spout\Common\Type::XLSX);
-        $this->filesystem->addPlugin(new \League\Flysystem\Plugin\ForcedCopy);
-        $this->filesystem->forceCopy('sample.xlsx', 'temp.xlsx');
-        $tmpHandle = $this->filesystem->readStream('temp.xlsx');
+        $path = $opt.'.xlsx';
+        if ($this->filesystem->has($path)) {
+            $updDate = Carbon::createFromTimestamp($this->filesystem->getTimestamp($path));
+            $expLimit = new Carbon('+ 4 hours');
+            if ($updDate->gt($expLimit)) {
+                return $response
+                    ->withBody(new Stream($this->filesystem->readStream($path)))
+                    ->withHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            } else {
+                $this->filesystem->delete($path);
+            }
+        }
+        $this->filesystem->copy('sample.xlsx', $path);
+        $tmpHandle = $this->filesystem->readStream($path);
         $metaDatas = stream_get_meta_data($tmpHandle);
         $tmpFilename = $metaDatas['uri'];
+        $defStyle = (new \Box\Spout\Writer\Style\StyleBuilder())->setShouldWrapText()->build();
         $writer->openToFile($tmpFilename);
-        $writer->addRow(['ID', 'Proyecto', 'Equipo', 'Descripcion']);
-        foreach ($proyectos as $pro) {
-            $writer->addRow([$pro->id, $pro->name, $pro->group->name, $pro->abstract]);
+
+        if ($opt == 'proyectos') {
+            $grupos = $this->db->query('App:Group', [
+                'users', 'locality.department', 'project.locality.department'
+            ])->get();
+            $writer->addRow([
+                'ID', 'Nombre del equipo', 'Acerca del equipo', 'Región',
+                'Departamento', 'Localidad',
+                'Año de conformación', 'Participación en ediciones anteriores',
+                'Email', 'Teléfono', 'Web', 'Facebook',
+                'Organización que pertenece el equipo',
+                'Nombre del proyecto', 'Resumen', 'Fundamentación', 'Temática',
+                'Trabajo ya ejecutado', 'Región del proyecto',
+                'Departamento del proyecto', 'Localidad del proyecto',
+                'Barrios', 'Monto total solicitado',
+                'Organización con la que realizará las actividades',
+                'Cantidad de integrantes', '¿Equipo completo?', '¿Responsable asignado?',
+                '¿DNI validados de todo el equipo?', '¿Cartas cargadas?',
+                '¿Cargó imagen?', 'Puntaje', 'Observaciones',
+                'Condición',
+            ]);
+            foreach ($grupos as $gro) {
+                if ($gro->project) {
+                    $pro = $gro->project;
+                } else {
+                    $pro = (object) [
+                        'name' => null, 'abstract' => null, 'foundation' => null, 'category' => null,
+                        'previous_work' => null, 'locality' => (object) [
+                            'name' => null, 'custom' => null, 'department' => (object) [
+                                'name' => null,
+                                'region_id' => null,
+                            ],
+                        ],
+                        'neighbourhoods' => [], 'total_budget' => null, 'organization' => null,
+                        'has_image' => null, 'notes' => null, 'selected' => null,
+                    ];
+                }
+                $writer->addRowWithStyle([
+                    $gro->id, $gro->name, $gro->description, $gro->locality->department->region_id,
+                    $gro->locality->department->name, $gro->locality->custom? $gro->locality_other: $gro->locality->name,
+                    $gro->year, implode(', ', $gro->previous_editions),
+                    $gro->email, $gro->telephone, $gro->web, $gro->facebook,
+                    $gro->parent_organization? $gro->parent_organization['name']: null,
+                    $pro->name, $pro->abstract, $pro->foundation, $pro->category? $pro->category->name: null,
+                    $pro->previous_work, $pro->locality->department->region_id,
+                    $pro->locality->department->name, $pro->locality->custom? $pro->locality_other: $pro->locality->name,
+                    implode(', ', $pro->neighbourhoods), $pro->total_budget,
+                    $pro->organization? $pro->organization['name']: null,
+                    $gro->users->count(), $gro->full_team? 'SI': 'NO', $gro->second_in_charge? 'SI': 'NO',
+                    $gro->verified_team? 'SI': 'NO', ($gro->uploaded_agreement && $gro->uploaded_letter)? 'SI': 'NO',
+                    $pro->has_image? 'SI': 'NO', $gro->quota, $pro->notes,
+                    $pro->selected? 'Seleccionado': null,
+                ], $defStyle);
+            }
+        } elseif ($opt == 'equipos') {
+            $grupos = $this->db->query('App:Group', [
+                'users.locality.department',
+            ])->get();
+            $writer->addRow([
+                'ID del equipo', 'Nombre del equipo', 'Cargo en equipo',
+                'DNI', 'Nombre/s', 'Apellidos/s',
+                'Región',
+                'Departamento',
+                'Localidad',
+                'Barrio', 'Dirección',
+                'Fecha de nacimiento', 'Edad',
+                'Género', 'Teléfono', 'Email', 'Facebook'
+            ]);
+            foreach ($grupos as $gro) {
+                foreach ($gro->users as $usr) {
+                    $cumple = Carbon::parse($usr->birthday);
+                    $writer->addRowWithStyle([
+                        $gro->id, $gro->name, $usr->pivot->relation,
+                        $usr->dni, $usr->names, $usr->surnames,
+                        $usr->locality->department->region_id,
+                        $usr->locality->department->name,
+                        $usr->locality->custom? $usr->locality_other: $usr->locality->name,
+                        $usr->neighbourhood, $usr->address,
+                        $cumple->toDateString(), $cumple->age,
+                        $usr->gender, $usr->telephone, $usr->email, $usr->facebook,
+                    ], $defStyle);
+                }
+            }
         }
+
         $writer->close();
-        //fclose($tmpHandle);
         return $response
-            ->withBody(new \Slim\Http\Stream($tmpHandle))
+            ->withBody(new Stream($tmpHandle))
             ->withHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     }
 }
