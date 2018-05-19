@@ -1,12 +1,13 @@
 <template>
   <div>
-    
+
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.name')}">
         <i class="fas fa-angle-double-right"></i> Nombre del proyecto *</label>
       <div class="control">
         <input v-model="project.name" data-vv-name="project.name" data-vv-as="'Nombre del proyecto'" type="text" v-validate="'required|min:10|max:250'" class="input is-large" placeholder="Requerido *">
-        <span v-show="errors.has('project.name')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.name')}}</span>
+        <span v-show="errors.has('project.name')" class="help is-danger">
+          <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.name')}}</span>
       </div>
     </div>
     <div class="field">
@@ -17,7 +18,8 @@
       <div class="control">
         <b-input v-model="project.abstract" data-vv-name="project.abstract" data-vv-as="'Resumen del proyecto'" v-validate="'required|min:10|max:2000'" type="textarea" minlength="10" maxlength="2000" rows="3" placeholder="Requerido *. Breve descripcion de tu proyecto">
         </b-input>
-        <span v-show="errors.has('project.abstract')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.abstract')}}</span>
+        <span v-show="errors.has('project.abstract')" class="help is-danger">
+          <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.abstract')}}</span>
       </div>
     </div>
     <div class="field">
@@ -28,7 +30,8 @@
       <div class="control">
         <b-input v-model="project.foundation" data-vv-name="project.foundation" data-vv-as="'Fundamentación'" v-validate="'required|min:10|max:1500'" type="textarea" minlength="10" maxlength="1500" rows="3" placeholder="Requerido *">
         </b-input>
-        <span v-show="errors.has('project.foundation')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.foundation')}}</span>
+        <span v-show="errors.has('project.foundation')" class="help is-danger">
+          <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.foundation')}}</span>
       </div>
     </div>
     <div class="field">
@@ -37,12 +40,14 @@
       <p>Defina en que categoría se enmarca el proyecto</p>
       <br>
       <b-field>
-        <b-select size="is-large" data-vv-name="project.category_id" data-vv-as="'Categoría'" v-validate="'required'" v-model="project.category_id" :disabled="categorias.length == 0" :loading="categoriasLoading" placeholder="Seleccione la temática" expanded>
-          <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.name}}</option>
-          
-        </b-select>
+        <div class="select is-large is-expanded" :class="{'is-loading': categoriasLoading}">
+          <select data-vv-name="project.category_id" data-vv-as="'Categoría'" v-validate="'required'" v-model="project.category_id" placeholder="Seleccione la temática">
+            <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">{{categoria.name}}</option>
+          </select>
+        </div>
       </b-field>
-      <span v-show="errors.has('project.category_id')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.category_id')}}</span>
+      <span v-show="errors.has('project.category_id')" class="help is-danger">
+        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.category_id')}}</span>
       <div class="notification is-primary" v-show="project.category_id != null">
         <p v-for="categoria in categorias" :key="categoria.id" v-show="project.category_id == categoria.id">{{categoria.description}}</p>
       </div>
@@ -65,7 +70,8 @@
               <i class="fas fa-times"></i> No</span>
           </b-radio-button>
         </b-field>
-        <span v-show="errors.has('enEjecucion')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('enEjecucion')}}</span>
+        <span v-show="errors.has('enEjecucion')" class="help is-danger">
+          <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('enEjecucion')}}</span>
       </div>
     </div>
     <br>
@@ -75,19 +81,20 @@
       <div class="control">
         <b-input type="textarea" v-model="project.previous_work" data-vv-name="project.previous_work" data-vv-as="'Descripcion de la ejecución'" v-validate="'required|min:10|max:1000'" minlength="10" maxlength="1000" rows="3" placeholder="Requerido *">
         </b-input>
-        <span v-show="errors.has('project.previous_work')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.previous_work')}}</span>
+        <span v-show="errors.has('project.previous_work')" class="help is-danger">
+          <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.previous_work')}}</span>
       </div>
     </div>
     <label class="label is-size-4">
       <i class="fas fa-angle-double-right"></i> ¿Donde se implementa o implementará territorialmente el proyecto? *
     </label>
-        <Localidad v-if="showLocalityField" ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
-        <div v-else>
-            <button @click="cleanLocalidad" class="button is-light is-pulled-right">Cambiar ubicación</button>
-            <show-localidad :locality-id="project.locality_id" :locality-other="project.locality_other"></show-localidad>
-            <br>
-            <br>
-        </div>
+    <Localidad v-if="showLocalityField" ref="localidadForm" @updateLocalidad="updateLocalidad" @updateLocalidadCustom="updateLocalidadCustom"></Localidad>
+    <div v-else>
+      <button @click="cleanLocalidad" class="button is-light is-pulled-right">Cambiar ubicación</button>
+      <show-localidad :locality-id="project.locality_id" :locality-other="project.locality_other"></show-localidad>
+      <br>
+      <br>
+    </div>
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('project.neighbourhoods')}">
         <i class="fas fa-angle-double-right"></i>¿En que barrio/s se llevará adelante? *</label>
@@ -95,7 +102,8 @@
       <br>
       <b-taginput v-model="project.neighbourhoods" data-vv-name="project.neighbourhoods" data-vv-as="'Barrios'" v-validate="'required'" size="is-medium" icon="map-marker" type="is-primary" placeholder="Nombre del barrio">
       </b-taginput>
-      <span v-show="errors.has('project.neighbourhoods')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.neighbourhoods')}}</span>
+      <span v-show="errors.has('project.neighbourhoods')" class="help is-danger">
+        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.neighbourhoods')}}</span>
       <br>
 
     </div>
@@ -112,20 +120,19 @@
             </a>
           </div>
           <p class="control is-expanded">
-            <b-input size="is-medium" v-model="inputObjetivos" name="inputObjetivos"  maxlength="300" placeholder="Escriba el objetivo"></b-input>
+            <b-input size="is-medium" v-model="inputObjetivos" name="inputObjetivos" maxlength="300" placeholder="Escriba el objetivo"></b-input>
           </p>
           <p class="control">
-            <b-tooltip :label="disableAddObjetivo ? 'Falta información' : 'Agregar!'"
-          :type="disableAddObjetivo ? 'is-danger' : 'is-primary'"
-            position="is-bottom">
-            <button @click="addObjetivo" class="button is-primary is-medium" :disabled="disableAddObjetivo">
-              <i class="fas fa-plus"></i>
-            </button>
-          </b-tooltip>
+            <b-tooltip :label="disableAddObjetivo ? 'Falta información' : 'Agregar!'" :type="disableAddObjetivo ? 'is-danger' : 'is-primary'" position="is-bottom">
+              <button @click="addObjetivo" class="button is-primary is-medium" :disabled="disableAddObjetivo">
+                <i class="fas fa-plus"></i>
+              </button>
+            </b-tooltip>
           </p>
         </div>
         <input type="hidden" v-model="project.goals" data-vv-name="project.goals" data-vv-as="'Objetivos'" v-validate="'required'">
-        <span v-show="errors.has('project.goals')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.goals')}}</span>
+        <span v-show="errors.has('project.goals')" class="help is-danger">
+          <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.goals')}}</span>
         <br>
         <div class="content">
           <table class="table is-narrow is-bordered">
@@ -173,17 +180,16 @@
           <b-input size="is-medium" v-model="inputActividad" maxlength="300" placeholder="Escribí la actividad  "></b-input>
         </p>
         <p class="control">
-          <b-tooltip :label="disableAddActividad ? 'Falta información' : 'Agregar!'"
-          :type="disableAddActividad ? 'is-danger' : 'is-primary'"
-            position="is-bottom">
-          <button @click="addActividad" class="button is-primary is-medium" :disabled="disableAddActividad">
-            <i class="far fa-calendar-plus"></i>
-          </button>
+          <b-tooltip :label="disableAddActividad ? 'Falta información' : 'Agregar!'" :type="disableAddActividad ? 'is-danger' : 'is-primary'" position="is-bottom">
+            <button @click="addActividad" class="button is-primary is-medium" :disabled="disableAddActividad">
+              <i class="far fa-calendar-plus"></i>
+            </button>
           </b-tooltip>
         </p>
       </div>
       <input type="hidden" v-model="project.schedule" data-vv-name="project.schedule" data-vv-as="'Actividades'" v-validate="'required'">
-      <span v-show="errors.has('project.schedule')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.schedule')}}</span>
+      <span v-show="errors.has('project.schedule')" class="help is-danger">
+        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.schedule')}}</span>
       <br>
       <div class="content">
         <table class="table is-narrow is-bordered">
@@ -233,22 +239,22 @@
         </p>
         <p class="control is-expanded">
           <input class="input is-medium" v-model.number="inputItemMonto" data-vv-name="inputItemMonto" data-vv-as="'Monto'" v-validate="'numeric'" type="text" placeholder="Monto en AR$">
-          <span v-if="errors.has('inputItemMonto')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('inputItemMonto')}}</span>
+          <span v-if="errors.has('inputItemMonto')" class="help is-danger">
+            <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('inputItemMonto')}}</span>
           <span v-else class="help">Ingrese números sin decimal, puntos o comas</span>
 
         </p>
         <p class="control">
-          <b-tooltip :label="disableAddItem ? 'Falta información' : 'Agregar!'"
-          :type="disableAddItem ? 'is-danger' : 'is-primary'"
-            position="is-bottom">
-          <button @click="addItem" class="button is-primary is-medium" :disabled="disableAddItem">
-            <i class="fas fa-plus"></i>
-          </button>
+          <b-tooltip :label="disableAddItem ? 'Falta información' : 'Agregar!'" :type="disableAddItem ? 'is-danger' : 'is-primary'" position="is-bottom">
+            <button @click="addItem" class="button is-primary is-medium" :disabled="disableAddItem">
+              <i class="fas fa-plus"></i>
+            </button>
           </b-tooltip>
         </p>
       </div>
       <input type="hidden" v-model="project.budget" data-vv-name="project.budget" data-vv-as="'Presupuesto'" v-validate="'required'">
-      <span v-show="errors.has('project.budget')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.budget')}}</span>
+      <span v-show="errors.has('project.budget')" class="help is-danger">
+        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('project.budget')}}</span>
       <br>
       <div class="content">
         <table class="table is-narrow is-bordered">
@@ -295,8 +301,10 @@
     <div class="field">
       <label class="label is-size-4" :class="{'has-text-danger': errors.has('conOrganizacion')}">
         <i class="fas fa-angle-double-right"></i> ¿Las actividades las realizarán en coordinación con otras organizaciones y/o instituciones? * </label>
-      <p>Se refiere a organizaciones y/o instituciones <u>diferentes</u> a la que pertenece el equipo</p>
-      <p><b>IMPORTANTE:</b> Si el proyecto se realiza en coordinación con otra institución y/o organización, debera adjuntar la carta aval en el sistema en otro momento.</p>
+      <p>Se refiere a organizaciones y/o instituciones
+        <u>diferentes</u> a la que pertenece el equipo</p>
+      <p>
+        <b>IMPORTANTE:</b> Si el proyecto se realiza en coordinación con otra institución y/o organización, debera adjuntar la carta aval en el sistema en otro momento.</p>
       <br>
       <b-field>
         <b-radio-button v-model="conOrganizacion" data-vv-name="conOrganizacion" data-vv-as="'Trabajo en conjunto con Organización'" v-validate="'required'" :native-value="true" type="is-primary" size="is-medium">
@@ -308,7 +316,8 @@
             <i class="fas fa-times"></i> No</span>
         </b-radio-button>
       </b-field>
-      <span v-show="errors.has('conOrganizacion')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('conOrganizacion')}}</span>
+      <span v-show="errors.has('conOrganizacion')" class="help is-danger">
+        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('conOrganizacion')}}</span>
     </div>
     <br>
     <form-organizacion ref="formOrganizacion" v-if="conOrganizacion" :organization.sync="project.organization"></form-organizacion>
@@ -316,12 +325,12 @@
 </template>
 
 <script>
-import Localidad from './FieldLocalidad'
+import Localidad from "./FieldLocalidad";
 import ShowLocalidad from "./GetLocalidad";
 
 import FormOrganizacion from "./FormOrganizacion";
 export default {
-  props: ['project'],
+  props: ["project"],
   components: {
     Localidad,
     ShowLocalidad,
@@ -348,13 +357,13 @@ export default {
     if (this.project.organization) {
       this.conOrganizacion = true;
       this.isInitialized = true;
-    } else if(this.project.organization === false){
+    } else if (this.project.organization === false) {
       this.conOrganizacion = false;
     }
-    if(this.project.previous_work){
-      this.enEjecucion = true
-    } else if(this.project.previous_work === false){
-      this.enEjecucion = false      
+    if (this.project.previous_work) {
+      this.enEjecucion = true;
+    } else if (this.project.previous_work === false) {
+      this.enEjecucion = false;
     }
     this.showLocalityField = this.project.locality_id === null ? true : false;
   },
@@ -369,7 +378,8 @@ export default {
       .catch(error => {
         console.error(error.message);
         this.$snackbar.open({
-          message: "Error de conexion con el servidor. No pudimos rescatar las categorias. Sin esto no se va a poder completar el formulario. Por favor, volvé a intentarlo más tarde o reintentá volviendo a cargar la pagina.",
+          message:
+            "Error de conexion con el servidor. No pudimos rescatar las categorias. Sin esto no se va a poder completar el formulario. Por favor, volvé a intentarlo más tarde o reintentá volviendo a cargar la pagina.",
           type: "is-danger",
           actionText: "Cerrar",
           indefinite: true
@@ -378,11 +388,11 @@ export default {
       });
   },
   methods: {
-    updateLocalidad: function(id){
-        this.project.locality_id = id
+    updateLocalidad: function(id) {
+      this.project.locality_id = id;
     },
-    updateLocalidadCustom: function(localidadCustom){
-        this.project.locality_other = localidadCustom
+    updateLocalidadCustom: function(localidadCustom) {
+      this.project.locality_other = localidadCustom;
     },
     addObjetivo: function() {
       if (!this.disableAddObjetivo) {
@@ -396,7 +406,7 @@ export default {
     addActividad: function() {
       if (!this.disableAddActividad) {
         this.project.schedule.push({
-          date: this.dateActividad.toISOString().split('T')[0],
+          date: this.dateActividad.toISOString().split("T")[0],
           activity: this.inputActividad
         });
         this.dateActividad = null;
@@ -449,7 +459,7 @@ export default {
         });
       });
       return promise;
-    },  
+    },
     validateOrganizacion: function() {
       if (this.conOrganizacion) {
         return this.$refs.formOrganizacion.validateForm();
@@ -457,7 +467,7 @@ export default {
         return true;
       }
     },
-    validateLocalidadOrganizacion: function(){
+    validateLocalidadOrganizacion: function() {
       if (this.conOrganizacion) {
         return this.$refs.formOrganizacion.validateLocalidad();
       } else {
@@ -465,7 +475,9 @@ export default {
       }
     },
     validateLocalidad: function() {
-      return (this.showLocalityField ? this.$refs.localidadForm.validateForm() : true);
+      return this.showLocalityField
+        ? this.$refs.localidadForm.validateForm()
+        : true;
     },
     cleanLocalidad: function() {
       this.project.locality_id = null;
@@ -501,13 +513,13 @@ export default {
     }
   },
   watch: {
-    enEjecucion: function(newVal, oldVal){
-      if(newVal === false){
-        this.project.previous_work = null
+    enEjecucion: function(newVal, oldVal) {
+      if (newVal === false) {
+        this.project.previous_work = null;
       }
     },
     conOrganizacion: function(newVal, oldVal) {
-     if (newVal) {
+      if (newVal) {
         if (this.isInitialized) {
           this.isInitialized = false;
         } else {
