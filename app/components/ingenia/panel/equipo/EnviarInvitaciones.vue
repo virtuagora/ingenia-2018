@@ -6,6 +6,7 @@
     <br>
     <b-message>
       Ingresá el correo electrónico del integrante a invitar. Un email le llegará a su correo electrónico. Una vez que se registre, el participante quedará vinculado a tu proyecto.
+      <br><b>Asegurate que sea el mail con el que inicia sesión. ¿El integrante ya ingresó usando facebook? En vez de invitarlo, decile que se una al equipo mandando una solicitud, ¡entrando en la página del proyecto y enviandola!</b>
     </b-message>
     <h1 class="subtitle is-5 has-text-link">Quedan {{ 25 - invitations.length }} de invitaciones para enviar (por email) o solicitudes de participar.</h1>
     <div class="field is-grouped">
