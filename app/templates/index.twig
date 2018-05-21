@@ -8,73 +8,92 @@
   {% include "ingenia/index/header.twig" %}
   <div class="hero is-white is-medium">
     <div class="hero-body has-text-centered">
-<img src="./assets/img/clap.svg" class="logo-header image is-centered" style="width:100px;">
-<br>
+      <img src="./assets/img/clap.svg" class="logo-header image is-centered" style="width:100px;">
+      <br>
       <h1 class="title is-2 is-700">¡Convocatoria cerrada!</h1>
       <h1 class="subtitle is-5 has-text-link">Gracias a todos los equipos por participar con grandes proyectos e ideas!</h1>
-<div class="columns">
-<div class="column is-6 is-offset-3">
-<div class="notification is-warning">
-<nav class="level">
-  <div class="level-item has-text-centered">
-    <div>
-      <p class="heading">Proyectos</p>
-      <p class="title">+1760</p>
-    </div>
-  </div>
-<div class="level-item has-text-centered">
-  <div>
-    <p class="heading">Jovenes participando</p>
-    <p class="title">+8Mil</p>
-  </div>
-</div>
-  <div class="level-item has-text-centered">
-    <div>
-      <p class="heading">Visitas</p>
-      <p class="title">+716Mil</p>
-    </div>
-  </div>
-  <div class="level-item has-text-centered">
-    <div>
-      <p class="heading">Votos bancando</p>
-      <p class="title"><p class="title">{{options()['stat-votes']}}</p></p>
-    </div>
-  </div>
-  <div class="level-item has-text-centered">
-    <div>
-      <p class="heading">Comentarios</p>
-      <p class="title">{{options()['stat-comments']}}</p>
-    </div>
-  </div>
-</nav>
-</div>
-</div>
-</div>
-<p class="is-size-5 is-600">¡Pronto tendrán más información! Y recordá:</p>
-      <p class="is-size-6">¡Aún podes seguir bancando proyectos! <i class="em em-muscle"></i> <a href="/login"><u>Iniciá sesión</u></a> y explorá <a href="/proyectos"><u>la lista de proyectos</u></a>
+      <div class="columns">
+        <div class="column is-6 is-offset-3">
+          <div class="notification is-warning">
+            <nav class="level">
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Proyectos</p>
+                  <p class="title">+1760</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Jovenes participando</p>
+                  <p class="title">+8Mil</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Visitas</p>
+                  <p class="title">+716Mil</p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Votos bancando</p>
+                  <p class="title">
+                    <p class="title">{{options()['stat-votes']}}</p>
+                  </p>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Comentarios</p>
+                  <p class="title">{{options()['stat-comments']}}</p>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <p class="is-size-5 is-600">¡Pronto tendrán más información! Y recordá:</p>
+      <p class="is-size-6">¡Aún podes seguir bancando proyectos!
+        <i class="em em-muscle"></i>
+        <a href="/login">
+          <u>Iniciá sesión</u>
+        </a>
+        y explorá
+        <a href="/proyectos">
+          <u>la lista de proyectos</u>
+        </a>
       </p>
-      <p class="is-size-6"><b>Para los equipos:</b> Aún pueden seguir completando los requisitos que estén pendientes</p>
-      <p class="is-size-6"><i>¿Dudas? Contactate con el <a href="https://facebook.com/GabineteJoven"><u>Gabinete Joven</u></a></i></p>
+      <p class="is-size-6">
+        <b>Para los equipos:</b>
+        Aún pueden seguir completando los requisitos que estén pendientes</p>
+      <p class="is-size-6">
+        <i>¿Dudas? Contactate con el
+          <a href="https://facebook.com/GabineteJoven">
+            <u>Gabinete Joven</u>
+          </a>
+        </i>
+      </p>
     </div>
   </div>
   <div class="hero is-light is-medium">
-  <div class="hero-body">
-  <div class="container">
-<h1 class="title has-text-centered has-text-black is-700 has-text-centered">Conocé algunos proyectos</h1>
-<h1 class="subtitle has-text-centered has-text-black is-5">¡Informate, bancalos, descubrí grandes ideas y acompañalos!</h1>
-  <project-carousel get-projects-url="{{path_for('lisPro20Random')}}">
-        <div class="notification has-text-centered">
-          <i class="fas fa-cog fa-spin fa-lg"></i>
-          Cargando...
-        </div>
-      </project-carousel>
-      <br>
-<p class="has-text-centered">
-      <a href="/proyectos" class=" button is-medium is-black">Visitá el catálogo</a>
-      </p>
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title has-text-centered has-text-black is-700 has-text-centered">Conocé algunos proyectos</h1>
+        <h1 class="subtitle has-text-centered has-text-black is-5">¡Informate, bancalos, descubrí grandes ideas y acompañalos!</h1>
+        <project-carousel get-projects-url="{{path_for('lisPro20Random')}}">
+          <div class="notification has-text-centered">
+            <i class="fas fa-cog fa-spin fa-lg"></i>
+            Cargando...
+          </div>
+        </project-carousel>
+        <br>
+        <p class="has-text-centered">
+          <a href="/proyectos" class=" button is-medium is-black">Visitá el catálogo</a>
+        </p>
+      </div>
+    </div>
   </div>
-  </div>
-  </div>
+  {#
   <section class="section">
     <div class="container">
       <div class="columns is-hidden">
@@ -196,10 +215,9 @@
           <a class="twitter-timeline" data-height="600" data-theme="light" data-link-color="#9266CC" href="https://twitter.com/gabinetejoven?ref_src=twsrc%5Etfw">Tweets de gabinetejoven</a>
         </div>
       </div>
-
-      {# <catalogo></catalogo> #}
     </div>
   </section>
+  #}
   <section class="section">
     <div class="container has-text-centered">
       <br>
