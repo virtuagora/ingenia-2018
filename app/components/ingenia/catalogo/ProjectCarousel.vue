@@ -1,5 +1,5 @@
 <template>
-  <carousel class="project-carousel" :perPageCustom="[[480,1],[768, 3], [1024, 4],[1216,5]]" :navigationEnabled="true" :autoplay="true" :autoplayTimeout="10000" :autoplayHoverPause="true" >
+  <carousel class="project-carousel" :perPageCustom="[[0,1],[768, 2], [1024, 4]]" :navigationEnabled="true" :autoplay="true" :autoplayTimeout="10000" :autoplayHoverPause="true" >
     <slide class="item-carousel" v-for="project in projects" :key="project.id">
       <div class="notification is-primary" :class="{'with-image': project.has_image}" :style="project.has_image ? styleWithImage(project.id) : styleWithoutImage()">
         <div class="bancar-count-container"><img src="/assets/img/ribbon-bancar.svg" style="height:70px; vertical-align:middle" alt="">
@@ -19,8 +19,8 @@
       <div class="notification is-info with-image" :style="styleWithoutImage()">
         <div class="data-project">
           <a href="/proyectos" target="_blank" style="text-decoration:none;">
-            <h1 class="title is-2">¡Aún hay mas proyectos por ver!</h1>
-            <h1 class="subtitle is-4">¡Visita el listado con mas de +1700 proyectos!</h1>
+            <h1 class="title is-3">¡Aún hay mas proyectos por ver!</h1>
+            <h1 class="subtitle is-5">¡Visitá el listado con mas de +1700 proyectos!</h1>
           </a>
         </div>
       </div>
@@ -99,8 +99,8 @@ export default {
       // if (this.localidadSelected !== null) {
       //   query.push("loc=" + this.localidadSelected.id);
       // }
-      query.push("page=" + (Math.floor(Math.random() * 54) + 1));
-      query.push("size=" + 14);
+      query.push("page=" + (Math.floor(Math.random() * 115) + 1));
+      query.push("size=" + 7);
       return this.getProjectsUrl.concat(
         query.length > 0 ? "?" : "",
         query.join("&")
