@@ -1,5 +1,5 @@
 <template>
-  <carousel class="project-carousel" :perPageCustom="[[0,1],[768, 2], [1024, 4]]" :navigationEnabled="true" :autoplay="true" :autoplayTimeout="10000" :autoplayHoverPause="true" >
+  <carousel v-if="!isLoading" class="project-carousel" :perPageCustom="[[0,1],[768, 2], [1024, 4]]" :navigationEnabled="true" :autoplay="true" :autoplayTimeout="10000" :autoplayHoverPause="true">
     <slide class="item-carousel" v-for="project in projects" :key="project.id">
       <div class="notification is-primary" :class="{'with-image': project.has_image}" :style="project.has_image ? styleWithImage(project.id) : styleWithoutImage()">
         <div class="bancar-count-container"><img src="/assets/img/ribbon-bancar.svg" style="height:70px; vertical-align:middle" alt="">
@@ -19,13 +19,18 @@
       <div class="notification is-info with-image" :style="styleWithoutImage()">
         <div class="data-project">
           <a href="/proyectos" target="_blank" style="text-decoration:none;">
-            <h1 class="title is-3">¡Aún hay mas proyectos por ver!</h1>
+            <h1 class="title is-3">¡Aún hay más proyectos por ver!</h1>
             <h1 class="subtitle is-5">¡Visitá el listado con mas de +1700 proyectos!</h1>
           </a>
         </div>
       </div>
     </slide>
   </carousel>
+  <div class="notification" v-else>
+    <br>
+    <b-loading :is-full-page="false" :active.sync="isLoading"></b-loading>
+    <br>
+  </div>
 </template>
 
 <script>
@@ -40,16 +45,20 @@ export default {
   data() {
     return {
       projects: [],
-      categorias: []
+      categorias: [],
+      isLoading: true
     };
   },
-  created: function() {
+  mounted: function() {
+    this.isLoading = true;
     Promise.all([this.$http.get("/category"), this.$http.get(this.urlGet)])
       .then(responses => {
+        this.isLoading = false;
         this.categorias = responses[0].data;
         this.projects = this.shuffleArray(responses[1].data.data);
       })
       .catch(error => {
+        this.isLoading = false;
         console.error(error);
       });
   },
