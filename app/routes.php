@@ -125,21 +125,21 @@ $app->get('/como-participar', function ($request, $response, $args) {
     ]);
 })->setName('showComoParticipar');
 
-// $app->get('/install[/{extra}]', function ($request, $response, $args) {
-//     $actions = new \App\Util\ActionsLoader($this->db);
-//     if (!isset($args['extra'])) {
-//         $installer = new \App\Util\Installer($this->db);
-//         $installer->down();
-//         $installer->up();
-//         $installer->populate();
-//         $loader = new \App\Util\LocalitiesLoader($this->db);
-//         $loader->up();
-//     } else {
-//         $actions->down();
-//     }
-//     $actions->up();
-//     return $response->withJSON(['message' => 'instalación exitosa']);
-// });
+$app->get('/install[/{extra}]', function ($request, $response, $args) {
+    $actions = new \App\Util\ActionsLoader($this->db);
+    if (!isset($args['extra'])) {
+        $installer = new \App\Util\Installer($this->db);
+        $installer->down();
+        $installer->up();
+        $installer->populate();
+        $loader = new \App\Util\LocalitiesLoader($this->db);
+        $loader->up();
+    } else {
+        $actions->down();
+    }
+    $actions->up();
+    return $response->withJSON(['message' => 'instalación exitosa']);
+});
 
 $app->get('/ping', function ($request, $response, $args) {
     if($request->getAttribute('subject')->getType() != 'Annonymous'){
@@ -232,6 +232,7 @@ $app->post('/group/accept-inv/{inv}', 'groupAction:postUserFromInvitation')->set
 $app->post('/group/accept-req/{inv}', 'groupAction:postUserFromRequest')->setName('runCreGroUsrReq');
 
 $app->get('/project', 'projectAction:get')->setName('lisPro');
+$app->get('/project-random', 'projectAction:get20Random')->setName('lisPro20Random');
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
 $app->post('/project', 'projectAction:post')->setName('runCrePro');
 $app->post('/project/{pro}', 'projectAction:patch')->setName('runUpdPro');

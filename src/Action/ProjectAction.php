@@ -71,6 +71,42 @@ class ProjectAction
         //return $response->withJSON($orgList->toArray());
     }
 
+    public function get20Random($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $pagParams = $this->pagination->getParams($request, [
+            'loc' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'dep' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'reg' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            'cat' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
+            's' => [
+                'type' => 'string',
+            ],
+        ]);
+        $resultados = $this->projectResource->retrieveRandoms($pagParams);
+        $resultados;
+        $resultados->setUri($request->getUri());
+        if ($this->authorization->checkPermission($subject, 'retDni')) {
+            $resultados->makeVisible([
+                'notes',
+            ]);
+        }
+        return $this->pagination->renderResponse($response, $resultados);
+        //return $response->withJSON($orgList->toArray());
+    }
+
     public function getComments($request, $response, $params)
     {
         $proId = $this->helper->getSanitizedId('pro', $params);

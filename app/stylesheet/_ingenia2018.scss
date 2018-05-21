@@ -142,7 +142,6 @@ table.table.text-middle td {
 // .b-radio.radio {
 //     margin-left: 0.5em;
 // }
-
 .content p.nl2br,
 p.nl2br {
     white-space: pre-wrap;
@@ -234,6 +233,40 @@ nav.navbar {
         .subtitle,
         .counter-likes {
             text-shadow: -1px 1px 4px rgba(0, 0, 0, 1);
+        }
+    }
+}
+
+.project-carousel {
+    .item-carousel {
+        .notification {
+            margin: 8px;
+            @include mobile {
+                min-height: 300px;
+            }
+            @include tablet {
+                min-height: 400px;
+            }
+            @include desktop {
+                min-height: 500px;
+            } // @include mobile {
+            //     padding-top: 80px;
+            // }
+            // @include tablet {
+            //     padding-top: 80px;
+            // }
+            // @include desktop {
+            //     padding-top: 80px;
+            // }
+            &.with-image {
+                background-size: cover;
+                background-position: center center
+            }
+            .title,
+            .subtitle,
+            .counter-likes {
+                text-shadow: -1px 1px 4px rgba(0, 0, 0, 1);
+            }
         }
     }
 }
