@@ -254,6 +254,15 @@ class ProjectResource extends Resource
         return $results;
     }
 
+    public function retrieveRandoms($options)
+    {
+        $query = $this->db->query('App:Project', ['group']);
+        $query->where('has_image', '=', "1");
+        
+        $results = new Paginator($query, $options);
+        return $results;
+    }
+
     public function retrieveComments($proId, $options)
     {
         $query = $this->db->query('App:Comment')->where('project_id', $proId);
