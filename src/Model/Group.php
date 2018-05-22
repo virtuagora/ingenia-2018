@@ -11,7 +11,7 @@ class Group extends Model
     protected $dates = ['deleted_at'];
     protected $visible = [
         'id', 'name', 'year', 'description', 'previous_editions',
-        'parent_organization', 'web', 'facebook',
+        'parent_organization', 'web', 'facebook', 'quota',
         'uploaded_agreement', 'uploaded_letter', 'full_team', 
         'second_in_charge', 'verified_team', 'locality_id',
         'locality_other', 'locality', 'pivot', 'project',

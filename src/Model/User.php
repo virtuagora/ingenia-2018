@@ -36,6 +36,11 @@ class User extends Model
         return $this->hasMany('App\Model\Invitation');
     }
 
+    public function projects()
+    {
+        return $this->hasMany('App\Model\Project');
+    }
+
     public function setNamesAttribute($value)
     {
         $this->attributes['names'] = $value;

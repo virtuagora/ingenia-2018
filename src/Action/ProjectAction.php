@@ -52,6 +52,10 @@ class ProjectAction
                 'type' => 'integer',
                 'minimum' => 1,
             ],
+            'cor' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
             'cat' => [
                 'type' => 'integer',
                 'minimum' => 1,
@@ -217,6 +221,59 @@ class ProjectAction
         return $this->representation->returnMessage($request, $response, [
             'message' => $vote? '¡Proyecto bancado!': 'Proyecto ya no bancado.',
             'vote' => $vote,
+            'status' => 200,
+        ]);
+    }
+
+    public function postCoordin($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
+            throw new UnauthorizedException();
+        }
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params
+        );
+        $user = $this->helper->getUserFromSubject($subject);
+        $project->coordin_id = $user->id;
+        $project->save();
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Proyecto asignado',
+            'status' => 200,
+        ]);
+    }
+
+    public function deleteCoordin($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
+            throw new UnauthorizedException();
+        }
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params
+        );
+        $project->coordin_id = null;
+        $project->save();
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Coordinador desvinculado',
+            'status' => 200,
+        ]);
+    }
+
+    public function postReview($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
+            throw new UnauthorizedException();
+        }
+        $this->projectResource->updateReview(
+            $subject, $project, $request->getParsedBody()
+        );
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Evaluación del proyecto actualizada',
             'status' => 200,
         ]);
     }

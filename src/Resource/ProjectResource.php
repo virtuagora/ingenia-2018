@@ -10,221 +10,221 @@ class ProjectResource extends Resource
     public function retrieveSchema($options = [])
     {
         $schema = [
-        'type' => 'object',
-        'properties' => [
-        'name' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 250,
-        ],
-        'abstract' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 2000,
-        ],
-        'foundation' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 1500,
-        ],
-        'category_id' => [
-        'type' => 'integer',
-        'minimum' => 1,
-        ],
-        'previous_work' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 1000,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'neighbourhoods' => [
-        'type' => 'array',
-        'items' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ],
-        ],
-        'goals' => [
-        'type' => 'array',
-        'items' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 300,
-        ],
-        ],
-        'schedule' => [
-        'type' => 'array',
-        'items' => [
-        'type' => 'object',
-        'properties' => [
-        'date' => [
-        'type' => 'string',
-        'pattern' => '^\d{4}-\d{2}-\d{2}$',
-        ],
-        'activity' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 300,
-        ],
-        ],
-        'required' => ['date', 'activity'],
-        'additionalProperties' => false,
-        ],
-        ],
-        'budget' => [
-        'type' => 'array',
-        'items' => [
-        'type' => 'object',
-        'properties' => [
-        'category' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 50,
-        ],
-        'description' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 300,
-        ],
-        'amount' => [
-        'type' => 'number',
-        'minimum' => 1,
-        ],
-        ],
-        'required' => ['category', 'description', 'amount'],
-        'additionalProperties' => false,
-        ],
-        ],
-        'organization' => [
-        'oneOf' => [
-        [
-        'type' => 'object',
-        'properties' => [
-        'name' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ],
-        'topics' => [
-        'type' => 'array',
-        'items' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ],
-        ],
-        'topic_other' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 250,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'locality_id' => [
-        'type' => 'integer',
-        'minimum' => 1,
-        ],
-        'locality_other' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 250,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'web' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'facebook' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 100,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'telephone' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 20,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'email' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'format' => 'email',
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        ],
-        'required' => [
-        'name', 'topics', 'topic_other', 'locality_id',
-        'locality_other', 'web', 'facebook', 'telephone', 'email',
-        ],
-        'additionalProperties' => false,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        'locality_id' => [
-        'type' => 'integer',
-        'minimum' => 1,
-        ],
-        'locality_other' => [
-        'oneOf' => [
-        [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 250,
-        ], [
-        'type' => 'null',
-        ],
-        ],
-        ],
-        ],
-        'required' => [
-        'name', 'abstract', 'foundation', 'category_id', 'previous_work',
-        'neighbourhoods', 'goals', 'schedule', 'budget', 'organization',
-        'locality_id', 'locality_other',
-        ],
-        'additionalProperties' => false,
+            'type' => 'object',
+            'properties' => [
+                'name' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 250,
+                ],
+                'abstract' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 2000,
+                ],
+                'foundation' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 1500,
+                ],
+                'category_id' => [
+                    'type' => 'integer',
+                    'minimum' => 1,
+                ],
+                'previous_work' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 1000,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+                'neighbourhoods' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 100,
+                    ],
+                ],
+                'goals' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 300,
+                    ],
+                ],
+                'schedule' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'date' => [
+                                'type' => 'string',
+                                'pattern' => '^\d{4}-\d{2}-\d{2}$',
+                            ],
+                            'activity' => [
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 300,
+                            ],
+                        ],
+                        'required' => ['date', 'activity'],
+                        'additionalProperties' => false,
+                    ],
+                ],
+                'budget' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'object',
+                        'properties' => [
+                            'category' => [
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 50,
+                            ],
+                            'description' => [
+                                'type' => 'string',
+                                'minLength' => 1,
+                                'maxLength' => 300,
+                            ],
+                            'amount' => [
+                                'type' => 'number',
+                                'minimum' => 1,
+                            ],
+                        ],
+                        'required' => ['category', 'description', 'amount'],
+                        'additionalProperties' => false,
+                    ],
+                ],
+                'organization' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'object',
+                            'properties' => [
+                                'name' => [
+                                    'type' => 'string',
+                                    'minLength' => 1,
+                                    'maxLength' => 100,
+                                ],
+                                'topics' => [
+                                    'type' => 'array',
+                                    'items' => [
+                                        'type' => 'string',
+                                        'minLength' => 1,
+                                        'maxLength' => 100,
+                                    ],
+                                ],
+                                'topic_other' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 250,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'locality_id' => [
+                                    'type' => 'integer',
+                                    'minimum' => 1,
+                                ],
+                                'locality_other' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 250,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'web' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 100,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'facebook' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 100,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'telephone' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'minLength' => 1,
+                                            'maxLength' => 20,
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                                'email' => [
+                                    'oneOf' => [
+                                        [
+                                            'type' => 'string',
+                                            'format' => 'email',
+                                        ], [
+                                            'type' => 'null',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                            'required' => [
+                                'name', 'topics', 'topic_other', 'locality_id',
+                                'locality_other', 'web', 'facebook', 'telephone', 'email',
+                            ],
+                            'additionalProperties' => false,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+                'locality_id' => [
+                    'type' => 'integer',
+                    'minimum' => 1,
+                ],
+                'locality_other' => [
+                    'oneOf' => [
+                        [
+                            'type' => 'string',
+                            'minLength' => 1,
+                            'maxLength' => 250,
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ],
+                ],
+            ],
+            'required' => [
+                'name', 'abstract', 'foundation', 'category_id', 'previous_work',
+                'neighbourhoods', 'goals', 'schedule', 'budget', 'organization',
+                'locality_id', 'locality_other',
+            ],
+            'additionalProperties' => false,
         ];
         return $schema;
     }
-    
+
     public function retrieve($options)
     {
         $query = $this->db->query('App:Project', ['group']);
@@ -240,6 +240,9 @@ class ProjectResource extends Resource
                 $q->where('region_id', $options['reg']);
             });
         }
+        if (isset($options['cor'])) {
+            $query->where('coordin_id', $options['cor']);
+        }
         if (isset($options['cat'])) {
             $query->where('category_id', $options['cat']);
         }
@@ -250,16 +253,7 @@ class ProjectResource extends Resource
         $results = new Paginator($query, $options);
         return $results;
     }
-    
-    public function retrieveRandoms($options)
-    {
-        $query = $this->db->query('App:Project', ['group']);
-        $query->where('has_image', '=', "1");
-        
-        $results = new Paginator($query, $options);
-        return $results;
-    }
-    
+
     public function retrieveComments($proId, $options)
     {
         $query = $this->db->query('App:Comment')->where('project_id', $proId);
@@ -269,7 +263,7 @@ class ProjectResource extends Resource
         $results = new Paginator($query, $options);
         return $results;
     }
-    
+
     public function createOne($subject, $data)
     {
         $user = $this->helper->getUserFromSubject($subject);
@@ -283,34 +277,34 @@ class ProjectResource extends Resource
         $project = $this->db->new('App:Project');
         return $this->persist($project, $group, $data);
     }
-    
+
     public function updateOne($subject, $project, $data)
     {
         $group = $project->group;
         return $this->persist($project, $group, $data);
     }
-    
+
     // TODO comprobar deadline
     public function persist($project, $group, $data)
     {
         $v = $this->validation->fromSchema($this->retrieveSchema());
         $v->assert($data);
-        
+
         $localidad = $this->db->query('App:Locality')->findOrFail($data['locality_id']);
         $categoria = $this->db->query('App:Category')->findOrFail($data['category_id']);
-        
+
         $duplicados = $this->helper->getDuplicatedFields(
-        'App:Project', $project, ['name']
+            'App:Project', $project, ['name']
         );
         if (!empty($duplicados)) {
             throw new AppException('usedName');
         }
-        
+
         $totalBudget = 0;
         foreach ($data['budget'] as $item) {
             $totalBudget += $item['amount'];
         }
-        
+
         $project->name = $data['name'];
         $project->trace = $this->helper->generateTrace($data['name']);
         $project->abstract = $data['abstract'];
@@ -333,31 +327,31 @@ class ProjectResource extends Resource
         }
         return $project;
     }
-    
+
     public function updatePicture($subject, $project, $imgFile)
     {
         if ($imgFile->getError() == UPLOAD_ERR_NO_FILE) {
             throw new AppException('No se envió archivo');
         } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
             throw new AppException(
-            'Hubo un error con el archivo recibido ('.$imgFile->getError().')'
+                'Hubo un error con el archivo recibido ('.$imgFile->getError().')'
             );
         }
         $fileMime = $imgFile->getClientMediaType();
         $allowedMimes = [
-        'image/jpeg' => 'jpg',
-        'image/pjpeg' => 'jpg',
-        'image/png' => 'png',
-        'image/gif' => 'gif',
+            'image/jpeg' => 'jpg',
+            'image/pjpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
         ];
         if (!isset($allowedMimes[$fileMime])) {
             throw new AppException('Tipo de archivo inválido');
         }
         $imgStrm = $this->image->make($imgFile->getStream()->detach())
-        ->fit(1000, 777, function ($constraint) {
-            $constraint->upsize();
-        })
-        ->encode('jpg', 90);
+            ->fit(1000, 777, function ($constraint) {
+                $constraint->upsize();
+            })
+            ->encode('jpg', 90);
         $this->filesystem->put('project/'.$project->id.'.jpg', $imgStrm);
         if (is_resource($imgStrm)) {
             fclose($imgStrm);
@@ -367,18 +361,18 @@ class ProjectResource extends Resource
             $project->save();
         }
     }
-    
+
     public function delete($subject, $project)
     {
         $group = $project->group;
         $project->delete();
         $group->delete();
     }
-    
+
     public function vote($subject, $project)
     {
         $user = $this->helper->getUserFromSubject($subject);
-        
+
         $result = $project->voters()->toggle($user->id);
         $project->likes = $project->voters()->count();
         $project->save();
@@ -390,21 +384,21 @@ class ProjectResource extends Resource
         }
         return $vote;
     }
-    
+
     public function createComment($subject, $project, $data)
     {
         $user = $this->helper->getUserFromSubject($subject);
         $schema = [
-        'type' => 'object',
-        'properties' => [
-        'content' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 500,
-        ],
-        ],
-        'required' => ['content'],
-        'additionalProperties' => false,
+            'type' => 'object',
+            'properties' => [
+                'content' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 500,
+                ],
+            ],
+            'required' => ['content'],
+            'additionalProperties' => false,
         ];
         $v = $this->validation->fromSchema($schema);
         $v->assert($data);
@@ -416,21 +410,21 @@ class ProjectResource extends Resource
         $this->options->incrementOption('stat-comments', 1);
         return $comment;
     }
-    
+
     public function createReply($subject, $comment, $data)
     {
         $user = $this->helper->getUserFromSubject($subject);
         $schema = [
-        'type' => 'object',
-        'properties' => [
-        'content' => [
-        'type' => 'string',
-        'minLength' => 1,
-        'maxLength' => 500,
-        ],
-        ],
-        'required' => ['content'],
-        'additionalProperties' => false,
+            'type' => 'object',
+            'properties' => [
+                'content' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 500,
+                ],
+            ],
+            'required' => ['content'],
+            'additionalProperties' => false,
         ];
         $v = $this->validation->fromSchema($schema);
         $v->assert($data);
@@ -445,20 +439,20 @@ class ProjectResource extends Resource
         $this->options->incrementOption('stat-comments', 1);
         return $reply;
     }
-    
+
     public function voteComment($subject, $comment, $data)
     {
         $user = $this->helper->getUserFromSubject($subject);
         $schema = [
-        'type' => 'object',
-        'properties' => [
-        'value' => [
-        'type' => 'integer',
-        'enum' => [-1, 1],
-        ],
-        ],
-        'required' => ['value'],
-        'additionalProperties' => false,
+            'type' => 'object',
+            'properties' => [
+                'value' => [
+                    'type' => 'integer',
+                    'enum' => [-1, 1],
+                ],
+            ],
+            'required' => ['value'],
+            'additionalProperties' => false,
         ];
         $v = $this->validation->fromSchema($schema);
         $v->assert($data);
@@ -470,5 +464,34 @@ class ProjectResource extends Resource
         $comment->votes = $comment->raters->sum('pivot.value');
         $comment->save();
         return $comment->votes;
+    }
+
+    public function updateReview($subject, $project, $data)
+    {
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'puntaje' => [
+                    'type' => 'integer',
+                ],
+                'monto' => [
+                    'type' => 'number',
+                ],
+                'seleccionado' => [
+                    'type' => 'boolean',
+                    'default' => false,
+                ],
+            ],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema['properties'], $data);
+        $v->assert($data);
+        $project->group->quota = $data['puntaje'];
+        $project->granted_budget = $data['monto'];
+        $project->selected = $data['seleccionado'];
+        $project->group->save();
+        $project->save();
+        return true;
     }
 }

@@ -195,9 +195,13 @@ class Installer
             $table->boolean('selected')->default(false);
             $table->boolean('has_image')->default(false);
             $table->decimal('total_budget')->default(0);
+            $table->decimal('granted_budget')->default(0);
             $table->integer('likes')->default(0);
             $table->string('trace')->nullable();
             $table->text('notes')->nullable(); //observaciones internas
+
+            $table->integer('coordin_id')->unsigned()->nullable();
+            $table->foreign('coordin_id')->references('id')->on('users')->onDelete('set null');
 
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
@@ -294,6 +298,17 @@ class Installer
             $table->foreign('log_id')->references('id')->on('logs')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
+
+        $this->db->schema()->create('receipts', function($table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->string('file')->nullable();
+            $table->decimal('amount')->default(0);
+            $table->text('detail')->nullable();
+            $table->integer('project_id')->unsigned();
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 

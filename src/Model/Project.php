@@ -12,8 +12,9 @@ class Project extends Model
     protected $visible = [
         'id', 'name', 'abstract', 'foundation', 'previous_work',
         'neighbourhoods', 'organization', 'locality_id', 'locality_other',
-        'goals', 'schedule', 'budget', 'category_id',
+        'goals', 'schedule', 'budget', 'category_id', 'coordin_id',
         'has_image', 'likes', 'group', 'category',
+        'selected_budget', 'granted_budget', 'selected'
     ];
     protected $with = [];
     protected $casts = [
@@ -22,6 +23,7 @@ class Project extends Model
         'neighbourhoods' => 'array',
         'goals' => 'array',
         'organization' => 'array',
+        'selected' => 'boolean',
     ];
 
     public function group()
@@ -37,6 +39,11 @@ class Project extends Model
     public function locality()
     {
         return $this->belongsTo('App\Model\Locality');
+    }
+
+    public function coordin()
+    {
+        return $this->belongsTo('App\Model\User', 'coordin_id');
     }
 
     public function voters()
