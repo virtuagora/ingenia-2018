@@ -243,6 +243,10 @@ $app->post('/comment/{com}/reply', 'projectAction:postReply')->setName('runCrePr
 $app->post('/comment/{com}/vote', 'projectAction:postCommentVote')->setName('runCreComVot');
 $app->get('/project/{pro}/comment', 'projectAction:getComments')->setName('getProCom');
 
+$app->post('/project/{pro}/review', 'projectAction:postReview')->setName('updProRev');
+$app->post('/project/{pro}/coordin', 'projectAction:postCoordin')->setName('updProCor');
+$app->delete('/project/{pro}/coordin', 'projectAction:deleteCoordin')->setName('delProCor');
+
 $app->post('/login', 'sessionAction:formLocalLogin')->setName('runLogin');
 
 $app->post('/pending-user', 'userAction:postPendingUser')->setName('runNewPendingUser');
