@@ -357,7 +357,7 @@ $app->get('/project/{pro}/print', function ($request, $response, $params) {
     $proyecto = $this->helper->getEntityFromId(
     'App:Project', 'pro', $params, ['group']
     );
-    if (!$this->authorization->checkPermission($subject, 'updPro', $proyecto)) {
+    if (!$this->authorization->checkPermission($subject, 'coordin', $proyecto)) {
         throw new UnauthorizedException();
     }
     // var_dump($proyecto->organization['locality_id']);

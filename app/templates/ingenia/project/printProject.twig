@@ -26,6 +26,13 @@
       <h1 class="subtitle is-3">
         {{project.group.name}}
       </h1>
+        {% if project.notes is not null %}
+          <div class="notification">
+            <p class="nl2br">
+              <i class="fas fa-info-circle fa-lg fa-fw"></i>&nbsp;<b>Observaciones</b>
+              <br>{{project.notes}}</p>
+          </div>
+        {% endif %}
       <div class="content is-clearfix">
         <div class="box is-paddingless is-pulled-right" style="max-width:350px; margin:6px">
           {% if project.has_image %}
@@ -138,6 +145,9 @@
             </tr>
           </tbody>
         </table>
+      <h3>
+          <b>Coordinador <i class="fas fa-bullhorn fa-fw"></i>&nbsp;&nbsp;</b><img src="{{avatar_url(project.coordin.subject.img_type, project.coordin.subject.img_hash, 32)}}" class="is-rounded" style="vertical-align: middle;"> {{project.coordin.names}} {{project.coordin.surnames}} <i>({{project.coordin.email}})</i>
+        </h3>
       </div>
       {% if project.organization %}
         <div class="content">
@@ -274,6 +284,10 @@
               {% endif %}
               <table class="table is-narrow is-bordered is-fullwidth">
                 <tbody>
+                 <tr>
+                    <th>DNI</th>
+                    <td>{{member.dni}}</td>
+                  </tr>
                   <tr>
                     <th>Genero</th>
                     <td>{{member.gender}}</td>
@@ -372,8 +386,11 @@
           </h4>
         </div>
       {% endif %}
-      {# <print-project :project="{{project}}" team-url="{{path_for('getGroup',{'gro': ':gro'})}}" get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}"></print-project> #}
     </div>
   </section>
 {% endblock %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+<script>
+window.onload = function () { window.print(); }
+</script>
+{% endblock %}
