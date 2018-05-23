@@ -32,7 +32,7 @@ class AdminAction
     public function getOptions($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
-        if (!$this->authorization->checkPermission($subject, 'retOpt')) {
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
             throw new UnauthorizedException();
         }
         $options = $this->options->getOptions();
@@ -42,7 +42,7 @@ class AdminAction
     public function getOption($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
-        if (!$this->authorization->checkPermission($subject, 'retOpt')) {
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
             throw new UnauthorizedException();
         }
         $opt = $this->helper->getSanitizedStr('opt', $params);
@@ -92,7 +92,7 @@ class AdminAction
     {
         $subject = $request->getAttribute('subject');
         $user = $this->helper->getEntityFromId('App:User', 'usr', $params);
-        if (!$this->authorization->checkPermission($subject, 'retDni')) {
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
             throw new UnauthorizedException();
         }
         $user->verified_dni = true;

@@ -481,15 +481,29 @@ class ProjectResource extends Resource
             'type' => 'object',
             'properties' => [
                 'puntaje' => [
-                    'type' => 'integer',
+                    'oneOf' => [
+                        [
+                            'type' => 'integer',
+                            'minimum' => 0,
+                            'maximum' => 100
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ]
                 ],
                 'monto' => [
-                    'type' => 'number',
+                    'oneOf' => [
+                        [
+                            'type' => 'number',
+                        ], [
+                            'type' => 'null',
+                        ],
+                    ]
                 ],
                 'seleccionado' => [
-                    'type' => 'boolean',
-                    'default' => false,
-                ],
+                            'type' => 'boolean',
+                            'default' => false,
+                ]
             ],
             'additionalProperties' => false,
         ];

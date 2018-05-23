@@ -12,11 +12,19 @@
             </li>
           </ul>
           <hr>
+          <p class="menu-label" v-if="roles.includes('coordin')">
+            Coordinación
+          </p>
+          <ul class="menu-list" v-if="roles.includes('coordin')">
+            <li>
+              <router-link :to="{ name: 'coordinListado'}" exact-active-class="is-active">Mis proyectos asignados</router-link>
+            </li>
+          </ul>
            <p class="menu-label">
             Administrar
           </p>
           <ul class="menu-list">
-            <li>
+            <li v-if="roles.includes('admin')">
               <router-link :to="{ name: 'adminListadoProyectos'}" exact-active-class="is-active">Listado de proyectos</router-link>
             </li>
             <li>
@@ -29,10 +37,10 @@
               <router-link :to="{ name: 'adminListaNegraDNI'}" exact-active-class="is-active">Lista negra de DNIs</router-link>
             </li>
           </ul>
-          <p class="menu-label">
+          <p class="menu-label" v-if="roles.includes('admin')">
             Configurar
           </p>
-          <ul class="menu-list">
+          <ul class="menu-list" v-if="roles.includes('admin')">
             <li>
               <router-link :to="{ name: 'adminFechaCierre'}" exact-active-class="is-active">Fecha de cierre</router-link>
             </li>
@@ -43,7 +51,10 @@
         </aside>
       </div>
       <div class="column">
-        <router-view :settings="settings" :get-projects="getProjects" :get-users="getUsers" 
+        <router-view :settings="settings"
+        :roles="roles" 
+        :update-review="updateReview"
+        :get-projects="getProjects" :get-users="getUsers" 
         :get-letter="getLetter" :get-agreement="getAgreement" :get-group-members="getGroupMembers"
         :get-user-dni="getUserDni" 
         :post-validate-dni="postValidateDni"
@@ -57,7 +68,7 @@
 
 <script>
 export default {
-  props: ['settings','getProjects','putProjectNote','getGroupMembers','teamUrl','getUsers','getLetter','getAgreement','getUserDni','postValidateDni','postRoleUser'],
+  props: ['settings','roles','getProjects','updateReview','putProjectNote','getGroupMembers','teamUrl','getUsers','getLetter','getAgreement','getUserDni','postValidateDni','postRoleUser'],
   data() {
     return {
       user: {}

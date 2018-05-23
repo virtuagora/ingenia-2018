@@ -35,7 +35,7 @@
           <span class="is-hidden-desktop">Mi panel</span>
         </a>
       </b-tooltip>
-      {% if 'admin' in subject.roles %}
+      {% if 'admin' in subject.roles or 'coordin' in subject.roles %}
       <b-tooltip label="Administración" position="is-bottom" class="is-hidden-touch">
         <a class="navbar-item" href="{{path_for('showAdminPanel')}}">
           <span class="icon">

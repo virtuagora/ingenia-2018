@@ -6,6 +6,7 @@ import AdminPanel from './AdminPanel'
 import Overview from './Overview'
 import FechaCierre from './FechaCierre'
 import ListadoProyectos from './ListadoProyectos'
+import ListadoProyectosCoordinadores from './ListadoProyectosCoordinadores'
 import DescargarMatriz from './DescargarMatriz'
 import ListaNegraDNI from './ListaNegraDNI'
 import VerificarDNI from './VerificarDNI'
@@ -60,6 +61,12 @@ const routes = [
         path: 'descargar-matriz',
         component: DescargarMatriz,
         name: 'adminDescargarMatriz',
+        props: true
+      },
+      {
+        path: 'coordinador/proyectos',
+        component: ListadoProyectosCoordinadores,
+        name: 'coordinListado',
         props: true
       }
     ],

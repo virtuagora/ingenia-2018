@@ -14,7 +14,10 @@
         Cargando . . .
       </div>
       <br>
-<router-view ref="adminPanel" id="{{subject.extra.user_id}}" :settings="{{options()|json_encode}}" 
+<router-view ref="adminPanel" id="{{subject.extra.user_id}}" 
+:roles="{{subject.roles|json_encode}}"
+:settings="{{options()|json_encode}}" 
+update-review="{{path_for('updProRev',{'pro': ':pro'})}}"
 get-users="{{path_for('getUsrs')}}" get-projects="{{path_for('lisPro')}}" 
 get-letter="{{path_for('getGroLet',{'gro': ':gro'})}}" get-agreement="{{path_for('getGroAgr',{'gro': ':gro'})}}"
 get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}"

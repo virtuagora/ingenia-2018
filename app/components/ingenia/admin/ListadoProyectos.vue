@@ -78,7 +78,7 @@
       </div>
     </nav>
     <div class="content">
-      <table class="table is-fullwidth">
+            <table class="table is-fullwidth">
         <thead>
           <tr>
             <th class="has-text-centered">
@@ -87,9 +87,22 @@
              <th class="has-text-centered">
               <i class="fa fa-sticky-note"></i>
             </th>
+             <th class="has-text-centered">
+              <i class="fa fa-trophy"></i>
+            </th>
             <th>Nombre</th>
             <th>Equipo</th>
             <th>Categoria</th>
+            <th class="has-text-centered">
+              <b-tooltip label="Puntaje" type="is-dark" position="is-top">
+              <i class="fas fa-check-square"></i>
+              </b-tooltip>
+            </th>
+            <th class="has-text-centered">
+              <b-tooltip label="Monto otorgado" type="is-dark" position="is-top">
+              <i class="fas fa-dollar-sign"></i>
+              </b-tooltip>
+            </th>
             <th class="has-text-centered">
               <b-tooltip label="Cuantos bancan el proyecto?" type="is-dark" position="is-top">
               <i class="em em-muscle"></i>
@@ -125,17 +138,18 @@
               <i class="fas fa-print fa-lg fa-fw"></i>
               </b-tooltip>
             </th>
-            <!-- <th class="has-text-centered">
-              <b-tooltip label="Seleccionar" type="is-dark" position="is-top"> 
+            <th class="has-text-centered">
+              <b-tooltip label="Evaluar" type="is-dark" position="is-top"> 
               <i class="fas fa-arrow-down fa-lg fa-fw"></i>
               </b-tooltip>
-            </th> -->
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="project in projects" :key="project.id">
             <td class="has-text-centered">{{project.id}}</td>
             <td class="has-text-centered"><i class="fas fa-fw" :class="{'fa-sticky-note has-text-link': project.notes != null, 'fa-minus': project.notes == null}"></i></td>
+            <td class="has-text-centered"><i class="fas fa-fw" :class="{'fa-trophy has-text-warning': project.selected, 'fa-minus': !project.selected}"></i></td>
             <td>
               <a @click="cardProyecto(project)">{{project.name}}</a>
             </td>
@@ -145,6 +159,8 @@
             <td>
               <span class="tag is-small is-dark">{{getCategory(project.category_id)}}</span>
             </td>
+            <td class="has-text-centered">{{project.group.quota}}</td>
+            <td class="has-text-centered">{{project.granted_budget}}</td>
             <td class="has-text-centered">{{project.likes}}</td>
             <td class="has-text-centered">
               <i class="fas fa-fw" :class="statusTeam(project)"></i>
@@ -168,16 +184,16 @@
                 <i class="fas fa-print fa-fw"></i>
               </a>
             </td>
-            <!-- <td class="has-text-centered">
-              <a class="has-text-link">
-                <i class="fas fa-star fa-fw"></i>&nbsp;Validar
+           <td class="has-text-centered">
+              <a @click="cardEvaluar(project)" class=" button is-small is-outlined is-400 is-link">
+                Evaluar
               </a>
-            </td> -->
+            </td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="12">
+            <th colspan="16">
               <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
                 <span slot="no-results">
                   <i class="fas fa-info-circle"></i> Fin de los resultados
@@ -199,9 +215,10 @@
 import ModalProyecto from "./ModalProyecto";
 import ModalEquipo from "./ModalEquipo";
 import InfiniteLoading from "vue-infinite-loading";
+import ModalReview from '../utils/ModalReview'
 
 export default {
-  props: ["getProjects", "getGroupMembers","getLetter","getAgreement",'putProjectNote'],
+  props: ["getProjects",'roles', "getGroupMembers","getLetter","getAgreement",'putProjectNote','updateReview'],
   components: {
     InfiniteLoading
   },
@@ -415,7 +432,15 @@ export default {
     },
     showFilters() {
       this.filters = true;
-    }
+    },
+    cardEvaluar: function(pro) {
+      this.$modal.open({
+        parent: this,
+        component: ModalReview,
+        hasModalCard: true,
+        props: { project: pro, budget: (pro.granted_budget ? pro.granted_budget : null), selected: pro.selected, quota: pro.group.quota, url: this.updateReview.replace(':pro',pro.id) }
+      });
+    },
   },
   watch: {
     regionSelected: function(newVal, oldVal) {

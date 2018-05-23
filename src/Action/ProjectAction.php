@@ -66,7 +66,7 @@ class ProjectAction
         ]);
         $resultados = $this->projectResource->retrieve($pagParams);
         $resultados->setUri($request->getUri());
-        if ($this->authorization->checkPermission($subject, 'retDni')) {
+        if ($this->authorization->checkPermission($subject, 'coordin')) {
             $resultados->makeVisible([
                 'notes',
             ]);
@@ -163,7 +163,7 @@ class ProjectAction
         $project = $this->helper->getEntityFromId(
             'App:Project', 'pro', $params
         );
-        if (!$this->authorization->checkPermission($subject, 'retOpt')) {
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
             throw new UnauthorizedException();
         }
         $notes = $this->helper->getSanitizedStr('notes', $request->getParsedBody());

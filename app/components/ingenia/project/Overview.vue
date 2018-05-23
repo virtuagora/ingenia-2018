@@ -3,8 +3,40 @@
 
     <section class="section">
       <div class="container">
+        <div class="notification is-warning has-text-centered" v-if="selected">
+          <h1 class="title is-1"><i class="fas fa-trophy"></i>&nbsp;¡Proyecto seleccionado!</h1>
+        </div>
         <div class="columns">
           <div class="column is-8">
+            <article class="message" v-if="isAdmin || isCoordinator">
+              <div class="message-body">
+                <a @click="showEditObservation = true" v-show="!showEditObservation" class="has-text-link is-pulled-right">
+                  <i class="fas fa-edit fa-lg"></i>
+                </a>
+                <h3 class="is-size-5" :class="{'has-text-danger': errors.has('noteInput')}">
+                  <b>Observaciones</b>
+                </h3>
+                  <div v-if="!showEditObservation">
+                    <p class="nl2br" v-if="notesCopy">{{notesCopy}}</p>
+                    <p class="nl2br" v-else>- Sin notas -</p>
+                  </div>
+                  <div class="field" v-else>
+                    <div class="control ">
+                      <b-input v-model="noteInput" size="is-small" data-vv-name="noteInput" data-vv-as="'Observaciones'" v-validate="'max:1000'" type="textarea" maxlength="1000" rows="2" placeholder="Observaciones">
+                      </b-input>
+                      <span v-show="errors.has('noteInput')" class="help is-danger">
+                        <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('noteInput')}}</span>
+                    </div>
+                <div class="buttons" v-if="sent == false">
+                  <button @click="saveObs()" class="button is-link is-600">Guardar</button>
+                  <button @click="deleteObs()" class="button">Borrar</button>
+                </div>
+                <div class="notification is-success" v-else>
+                  <i class="fas fa-check fa-fw"></i>&nbsp;¡Observación guardada!
+                </div>
+                  </div>
+              </div>
+            </article>
             <h3 class="is-size-3">
               <b>Descripción del proyecto</b>
             </h3>
@@ -160,19 +192,32 @@
 <script>
 import Localidad from "../utils/GetLocalidad";
 export default {
-  props: ["project", "sendRequestJoin"],
+  props: [
+    "project",
+    "sendRequestJoin",
+    "notes",
+    "isAdmin",
+    "isCoordinator",
+    "idCoordinator",
+    "putProjectNote",
+    'selected'
+  ],
   components: {
     Localidad
   },
   data() {
     return {
       user: {},
+      notesCopy: this.notes,
       wannaColaborate: false,
-      message: '',
+      showEditObservation: false,
+      message: "",
       isLoading: false,
       response: {
         ok: false
-      }
+      },
+      noteInput: "",
+      sent: false,
     };
   },
   created: function() {
@@ -223,12 +268,67 @@ export default {
         );
       }
       return "";
-    }
+    },
+    deleteObs() {
+      this.isLoading = true;
+      this.$http
+        .put(this.putProjectNote, {notes: null})
+        .then(response => {
+          this.isLoading = false;
+          this.notesCopy = null
+          this.showEditObservation = false
+          this.$snackbar.open({
+            message: "¡Observacion guardada!",
+            type: "is-success",
+            actionText: "OK"
+          });
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    },
+    saveObs() {
+      this.isLoading = true;
+      this.$http
+        .put(this.putProjectNote, this.payload2)
+        .then(response => {
+          this.notesCopy = this.noteInput
+          this.showEditObservation = false          
+          this.$snackbar.open({
+            message: "¡Observacion guardada!",
+            type: "is-success",
+            actionText: "OK"
+          });
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    },
   },
   computed: {
     payload: function() {
       return {
         comment: this.isOptional(this.message)
+      };
+    },
+    payload2: function() {
+      return {
+        notes: this.isOptional(this.noteInput)
       };
     },
     montoTotal: function() {

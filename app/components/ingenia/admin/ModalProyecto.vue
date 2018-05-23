@@ -4,6 +4,8 @@
       <p class="modal-card-title">{{project.name}}</p>
     </header>
     <section class="modal-card-body">
+      <a :href="'/proyecto/'+project.id" class="button is-link is-outlined is-fullwidth" target="_blank">Ir a la página del proyecto</a>
+      <br>
       <div v-if="sent == false">
         <b-message v-if="project.notes">
           <p class="nl2br">{{project.notes}}</p>
@@ -223,7 +225,6 @@ export default {
           });
           this.isLoading = false;
           this.sent = true;
-          this.forceUpdateState("userPanel");
         })
         .catch(error => {
           console.error(error.message);

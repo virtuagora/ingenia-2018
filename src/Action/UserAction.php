@@ -46,7 +46,7 @@ class UserAction
         ]);
         $resultados = $this->userResource->retrieve($pagParams);
         $resultados->setUri($request->getUri());
-        if ($this->authorization->checkPermission($subject, 'retDni')) {
+        if ($this->authorization->checkPermission($subject, 'coordin')) {
             $resultados->makeVisible([
                 'dni',
             ]);
@@ -233,7 +233,7 @@ class UserAction
         $usuario = $this->helper->getEntityFromId(
             'App:User', 'usr', $params
         );
-        if (!$this->authorization->checkPermission($subject, 'retUsrFull', $usuario)) {
+        if (!$this->authorization->checkPermission($subject, 'coordin', $usuario)) {
             throw new UnauthorizedException();
         }
         $fileData = $this->userResource->getDniFile($usuario);

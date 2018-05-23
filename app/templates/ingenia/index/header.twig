@@ -39,7 +39,7 @@
                   </a>
                 </b-tooltip>
               </div>
-              {% if 'admin' in subject.roles %}
+              {% if 'admin' in subject.roles or 'coordin' in subject.roles %}
             <div class="column is-narrow">
               <b-tooltip label="Ajustes" type="is-dark" position="is-bottom">
 <a href="{{path_for('showAdminPanel')}}" class="">

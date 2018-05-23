@@ -61,6 +61,7 @@
     "vue-masonry": "^0.11.1",
     "vue-recaptcha": "^1.1.0",
     "vue-router": "^3.0.1",
+    "vue-slider-component": "^2.6.2",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.2"
   }

@@ -1,7 +1,19 @@
 <template>
 <div>
   <team-avatars :id="project.group.id" :team-url="teamUrl" :get-group-members="getGroupMembers"></team-avatars>
-  <router-view :project="project" :send-request-join="sendRequestJoin"></router-view>
+  <coordinators 
+   :granted-budget="grantedBudget == '' ? null : grantedBudget"
+   :selected=" selected == '' ? null : selected" 
+   :quota="quota == '' ? null : quota" 
+   :is-admin="isAdmin ? true : false" 
+   :is-coordinator="isCoordinator ? true : null" 
+   :id-coordinator="idCoordinator ? idCoordinator : null"
+   :id="project.id"
+   :update-review="updateReview"
+   :assign-coordinator="assignCoordinator"
+   :delete-coordinator="deleteCoordinator"
+   v-if="isAdmin || isCoordinator"></coordinators>
+  <router-view :put-project-note="putProjectNote" :selected=" selected == '' ? null : selected" :is-admin="isAdmin ? true : false" :is-coordinator="isCoordinator ? true : null" :id-coordinator="idCoordinator ? idCoordinator : null" :notes="notes ? notes : null" :project="project" :send-request-join="sendRequestJoin"></router-view>
       <hr class="is-marginless">
   <section class="section" id="comentarios">
       <div class="container">
@@ -17,11 +29,15 @@
 
 <script>
 import TeamAvatars from './TeamAvatars'
+import Coordinators from './Coordinators'
 import Comments from './Comments'
 export default {
-  props:['project',"getGroupMembers", 'sendRequestJoin', 'teamUrl', 'commentsUrl', 'commentUrl','replyUrl','likeUrl'],
+  props:['project','isAdmin','notes','grantedBudget','selected','quota','isCoordinator',
+  'putProjectNote','idCoordinator', 'updateReview', 'assignCoordinator','deleteCoordinator',
+  "getGroupMembers", 'sendRequestJoin', 'teamUrl', 'commentsUrl', 'commentUrl','replyUrl','likeUrl'],
   components:{
     TeamAvatars,
+    Coordinators,
     Comments
   },
   methods: {

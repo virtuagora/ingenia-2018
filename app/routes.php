@@ -323,7 +323,7 @@ $app->group('/panel', function () {
 
 $app->get('/administracion[/{path:.*}]', function ($req, $res, $arg) {
     $subject = $req->getAttribute('subject');
-    if (!$this->authorization->checkPermission($subject, 'retOpt')) {
+    if (!$this->authorization->checkPermission($subject, 'coordin')) {
         throw new UnauthorizedException();
     }
     return $this->view->render($res, 'ingenia/admin/adminPanel.twig', []);

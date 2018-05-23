@@ -107,13 +107,39 @@
       </navbar-project>
     </div>
   </div>
-  <router-view :project="{{project}}" get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}" 
+  {% if 'admin' in subject.roles or 'coordin' in subject.roles %}
+  <router-view :project="{{project}}" 
+  is-admin="{{'admin' in subject.roles}}" 
+  is-coordinator="{{'coordin' in subject.roles}}" 
+  id-coordinator="{{project.coordin_id}}"
+  notes="{{project.notes}}"
+  granted-budget="{{project.granted_budget}}"
+  selected="{{project.selected}}" 
+  quota="{{project.group.quota}}" 
+update-review="{{path_for('updProRev',{'pro': project.id})}}"
+assign-coordinator="{{path_for('updProCor',{'pro': project.id})}}"
+delete-coordinator="{{path_for('delProCor',{'pro': project.id})}}"  
+  put-project-note="{{path_for('putProNot', {'pro': project.id})}}"
+  get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}" 
   team-url="{{path_for('getGroup',{'gro': ':gro'})}}" 
   send-request-join="{{path_for('runCreGroReq',{'gro': ':gro'})}}"
 comments-url="{{path_for('getProCom', {'pro': project.id})}}"
 comment-url="{{path_for('runCreProCom',{'pro': project.id})}}"
 reply-url="{{path_for('runCreProRep',{'com': ':com'})}}"
 like-url="{{path_for('runCreComVot',{'com': ':com'})}}">
+  {% else %}
+  <router-view :project="{{project}}" 
+  :is-admin="false" 
+  :is-coordinator="false" 
+  :id-coordinator="null"
+  get-group-members="{{path_for('getGroUsr',{'gro': ':gro'})}}" 
+  team-url="{{path_for('getGroup',{'gro': ':gro'})}}" 
+  send-request-join="{{path_for('runCreGroReq',{'gro': ':gro'})}}"
+comments-url="{{path_for('getProCom', {'pro': project.id})}}"
+comment-url="{{path_for('runCreProCom',{'pro': project.id})}}"
+reply-url="{{path_for('runCreProRep',{'com': ':com'})}}"
+like-url="{{path_for('runCreComVot',{'com': ':com'})}}">
+  {% endif %}
     <div class="has-text-centered" style="padding: 3rem 0rem;">
       <span class="is-size-4">
         <i class="fa fa-cog fa-fw fa-spin"></i>
