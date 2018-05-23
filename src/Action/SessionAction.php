@@ -23,13 +23,22 @@ class SessionAction
         if ($result['status'] == 'success') {
             $user = $result['user'];
             $group = $user->groups->first();
-            $session = $this->session->signIn($user->subject->toDummy([
-                'user_id' => $user->id,
-                'group' => [
+            if ($group) {
+                $groupInfo = [
                     'id' => $group->id,
                     'relation' => $group->pivot->relation,
                     'name' => $group->name,
-                ],
+                ];
+            } else {
+                $groupInfo = [
+                    'id' => null,
+                    'relation' => null,
+                    'name' => null,
+                ];
+            }
+            $session = $this->session->signIn($user->subject->toDummy([
+                'user_id' => $user->id,
+                'group' => $groupInfo,
             ]));
             return $response->withRedirect('/');
         } else {
