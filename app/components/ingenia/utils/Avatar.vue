@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.image .img{
+.image img{
   height: 100%;
 }
 </style>
