@@ -252,7 +252,7 @@ class GroupAction
         $group = $this->helper->getEntityFromId(
         'App:Group', 'gro', $params
         );
-        if (!$this->authorization->checkPermission($subject, 'coordin', $group)) {
+        if (!$this->authorization->checkPermission($subject, 'updGroAgreement', $group)) {
             throw new UnauthorizedException();
         }
         $fileData = $this->groupResource->getAgreementFile($group);
@@ -284,7 +284,7 @@ class GroupAction
         $group = $this->helper->getEntityFromId(
         'App:Group', 'gro', $params
         );
-        if (!$this->authorization->checkPermission($subject, 'coordin', $group)) {
+        if (!$this->authorization->checkPermission($subject, 'updGroLetter', $group)) {
             throw new UnauthorizedException();
         }
         $fileData = $this->groupResource->getLetterFile($group);
