@@ -4,7 +4,7 @@
     <b-message>
       Uno de los requerimientos para ser integrante de un equipo INGENIA o presentar un proyecto INGENIA es el de completar tus datos personales. Completá los mismos en el siguiente formulario.
     </b-message>
-    <div class="notification is-warning">IMPORTANTE! NO SUBAS LOS DATOS DEL RESPONSABLE DEL PROYECTO.<br><b>ESTO SON -TUS- DATOS PERSONALES, NO DE OTRA PERSONA.</b></div>
+    <div class="notification is-warning">¡IMPORTANTE! NO SUBAS LOS DATOS DE OTRA PERSONA.<b>ESTO SON -TUS- DATOS PERSONALES.</b></div>
     <label class="label is-size-5">
       <i class="fas fa-angle-double-right"></i> Registro en la plataforma *
     </label>

@@ -51,12 +51,12 @@ const routes = [
         name: 'userInscripcionIngenia',
         props: true
       },
-      {
-        path: 'otras-opciones',
-        component: OtrasOpciones,
-        name: 'userOtrasOpciones',
-        props: true
-      },
+      // {
+      //   path: 'otras-opciones',
+      //   component: OtrasOpciones,
+      //   name: 'userOtrasOpciones',
+      //   props: true
+      // },
       {
         path: 'perfil',
         component: Perfil,
@@ -117,12 +117,12 @@ const routes = [
             name: 'userVerProyecto',
             props: true
           },
-          {
-            path: 'editar',
-            component: EditarProyecto,
-            name: 'userEditarProyecto',
-            props: true
-          },
+          // {
+          //   path: 'editar',
+          //   component: EditarProyecto,
+          //   name: 'userEditarProyecto',
+          //   props: true
+          // },
           {
             path: 'imagen',
             component: SubirImagen,
@@ -160,12 +160,12 @@ const routes = [
             name: 'userVerIntegrantes',
             props: true
           },
-          {
-            path: 'editar',
-            component: EditarEquipo,
-            name: 'userEditarEquipo',
-            props: true
-          },
+          // {
+          //   path: 'editar',
+          //   component: EditarEquipo,
+          //   name: 'userEditarEquipo',
+          //   props: true
+          // },
           {
             path: 'enviar-invitaciones',
             component: EnviarInvitaciones,

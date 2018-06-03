@@ -3,13 +3,16 @@
         <div class="tabs">
   <ul>
     <li :class="{'is-active': $route.name == 'userVerProyecto'}" v-if="user.groups[0].project !== null"><router-link :to="{ name: 'userVerProyecto'}">Ver proyecto</router-link></li>
-    <li :class="{'is-active': $route.name == 'userEditarProyecto'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null"><router-link :to="{ name: 'userEditarProyecto'}">Editar proyecto</router-link></li>
+    <!-- <li :class="{'is-active': $route.name == 'userEditarProyecto'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null"><router-link :to="{ name: 'userEditarProyecto'}">Editar proyecto</router-link></li> -->
     <li :class="{'is-active': $route.name == 'userSubirImagen'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null"><router-link :to="{ name: 'userSubirImagen'}">Subir imagen del proyecto</router-link></li>
   </ul>
 </div>
     <h1 class="subtitle is-3">Mi proyecto de INGENIA</h1>
     <h1 class="title is-1">{{project.name}}</h1>
     <hr>
+    <b-message class="has-text-centered" type="is-warning">
+      La convocatoria ha cerrado, la opcion de editar el proyecto ya no se encuentra más disponible
+    </b-message>
     <a :href="'/proyecto/'+project.id" class="button is-info is-outlined is-fullwidth">Ir a la página del proyecto</a>
     <br>
     <div class="content is-clearfix">

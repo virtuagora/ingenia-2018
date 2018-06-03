@@ -57,7 +57,7 @@
               <router-link :to="{ name: 'userVerEquipo'}" exact-active-class="is-active">Ver mi equipo</router-link>
             </li>
             <li v-if="user.groups[0].pivot.relation == 'responsable'">
-              <router-link :to="{ name: 'userVerIntegrantes'}" exact-active-class="is-active">Ver integrantes y pendientes
+              <router-link :to="{ name: 'userVerIntegrantes'}" exact-active-class="is-active">Ver integrantes e invitaciones
                 <span class="badge is-badge-danger is-badge-small" :class="{'is-hidden': cantSolicitudes == 0}" data-badge="">
                   <i class="fas fa-envelope fa-fw"></i>
                 </span>
@@ -86,14 +86,14 @@
                 <i class="fas fa-fw" :class="{'fa-check has-text-success': user.groups[0].project.organization !== null && user.groups[0].uploaded_letter, 'fa-exclamation has-text-danger': user.groups[0].project.organization !== null && !user.groups[0].uploaded_letter }" :style="$route.name == 'userSubirAvalOrganizacion' ? 'color: white !important;' : ''"></i>&nbsp;Subir carta de aval</router-link>
             </li>
           </ul>
-          <p class="menu-label" v-if="user.groups[0] !== undefined && user.groups[0].pivot.relation == 'responsable'">
+          <!-- <p class="menu-label" v-if="user.groups[0] !== undefined && user.groups[0].pivot.relation == 'responsable'">
             Avanzado
           </p>
           <ul class="menu-list" v-if="user.groups[0] !== undefined && user.groups[0].pivot.relation == 'responsable'">
             <li>
               <router-link :to="{ name: 'userOtrasOpciones'}" exact-active-class="is-active">Otras opciones</router-link>
             </li>
-          </ul>
+          </ul> -->
           <!-- <ul class="menu-list" v-if="user.groups[0] !== undefined && user.groups[0].project !== null && user.groups[0].pivot.relation == 'responsable'">
           <li v-if="user.groups[0].pivot.relation == 'responsable'">
             <router-link :to="{ name: 'userOtrasOpciones'}" exact-active-class="is-active">Otras opciones</router-link>

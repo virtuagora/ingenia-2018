@@ -1,20 +1,26 @@
 <template>
-  <div>
-            <div class="tabs">
-  <ul>
-    <li :class="{'is-active': $route.name == 'userVerProyecto'}" v-if="user.groups[0].project !== null"><router-link :to="{ name: 'userVerProyecto'}">Ver proyecto</router-link></li>
-    <li :class="{'is-active': $route.name == 'userEditarProyecto'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null"><router-link :to="{ name: 'userEditarProyecto'}">Editar proyecto</router-link></li>
-    <li :class="{'is-active': $route.name == 'userSubirImagen'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null"><router-link :to="{ name: 'userSubirImagen'}">Subir imagen del proyecto</router-link></li>
-  </ul>
-</div>
-      <div class="has-text-centered">
-        <img src="/assets/img/ingenia-logo.svg" class="image is-centered" style="max-width: 250px;">
-      </div>
-      <br>
-      <b-message class="has-text-centered">
-        Ingresá aquí todos los datos requeridos sobre el proyecto.
-        <br>¡Estos datos serán visibles para todos los que visiten el punto de encuentro del proyecto! Podes editarlo cuantas veces necesites, hasta el cierre de la convocatoria.
-      </b-message>
+  <div v-if="user.groups[0].project">
+    <div class="tabs">
+      <ul>
+        <li :class="{'is-active': $route.name == 'userVerProyecto'}" v-if="user.groups[0].project !== null">
+          <router-link :to="{ name: 'userVerProyecto'}">Ver proyecto</router-link>
+        </li>
+        <!-- <li :class="{'is-active': $route.name == 'userEditarProyecto'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
+          <router-link :to="{ name: 'userEditarProyecto'}">Editar proyecto</router-link>
+        </li> -->
+        <li :class="{'is-active': $route.name == 'userSubirImagen'}" v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null">
+          <router-link :to="{ name: 'userSubirImagen'}">Subir imagen del proyecto</router-link>
+        </li>
+      </ul>
+    </div>
+    <div class="has-text-centered">
+      <img src="/assets/img/ingenia-logo.svg" class="image is-centered" style="max-width: 250px;">
+    </div>
+    <br>
+    <b-message class="has-text-centered">
+      Ingresá aquí todos los datos requeridos sobre el proyecto.
+      <br>¡Estos datos serán visibles para todos los que visiten el punto de encuentro del proyecto! Podes editarlo cuantas veces necesites, hasta el cierre de la convocatoria.
+    </b-message>
     <section v-if="!editMode || (editMode && fetchResponse.replied && fetchResponse.ok)">
       <div class="notification is-link">
         <h1 class="title is-2 is-700">
@@ -37,6 +43,17 @@
       </div>
     </section>
     <b-loading :active.sync="isLoading"></b-loading>
+  </div>
+  <div v-else>
+    <!-- Mostrar si ya no pueden cargar proyecto -->
+    <div class="has-text-centered">
+      <img src="/assets/img/ingenia-logo.svg" class="image is-centered" style="max-width: 250px;">
+    </div>
+    <br>
+    <b-message class="has-text-centered" type="is-warning">
+      La convocatoria ha cerrado. Ya no puede cargar un proyecto en ingenia.
+    </b-message>
+    <!-- <router-link :to="{ name: 'userOtrasOpciones'}" class="button is-dark is-400">Eliminar el equipo del registro</router-link> -->
   </div>
 </template>
 
@@ -89,14 +106,18 @@ export default {
           this.project.abstract = response.data.abstract;
           this.project.foundation = response.data.foundation;
           this.project.category_id = response.data.category.id;
-          this.project.previous_work = response.data.previous_work ? response.data.previous_work : false;
+          this.project.previous_work = response.data.previous_work
+            ? response.data.previous_work
+            : false;
           this.project.locality_id = response.data.locality_id;
           this.project.locality_other = response.data.locality_other;
           this.project.neighbourhoods = response.data.neighbourhoods;
           this.project.goals = response.data.goals;
           this.project.schedule = response.data.schedule;
           this.project.budget = response.data.budget;
-          this.project.organization = response.data.organization ? response.data.organization : false
+          this.project.organization = response.data.organization
+            ? response.data.organization
+            : false;
           this.fetchResponse.replied = true;
           this.fetchResponse.ok = true;
           this.isLoading = false;
@@ -152,7 +173,7 @@ export default {
                 });
                 this.isLoading = false;
                 this.response.ok = true;
-                this.forceUpdateState('userPanel')
+                this.forceUpdateState("userPanel");
               })
               .catch(error => {
                 console.error(error.message);

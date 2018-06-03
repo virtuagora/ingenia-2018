@@ -402,6 +402,7 @@ export default {
         "fa-check": (pro.organization != null) & pro.group.uploaded_letter,
         "is-hidden": (pro.organization != null) & pro.group.uploaded_letter,
         "fa-times": (pro.organization != null) & !pro.group.uploaded_letter,
+        "has-text-danger": (pro.organization != null) & !pro.group.uploaded_letter,
         "fa-minus": pro.organization == null
       };
     },
