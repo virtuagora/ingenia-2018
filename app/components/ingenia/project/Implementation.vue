@@ -2,6 +2,63 @@
   <section class="section">
     <div class="container">
       <div class="columns">
+        <div class="column is-10 is-offset-1" v-if="project.selected">
+<h3 class="is-size-3">
+              <b>Descripción del proyecto</b>
+            </h3>
+            <p class="nl2br">{{project.abstract}}</p>
+            <br>
+            <h3 class="is-size-3">
+              <b>Fundamentación del proyecto</b>
+            </h3>
+            <p class="nl2br">{{project.foundation}}</p>
+            <br>
+            <div class="notification is-primary">
+              <div class="columns">
+                <div class="column is-hidden-mobile">
+                  <h3 class="is-size-3">
+                    <b>¡Compartilo!</b>
+                  </h3>
+                </div>
+                <div class="column is-narrow has-text-centered-mobile">
+                  <p class="">
+                    <a href="javascript:shareOnFacebook()">
+                      <i class="fab fa-facebook fa-3x fa-fw"></i>
+                    </a>
+                    <a :href="'https://twitter.com/intent/tweet?text=¡Este gran proyecto está participando de INGENIA y necesita tú apoyo! ¡Ingresá y bancalo con tú voto!&url=' + getLocation + '&hashtags=INGENIA,hayEquipo!'">
+                      <i class="fab fa-twitter fa-3x fa-fw"></i>
+                    </a>
+                    <a :href="'whatsapp://send?text=¡Este gran proyecto está participando de INGENIA y necesita tú apoyo! ¡Ingresá y bancalo con tú voto! Visitalo entrando a ' + getLocation">
+                      <i class="fab fa-whatsapp fa-3x fa-fw"></i>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="columns">
+              <div class="column">
+                <h5 class="is-size-4">
+                  <b>Donde se implementará</b>
+                </h5>
+                <Localidad :locality-id="project.locality_id" :locality-other="project.locality_other"></Localidad>
+              </div>
+              <div class="column">
+                <h5 class="is-size-4">
+                  <b>Barrios en que se implementara</b>
+                </h5>
+                <p>{{project.neighbourhoods.join(', ')}}</p>
+              </div>
+            </div>
+            <h5 class="is-size-4">
+              <b>Trabajo previo</b>
+            </h5>
+            <p v-if="project.previous_work">{{project.previous_work}}</p>
+            <p v-else>
+              <i>No presenta trabajo previo</i>
+            </p>
+        </div>
+      </div>
+      <div class="columns">
         <div class="column is-6">
           <h1 class="title is-3"><i class="fas fa-flag-checkered fa-fw"></i>&nbsp;Los objetivos</h1>
           <br>

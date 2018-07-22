@@ -104,16 +104,16 @@
           <li class="{{ headerActive == 'showAcerca' ? 'is-active' }}">
             <a href="{{path_for('showAcerca')}}">¿Que es INGENIA?</a>
           </li>
-          <li class="{{ headerActive == 'showComoParticipar' ? 'is-active' }}">
+          {# <li class="{{ headerActive == 'showComoParticipar' ? 'is-active' }}">
             <a href="{{path_for('showComoParticipar')}}">¿Como participar?</a>
           </li>
           <li class="{{ headerActive == 'showReglamento' ? 'is-active' }}">
             <a href="{{path_for('showReglamento')}}">Reglamento</a>
-          </li>
+          </li> #}
           <li class="{{ headerActive == 'showAyuda' ? 'is-active' }}">
-            <a href="{{path_for('showAyuda')}}"><span class="icon">
-                <i class="fas fa-question-circle"></i> 
-              </span>Ayuda</a>
+            <a href="{{path_for('showAyuda')}}">
+                <i class="fas fa-question-circle fa-fw"></i>&nbsp; 
+              Ayuda</a>
           </li>
         </ul>
       </div>

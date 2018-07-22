@@ -19,12 +19,12 @@ $app->post('/fb-callback', function ($request, $response, $args) {
         $user = $result['user'];
         $group = $user->groups->first();
         $session = $this->session->signIn($user->subject->toDummy([
-        'user_id' => $user->id,
-        'group' => [
-        'id' => $group->id,
-        'relation' => $group->pivot->relation,
-        'name' => $group->name,
-        ],
+            'user_id' => $user->id,
+            'group' => [
+                'id' => $group->id,
+                'relation' => $group->pivot->relation,
+                'name' => $group->name,
+                ],
         ]));
         return $response->withRedirect('/');
     } elseif ($result['status'] == 'pending-user') {
@@ -44,12 +44,12 @@ $app->post('/fb-register', function ($request, $response, $args) {
     $user = $this->identity->registerUser([], $data['token']);
     $group = $user->groups->first();
     $session = $this->session->signIn($user->subject->toDummy([
-    'user_id' => $user->id,
-    'group' => [
-    'id' => $group->id,
-    'relation' => $group->pivot->relation,
-    'name' => $group->name,
-    ],
+        'user_id' => $user->id,
+        'group' => [
+            'id' => $group->id,
+            'relation' => $group->pivot->relation,
+            'name' => $group->name,
+            ],
     ]));
     return $response->withRedirect('/');
 })->setName('fbRegister');
@@ -90,6 +90,7 @@ $app->get('/', function ($request, $response, $args) {
 })->setName('showHome');
 
 $app->get('/reglamento', function ($request, $response, $args) {
+    return $response->withRedirect('/');
     return $this->view->render($response, 'ingenia/index/reglamento.twig', [
     'headerActive' => 'showReglamento'
     ]);
@@ -115,14 +116,15 @@ $app->get('/proyectos', function ($request, $response, $args) {
 
 $app->get('/ayuda', function ($request, $response, $args) {
     return $this->view->render($response, 'ingenia/index/ayuda.twig', [
-    'headerActive' => 'showAyuda'
+        'headerActive' => 'showAyuda'
     ]);
 })->setName('showAyuda');
 
 $app->get('/como-participar', function ($request, $response, $args) {
-    return $this->view->render($response, 'ingenia/index/comoParticipar.twig', [
-    'headerActive' => 'showComoParticipar'
-    ]);
+    return $response->withRedirect('/');
+    // return $this->view->render($response, 'ingenia/index/comoParticipar.twig', [
+    // 'headerActive' => 'showComoParticipar'
+    // ]);
 })->setName('showComoParticipar');
 
 // $app->get('/install[/{extra}]', function ($request, $response, $args) {
@@ -151,7 +153,7 @@ $app->get('/ping', function ($request, $response, $args) {
 $app->get('/test', function ($request, $response, $args) {
     $options = $this->db->query('App:Option')->get()->toArray();
     return $this->view->render($response, 'test/simple.twig', [
-    'text' => $options,
+        'text' => $options,
     ]);
     //return $res->withJSON($this->session->get('user'));
 });
@@ -405,6 +407,12 @@ $app->group('/proyecto', function () {
     });
 });
 
+
+$app->get('/historia/nuevo', function ($request, $response, $args) {
+    return $this->view->render($response, 'ingenia/stories/create.twig', [
+        
+    ]);
+})->setName('ShowNuevaHistoria');
 // $app->get('/proyecto/{pro}', function($request, $response, $params){
 //     $proyecto = $this->helper->getEntityFromId(
 //     'App:Project', 'pro', $params

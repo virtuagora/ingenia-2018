@@ -60,6 +60,9 @@ class ProjectAction
                 'type' => 'integer',
                 'minimum' => 1,
             ],
+            'sel' => [
+                'type' => 'boolean'
+            ],
             's' => [
                 'type' => 'string',
             ],
@@ -94,6 +97,9 @@ class ProjectAction
             'cat' => [
                 'type' => 'integer',
                 'minimum' => 1,
+            ],
+             'sel' => [
+                'type' => 'boolean'
             ],
             's' => [
                 'type' => 'string',

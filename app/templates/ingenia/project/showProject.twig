@@ -70,6 +70,11 @@
             <span class="tag is-white is-large">
               {{project.category.name}}
             </span>
+            {% if project.selected %}
+             <span class="tag is-warning is-large">
+              <i class="fas fa-trophy fa-fw"></i>&nbsp;¡Seleccionado!
+            </span>
+            {% endif %}
           </div>
           <div class="columns">
             <div class="column is-7-tablet is-8-desktop is-9-fullhd">
