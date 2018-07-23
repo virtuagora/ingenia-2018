@@ -327,7 +327,10 @@ nav.projects-filter {
   background-size: cover;
   background-position: center center;
   .hero-body {
-    background-color: rgba(0, 0, 0, 0.2);
+    // background-color: rgba(0, 0, 0, 0.2);
+    border:1px solid #CACACA;
+    border-left: 0;
+    border-right: 0;
     height: 400px;
     .title,
     .subtitle {
