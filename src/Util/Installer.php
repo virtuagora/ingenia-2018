@@ -305,7 +305,17 @@ class Installer
             $table->increments('id');
             $table->string('file')->nullable();
             $table->decimal('amount')->default(0);
+            $table->date('date')->nullable();
             $table->text('detail')->nullable();
+            $table->integer('project_id')->unsigned();
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->timestamps();
+        });
+        $this->db->schema()->create('stories', function($table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->string('picture')->nullable();
+            $table->text('body')->nullable();
             $table->integer('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->timestamps();
