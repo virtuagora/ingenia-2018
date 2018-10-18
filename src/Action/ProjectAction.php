@@ -352,4 +352,29 @@ class ProjectAction
         'project' => $proyecto,
         ]);
     }
+
+    // ==========
+
+    public function getStories($request, $response, $params)
+    {
+        $proId = $this->helper->getSanitizedId('pro', $params);
+        $pagParams = $this->pagination->getParams($request, [
+            // 'usr' => [
+            //     'type' => 'integer',
+            //     'minimum' => 1,
+            // ],
+        ]);
+        $resultados = $this->projectResource->retrieveStories($proId, $pagParams);
+        $resultados->setUri($request->getUri());
+        return $this->pagination->renderResponse($response, $resultados);
+    }
+
+    public function getAllStories($request, $response, $params)
+    {
+        $pagParams = $this->pagination->getParams($request, [
+        ]);
+        $resultados = $this->projectResource->retrieveAllStories($proId, $pagParams);
+        $resultados->setUri($request->getUri());
+        return $this->pagination->renderResponse($response, $resultados);
+    }
 }

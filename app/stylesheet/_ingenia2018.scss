@@ -321,6 +321,9 @@ nav.projects-filter {
 
 .editor .editable {
   outline: 0;
+  border-bottom: 1px solid #eeeeee;
+  padding: 5px;
+  margin-bottom: 5px;
 }
 
 .post-header-image {
@@ -331,7 +334,9 @@ nav.projects-filter {
     border:1px solid #CACACA;
     border-left: 0;
     border-right: 0;
-    height: 400px;
+    width: 100%;
+    padding: 100% 0 0 0; /* 1:1 Aspect Ratio */
+    // position: relative; /* If you want text inside of it */
     .title,
     .subtitle {
       text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);

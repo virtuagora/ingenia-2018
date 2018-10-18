@@ -1,100 +1,68 @@
 {% set show_footer = false %}
 {% set show_navbar = false %}
-{# set body_class = '' #}
 
 {% extends 'master.twig' %}
+{% block title %}Crear historia{% endblock %}
 {% block stylesheets %}{% endblock %}
 {% block scriptshead %}
-  {# <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script> #}
 {% endblock %}
 {% block body %}
-  <div class="notification is-radiusless is-primary has-text-centered">
-    <i class="fas fa-star fa-fw"></i> Creando una nueva historia
+  <div class="notification is-radiusless is-primary has-text-centered is-clearfix">
+    <a href="{{path_for('showHome')}}">
+    <img src="{{asset('img/ingenia2018.svg')}}" class="image is-pulled-left" style="height: 22px;">
+    </a>
+    <i class="fas fa-star fa-fw"></i>
+    Creando una nueva historia
   </div>
-  <div class="container">
-  <form action="#" enctype="multipart/form-data" id="form-post" method="POST">
-    {# <section class="post-header-image hero is-dark is-medium" id="header-post-cover">
-      <div class="hero-body">
-        <div class="container">
-          <div class="columns">
-            <div class="column is-6 is-offset-3">
-              <div class="box">
-                <div class="field">
-                  <label class="label">Título del post</label>
-                  <div class="control">
-                    <input class="input input-title is-medium" name="post-titulo" type="text">
-                  </div>
-                </div>
-                <div class="field">
-                  <label class="label">Bajada de la noticia (Descripción)</label>
-                  <div class="control">
-                    <textarea class="textarea input-subtitle autosize-area" name="post-descripcion" type="text"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> #}
-    <div class="section">
-      <div class="columns">
-        <div class="column is-6 is-offset-3 post-content editor-box">
-          <p></p>
-          <div class="field">
-            <div class="control">
-              <textarea class="input input-title autosize-area is-large" name="post-titulo" placeholder="El título de tu historia"></textarea>
-            </div>
-          </div>
-          <section class="post-header-image hero is-light is-medium" id="header-post-cover">
-            <div class="hero-body"></div>
-          </section>
-          <br>
-          <div class="content is-medium editor">
-            <div class="editable"></div>
-          </div>
-          <br>
-          <div class="content has-text-right">
-            <i>- Escrito por el equipo "Sarasa", Proyecto "Lalala"</i>
-            <br>
-            <i class="fas fa-calendar fa-fw"></i>&nbsp;<i>{{"now"|date("m/d/Y")}}</i>
-          </div>
-        </div>
-        <div class="column is-3">
-          <section class="section">
-            <div class="file has-name is-boxed">
+  <div class="container is-fluid">
+    <form action="{{path_for('postNuevaHistoria', {'gro': group.id})}}" enctype="multipart/form-data" id="form-post" method="POST">
+      <div class="section">
+        <div class="columns">
+          <div class="column is-4 is-offset-4 post-content editor-box">
+            <div class="file has-name is-fullwidth">
               <label class="file-label">
-                <input accept="image/jpeg" class="file-input" id="file-cover" name="post-cover" type="file" onchange="changeCover()"/>
+                <input accept="image/jpeg" class="file-input" id="file-cover" name="post-cover" type="file" onchange="changeCover()">
                 <span class="file-cta">
                   <span class="file-icon">
-                    <i class="fa fa-upload"></i>
+                    <i class="fas fa-upload"></i>
                   </span>
                   <span class="file-label">
-                    Subir imagen cabezal
+                    Elegí una foto..
                   </span>
                 </span>
                 <span class="file-name">
-                  <span id="filename-cover">Elija un archivo...</span>
+                  <span id="filename-cover"></span>
                 </span>
               </label>
             </div>
             <br>
-            <button class="button is-primary is-medium is-outlined" onclick="submitPost()"><i class="fa fa-paper-plane fa-fw"></i>&nbsp;Postear</button>
+            <section class="post-header-image hero is-light" id="header-post-cover">
+              <div class="hero-body"></div>
+            </section>
+            <br>
+            <div class="content editor">
+              <div class="editable"></div>
+            </div>
+            <div class="content has-text-left is-size-7">
+              <i class="fas fa-calendar fa-fw"></i>&nbsp;<i>{{"now"|date("m/d/Y")}}</i> - <i> Grupo <b>"{{group.name}}"</b> - Proyecto "{{project.name}}"</i>
+              <br>
+            </div>
+              <button class="button is-primary is-medium is-outlined is-fullwidth" onclick="submitPost()"><i class="fa fa-paper-plane fa-fw"></i>&nbsp;Postear historia</button>
+
           </div>
-        </section>
+        </div>
       </div>
+      <input id="input-post-cuerpo" name="post-cuerpo" type="hidden"/>
+    </form>
+  </div>
+  <section class="section">
+    <div class="container has-text-centered">
+      <br>
+      <img src="{{asset('img/slogan3-dark.svg')}}" class="image is-hidden-touch" style="height: 50px; margin: 0 auto;">
+      <img src="{{asset('img/slogan4-dark.svg')}}" class="image is-hidden-desktop" style="width: 100px; margin: 0 auto;">
+      <br>
     </div>
-    <input id="input-post-cuerpo" name="post-cuerpo" type="hidden"/>
-  </form>
-  </div>
-<section class="section">
-  <div class="container has-text-centered">
-    <br>
-    <img src="{{asset('img/slogan3-dark.svg')}}" class="image is-hidden-touch" style="height: 70px; margin: 0 auto;">
-    <img src="{{asset('img/slogan4-dark.svg')}}" class="image is-hidden-desktop" style="width: 150px; margin: 0 auto;">
-    <br>
-  </div>
-</section>
+  </section>
 {% endblock %}
 
 {% block javascripts %}

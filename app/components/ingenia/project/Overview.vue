@@ -55,7 +55,7 @@
               </div>
             </article>
             <hr>
-            <stories v-if="project.selected"></stories>
+            <stories v-if="project.selected" :isAdmin="isAdmin" :isCoordinator="isCoordinator" :project-id="project.id"></stories>
             <div v-if="project.selected">
               <router-link :to="{ name: 'projectImplementation'}" class="button is-black is-outlined is-medium is-fullwidth">¿Queres saber de que se trata? Hacé clic acá</router-link>
             </div>

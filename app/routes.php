@@ -2,6 +2,7 @@
 
 // misc
 
+use App\Util\Exception\AppException;
 use App\Util\Exception\UnauthorizedException;
 
 // pantalla con botón login con facebook
@@ -24,16 +25,16 @@ $app->post('/fb-callback', function ($request, $response, $args) {
                 'id' => $group->id,
                 'relation' => $group->pivot->relation,
                 'name' => $group->name,
-                ],
+            ],
         ]));
         return $response->withRedirect('/');
     } elseif ($result['status'] == 'pending-user') {
         return $this->view->render($response, 'base/facebook-registro.twig', [
-        'token' => $result['token'],
+            'token' => $result['token'],
         ]);
     } else {
         return $this->view->render($response, 'test/fb-login-link.twig', [
-        'link' => $result['status'],
+            'link' => $result['status'],
         ]);
     }
 })->setName('fbCallbackGet');
@@ -49,7 +50,7 @@ $app->post('/fb-register', function ($request, $response, $args) {
             'id' => $group->id,
             'relation' => $group->pivot->relation,
             'name' => $group->name,
-            ],
+        ],
     ]));
     return $response->withRedirect('/');
 })->setName('fbRegister');
@@ -58,7 +59,7 @@ $app->post('/fb-register', function ($request, $response, $args) {
 $app->get('/idle', function ($request, $response, $args) {
     $sub = $request->getAttribute('subject');
     return $this->view->render($response, 'test/simple.twig', [
-    'text' => $sub->getType(),
+        'text' => $sub->getType(),
     ]);
 });
 
@@ -67,15 +68,33 @@ $app->get('/logout', function ($request, $response, $args) {
     return $response->withRedirect('/');
 })->setName('showLogout');
 
-
 ///
 
 $app->get('/', function ($request, $response, $args) {
+    $subject = $request->getAttribute('subject')->toArray();
+    if ( $subject['type'] != 'Annonymous') {
+        $user = $this->helper->getUserFromSubject($request->getAttribute('subject'));
+        $group = $user->groups()->first();
+        if (is_null($group)) {
+            return $this->view->render($response, 'index.twig', [
+                'groupId' => null,
+                'showCreateStory' => false,
+                'headerActive' => 'showHome',
+            ]);
+        }
+        if (!is_null($group->project) && $group->project->selected == true) {
+            return $this->view->render($response, 'index.twig', [
+                'groupId' => $group->id,
+                'showCreateStory' => true,
+                'headerActive' => 'showHome',
+            ]);
+        }
+    }
     // $this->logger->info('Hello!');
     return $this->view->render($response, 'index.twig', [
-    // 'name' => 'hello!',
-    // 'sub' => $request->getAttribute('subject'),
-    'headerActive' => 'showHome'
+        'groupId' => null,
+        'showCreateStory' => false,
+        'headerActive' => 'showHome',
     ]);
     // if ($request->getAttribute('subject')->getType() != 'Annonymous') {
     //     return $this->view->render($response, 'index.twig', [
@@ -92,31 +111,31 @@ $app->get('/', function ($request, $response, $args) {
 $app->get('/reglamento', function ($request, $response, $args) {
     return $response->withRedirect('/');
     return $this->view->render($response, 'ingenia/index/reglamento.twig', [
-    'headerActive' => 'showReglamento'
+        'headerActive' => 'showReglamento',
     ]);
 })->setName('showReglamento');
 
 $app->get('/acerca', function ($request, $response, $args) {
     return $this->view->render($response, 'ingenia/index/acerca.twig', [
-    'headerActive' => 'showAcerca'
+        'headerActive' => 'showAcerca',
     ]);
 })->setName('showAcerca');
 
 $app->get('/privacidad', function ($request, $response, $args) {
     return $this->view->render($response, 'ingenia/index/privacidad.twig', [
-    'headerActive' => 'showPrivacidad'
+        'headerActive' => 'showPrivacidad',
     ]);
 })->setName('showPrivacidad');
 
 $app->get('/proyectos', function ($request, $response, $args) {
     return $this->view->render($response, 'ingenia/index/proyectos.twig', [
-    'headerActive' => 'showCatalogo'
+        'headerActive' => 'showCatalogo',
     ]);
 })->setName('showCatalogo');
 
 $app->get('/ayuda', function ($request, $response, $args) {
     return $this->view->render($response, 'ingenia/index/ayuda.twig', [
-        'headerActive' => 'showAyuda'
+        'headerActive' => 'showAyuda',
     ]);
 })->setName('showAyuda');
 
@@ -144,29 +163,29 @@ $app->get('/como-participar', function ($request, $response, $args) {
 // });
 
 $app->get('/ping', function ($request, $response, $args) {
-    if($request->getAttribute('subject')->getType() != 'Annonymous'){
-        return $response->withJSON(['message' => 'Pong!' ]);
+    if ($request->getAttribute('subject')->getType() != 'Annonymous') {
+        return $response->withJSON(['message' => 'Pong!']);
     }
     return $response->withJSON(['message' => 'Login']);
 });
 
-$app->get('/test', function ($request, $response, $args) {
-    $options = $this->db->query('App:Option')->get()->toArray();
-    return $this->view->render($response, 'test/simple.twig', [
-        'text' => $options,
-    ]);
-    //return $res->withJSON($this->session->get('user'));
-});
+// $app->get('/test', function ($request, $response, $args) {
+//     $options = $this->db->query('App:Option')->get()->toArray();
+//     return $this->view->render($response, 'test/simple.twig', [
+//         'text' => $options,
+//     ]);
+//     //return $res->withJSON($this->session->get('user'));
+// });
 
 // views
 
 $app->get('/login', function ($request, $response, $args) {
     if ($request->getAttribute('subject')->getType() != 'Annonymous') {
-        return $response->withRedirect('/');
+        return $response->withRedirect('/');    
     }
     return $this->view->render($response, 'base/login.twig', [
-    'facebookKey' => $this->get('settings')['facebook']['app_id'],
-    'googleKey' => $this->get('settings')['recaptcha']['public_key'],
+        'facebookKey' => $this->get('settings')['facebook']['app_id'],
+        'googleKey' => $this->get('settings')['recaptcha']['public_key'],
     ]);
 })->setName('showLogin');
 
@@ -180,13 +199,13 @@ $app->get('/sign-up', function ($request, $response, $args) {
 $app->get('/complete-sign-up', function ($request, $response, $args) {
     $token = $request->getQueryParam('token');
     $pending = $this->db->query('App:PendingUser')
-    ->where('token', $token)
-    ->first();
+        ->where('token', $token)
+        ->first();
     if (is_null($pending)) {
         return $response->withRedirect('/');
     }
     return $this->view->render($response, 'base/completar-registro.twig', [
-    'activation_key' => $token,
+        'activation_key' => $token,
     ]);
 })->setName('showCompleteSignUp');
 
@@ -244,6 +263,7 @@ $app->post('/project/{pro}/comment', 'projectAction:postComment')->setName('runC
 $app->post('/comment/{com}/reply', 'projectAction:postReply')->setName('runCreProRep');
 $app->post('/comment/{com}/vote', 'projectAction:postCommentVote')->setName('runCreComVot');
 $app->get('/project/{pro}/comment', 'projectAction:getComments')->setName('getProCom');
+$app->get('/project/{pro}/stories', 'projectAction:getStories')->setName('getProStories');
 
 $app->post('/project/{pro}/review', 'projectAction:postReview')->setName('updProRev');
 $app->post('/project/{pro}/coordin', 'projectAction:postCoordin')->setName('updProCor');
@@ -257,14 +277,14 @@ $app->get('/complete-restore/{usr}/{tkn}', function ($request, $response, $args)
     $usr = $args['usr'];
     $tkn = $args['tkn'];
     $pending = $this->db->query('App:User')
-    ->where('token', $tkn)
-    ->first();
+        ->where('token', $tkn)
+        ->first();
     if (is_null($pending)) {
         return $response->withRedirect('/');
     }
     return $this->view->render($response, 'base/completar-password.twig', [
-    'activation_key' => $tkn,
-    'user' => $usr
+        'activation_key' => $tkn,
+        'user' => $usr,
     ]);
 })->setName('runPassReset');
 $app->post('/restore-password/{usr}', 'userAction:postPasswordRestore')->setName('runRestorePassword');
@@ -272,16 +292,16 @@ $app->post('/user', 'userAction:post')->setName('runNewUser');
 
 $app->post('/project/{pro}/picture', 'projectAction:postPicture')->setName('runUpdProPic');
 $app->get('/project/{pro}/picture', function ($request, $response, $params) {
-    $path = 'project/'.$this->helper->getSanitizedId('pro', $params).'.jpg';
+    $path = 'project/' . $this->helper->getSanitizedId('pro', $params) . '.jpg';
     if (!$this->filesystem->has($path)) {
         throw new \App\Util\Exception\AppException(
-        'El documento no se encuentra almacenado',
-        404
+            'El documento no se encuentra almacenado',
+            404
         );
     }
     return $response
-    ->withBody(new \Slim\Http\Stream($this->filesystem->readStream($path)))
-    ->withHeader('Content-Type', $this->filesystem->getMimetype($path));
+        ->withBody(new \Slim\Http\Stream($this->filesystem->readStream($path)))
+        ->withHeader('Content-Type', $this->filesystem->getMimetype($path));
 })->setName('getProPic');
 
 // guille
@@ -343,13 +363,13 @@ $app->group('/account', function () {
 });
 
 $app->group('/usuario', function () {
-    $this->get('/{usr}', function($request, $response, $params){
+    $this->get('/{usr}', function ($request, $response, $params) {
         $usuario = $this->helper->getEntityFromId(
-        'App:User', 'usr', $params, ['groups.project']
+            'App:User', 'usr', $params, ['groups.project']
         );
         $usuario->addVisible(['groups']);
         return $this->view->render($response, 'ingenia/user/showUser.twig', [
-        'user' => $usuario,
+            'user' => $usuario,
         ]);
     })->setName('showProfile');
 });
@@ -357,7 +377,7 @@ $app->group('/usuario', function () {
 $app->get('/project/{pro}/print', function ($request, $response, $params) {
     $subject = $request->getAttribute('subject');
     $proyecto = $this->helper->getEntityFromId(
-    'App:Project', 'pro', $params, ['group']
+        'App:Project', 'pro', $params, ['group']
     );
     if (!$this->authorization->checkPermission($subject, 'coordin', $proyecto)) {
         throw new UnauthorizedException();
@@ -368,22 +388,22 @@ $app->get('/project/{pro}/print', function ($request, $response, $params) {
     //     $orgLoc = $this->db->query('App:Locality')->where('id', $proyecto->organization['locality_id'])->first();
     // }
     return $this->view->render($response, 'ingenia/project/printProject.twig', [
-    'project' => $proyecto,
-    // 'orgLoc' => $orgLoc
+        'project' => $proyecto,
+        // 'orgLoc' => $orgLoc
     ]);
 })->setName('printPro');
 
 $app->group('/proyecto', function () {
-    $this->get('/{pro}', function($request, $response, $params) {
+    $this->get('/{pro}', function ($request, $response, $params) {
         $subject = $request->getAttribute('subject');
         $proyecto = $this->helper->getEntityFromId(
-        'App:Project', 'pro', $params, ['category']
+            'App:Project', 'pro', $params, ['category']
         );
         if ($subject->getType() == 'User') {
             $voted = !is_null(
-            $proyecto->voters()
-            ->where('user_id', $subject->getExtra()['user_id'])
-            ->first()
+                $proyecto->voters()
+                    ->where('user_id', $subject->getExtra()['user_id'])
+                    ->first()
             );
         } else {
             $voted = false;
@@ -391,28 +411,122 @@ $app->group('/proyecto', function () {
         $proyecto->addVisible(['category_id']);
         // return $response->withJSON($proyecto->toArray());
         return $this->view->render($response, 'ingenia/project/showProject.twig', [
-        'project' => $proyecto,
-        'voted' => $voted,
+            'project' => $proyecto,
+            'voted' => $voted,
         ]);
     })->setName('showProject');
-    $this->get('/{pro}/[{path:.*}]', function($request, $response, $params){
+    $this->get('/{pro}/[{path:.*}]', function ($request, $response, $params) {
         $proyecto = $this->helper->getEntityFromId(
-        'App:Project', 'pro', $params
+            'App:Project', 'pro', $params
         );
-        $proyecto->addVisible(['goals', 'schedule', 'budget','category_id']);
+        $proyecto->addVisible(['goals', 'schedule', 'budget', 'category_id']);
         // return $response->withJSON($proyecto->toArray());
         return $this->view->render($response, 'ingenia/project/showProject.twig', [
-        'project' => $proyecto,
+            'project' => $proyecto,
         ]);
     });
 });
 
+$app->get('/grupo/{gro}/historia/nuevo', function ($request, $response, $args) {
+    $subject = $request->getAttribute('subject');
+    $group = $this->helper->getEntityFromId(
+        'App:Group', 'gro', $args, ['invitations']
+    );
+    if (!$this->authorization->checkPermission($subject, 'retGroFull', $group)) {
+        throw new UnauthorizedException();
+    }
+    if (is_null($group->project)) {
+        throw new AppException('El grupo no puede acceder al recurso');
+    }
+    if ($group->project->selected == false) {
+        throw new AppException('El proyecto no puede subir historias');
+    }
 
-$app->get('/historia/nuevo', function ($request, $response, $args) {
     return $this->view->render($response, 'ingenia/stories/create.twig', [
-        
+        'group' => $group,
+        'project' => $group->project,
     ]);
-})->setName('ShowNuevaHistoria');
+})->setName('showNuevaHistoria');
+
+$app->post('/grupo/{gro}/historia/nuevo', function ($request, $response, $args) {
+    $subject = $request->getAttribute('subject');
+    $group = $this->helper->getEntityFromId(
+        'App:Group', 'gro', $args, ['invitations']
+    );
+    if (!$this->authorization->checkPermission($subject, 'retGroFull', $group)) {
+        throw new UnauthorizedException();
+    }
+    if (is_null($group->project)) {
+        throw new AppException('El grupo no puede acceder al recurso');
+    }
+    if ($group->project->selected == false) {
+        throw new AppException('El proyecto no puede subir historias');
+    }
+    // BODY
+    $data = $request->getParsedBody();
+    // IMAGE
+    $imgFile = $request->getUploadedFiles()['post-cover'];
+
+    if ($imgFile->getError() == UPLOAD_ERR_NO_FILE) {
+        throw new AppException('No se envió archivo');
+    } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
+        throw new AppException(
+            'Hubo un error con el archivo recibido (' . $imgFile->getError() . ')'
+        );
+    }
+    $fileMime = $imgFile->getClientMediaType();
+    $allowedMimes = [
+        'image/jpeg' => 'jpg',
+        'image/pjpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/gif' => 'gif',
+    ];
+    if (!isset($allowedMimes[$fileMime])) {
+        throw new AppException('Tipo de archivo inválido');
+    }
+    $imgStrm = $this->image->make($imgFile->getStream()->detach())
+        ->fit(800, 800, function ($constraint) {
+            $constraint->upsize();
+        })
+        ->encode('jpg', 92);
+    $story = $this->db->new('App:Story');
+    $story->body = $data['post-cuerpo'];
+    $story->project()->associate($group->project);
+    $story->save();
+    $fileName = 'story-' . $story->id . '.jpg';
+    $story->picture = $fileName;
+    $story->save();
+    $this->filesystem->put('stories/' . $fileName, $imgStrm);
+    if (is_resource($imgStrm)) {
+        fclose($imgStrm);
+    }
+    // if (!$project->has_image) {
+    //     $project->has_image = true;
+    //     $project->save();
+    // }
+    $story = $this->db->new('App:Story');
+    $story->picture = $fileName;
+    $story->body = $data['post-cuerpo'];
+    $story->project()->associate($group->project);
+    return $this->view->render($response, 'ingenia/stories/create.twig', [
+    ]);
+})->setName('postNuevaHistoria');
+
+$app->get('/stories/images/{sto}', function ($request, $response, $params) {
+    $path = 'stories/story-' . $this->helper->getSanitizedId('sto', $params) . '.jpg';
+    if (!$this->filesystem->has($path)) {
+        throw new \App\Util\Exception\AppException(
+            'El documento no se encuentra almacenado',
+            404
+        );
+    }
+    return $response
+        ->withBody(new \Slim\Http\Stream($this->filesystem->readStream($path)))
+        ->withHeader('Content-Type', $this->filesystem->getMimetype($path));
+})->setName('getStoryPic');
+
+$app->get('/stories/all', 'projectAction:getAllStories')->setName('getAllStories');
+
 // $app->get('/proyecto/{pro}', function($request, $response, $params){
 //     $proyecto = $this->helper->getEntityFromId(
 //     'App:Project', 'pro', $params
@@ -442,6 +556,5 @@ $app->get('/historia/nuevo', function ($request, $response, $args) {
 //     return $this->view->render($res, 'test3.twig', [
 //     ]);
 // });
-
 
 // $app->post('/testing/comment', 'testingAction:commentNodeAction')->setName('commentNode');

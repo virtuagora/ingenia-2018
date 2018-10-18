@@ -39,6 +39,7 @@ import FBRegister from './ingenia/FBRegister'
 import CompletarRegistro from './ingenia/CompletarRegistro'
 import CompletarResetPassword from './ingenia/CompletarResetPassword'
 import Catalogo from './ingenia/catalogo/Catalogo'
+import ShowStories from './ingenia/catalogo/ShowStories'
 import ProjectCarousel from './ingenia/catalogo/ProjectCarousel'
 import ProjectCarouselSmall from './ingenia/catalogo/ProjectCarouselSmall'
 import GetLocalidad from './ingenia/utils/GetLocalidad'
@@ -152,6 +153,7 @@ window.vm = new Vue({ // eslint-disable-line no-new
     CompletarRegistro,
     CompletarResetPassword,
     Catalogo,
+    ShowStories,
     ProjectCarousel,
     GetLocalidad,
     VoteProject,

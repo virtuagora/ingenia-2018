@@ -520,4 +520,26 @@ class ProjectResource extends Resource
         $project->save();
         return true;
     }
+
+    // ===============
+
+    public function retrieveStories($proId, $options)
+    {
+        $query = $this->db->query('App:Story')->where('project_id', $proId)->orderBy('created_at', 'DESC');
+        // if (isset($options['usr'])) {
+        //     $query->where('author_id', $options['usr']);
+        // }
+        $results = new Paginator($query, $options);
+        return $results;
+    }
+
+    public function retrieveAllStories($proId, $options)
+    {
+        $query = $this->db->query('App:Story')->orderBy('created_at', 'DESC');
+        // if (isset($options['usr'])) {
+        //     $query->where('author_id', $options['usr']);
+        // }
+        $results = new Paginator($query, $options);
+        return $results;
+    }
 }

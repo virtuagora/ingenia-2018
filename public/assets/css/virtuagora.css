@@ -27950,6 +27950,9 @@ nav.projects-filter .taginput input.taginput-container.is-focusable,
 
 .editor .editable {
   outline: 0;
+  border-bottom: 1px solid #eeeeee;
+  padding: 5px;
+  margin-bottom: 5px;
 }
 
 .post-header-image {
@@ -27958,8 +27961,12 @@ nav.projects-filter .taginput input.taginput-container.is-focusable,
 }
 
 .post-header-image .hero-body {
-  background-color: rgba(0, 0, 0, 0.2);
-  height: 400px;
+  border: 1px solid #CACACA;
+  border-left: 0;
+  border-right: 0;
+  width: 100%;
+  padding: 100% 0 0 0;
+  /* 1:1 Aspect Ratio */
 }
 
 .post-header-image .hero-body .title,

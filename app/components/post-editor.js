@@ -18,12 +18,15 @@ var editor = new MediumEditor('.editable', {
       'justifyCenter',
       'justifyFull'
     ],
-    allowMultiParagraphSelection: false
+    allowMultiParagraphSelection: false,
   },
+    anchor: {
+        placeholderText: 'Escriba la URL',
+    },
   placeholder: {
     /* This example includes the default options for placeholder,
        if nothing is passed this is what it used */
-    text: 'Comience a tipear el articulo. ¡Seleccione el texto para otras opciones!',
+    text: 'Escribí algo de la foto =)',
     hideOnClick: true
   }
 });
