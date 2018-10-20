@@ -21,6 +21,7 @@ import VerProyecto from './proyecto/VerProyecto'
 import EditarProyecto from './proyecto/EditarProyecto'
 import SubirImagen from './proyecto/SubirImagen'
 import SubirAvalOrganizacion from './proyecto/SubirAvalOrganizacion'
+import SubirRecibos from './proyecto/SubirRecibos'
 import EnviarProyecto from './proyecto/EnviarProyecto'
 
 import Equipo from './equipo/Equipo'
@@ -133,6 +134,12 @@ const routes = [
             path: 'aval',
             component: SubirAvalOrganizacion,
             name: 'userSubirAvalOrganizacion',
+            props: true
+          },
+          {
+            path: 'recibos',
+            component: SubirRecibos,
+            name: 'userSubirRecibos',
             props: true
           },
           {

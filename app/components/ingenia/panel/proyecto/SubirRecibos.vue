@@ -1,0 +1,199 @@
+<template>
+  <div>
+    <h1 class="subtitle is-3">Recibos / Comprobantes de compra</h1>
+    <p>Aquí vas a poder presentar los comprobantes de las compras hechas para la realización del proyecto. Recorda que este paso es requerido para cuando finalice el proyecto.</p>
+    <br>
+    <div class="notification is-warning">
+      <b>Nota:</b> Aun asi, recordá guardar los comprobantes originales.
+    </div>
+    <div class="card">
+      <div class="card-content">
+        <h1 class="subtitle is-4"><i class="fa fa-plus"></i> Subir nuevo recibo</h1>
+        <form :action="formUrl" ref="formReceipt" method="post" enctype="multipart/form-data">
+          <hr>
+          <div class="field">
+            <label class="label">Fecha del comprobante</label>
+          <b-datepicker placeholder="Hace clic para seleccionar la fecha" v-model="inputReciboFecha" :mobile-native="false" :date-formatter="(date) => date.toLocaleDateString('es-AR')" icon="calendar-alt">
+            </b-datepicker>
+            <span v-show="errors.has('inputReciboFecha')" class="help is-danger">
+              <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('inputReciboFecha')}}</span>
+            <input type="hidden" v-model="fechaFinal" v-validate="'required'" name="fecha">
+          </div>
+          <div class="field">
+            <label class="label">Detalle</label>
+            <div class="control">
+              <input class="input" name="detalle" type="text" v-validate="'required'" placeholder="Escribi el detalle de la compra (Ej: Productos y/o lugar donde lo compraste">
+              <div class="help">Si son varios productos, listalos en el campo.</div>
+            <span v-show="errors.has('detalle')" class="help is-danger"><i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('detalle')}}</span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Monto</label>
+            <div class="control">
+              <input class="input" name="monto" v-validate="'required|numeric'" type="text" placeholder="Monto en AR$">
+          <span v-if="errors.has('monto')" class="help is-danger">
+            <i class="fas fa-times-circle fa-fw"></i>&nbsp;{{errors.first('monto')}}</span>
+          <span v-else class="help">Ingrese números sin decimal, puntos o comas</span>
+            </div>
+          </div>
+          <b>Foto/Archivo del comprobante</b>
+          <p>Requerido. Debe ser un archivo .JPG, .JPEG, .PDF, .DOC o .DOCX de hasta 3MB como máximo.</p>
+          <br>
+          <b-field class="file">
+            <b-upload v-model="files" name="archivo" v-validate="'required|size:3072|mimes:application/pdf,invalid/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/jpeg,image/pjpeg'">
+              <a class="button is-link">
+                <b-icon icon="upload"></b-icon>
+                <span>Click para cargar</span>
+              </a>
+            </b-upload>
+            <span class="file-name" style="max-width: none;">
+              {{ files && files.length ? files[0].name : 'Seleccione un archivo para subir...' }}
+            </span>
+          </b-field>
+          <p v-show="errors.has('archivo')" class="has-text-danger is-size-7">Por favor, comproba que el archivo cumpla con las condiciones; Es requerido. Debe ser un archivo .JPG, .JPEG, .PDF, .DOC o .DOCX de hasta 3MB como máximo.</p>
+          <hr>
+          <div class="field">
+            <div class="control is-clearfix">
+              <a @click="submit" type="submit" class="button is-info is-pulled-right" :class="{'is-loading': isLoading}">
+                <i class="fa fa-paper-plane fa-fw"></i>&nbsp;Enviar</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <br>
+    <table class="table is-fullwidth">
+      <thead>
+        <th width="130px">Fecha compra</th>
+        <th>Detalle</th>
+        <th class="has-text-centered" width="100px">Monto</th>
+        <th class="has-text-centered" width="80px">Acción</th>
+      </thead>
+      <tbody>
+        <tr v-for="recibo in recibos" :key="recibo.id">
+          <td>
+            {{recibo.date.split(' ')[0]}}
+          </td>
+          <td class="is-size-7">{{recibo.detail}}</td>
+          <td class="has-text-centered">$ {{recibo.amount.split('.')[0]}}</td>
+          <td class="has-text-centered">
+            <a :href="'/project/' + projectId + '/receipts/' + recibo.id" target="_blank" class="button is-small is-outlined is-primary"><i class="fas fa-download fa-fw"></i></a>
+          </td>
+        </tr>
+        <tr v-if="recibos.length == 0">
+          <td colspan="4" class="has-text-centered">Aún no se cargaron recibos</td>
+        </tr>
+      </tbody>
+    </table>
+    <b-loading :is-full-page="true" :active.sync="isLoading"></b-loading>
+  </div>
+</template>
+
+<script>
+export default {
+  props: [],
+  data() {
+    return {
+      // pendiente: false,
+      // rechazado: false,
+      // verificado: false,
+      inputReciboFecha: null,
+      fechaFinal: '',
+      recibos: [],
+      isLoading: false,
+      files: [],
+      formUrl:
+        "/project/" + this.$store.state.user.groups[0].project.id + "/receipts"
+      // user: {},
+      // verifying: true
+    };
+  },
+  created: function() {
+    this.user = this.$store.state.user;
+  },
+  mounted: function() {
+    this.getRecibos();
+    // this.forceUpdateState("userPanel")
+    //   .then(user => {
+    //     this.user = this.$store.state.user;
+    //     this.verifying = false;
+    //   })
+    //   .catch(e => {
+    //     this.$snackbar.open({
+    //       message: "Error al verificar la carta de aval.",
+    //       type: "is-danger",
+    //       actionText: "Cerrar"
+    //     });
+    //   });
+  },
+  methods: {
+    getRecibos: function() {
+      this.isLoading = true;
+      this.$http
+        .get(
+          "project/" + this.$store.state.user.groups[0].project.id + "/receipts?size=100"
+        )
+        .then(response => {
+          this.recibos = response.data.data;
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+        });
+    },
+    submit: function() {
+      this.$validator
+        .validateAll()
+        .then(result => {
+          if (!result) {
+            this.$snackbar.open({
+              message: "Error en el formulario. Verifíquelo",
+              type: "is-danger",
+              actionText: "Cerrar"
+            });
+            return false;
+          }
+          this.isLoading = true;
+          this.$refs.formReceipt.submit();
+        })
+        .catch(error => {
+          this.$snackbar.open({
+            message: "Error inesperado",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+          return false;
+        });
+    }
+  },
+  computed: {
+    projectId: function(){
+      return this.$store.state.user.groups[0].project.id
+    }
+  },
+  watch: {
+    inputReciboFecha: function(newVal) {
+          this.fechaFinal = newVal.toISOString().split("T")[0];
+        }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (
+        vm.user.groups[0] !== undefined &&
+        vm.user.groups[0].pivot.relation === "responsable"
+      ) {
+        console.log("Authorized");
+      } else {
+        console.log("Unauthorized - Kicking to dashboard!");
+        next({ name: "panelOverview" });
+      }
+    });
+  }
+};
+</script>

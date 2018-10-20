@@ -95,6 +95,11 @@
           <li class="{{ headerActive == 'showCatalogo' ? 'is-active' }}">
             <a href="{{path_for('showCatalogo')}}">Proyectos</a>
           </li>
+          <li class="{{ headerActive == 'showHistorias' ? 'is-active' }}">
+            <a href="{{path_for('showHistorias')}}">
+                <i class="fas fa-camera-retro fa-lg fa-fw"></i>&nbsp; 
+              Historias</a>
+          </li>
           {% if subject.id %}
             <li>
               <a href="/panel"><i class="fas fa-compass fa-fw"></i>&nbsp;Mi panel</a>

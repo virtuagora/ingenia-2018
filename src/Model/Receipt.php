@@ -4,11 +4,11 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reicipt extends Model
+class Receipt extends Model
 {
-    protected $table = 'reicipts';
+    protected $table = 'receipts';
     protected $visible = [
-        'id', 'detail', 'ammount', 'date', 'file', 'created_at',
+        'id', 'detail', 'amount', 'date', 'file', 'created_at',
     ];
     
     public function project()

@@ -8,7 +8,7 @@
     <div v-else>
       <div class="columns is-multiline is-mobile">
         <div class="column is-3" v-for="story in stories" :key="story.id">
-          <a href="">
+          <a :href="'/historia/' + story.id">
             <img :src="'/stories/images/' + story.id" alt="">
           </a>
         </div>
@@ -24,7 +24,7 @@
           </h1>
         </div>
         <span slot="no-more">
-          <i class="fas fa-info-circle"></i> ¡Fín de las historias!
+          <i class="fas fa-info-circle"></i> ¡Fín de las historias!<br><br><a href="/historias" class="button is-link is-medium is-outlined">Mira todas las historias haciendo clic acá!</a>
         </span>
       </infinite-loading>
     </div>
@@ -36,6 +36,7 @@ import InfiniteLoading from "vue-infinite-loading";
 
 
 export default {
+  props: ['limit'],
   data() {
     return {
       stories: [],
@@ -110,7 +111,7 @@ getstories: function() {
             });
             $state.complete();
           });
-      } else if (this.paginator.next_page_url) {
+      } else if (this.paginator.next_page_url && this.stories.length <= this.storiesLimit) {
         this.$http
           .get(this.paginator.next_page_url)
           .then(response => {
@@ -140,6 +141,10 @@ getstories: function() {
   computed: {
     storiesUrl: function(){
       return '/stories/all?size=4'
+    },
+    storiesLimit: function(){
+      if(this.limit != undefined) return this.limit
+      return 250000   
     }
   }
 };

@@ -90,7 +90,9 @@
       <div class="container">
         <hr>
         <br>
-        <img src="./assets/img/historia.svg" class="image is-centered " alt="">
+        <a href="/historias">
+          <img src="./assets/img/historia.svg" class="image is-centered " alt="">
+        </a>
         <br>
         <div class="has-text-centered">
           <h1 class="title is-size-3-desktop is-size-4-touch">¡Publicá las historias de tus proyectos!</h1>
@@ -101,7 +103,7 @@
           <br>
           {% endif %}
           <br>
-          <show-stories></show-stories>
+          <show-stories :limit="4"></show-stories>
         </div>
       </div>
     </div>

@@ -72,7 +72,7 @@ $app->get('/logout', function ($request, $response, $args) {
 
 $app->get('/', function ($request, $response, $args) {
     $subject = $request->getAttribute('subject')->toArray();
-    if ( $subject['type'] != 'Annonymous') {
+    if ($subject['type'] != 'Annonymous') {
         $user = $this->helper->getUserFromSubject($request->getAttribute('subject'));
         $group = $user->groups()->first();
         if (is_null($group)) {
@@ -139,6 +139,33 @@ $app->get('/ayuda', function ($request, $response, $args) {
     ]);
 })->setName('showAyuda');
 
+$app->get('/historias', function ($request, $response, $args) {
+    $subject = $request->getAttribute('subject')->toArray();
+    if ($subject['type'] != 'Annonymous') {
+        $user = $this->helper->getUserFromSubject($request->getAttribute('subject'));
+        $group = $user->groups()->first();
+        if (is_null($group)) {
+            return $this->view->render($response, 'ingenia/index/historias.twig', [
+                'groupId' => null,
+                'showCreateStory' => false,
+                'headerActive' => 'showHistorias',
+            ]);
+        }
+        if (!is_null($group->project) && $group->project->selected == true) {
+            return $this->view->render($response, 'ingenia/index/historias.twig', [
+                'groupId' => $group->id,
+                'showCreateStory' => true,
+                'headerActive' => 'showHistorias',
+            ]);
+        }
+    }
+    return $this->view->render($response, 'ingenia/index/historias.twig', [
+        'groupId' => null,
+        'showCreateStory' => false,
+        'headerActive' => 'showHistorias',
+    ]);
+})->setName('showHistorias');
+
 $app->get('/como-participar', function ($request, $response, $args) {
     return $response->withRedirect('/');
     // return $this->view->render($response, 'ingenia/index/comoParticipar.twig', [
@@ -181,7 +208,7 @@ $app->get('/ping', function ($request, $response, $args) {
 
 $app->get('/login', function ($request, $response, $args) {
     if ($request->getAttribute('subject')->getType() != 'Annonymous') {
-        return $response->withRedirect('/');    
+        return $response->withRedirect('/');
     }
     return $this->view->render($response, 'base/login.twig', [
         'facebookKey' => $this->get('settings')['facebook']['app_id'],
@@ -504,12 +531,12 @@ $app->post('/grupo/{gro}/historia/nuevo', function ($request, $response, $args) 
     //     $project->has_image = true;
     //     $project->save();
     // }
-    $story = $this->db->new('App:Story');
-    $story->picture = $fileName;
-    $story->body = $data['post-cuerpo'];
-    $story->project()->associate($group->project);
-    return $this->view->render($response, 'ingenia/stories/create.twig', [
+    $url = $this->helper->pathFor('showHistoria', true, [
+        'story' => $story->id,
     ]);
+    $this->logger->info($story->id);
+    return $response->withRedirect($url);
+
 })->setName('postNuevaHistoria');
 
 $app->get('/stories/images/{sto}', function ($request, $response, $params) {
@@ -526,6 +553,50 @@ $app->get('/stories/images/{sto}', function ($request, $response, $params) {
 })->setName('getStoryPic');
 
 $app->get('/stories/all', 'projectAction:getAllStories')->setName('getAllStories');
+
+$app->get('/historia/{story}', function ($request, $response, $params) {
+    $historia = $this->helper->getEntityFromId(
+        'App:Story', 'story', $params, ['project']
+    );
+    // $historia->addVisible(['groups']);
+    $otrasHistorias = $this->db->query('App:Story')
+        ->where('project_id', $historia->project->id)
+        ->orderBy('created_at', 'DESC')
+        ->limit(5)
+        ->get();
+    $otrasHistoriasDeOtros = $this->db->query('App:Story')
+        ->orderBy('created_at', 'DESC')
+        ->limit(5)
+        ->get();
+    return $this->view->render($response, 'ingenia/stories/showStory.twig', [
+        'story' => $historia,
+        'more' => $otrasHistorias,
+        'moreStories' => $otrasHistoriasDeOtros,
+    ]);
+})->setName('showHistoria');
+
+$app->post('/project/{pro}/receipts', 'projectAction:postReceipt')->setName('postReceipt');
+$app->get('/project/{pro}/receipts', 'projectAction:getAllReceipts')->setName('getReceipts');
+$app->get('/project/{pro}/receipts/{rec}', 'projectAction:getReceipt')->setName('getRece|ipt');
+$app->get('/admin/project/{pro}/receipts/{rec}', 'projectAction:getAdminReceipt')->setName('getAdminReceipt');
+$app->get('/admin/project/{pro}/receipts', function ($request, $response, $params) {
+    $subject = $request->getAttribute('subject');
+    $project = $this->helper->getEntityFromId(
+        'App:Project', 'pro', $params, ['group']
+    );
+    if (!$this->authorization->checkPermission($subject, 'coordin')) {
+        throw new UnauthorizedException();
+    }
+    if (!$project->selected) {
+        throw new UnauthorizedException();
+    }
+   $recibos = $this->db->query('App:Receipt')
+        ->where('project_id',$project->id)->orderBy('date', 'DESC')->get();
+    return $this->view->render($response, 'ingenia/admin/showdownRecibos.twig', [
+        'recibos' => $recibos,
+        'project' => $project
+    ]);
+})->setName('getAdminReceipts');
 
 // $app->get('/proyecto/{pro}', function($request, $response, $params){
 //     $proyecto = $this->helper->getEntityFromId(

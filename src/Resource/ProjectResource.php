@@ -2,8 +2,8 @@
 
 namespace App\Resource;
 
-use App\Util\Paginator;
 use App\Util\Exception\AppException;
+use App\Util\Paginator;
 
 class ProjectResource extends Resource
 {
@@ -228,7 +228,7 @@ class ProjectResource extends Resource
     public function retrieve($options)
     {
         $query = $this->db->query('App:Project', ['group']);
-        
+
         if (isset($options['loc'])) {
             $query->where('locality_id', $options['loc']);
         } elseif (isset($options['dep'])) {
@@ -261,7 +261,7 @@ class ProjectResource extends Resource
     {
         $query = $this->db->query('App:Project', ['group']);
         $query->where('has_image', '=', "1");
-        
+
         $results = new Paginator($query, $options);
         return $results;
     }
@@ -346,7 +346,7 @@ class ProjectResource extends Resource
             throw new AppException('No se envió archivo');
         } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
             throw new AppException(
-                'Hubo un error con el archivo recibido ('.$imgFile->getError().')'
+                'Hubo un error con el archivo recibido (' . $imgFile->getError() . ')'
             );
         }
         $fileMime = $imgFile->getClientMediaType();
@@ -364,7 +364,7 @@ class ProjectResource extends Resource
                 $constraint->upsize();
             })
             ->encode('jpg', 90);
-        $this->filesystem->put('project/'.$project->id.'.jpg', $imgStrm);
+        $this->filesystem->put('project/' . $project->id . '.jpg', $imgStrm);
         if (is_resource($imgStrm)) {
             fclose($imgStrm);
         }
@@ -488,11 +488,11 @@ class ProjectResource extends Resource
                         [
                             'type' => 'integer',
                             'minimum' => 0,
-                            'maximum' => 100
+                            'maximum' => 100,
                         ], [
                             'type' => 'null',
                         ],
-                    ]
+                    ],
                 ],
                 'monto' => [
                     'oneOf' => [
@@ -501,12 +501,12 @@ class ProjectResource extends Resource
                         ], [
                             'type' => 'null',
                         ],
-                    ]
+                    ],
                 ],
                 'seleccionado' => [
-                            'type' => 'boolean',
-                            'default' => false,
-                ]
+                    'type' => 'boolean',
+                    'default' => false,
+                ],
             ],
             'additionalProperties' => false,
         ];
@@ -541,5 +541,78 @@ class ProjectResource extends Resource
         // }
         $results = new Paginator($query, $options);
         return $results;
+    }
+
+     public function retrieveAllReceipts($proId, $options)
+    {
+        $query = $this->db->query('App:Receipt')
+        ->where('project_id',$proId)->orderBy('date', 'DESC');
+        // if (isset($options['usr'])) {
+        //     $query->where('author_id', $options['usr']);
+        // }
+        $results = new Paginator($query, $options);
+        return $results;
+    }
+
+    public function createReceipt($subject, $project, $data, $file)
+    {
+        if ($file->getError() === UPLOAD_ERR_INI_SIZE || $file->getError() === UPLOAD_ERR_FORM_SIZE) {
+            throw new AppException('El archivo excede el límite de tamaño permitido');
+        } elseif ($file->getError() !== UPLOAD_ERR_OK) {
+            throw new AppException('Hubo un error con el archivo recibido. Código ' . $file->getError());
+        }
+        $fileMime = $file->getClientMediaType();
+        $allowedMimes = [
+            'application/pdf' => 'pdf',
+            'invalid/pdf' => 'pdf',
+            'application/msword' => 'doc',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+            'image/jpeg' => 'jpg',
+            'image/pjpeg' => 'jpg',
+            'image/png' => 'png',
+        ];
+        if (!isset($allowedMimes[$fileMime])) {
+            throw new AppException('Tipo de documento inválido');
+        }
+        $receipt = $this->db->new('App:Receipt');
+        $receipt->detail = $data['detalle'];
+        $receipt->amount = $data['monto'];
+        $receipt->date = $data['fecha'];
+        $receipt->project()->associate($project);
+        $receipt->save();
+        $receipt->file = 'rec-'. $receipt->id . '-pro-' . $project->id . '.' . $allowedMimes[$fileMime];
+        $receipt->save();
+        $fileStrm = $file->getStream()->detach();
+        $this->filesystem->putStream(
+            'receipts/' . 'rec-'. $receipt->id . '-pro-' . $project->id . '.' . $allowedMimes[$fileMime],
+            $fileStrm
+        );
+        if (is_resource($fileStrm)) {
+            fclose($fileStrm);
+        }
+        return;
+    }
+
+    public function getReceipt($project, $receiptId)
+    {
+        if ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.pdf')) {
+            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.pdf';
+        } elseif ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.jpg')) {
+            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.jpg';
+        } elseif ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.png')) {
+            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.png';
+        } elseif ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.doc')) {
+            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.doc';
+        } elseif ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.docx')) {
+            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.docx';
+        } else {
+            throw new AppException('El documento no se encuentra almacenado', 404);
+        }
+        $mime = $this->filesystem->getMimetype($path);
+        $strm = $this->filesystem->readStream($path);
+        return [
+            'strm' => $strm,
+            'mime' => $mime,
+        ];
     }
 }

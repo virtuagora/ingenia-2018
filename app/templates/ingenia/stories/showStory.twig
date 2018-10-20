@@ -1,0 +1,85 @@
+{% set show_footer = true %}
+{% set show_navbar = true %}
+{# set body_class = '' #}
+{% extends 'master.twig' %}
+{% block title %}Perfil: Ver historia
+{% endblock %}
+{% block scriptshead %}{% endblock %}
+{% block body %}
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-offset-2 is-8">
+          <div class="media">
+            <div class="media-left is-hidden-touch">
+            <a href="/historias">
+              <img src="/assets/img/icons-historia.svg" class="logo-header image is-centered" style="width:150px">
+            </a>
+            </div>
+            <div class="media-content has-text-right-desktop has-text-centered-touch" style="overflow: visible">
+            <a href="/historias">
+              <img src="/assets/img/icons-historia.svg" class="logo-header image is-centered is-hidden-desktop" style="width:150px">
+            </a>
+              <h1 class="title is-size-2-desktop is-size-3-touch is-600">Toda historia nace en equipo</h1>
+              <h1 class="subtitle is-5 is-size-6-touch">Acercate a sus historias y conocelos personalmente</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="columns">
+        <div class="column is-5 is-offset-2">
+          <img src="/stories/images/{{story.id}}" class="image" alt="">
+        </div>
+        <div class="column is-3">
+          <div class="content">
+            <p class="is-size-7">{{story.body}}</p>
+            <p>
+              <b>Proyecto</b><br>
+              <a href="/proyecto/{{story.project.id}}">{{story.project.name}}</a>
+            </p>
+            <p>
+              <b>Grupo</b><br>{{story.project.group.name}}</p>
+            <p>
+              <b>Publicado</b><br>{{story.created_at|date('Y-m-d')}}</p>
+            <hr>
+            <p>
+              <b>Otros links</b><br>
+              <a href="/historias">Ver mas historias</a>
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <h1 class="subtitle is-4 has-text-centered">¡Ultimas historias del equipo!</h1>
+      <div class="columns">
+      <div class="column is-8 is-offset-2">
+      <div class="columns is-multiline is-mobile">
+        {% for historia in more if historia.id != story.id %}
+          <div class="column is-6-mobile">
+          <a href="/historia/{{historia.id}}">
+            <img src="/stories/images/{{historia.id}}" class="image" alt="">
+          </a>
+          </div>
+        {% endfor %}
+      </div>
+      </div>
+      </div>
+      <h1 class="subtitle is-5 has-text-centered">¡Otras historias del otros equipos!</h1>
+      <div class="columns">
+      <div class="column is-6 is-offset-3">
+      <div class="columns is-multiline is-mobile">
+        {% for historia in moreStories if historia.id != story.id %}
+          <div class="column is-6-mobile">
+          <a href="/historia/{{historia.id}}">
+            <img src="/stories/images/{{historia.id}}" class="image" alt="">
+          </a>
+          </div>
+        {% endfor %}
+      </div>
+      </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+{% block javascripts %}{% endblock %}

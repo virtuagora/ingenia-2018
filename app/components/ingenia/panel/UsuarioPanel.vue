@@ -85,6 +85,13 @@
               <router-link :to="{ name: 'userSubirAvalOrganizacion'}" exact-active-class="is-active">
                 <i class="fas fa-fw" :class="{'fa-check has-text-success': user.groups[0].project.organization !== null && user.groups[0].uploaded_letter, 'fa-exclamation has-text-danger': user.groups[0].project.organization !== null && !user.groups[0].uploaded_letter }" :style="$route.name == 'userSubirAvalOrganizacion' ? 'color: white !important;' : ''"></i>&nbsp;Subir carta de aval</router-link>
             </li>
+            <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null && user.groups[0].project.selected == true">
+              <a :href="'/grupo/' + user.groups[0].id + '/historia/nuevo'"><i class="fas fa-camera-retro fa-lg fa-fw"></i>&nbsp;Subir una historia</a>
+            </li>
+            <li v-if="user.groups[0].pivot.relation == 'responsable' && user.groups[0].project !== null && user.groups[0].project.selected == true">
+              <router-link :to="{ name: 'userSubirRecibos'}" exact-active-class="is-active">
+                <i class="fas fa-archive fa-lg fa-fw"></i>&nbsp;Subir recibos</router-link>
+            </li>
           </ul>
           <!-- <p class="menu-label" v-if="user.groups[0] !== undefined && user.groups[0].pivot.relation == 'responsable'">
             Avanzado

@@ -39,9 +39,11 @@
             <section class="post-header-image hero is-light" id="header-post-cover">
               <div class="hero-body"></div>
             </section>
-            <br>
-            <div class="content editor">
-              <div class="editable"></div>
+            {# <div class="content editor"> #}
+              {# <div class="editable"></div> #}
+            {# </div> #}
+            <div>
+            <textarea name="post-cuerpo" class="textarea" rows="3" style="border-left: 0; border-radius:0; font-size:14px; margin-bottom: 12px; margin-top: 12px; padding: 0;"></textarea>
             </div>
             <div class="content has-text-left is-size-7">
               <i class="fas fa-calendar fa-fw"></i>&nbsp;<i>{{"now"|date("m/d/Y")}}</i> - <i> Grupo <b>"{{group.name}}"</b> - Proyecto "{{project.name}}"</i>
@@ -52,7 +54,6 @@
           </div>
         </div>
       </div>
-      <input id="input-post-cuerpo" name="post-cuerpo" type="hidden"/>
     </form>
   </div>
   <section class="section">

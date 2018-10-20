@@ -1,0 +1,44 @@
+{# set show_footer = true #}
+{% set show_navbar = false %}
+{# set body_class = '' #}
+
+{% extends 'master.twig' %}
+
+{% block title %}
+  Historias
+{% endblock %}
+
+{% block body %}
+  {% include "ingenia/index/header.twig" %}
+  <div class="container">
+    <section class="section">
+          <div class="has-text-centered">
+          <a href="/historias">
+          <img src="./assets/img/historia.svg" class="image is-centered " alt="">
+        </a>
+        <br>
+        <div class="has-text-centered">
+          <h1 class="title is-size-3-desktop is-size-4-touch">¡Publicá las historias de tus proyectos!</h1>
+          <h1 class="subtitle is-5 is-size-6-touch">¡Mostrales a todos los momentos de gloria de tu proyecto!</h1>
+          {% if showCreateStory == true %}
+          <a href="{{path_for('showNuevaHistoria',{'gro': groupId})}}" class="button is-link is-medium is-400"><i class="fas fa-plus fa-fw"></i>&nbsp;Crea una historia</a>
+          <br>
+          <br>
+          {% endif %}
+          <br>
+          <show-stories></show-stories>
+        </div>
+      </div>
+      <br>
+      <br>
+      <img src="{{asset('img/slogan3-dark.svg')}}" class="image is-hidden-touch" style="height: 100px; margin: 0 auto;">
+      <img src="{{asset('img/slogan4-dark.svg')}}" class="image is-hidden-desktop" style="width: 250px; margin: 0 auto;">
+      <br>
+      <br>
+    </section>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script async="async" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+{% endblock %}

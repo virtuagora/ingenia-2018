@@ -77,7 +77,7 @@
         </div>
       </div>
     </nav>
-    <div class="content">
+    <div class="content is-small">
             <table class="table is-fullwidth">
         <thead>
           <tr>
@@ -133,6 +133,11 @@
               <i class="fas fa-file-pdf fa-lg fa-fw"></i>
               </b-tooltip>
             </th>
+             <th class="has-text-centered">
+              <b-tooltip label="Recibos" type="is-dark" position="is-top"> 
+              <i class="fas fa-archive fa-lg fa-fw"></i>
+              </b-tooltip>
+            </th>
             <th class="has-text-centered">
               <b-tooltip label="Imprimir" type="is-dark" position="is-top"> 
               <i class="fas fa-print fa-lg fa-fw"></i>
@@ -179,6 +184,11 @@
               <i class="fas fa-fw" :class="statusLetter(project)"></i>
               <a :href="letterUrl(project.group)" class="has-text-link" target="_blank" v-if="(project.organization != null) && project.group.uploaded_letter"><i class="fas fa-download"></i></a>
             </td>
+                        <td class="has-text-centered">
+              <a :href="'/admin/project/'+project.id+'/receipts'" target="_blank" class="has-text-link">
+                <i class="fas fa-eye fa-fw"></i>
+              </a>
+            </td>
             <td class="has-text-centered">
               <a :href="'/project/'+project.id+'/print'" target="_blank" class="has-text-link">
                 <i class="fas fa-print fa-fw"></i>
@@ -193,7 +203,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="16">
+            <th colspan="17">
               <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
                 <span slot="no-results">
                   <i class="fas fa-info-circle"></i> Fin de los resultados

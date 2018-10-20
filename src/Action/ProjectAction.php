@@ -4,6 +4,7 @@ namespace App\Action;
 
 use App\Util\Exception\AppException;
 use App\Util\Exception\UnauthorizedException;
+use Slim\Http\Stream;
 
 class ProjectAction
 {
@@ -12,7 +13,7 @@ class ProjectAction
     protected $helper;
     protected $authorization;
     protected $pagination;
-    
+
     public function __construct(
         $projectResource, $representation, $helper, $authorization, $pagination
     ) {
@@ -22,7 +23,7 @@ class ProjectAction
         $this->authorization = $authorization;
         $this->pagination = $pagination;
     }
-    
+
     // GET /proyecto/{pro}
     public function getOne($request, $response, $params)
     {
@@ -61,7 +62,7 @@ class ProjectAction
                 'minimum' => 1,
             ],
             'sel' => [
-                'type' => 'boolean'
+                'type' => 'boolean',
             ],
             's' => [
                 'type' => 'string',
@@ -98,8 +99,8 @@ class ProjectAction
                 'type' => 'integer',
                 'minimum' => 1,
             ],
-             'sel' => [
-                'type' => 'boolean'
+            'sel' => [
+                'type' => 'boolean',
             ],
             's' => [
                 'type' => 'string',
@@ -130,7 +131,7 @@ class ProjectAction
         $resultados->setUri($request->getUri());
         return $this->pagination->renderResponse($response, $resultados);
     }
-    
+
     public function post($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -196,7 +197,7 @@ class ProjectAction
             'status' => 200,
         ]);
     }
-    
+
     public function postPicture($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -213,7 +214,7 @@ class ProjectAction
         $this->projectResource->updatePicture($subject, $project, $archivo);
         return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
     }
-    
+
     public function postVote($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -225,7 +226,7 @@ class ProjectAction
         );
         $vote = $this->projectResource->vote($subject, $project);
         return $this->representation->returnMessage($request, $response, [
-            'message' => $vote? '¡Proyecto bancado!': 'Proyecto ya no bancado.',
+            'message' => $vote ? '¡Proyecto bancado!' : 'Proyecto ya no bancado.',
             'vote' => $vote,
             'status' => 200,
         ]);
@@ -283,7 +284,7 @@ class ProjectAction
             'status' => 200,
         ]);
     }
-    
+
     public function postComment($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -302,7 +303,7 @@ class ProjectAction
             'status' => 200,
         ]);
     }
-    
+
     public function postReply($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -321,7 +322,7 @@ class ProjectAction
             'status' => 200,
         ]);
     }
-    
+
     public function postCommentVote($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -340,16 +341,16 @@ class ProjectAction
             'votes' => $votes,
         ]);
     }
-    
+
     public function showProject($request, $response, $params)
     {
         $proyecto = $this->helper->getEntityFromId(
-        'App:Project', 'pro', $params
+            'App:Project', 'pro', $params
         );
-        $proyecto->addVisible(['goals', 'schedule', 'budget','category_id']);
+        $proyecto->addVisible(['goals', 'schedule', 'budget', 'category_id']);
         // return $response->withJSON($proyecto->toArray());
         return $this->view->render($response, 'ingenia/project/showProject.twig', [
-        'project' => $proyecto,
+            'project' => $proyecto,
         ]);
     }
 
@@ -376,5 +377,81 @@ class ProjectAction
         $resultados = $this->projectResource->retrieveAllStories($proId, $pagParams);
         $resultados->setUri($request->getUri());
         return $this->pagination->renderResponse($response, $resultados);
+    }
+
+    public function postReceipt($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        if (!$project->selected) {
+            throw new UnauthorizedException();
+        }
+        if (empty($request->getUploadedFiles()['archivo'])) {
+            throw new AppException('No se envió un archivo');
+        }
+        $data = $request->getParsedBody();
+        $archivo = $request->getUploadedFiles()['archivo'];
+        $this->projectResource->createReceipt($subject, $project, $data, $archivo);
+        return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
+    }
+
+    public function getAllReceipts($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+         if (!$project->selected) {
+            throw new UnauthorizedException();
+        }
+        $pagParams = $this->pagination->getParams($request, [
+        ]);
+        $resultados = $this->projectResource->retrieveAllReceipts($project->id, $pagParams);
+        $resultados->setUri($request->getUri());
+        return $this->pagination->renderResponse($response, $resultados);
+    }
+
+    public function getReceipt($request, $response, $params)
+    {
+        $receiptId = $this->helper->getSanitizedId('rec', $params);
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+         if (!$project->selected) {
+            throw new UnauthorizedException();
+        }
+        $fileData = $this->projectResource->getReceipt($project, $receiptId);
+        return $response->withBody(new Stream($fileData['strm']))
+        ->withHeader('Content-Type', $fileData['mime']);
+    }
+
+    public function getAdminReceipt($request, $response, $params)
+    {
+        $receiptId = $this->helper->getSanitizedId('rec', $params);
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'coordin')) {
+            throw new UnauthorizedException();
+        }
+         if (!$project->selected) {
+            throw new UnauthorizedException();
+        }
+        $fileData = $this->projectResource->getReceipt($project, $receiptId);
+        return $response->withBody(new Stream($fileData['strm']))
+        ->withHeader('Content-Type', $fileData['mime']);
     }
 }
