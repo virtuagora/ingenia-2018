@@ -543,7 +543,45 @@ class ProjectResource extends Resource
         return $results;
     }
 
-     public function retrieveAllReceipts($proId, $options)
+    public function createStory($subject, $project, $data, $imgFile)
+    {
+        if ($imgFile->getError() == UPLOAD_ERR_NO_FILE) {
+            throw new AppException('No se envió archivo');
+        } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
+            throw new AppException(
+                'Hubo un error con el archivo recibido (' . $imgFile->getError() . ')'
+            );
+        }
+        $fileMime = $imgFile->getClientMediaType();
+        $allowedMimes = [
+            'image/jpeg' => 'jpg',
+            'image/pjpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/gif' => 'gif',
+        ];
+        if (!isset($allowedMimes[$fileMime])) {
+            throw new AppException('Tipo de archivo inválido');
+        }
+        $imgStrm = $this->image->make($imgFile->getStream()->detach())
+            ->fit(800, 800, function ($constraint) {
+                $constraint->upsize();
+            })
+            ->encode('jpg', 92);
+        $story = $this->db->new('App:Story');
+        $story->body = $data['post-cuerpo'];
+        $story->project()->associate($project);
+        $story->save();
+        $fileName = 'story-' . $story->id . '.jpg';
+        $story->picture = $fileName;
+        $story->save();
+        $this->filesystem->put('stories/' . $fileName, $imgStrm);
+        if (is_resource($imgStrm)) {
+            fclose($imgStrm);
+        }
+        return $story;
+    }
+
+    public function retrieveAllReceipts($proId, $options)
     {
         $query = $this->db->query('App:Receipt')
         ->where('project_id',$proId)->orderBy('date', 'DESC');
@@ -584,7 +622,7 @@ class ProjectResource extends Resource
         $receipt->save();
         $fileStrm = $file->getStream()->detach();
         $this->filesystem->putStream(
-            'receipts/' . 'rec-'. $receipt->id . '-pro-' . $project->id . '.' . $allowedMimes[$fileMime],
+            'receipts/' . $receipt->file,
             $fileStrm
         );
         if (is_resource($fileStrm)) {
@@ -593,19 +631,13 @@ class ProjectResource extends Resource
         return;
     }
 
-    public function getReceipt($project, $receiptId)
+    public function getReceipt($project, $receipt)
     {
-        if ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.pdf')) {
-            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.pdf';
-        } elseif ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.jpg')) {
-            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.jpg';
-        } elseif ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.png')) {
-            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.png';
-        } elseif ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.doc')) {
-            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.doc';
-        } elseif ($this->filesystem->has('receipts/rec-' . $receiptId . '-pro-' . $project->id . '.docx')) {
-            $path = 'receipts/rec-' . $receiptId . '-pro-' . $project->id . '.docx';
-        } else {
+        if (!isset($receipt->file)) {
+            throw new AppException('No posee documento cargado', 404);
+        }
+        $path = 'receipts/'.$receipt->file;
+        if (!$this->filesystem->has('receipts/'.$receipt->file)) {
             throw new AppException('El documento no se encuentra almacenado', 404);
         }
         $mime = $this->filesystem->getMimetype($path);

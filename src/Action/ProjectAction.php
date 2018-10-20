@@ -379,6 +379,33 @@ class ProjectAction
         return $this->pagination->renderResponse($response, $resultados);
     }
 
+    public function postStory($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $group = $this->helper->getEntityFromId(
+            'App:Group', 'gro', $params, ['invitations']
+        );
+        if (!$this->authorization->checkPermission($subject, 'retGroFull', $group)) {
+            throw new UnauthorizedException();
+        }
+        if (is_null($group->project)) {
+            throw new AppException('El grupo no puede acceder al recurso');
+        }
+        if ($group->project->selected == false) {
+            throw new AppException('El proyecto no puede subir historias');
+        }
+        // BODY
+        $data = $request->getParsedBody();
+        // IMAGE
+        $imgFile = $request->getUploadedFiles()['post-cover'];
+
+        $story = $this->projectResource->createStory($subject, $group->project, $data, $imgFile);
+        $url = $this->helper->pathFor('showHistoria', true, [
+            'story' => $story->id,
+        ]);
+        return $response->withRedirect($url);
+    }
+
     public function postReceipt($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');
@@ -421,18 +448,18 @@ class ProjectAction
 
     public function getReceipt($request, $response, $params)
     {
-        $receiptId = $this->helper->getSanitizedId('rec', $params);
         $subject = $request->getAttribute('subject');
-        $project = $this->helper->getEntityFromId(
-            'App:Project', 'pro', $params, ['group']
+        $receipt = $this->helper->getEntityFromId(
+            'App:Receipt', 'rec', $params, ['project']
         );
+        $project = $receipt->project;
         if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
             throw new UnauthorizedException();
         }
          if (!$project->selected) {
             throw new UnauthorizedException();
         }
-        $fileData = $this->projectResource->getReceipt($project, $receiptId);
+        $fileData = $this->projectResource->getReceipt($project, $receipt);
         return $response->withBody(new Stream($fileData['strm']))
         ->withHeader('Content-Type', $fileData['mime']);
     }

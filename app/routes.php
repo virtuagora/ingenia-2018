@@ -279,6 +279,8 @@ $app->delete('/group/{gro}', 'groupAction:delete')->setName('delGro');
 $app->post('/group/accept-inv/{inv}', 'groupAction:postUserFromInvitation')->setName('runCreGroUsrInv');
 $app->post('/group/accept-req/{inv}', 'groupAction:postUserFromRequest')->setName('runCreGroUsrReq');
 
+$app->post('/grupo/{gro}/historia/nuevo', 'projectAction:postStory')->setName('postNuevaHistoria');
+
 $app->get('/project', 'projectAction:get')->setName('lisPro');
 $app->get('/project-random', 'projectAction:get20Random')->setName('lisPro20Random');
 $app->get('/project/{pro}', 'projectAction:getOne')->setName('getPro');
@@ -475,69 +477,69 @@ $app->get('/grupo/{gro}/historia/nuevo', function ($request, $response, $args) {
     ]);
 })->setName('showNuevaHistoria');
 
-$app->post('/grupo/{gro}/historia/nuevo', function ($request, $response, $args) {
-    $subject = $request->getAttribute('subject');
-    $group = $this->helper->getEntityFromId(
-        'App:Group', 'gro', $args, ['invitations']
-    );
-    if (!$this->authorization->checkPermission($subject, 'retGroFull', $group)) {
-        throw new UnauthorizedException();
-    }
-    if (is_null($group->project)) {
-        throw new AppException('El grupo no puede acceder al recurso');
-    }
-    if ($group->project->selected == false) {
-        throw new AppException('El proyecto no puede subir historias');
-    }
-    // BODY
-    $data = $request->getParsedBody();
-    // IMAGE
-    $imgFile = $request->getUploadedFiles()['post-cover'];
+// $app->post('/grupo/{gro}/historia/nuevo', function ($request, $response, $args) {
+//     $subject = $request->getAttribute('subject');
+//     $group = $this->helper->getEntityFromId(
+//         'App:Group', 'gro', $args, ['invitations']
+//     );
+//     if (!$this->authorization->checkPermission($subject, 'retGroFull', $group)) {
+//         throw new UnauthorizedException();
+//     }
+//     if (is_null($group->project)) {
+//         throw new AppException('El grupo no puede acceder al recurso');
+//     }
+//     if ($group->project->selected == false) {
+//         throw new AppException('El proyecto no puede subir historias');
+//     }
+//     // BODY
+//     $data = $request->getParsedBody();
+//     // IMAGE
+//     $imgFile = $request->getUploadedFiles()['post-cover'];
 
-    if ($imgFile->getError() == UPLOAD_ERR_NO_FILE) {
-        throw new AppException('No se envió archivo');
-    } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
-        throw new AppException(
-            'Hubo un error con el archivo recibido (' . $imgFile->getError() . ')'
-        );
-    }
-    $fileMime = $imgFile->getClientMediaType();
-    $allowedMimes = [
-        'image/jpeg' => 'jpg',
-        'image/pjpeg' => 'jpg',
-        'image/png' => 'png',
-        'image/gif' => 'gif',
-    ];
-    if (!isset($allowedMimes[$fileMime])) {
-        throw new AppException('Tipo de archivo inválido');
-    }
-    $imgStrm = $this->image->make($imgFile->getStream()->detach())
-        ->fit(800, 800, function ($constraint) {
-            $constraint->upsize();
-        })
-        ->encode('jpg', 92);
-    $story = $this->db->new('App:Story');
-    $story->body = $data['post-cuerpo'];
-    $story->project()->associate($group->project);
-    $story->save();
-    $fileName = 'story-' . $story->id . '.jpg';
-    $story->picture = $fileName;
-    $story->save();
-    $this->filesystem->put('stories/' . $fileName, $imgStrm);
-    if (is_resource($imgStrm)) {
-        fclose($imgStrm);
-    }
-    // if (!$project->has_image) {
-    //     $project->has_image = true;
-    //     $project->save();
-    // }
-    $url = $this->helper->pathFor('showHistoria', true, [
-        'story' => $story->id,
-    ]);
-    $this->logger->info($story->id);
-    return $response->withRedirect($url);
+//     if ($imgFile->getError() == UPLOAD_ERR_NO_FILE) {
+//         throw new AppException('No se envió archivo');
+//     } elseif ($imgFile->getError() !== UPLOAD_ERR_OK) {
+//         throw new AppException(
+//             'Hubo un error con el archivo recibido (' . $imgFile->getError() . ')'
+//         );
+//     }
+//     $fileMime = $imgFile->getClientMediaType();
+//     $allowedMimes = [
+//         'image/jpeg' => 'jpg',
+//         'image/pjpeg' => 'jpg',
+//         'image/png' => 'png',
+//         'image/gif' => 'gif',
+//     ];
+//     if (!isset($allowedMimes[$fileMime])) {
+//         throw new AppException('Tipo de archivo inválido');
+//     }
+//     $imgStrm = $this->image->make($imgFile->getStream()->detach())
+//         ->fit(800, 800, function ($constraint) {
+//             $constraint->upsize();
+//         })
+//         ->encode('jpg', 92);
+//     $story = $this->db->new('App:Story');
+//     $story->body = $data['post-cuerpo'];
+//     $story->project()->associate($group->project);
+//     $story->save();
+//     $fileName = 'story-' . $story->id . '.jpg';
+//     $story->picture = $fileName;
+//     $story->save();
+//     $this->filesystem->put('stories/' . $fileName, $imgStrm);
+//     if (is_resource($imgStrm)) {
+//         fclose($imgStrm);
+//     }
+//     // if (!$project->has_image) {
+//     //     $project->has_image = true;
+//     //     $project->save();
+//     // }
+//     $url = $this->helper->pathFor('showHistoria', true, [
+//         'story' => $story->id,
+//     ]);
+//     $this->logger->info($story->id);
+//     return $response->withRedirect($url);
 
-})->setName('postNuevaHistoria');
+// })->setName('postNuevaHistoria');
 
 $app->get('/stories/images/{sto}', function ($request, $response, $params) {
     $path = 'stories/story-' . $this->helper->getSanitizedId('sto', $params) . '.jpg';
@@ -577,7 +579,7 @@ $app->get('/historia/{story}', function ($request, $response, $params) {
 
 $app->post('/project/{pro}/receipts', 'projectAction:postReceipt')->setName('postReceipt');
 $app->get('/project/{pro}/receipts', 'projectAction:getAllReceipts')->setName('getReceipts');
-$app->get('/project/{pro}/receipts/{rec}', 'projectAction:getReceipt')->setName('getRece|ipt');
+$app->get('/project/{pro}/receipts/{rec}', 'projectAction:getReceipt')->setName('getReceipt');
 $app->get('/admin/project/{pro}/receipts/{rec}', 'projectAction:getAdminReceipt')->setName('getAdminReceipt');
 $app->get('/admin/project/{pro}/receipts', function ($request, $response, $params) {
     $subject = $request->getAttribute('subject');
