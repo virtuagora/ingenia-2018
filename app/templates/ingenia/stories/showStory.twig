@@ -2,7 +2,7 @@
 {% set show_navbar = true %}
 {# set body_class = '' #}
 {% extends 'master.twig' %}
-{% block title %}Perfil: Ver historia
+{% block title %}Ver historia
 {% endblock %}
 {% block scriptshead %}{% endblock %}
 {% block body %}
@@ -26,6 +26,13 @@
           </div>
         </div>
       </div>
+      {% if subject.extra.group.relation == 'responsable' and subject.extra.group.id == story.project.group.id %}
+      <div class="buttons is-centered">
+      <form action="{{path_for('deleteStory',{'sto': story.id})}}" method="POST">
+      <button type="submit" class="button is-danger is-inverted"><i class="fas fa-times"></i>&nbsp;Borrar historia</button>
+      </form>
+      </div>
+      {% endif %}
       <br>
       <div class="columns">
         <div class="column is-5 is-offset-2">
@@ -58,7 +65,7 @@
         {% for historia in more if historia.id != story.id %}
           <div class="column is-6-mobile">
           <a href="/historia/{{historia.id}}">
-            <img src="/stories/images/{{historia.id}}" class="image" alt="">
+            <img src="/stories/images/{{historia.id}}" class="image is-centered" style="width:200px;" alt="">
           </a>
           </div>
         {% endfor %}
@@ -72,7 +79,7 @@
         {% for historia in moreStories if historia.id != story.id %}
           <div class="column is-6-mobile">
           <a href="/historia/{{historia.id}}">
-            <img src="/stories/images/{{historia.id}}" class="image" alt="">
+            <img src="/stories/images/{{historia.id}}" class="image is-centered" style="width:200px;" alt="">
           </a>
           </div>
         {% endfor %}

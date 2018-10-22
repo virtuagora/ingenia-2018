@@ -374,7 +374,7 @@ class ProjectAction
     {
         $pagParams = $this->pagination->getParams($request, [
         ]);
-        $resultados = $this->projectResource->retrieveAllStories($proId, $pagParams);
+        $resultados = $this->projectResource->retrieveAllStories($pagParams);
         $resultados->setUri($request->getUri());
         return $this->pagination->renderResponse($response, $resultados);
     }
@@ -383,7 +383,7 @@ class ProjectAction
     {
         $subject = $request->getAttribute('subject');
         $group = $this->helper->getEntityFromId(
-            'App:Group', 'gro', $params, ['invitations']
+            'App:Group', 'gro', $params, []
         );
         if (!$this->authorization->checkPermission($subject, 'retGroFull', $group)) {
             throw new UnauthorizedException();
@@ -402,6 +402,23 @@ class ProjectAction
         $story = $this->projectResource->createStory($subject, $group->project, $data, $imgFile);
         $url = $this->helper->pathFor('showHistoria', true, [
             'story' => $story->id,
+        ]);
+        return $response->withRedirect($url);
+    }
+
+    public function deleteStory($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $story = $this->helper->getEntityFromId(
+            'App:Story', 'sto', $params, ['project']
+        );
+        $project = $story->project;
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        $this->projectResource->deleteStory($subject, $story, $project);
+        $url = $this->helper->pathFor('showProject', true, [
+            'pro' => $project->id,
         ]);
         return $response->withRedirect($url);
     }
@@ -481,4 +498,22 @@ class ProjectAction
         return $response->withBody(new Stream($fileData['strm']))
         ->withHeader('Content-Type', $fileData['mime']);
     }
+
+     public function deleteReceipt($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $receipt = $this->helper->getEntityFromId(
+            'App:Receipt', 'rec', $params, ['project']
+        );
+        $project = $receipt->project;
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        $this->projectResource->deleteReceipt($subject, $receipt, $project);
+        return $this->representation->returnMessage($request, $response, [
+            'message' => 'Recibo borrado',
+            'status' => 200,
+        ]);
+    }
+
 }

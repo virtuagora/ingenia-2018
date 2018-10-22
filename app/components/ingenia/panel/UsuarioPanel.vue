@@ -75,9 +75,9 @@
             Mi proyecto Ingenia
           </p>
           <ul class="menu-list" v-if="user.groups[0] !== undefined ">
-            <li v-if="user.groups[0].project === null && user.groups[0].pivot.relation == 'responsable'">
+            <!-- <li v-if="user.groups[0].project === null && user.groups[0].pivot.relation == 'responsable'">
               <router-link :to="{ name: 'userEditarProyecto'}" exact-active-class="is-active">Cargar proyecto</router-link>
-            </li>
+            </li> -->
             <li v-if="user.groups[0].project !== null">
               <router-link :to="{ name: 'userVerProyecto'}" exact-active-class="is-active">Ver mi proyecto</router-link>
             </li>

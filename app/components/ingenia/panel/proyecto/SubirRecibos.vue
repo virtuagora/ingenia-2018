@@ -67,7 +67,7 @@
         <th width="130px">Fecha compra</th>
         <th>Detalle</th>
         <th class="has-text-centered" width="100px">Monto</th>
-        <th class="has-text-centered" width="80px">Acción</th>
+        <th class="has-text-centered" width="120px">Acción</th>
       </thead>
       <tbody>
         <tr v-for="recibo in recibos" :key="recibo.id">
@@ -78,6 +78,7 @@
           <td class="has-text-centered">$ {{recibo.amount.split('.')[0]}}</td>
           <td class="has-text-centered">
             <a :href="'/project/' + projectId + '/receipts/' + recibo.id" target="_blank" class="button is-small is-outlined is-primary"><i class="fas fa-download fa-fw"></i></a>
+            &nbsp;<a @click="deleteRecibo(recibo.id)" class="button is-small is-outlined is-danger"><i class="fas fa-times"></i></a>
           </td>
         </tr>
         <tr v-if="recibos.length == 0">
@@ -135,6 +136,31 @@ export default {
         )
         .then(response => {
           this.recibos = response.data.data;
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+        });
+    },
+    deleteRecibo: function(id) {
+      this.isLoading = true;
+      this.$http
+        .post(
+          "/receipts/" + id
+        )
+        .then(response => {
+          this.$snackbar.open({
+            message: "Recibo eliminado del listado",
+            type: "is-success",
+            actionText: "Cerrar"
+          });
+          this.getRecibos();
           this.isLoading = false;
         })
         .catch(error => {

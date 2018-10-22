@@ -37,14 +37,11 @@
     <div v-else>
       <div class="columns is-multiline">
         <div class="column is-3" v-for="story in stories" :key="story.id">
-          <a href="">
+          <a :href="'/historia/' + story.id">
             <img :src="'/stories/images/' + story.id" alt="">
           </a>
         </div>
       </div>
-      <!-- <p v-for="story in stories" :key="story.id">
-        <img :src="'/stories/images/' + story.id" alt="">
-      </p> -->
       <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler">
         <div class="box has-text-centered" v-if="stories.length == 0" style="margin-top:15px;" slot="no-results">
           :(

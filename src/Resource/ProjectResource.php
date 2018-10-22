@@ -533,7 +533,7 @@ class ProjectResource extends Resource
         return $results;
     }
 
-    public function retrieveAllStories($proId, $options)
+    public function retrieveAllStories($options)
     {
         $query = $this->db->query('App:Story')->orderBy('created_at', 'DESC');
         // if (isset($options['usr'])) {
@@ -581,10 +581,16 @@ class ProjectResource extends Resource
         return $story;
     }
 
+    public function deleteStory($subject, $story, $project)
+    {
+        $story->delete();
+        return;
+    }
+
     public function retrieveAllReceipts($proId, $options)
     {
         $query = $this->db->query('App:Receipt')
-        ->where('project_id',$proId)->orderBy('date', 'DESC');
+        ->where('project_id',$proId)->orderBy('date', 'ASC');
         // if (isset($options['usr'])) {
         //     $query->where('author_id', $options['usr']);
         // }
@@ -646,5 +652,11 @@ class ProjectResource extends Resource
             'strm' => $strm,
             'mime' => $mime,
         ];
+    }
+
+    public function deleteReceipt($subject, $receipt, $project)
+    {
+        $receipt->delete();
+        return;
     }
 }

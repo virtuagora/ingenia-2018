@@ -556,6 +556,8 @@ $app->get('/stories/images/{sto}', function ($request, $response, $params) {
 
 $app->get('/stories/all', 'projectAction:getAllStories')->setName('getAllStories');
 
+$app->post('/historia/{sto}', 'projectAction:deleteStory')->setName('deleteStory');
+
 $app->get('/historia/{story}', function ($request, $response, $params) {
     $historia = $this->helper->getEntityFromId(
         'App:Story', 'story', $params, ['project']
@@ -580,6 +582,7 @@ $app->get('/historia/{story}', function ($request, $response, $params) {
 $app->post('/project/{pro}/receipts', 'projectAction:postReceipt')->setName('postReceipt');
 $app->get('/project/{pro}/receipts', 'projectAction:getAllReceipts')->setName('getReceipts');
 $app->get('/project/{pro}/receipts/{rec}', 'projectAction:getReceipt')->setName('getReceipt');
+$app->post('/receipts/{rec}', 'projectAction:deleteReceipt')->setName('deleteReceipt');
 $app->get('/admin/project/{pro}/receipts/{rec}', 'projectAction:getAdminReceipt')->setName('getAdminReceipt');
 $app->get('/admin/project/{pro}/receipts', function ($request, $response, $params) {
     $subject = $request->getAttribute('subject');
@@ -593,7 +596,7 @@ $app->get('/admin/project/{pro}/receipts', function ($request, $response, $param
         throw new UnauthorizedException();
     }
    $recibos = $this->db->query('App:Receipt')
-        ->where('project_id',$project->id)->orderBy('date', 'DESC')->get();
+        ->where('project_id',$project->id)->orderBy('date', 'ASC')->get();
     return $this->view->render($response, 'ingenia/admin/showdownRecibos.twig', [
         'recibos' => $recibos,
         'project' => $project
