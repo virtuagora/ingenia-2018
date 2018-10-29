@@ -413,7 +413,7 @@ class ProjectAction
             'App:Story', 'sto', $params, ['project']
         );
         $project = $story->project;
-        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+        if (!$this->authorization->checkPermission($subject, 'retGroFull', $project)) {
             throw new UnauthorizedException();
         }
         $this->projectResource->deleteStory($subject, $story, $project);
