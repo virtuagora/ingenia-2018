@@ -444,6 +444,59 @@ class ProjectAction
         return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
     }
 
+     public function postSendReceipts($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        if (!$project->selected) {
+            throw new UnauthorizedException();
+        }
+        $this->projectResource->setReceiptsSent($subject, $project);
+        return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
+
+    }
+
+     public function postAdminApproveReceipts($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        if (!$project->selected) {
+            throw new UnauthorizedException();
+        }
+        $project->budget_approved = true;
+        $project->save();
+        return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
+
+    }
+
+     public function postAdminRejectReceipts($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $project = $this->helper->getEntityFromId(
+            'App:Project', 'pro', $params, ['group']
+        );
+        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+            throw new UnauthorizedException();
+        }
+        if (!$project->selected) {
+            throw new UnauthorizedException();
+        }
+        $project->budget_sent = false;
+        $project->budget_approved = false;
+        $project->save();
+        return $response->withRedirect($request->getHeaderLine('HTTP_REFERER'));
+    }
+
     public function getAllReceipts($request, $response, $params)
     {
         $subject = $request->getAttribute('subject');

@@ -581,8 +581,11 @@ $app->get('/historia/{story}', function ($request, $response, $params) {
 
 $app->post('/project/{pro}/receipts', 'projectAction:postReceipt')->setName('postReceipt');
 $app->get('/project/{pro}/receipts', 'projectAction:getAllReceipts')->setName('getReceipts');
+$app->post('/project/{pro}/receipts/send', 'projectAction:postSendReceipts')->setName('postSendReceipts');
 $app->get('/project/{pro}/receipts/{rec}', 'projectAction:getReceipt')->setName('getReceipt');
 $app->post('/receipts/{rec}', 'projectAction:deleteReceipt')->setName('deleteReceipt');
+$app->post('/admin/project/{pro}/receipts/approve', 'projectAction:postAdminApproveReceipts')->setName('postAdminApproveReceipts');
+$app->post('/admin/project/{pro}/receipts/reject', 'projectAction:postAdminRejectReceipts')->setName('postAdminRejectReceipts');
 $app->get('/admin/project/{pro}/receipts/{rec}', 'projectAction:getAdminReceipt')->setName('getAdminReceipt');
 $app->get('/admin/project/{pro}/receipts', function ($request, $response, $params) {
     $subject = $request->getAttribute('subject');

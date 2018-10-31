@@ -159,7 +159,7 @@ class AdminAction
             'Organización con la que realizará las actividades',
             'Cantidad de integrantes', '¿Equipo completo?', '¿Responsable asignado?',
             '¿DNI validados de todo el equipo?', '¿Cartas cargadas?',
-            '¿Cargó imagen?', 'Puntaje', 'Observaciones',
+            '¿Cargó imagen?', 'Puntaje', 'Rendición enviada', 'Rendición aprobada', 'Observaciones',
             'Condición',
             ]);
             foreach ($grupos as $gro) {
@@ -175,7 +175,7 @@ class AdminAction
                     ],
                     ],
                     'neighbourhoods' => [], 'total_budget' => null, 'organization' => null,
-                    'has_image' => null, 'notes' => null, 'selected' => null,
+                    'has_image' => null, 'notes' => null,'budget_sent' => null,'budget_approved' => null, 'selected' => null,
                     ];
                 }
                 $writer->addRowWithStyle([
@@ -191,7 +191,7 @@ class AdminAction
                 $pro->organization? $pro->organization['name']: null,
                 $gro->users->count(), $gro->full_team? 'SI': 'NO', $gro->second_in_charge? 'SI': 'NO',
                 $gro->verified_team? 'SI': 'NO', ($gro->uploaded_agreement && $gro->uploaded_letter)? 'SI': 'NO',
-                $pro->has_image? 'SI': 'NO', $gro->quota, $pro->notes,
+                $pro->has_image? 'SI': 'NO', $gro->quota, $pro->budget_sent? 'SI': 'NO', $pro->budget_approved? 'SI': 'NO', $pro->notes,
                 $pro->selected? 'Seleccionado': null,
                 ], $defStyle);
             }

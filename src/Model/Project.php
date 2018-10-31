@@ -14,7 +14,8 @@ class Project extends Model
         'neighbourhoods', 'organization', 'locality_id', 'locality_other',
         'goals', 'schedule', 'budget', 'category_id', 'coordin_id',
         'has_image', 'likes', 'group', 'category',
-        'selected_budget', 'granted_budget', 'selected'
+        'selected_budget', 'granted_budget', 'selected',
+        'budget_sent', 'budget_approved'
     ];
     protected $with = [];
     protected $casts = [

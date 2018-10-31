@@ -148,8 +148,13 @@
 </template>
 
 <script>
+import Localidad from "../utils/GetLocalidad";
+
 export default {
   props: ["project"],
+  components: {
+    Localidad
+  },
   computed:{
     montoTotal: function() {
       const reducer = (accumulator, item) =>

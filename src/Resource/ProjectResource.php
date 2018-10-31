@@ -581,6 +581,13 @@ class ProjectResource extends Resource
         return $story;
     }
 
+    public function setReceiptsSent($subject, $project)
+    { 
+        $project->budget_sent = true;
+        $project->save();
+        return $project;
+    }
+
     public function deleteStory($subject, $story, $project)
     {
         $story->delete();

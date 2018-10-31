@@ -20,6 +20,11 @@
             </p>
           </div>
         </div>
+        <div class="level-item">
+           <a @click="onlySelected = !onlySelected" class="button is-white">
+            <i class="fas fa-trophy fa-fw"></i>
+          </a>
+        </div>
       </div>
       <!-- Right side -->
       <div class="level-right" v-if="!filters">
@@ -134,6 +139,16 @@
               </b-tooltip>
             </th>
              <th class="has-text-centered">
+              <b-tooltip label="Rendición enviado" type="is-dark" position="is-top"> 
+              <i class="fas fa-dollar-sign fa-lg"></i>&nbsp;<i class="fas fa-paper-plane"></i>
+              </b-tooltip>
+            </th>
+             <th class="has-text-centered">
+              <b-tooltip label="Rendición aprobado" type="is-dark" position="is-top"> 
+              <i class="fas fa-dollar-sign fa-lg"></i>&nbsp;<i class="fas fa-check"></i>
+              </b-tooltip>
+            </th>
+             <th class="has-text-centered">
               <b-tooltip label="Recibos" type="is-dark" position="is-top"> 
               <i class="fas fa-archive fa-lg fa-fw"></i>
               </b-tooltip>
@@ -184,9 +199,17 @@
               <i class="fas fa-fw" :class="statusLetter(project)"></i>
               <a :href="letterUrl(project.group)" class="has-text-link" target="_blank" v-if="(project.organization != null) && project.group.uploaded_letter"><i class="fas fa-download"></i></a>
             </td>
+            <td class="has-text-centered">
+              <i v-if="project.budget_sent" class="fas fa-check has-text-success"></i>
+              <i v-else class="fas fa-times has-text-danger"></i>
+            </td>
+            <td class="has-text-centered">
+              <i v-if="project.budget_approved" class="fas fa-check has-text-success"></i>
+              <i v-else class="fas fa-question-circle has-text-dark"></i>
+            </td>
                         <td class="has-text-centered">
               <a :href="'/admin/project/'+project.id+'/receipts'" target="_blank" class="has-text-link">
-                <i class="fas fa-eye fa-fw"></i>
+                <i class="fas fa-reply fa-fw"></i>
               </a>
             </td>
             <td class="has-text-centered">
@@ -203,7 +226,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="17">
+            <th colspan="19">
               <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
                 <span slot="no-results">
                   <i class="fas fa-info-circle"></i> Fin de los resultados
@@ -255,7 +278,8 @@ export default {
       departamentos: [],
       localidades: [],
       nameToSearch: "",
-      filters: false
+      filters: false,
+      onlySelected: false,
     };
   },
   mounted: function() {
@@ -454,6 +478,9 @@ export default {
     },
   },
   watch: {
+    onlySelected: function(){
+      this.resetEverything()
+    },
     regionSelected: function(newVal, oldVal) {
       if (newVal != null) {
         this.departamentoSelected = null;
@@ -512,6 +539,9 @@ export default {
     urlGet: function() {
       let query = [];
       query.push("size=100");
+      if (this.onlySelected) {
+        query.push("sel=true");
+      }
       if (this.nameToSearch !== "") {
         query.push("s=" + this.nameToSearch);
       }

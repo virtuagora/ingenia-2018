@@ -6,7 +6,7 @@
     <div class="notification is-warning">
       <b>Nota:</b> Aun asi, recordá guardar los comprobantes originales.
     </div>
-    <div class="card">
+    <div class="card" v-if="!project.budget_sent">
       <div class="card-content">
         <h1 class="subtitle is-4"><i class="fa fa-plus"></i> Subir nuevo recibo</h1>
         <form :action="formUrl" ref="formReceipt" method="post" enctype="multipart/form-data">
@@ -67,7 +67,7 @@
         <th width="130px">Fecha compra</th>
         <th>Detalle</th>
         <th class="has-text-centered" width="100px">Monto</th>
-        <th class="has-text-centered" width="120px">Acción</th>
+        <th class="has-text-centered" width="120px" v-if="!project.budget_sent">Acción</th>
       </thead>
       <tbody>
         <tr v-for="recibo in recibos" :key="recibo.id">
@@ -76,7 +76,7 @@
           </td>
           <td class="is-size-7">{{recibo.detail}}</td>
           <td class="has-text-centered">$ {{recibo.amount.split('.')[0]}}</td>
-          <td class="has-text-centered">
+          <td class="has-text-centered" v-if="!project.budget_sent">
             <a :href="'/project/' + projectId + '/receipts/' + recibo.id" target="_blank" class="button is-small is-outlined is-primary"><i class="fas fa-download fa-fw"></i></a>
             &nbsp;<a @click="deleteRecibo(recibo.id)" class="button is-small is-outlined is-danger"><i class="fas fa-times"></i></a>
           </td>
@@ -86,6 +86,20 @@
         </tr>
       </tbody>
     </table>
+    <div v-if="!project.budget_sent">
+    <hr>
+    <h1 class="title is-4">¿Terminarse de subir todos los recibos?</h1>
+    <p>Una vez que hayas presentado todos los recibos de las compras hechas del proyecto, tenes que cerrar tu rendición y presentarlo a Ingenia. Cuando lo envies, Gabinete Joven aprobará la rendición o se comunicará con el equipo si existe algún error para que puedas volver a revisarlo.</p>
+    <br>
+    <a class="button is-info is-fullwidth is-outlined is-600 is-medium" v-if="showConfirmSending" @click="sendReceipts()"><i class="fas fa-question-circle"></i>&nbsp;Clic de nuevo para confirmar el envio</a>
+    <a class="button is-primary is-fullwidth is-outlined is-400" v-else @click="showConfirmSending = true"><i class="fas fa-lock"></i>&nbsp;Cerrar la rendición de gastos</a>
+    </div>
+    <div v-else>
+      <h1 class="title is-4"><i class="fas fa-check has-text-success"></i>&nbsp;&nbsp;Rendicion de gastos enviado!</h1>
+      <div class="notification is-success" v-if="project.budget_approved">
+        <h1 class="title is-5 is-marginless"><i class="fas fa-check"></i>&nbsp;&nbsp;La rendición de gastos ha sido aprobada!</h1>
+      </div>
+    </div>
     <b-loading :is-full-page="true" :active.sync="isLoading"></b-loading>
   </div>
 </template>
@@ -98,6 +112,7 @@ export default {
       // pendiente: false,
       // rechazado: false,
       // verificado: false,
+      showConfirmSending: false,
       inputReciboFecha: null,
       fechaFinal: '',
       recibos: [],
@@ -108,9 +123,6 @@ export default {
       // user: {},
       // verifying: true
     };
-  },
-  created: function() {
-    this.user = this.$store.state.user;
   },
   mounted: function() {
     this.getRecibos();
@@ -196,11 +208,42 @@ export default {
           });
           return false;
         });
+    },
+    sendReceipts: function(){
+      this.isLoading = true;
+      this.$http
+        .post(
+          "project/" + this.project.id + "/receipts/send"
+        )
+        .then(response => {
+          this.forceUpdateState("userPanel")
+          this.$snackbar.open({
+            message: "¡Los recibos han sido enviados para ser aprobados!",
+            type: "is-success",
+            actionText: "Cerrar"
+          });
+          this.isLoading = false;
+        })
+        .catch(error => {
+          console.error(error.message);
+          this.isLoading = false;
+          this.$snackbar.open({
+            message: "Error inesperado. Recarge la pagina.",
+            type: "is-danger",
+            actionText: "Cerrar"
+          });
+        });
     }
   },
   computed: {
     projectId: function(){
       return this.$store.state.user.groups[0].project.id
+    },
+    user: function(){
+      return this.$store.state.user;
+    },
+    project: function(){
+      return this.$store.state.user.groups[0].project
     }
   },
   watch: {

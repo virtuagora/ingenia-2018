@@ -2,10 +2,10 @@
   <section>
     <div class="media">
       <div class="media-left is-hidden-touch">
-        <img src="/assets/img/icons-historia.svg" class="logo-header image is-centered" style="width:150px">
+        <img src="/assets/img/historia-small.svg" class="logo-header image is-centered" style="width:100px">
       </div>
       <div class="media-content has-text-right-desktop has-text-centered-touch" style="overflow: visible">
-        <img src="/assets/img/icons-historia.svg" class="logo-header image is-centered is-hidden-desktop" style="width:150px">
+        <img src="/assets/img/historia-small.svg" class="logo-header image is-centered is-hidden-desktop" style="width:100px">
         <h1 class="title is-size-2-desktop is-size-3-touch is-600">Toda historia nace en equipo</h1>
         <h1 class="subtitle is-5 is-size-6-touch">Acercate a sus historias y conocelos personalmente</h1>
       </div>
@@ -23,9 +23,9 @@
       </div>
 
       <!-- Right side -->
-      <div class="level-right" v-if="this.user.groups[0] && this.user.groups[0].project.id == projectId">
+      <div class="level-right" v-if="user && user.groups[0] && user.groups[0].project.id == projectId">
         <p class="level-item">
-          <a :href="'/grupo/'+this.user.groups[0].id+'/historia/nuevo'" class="button is-info is-400 is-outlined"><i class="fas fa-edit fa-fw"></i>&nbsp;Publicar una nueva historia</a>
+          <a :href="'/grupo/'+user.groups[0].id+'/historia/nuevo'" class="button is-info is-400 is-outlined"><i class="fas fa-edit fa-fw"></i>&nbsp;Publicar una nueva historia</a>
         </p>
       </div>
     </nav>
@@ -61,7 +61,6 @@
 <script>
 import InfiniteLoading from "vue-infinite-loading";
 
-
 export default {
   props: [
     "projectId",
@@ -70,7 +69,6 @@ export default {
   ],
   data() {
     return {
-      user: {},
       stories: [],
       isLoading: false,
       sendingstory: false,
@@ -87,9 +85,6 @@ export default {
   },
   components: {
     InfiniteLoading
-  },
-  created: function() {
-    this.user = this.$store.state.user;
   },
   methods: {
 getstories: function() {
@@ -183,6 +178,9 @@ getstories: function() {
     },
     storiesUrl: function(){
       return '/project/' + this.projectId + '/stories?size=4'
+    },
+    user: function(){
+      return this.$store.state.user
     }
   }
 };

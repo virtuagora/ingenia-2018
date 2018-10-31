@@ -39,6 +39,7 @@ export default {
   props: ['limit'],
   data() {
     return {
+      user: null,
       stories: [],
       isLoading: false,
       paginator: {
@@ -51,9 +52,6 @@ export default {
   },
   components: {
     InfiniteLoading
-  },
-  created: function() {
-    this.user = this.$store.state.user;
   },
   methods: {
 getstories: function() {
@@ -145,6 +143,9 @@ getstories: function() {
     storiesLimit: function(){
       if(this.limit != undefined) return this.limit
       return 250000   
+    },
+    user: function(){
+      return this.$store.state.user
     }
   }
 };

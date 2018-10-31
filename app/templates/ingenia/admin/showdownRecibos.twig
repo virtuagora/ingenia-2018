@@ -5,46 +5,72 @@
 {% extends 'master.twig' %}
 
 {% block title %}
-  Showdown - Comprobantes/Recibos - {{project.group.name}}
+  Showdown - Comprobantes/Recibos -
+  {{project.group.name}}
 {% endblock %}
 
 {% block body %}
   <div class="container">
-  <div class="section">
-          <img src="/assets/img/ingenia2018.svg" class=" image" style="width:180px;">
-    <br>
-    <h1 class="subtitle is-2">Comprobantes de compras - Edición 2018</h1>
-    <hr>
-    <h2 class="title is-3">{{project.name}}</h2>
-    <h2 class="subtitle is-4">Grupo - {{project.group.name}}</h2>
-    <hr>
-      <table class="table is-fullwidth">
-      <thead>
-        <th width="130px">Fecha compra</th>
-        <th>Detalle</th>
-        <th class="has-text-centered" width="100px">Monto</th>
-        <th class="has-text-centered" width="80px">Acción</th>
-      </thead>
-      <tbody>
-      {% for recibo in recibos %}
-        <tr>
-          <td>
-            {{recibo.date|date('Y-m-d')}}
-          </td>
-          <td >{{recibo.detail}}</td>
-          <td class="has-text-centered">$ {{recibo.amount|replace({".00" : ""})|number_format(0, ',', '')}}</td>
-          <td class="has-text-centered">
-            <a href="/admin/project/{{project.id}}/receipts/{{recibo.id}}" target="_blank" class="button is-small is-outlined is-primary"><i class="fas fa-download fa-fw"></i></a>
-          </td>
-        </tr>
-        {% endfor %}
-        {% if recibos|length == 0 %}
-        <tr>
-          <td colspan="4" class="has-text-centered">Aún no se cargaron recibos</td>
-        </tr>
+    <div class="section">
+      <div class="is-pulled-right has-text-right">
+        <div class="buttons is-right">
+          <form action="/admin/project/{{project.id}}/receipts/approve" method="POST">
+            <button type="submit" class="button is-success is-outlined" style="margin: 0 5px;">
+              <i class="fas fa-check"></i>&nbsp;Aprobar</button>
+          </form>
+          <form action="/admin/project/{{project.id}}/receipts/reject" method="POST">
+            <button type="submit" class="button is-dark is-outlined" style="margin: 0 5px;">
+              <i class="fas fa-times"></i>&nbsp;Rechazar</button>
+          </form>
+        </div>
+        {% if project.budget_sent == 0 and project.budget_approved == 0 %}
+        <p><i class="fas fa-question-circle"></i>&nbsp;Rendición de gastos RECHAZADA o aún no enviada</p>
+        {% elseif project.budget_sent == 1 and project.budget_approved == 0 %}
+        <p><i class="fas fa-question-circle"></i>&nbsp;Rendición PENDIENTE de aprobar</p>
+        {% elseif project.budget_approved == 1 %}
+        <p><i class="fas fa-check"></i>&nbsp;Rendición de gastos APROBADA</p>
         {% endif %}
-      </tbody>
-    </table>
-  </div>
+        <br>
+      <a href="/administracion/proyectos" class="button is-small is-info"><i class="fas fa-reply"></i>&nbsp;Volver</a>
+      </div>
+      <img src="/assets/img/ingenia2018.svg" class=" image" style="width:180px;">
+      <br>
+      <h1 class="subtitle is-2">Rendición de gastos - Edición 2018</h1>
+      <hr>
+      <h2 class="title is-3">{{project.name}}</h2>
+      <h2 class="subtitle is-4">Grupo -
+        {{project.group.name}}</h2>
+      <hr>
+      <table class="table is-fullwidth">
+        <thead>
+          <th width="130px">Fecha compra</th>
+          <th>Detalle</th>
+          <th class="has-text-centered" width="100px">Monto</th>
+          <th class="has-text-centered" width="80px">Acción</th>
+        </thead>
+        <tbody>
+          {% for recibo in recibos %}
+            <tr>
+              <td>
+                {{recibo.date|date('Y-m-d')}}
+              </td>
+              <td >{{recibo.detail}}</td>
+              <td class="has-text-centered">$
+                {{recibo.amount|replace({".00" : ""})|number_format(0, ',', '')}}</td>
+              <td class="has-text-centered">
+                <a href="/admin/project/{{project.id}}/receipts/{{recibo.id}}" target="_blank" class="button is-small is-outlined is-primary">
+                  <i class="fas fa-download fa-fw"></i>
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+          {% if recibos | length == 0 %}
+            <tr>
+              <td colspan="4" class="has-text-centered">Aún no se cargaron recibos</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
   </div>
 {% endblock %}
