@@ -547,7 +547,10 @@ class ProjectAction
          if (!$project->selected) {
             throw new UnauthorizedException();
         }
-        $fileData = $this->projectResource->getReceipt($project, $receiptId);
+        $receipt = $this->helper->getEntityFromId(
+            'App:Receipt', 'rec', $params, ['project']
+        );
+        $fileData = $this->projectResource->getReceipt($project, $receipt);
         return $response->withBody(new Stream($fileData['strm']))
         ->withHeader('Content-Type', $fileData['mime']);
     }
