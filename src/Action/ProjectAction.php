@@ -467,7 +467,7 @@ class ProjectAction
         $project = $this->helper->getEntityFromId(
             'App:Project', 'pro', $params, ['group']
         );
-        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+        if (!$this->authorization->checkPermission($subject, 'coordin', $project)) {
             throw new UnauthorizedException();
         }
         if (!$project->selected) {
@@ -485,7 +485,7 @@ class ProjectAction
         $project = $this->helper->getEntityFromId(
             'App:Project', 'pro', $params, ['group']
         );
-        if (!$this->authorization->checkPermission($subject, 'updPro', $project)) {
+        if (!$this->authorization->checkPermission($subject, 'coordin', $project)) {
             throw new UnauthorizedException();
         }
         if (!$project->selected) {
