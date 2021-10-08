@@ -1,6 +1,8 @@
 Ingenia 2018
 ===
 
+> This is the 2018 archive for the Ingenia project. The latest one is available here: https://github.com/virtuagora/ingenia
+
 If you need information or support please contact us! 
 [@augusthur](https://github.com/augusthur) & [@guillecro](https://github.com/guillecro)
 
