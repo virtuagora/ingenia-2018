@@ -1,15 +1,13 @@
-# Welcome to Virtuagora 2.0 for Ingenia 2018
+Ingenia 2018
+===
 
-**WARNING: This repository is still under development for the version 2 of Virtuagora.**
 If you need information or support please contact us! 
-[@augusthur][2] & [@guillermocroppi][3]
+[@augusthur](https://github.com/augusthur) & [@guillecro](https://github.com/guillecro)
 
-Right now the project is *quite* unstable, but because it is still in development!
-Want to know when it will be available? Follow us on Twitter  [@virtuagora][1]
-
----
+Follow us on Twitter  [@virtuagora](https://twitter.com/virtuagora)
 
 ### Installation
+
 Open a terminal in the desire folder where you want to `git clone` the repository.
 ```bash
 git clone https://github.com/virtuagora/virtuagora-core.git
